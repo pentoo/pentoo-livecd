@@ -1,0 +1,187 @@
+---
+ arch/alpha/Kconfig        |   26 ++++++++++++++++++++++++
+ arch/alpha/kernel/traps.c |   49 ++++++++++++++++++++++++++++++++++++++++++++++
+ include/linux/sysctl.h    |   14 +++++++++++++
+ kernel/sysctl.c           |   12 ++++++++++-
+ 4 files changed, 100 insertions(+), 1 deletion(-)
+
+--- a/arch/alpha/Kconfig
++++ b/arch/alpha/Kconfig
+@@ -616,6 +616,32 @@ config VERBOSE_MCHECK_ON
+ 
+ 	  Take the default (1) unless you want more control or more info.
+ 
++config ALPHA_UAC_SYSCTL
++	bool "Configure UAC policy via sysctl"
++	depends on SYSCTL
++	default y
++	---help---
++	  Configuring the UAC (unaligned access control) policy on a Linux
++	  system usually involves setting a compile time define. If you say
++	  Y here, you will be able to modify the UAC policy at runtime using
++	  the /proc interface.
++
++	  The UAC policy defines the action Linux should take when an
++	  unaligned memory access occurs. The action can include printing a
++	  warning message (NOPRINT), sending a signal to the offending
++	  program to help developers debug their applications (SIGBUS), or
++	  disabling the transparent fixing (NOFIX).
++
++	  The sysctls will be initialized to the compile-time defined UAC
++	  policy. You can change these manually, or with the sysctl(8)
++	  userspace utility.
++
++	  To disable the warning messages at runtime, you would use
++
++	    echo 1 > /proc/sys/kernel/uac/noprint
++
++	  This is pretty harmless. Say Y if you're not sure.
++
+ source "drivers/pci/Kconfig"
+ source "drivers/eisa/Kconfig"
+ 
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -14,6 +14,7 @@
+ #include <linux/delay.h>
+ #include <linux/smp_lock.h>
+ #include <linux/module.h>
++#include <linux/sysctl.h>
+ #include <linux/init.h>
+ #include <linux/kallsyms.h>
+ 
+@@ -102,6 +103,38 @@ static char * ireg_name[] = {"v0", "t0",
+ 			   "t10", "t11", "ra", "pv", "at", "gp", "sp", "zero"};
+ #endif
+ 
++#ifdef CONFIG_ALPHA_UAC_SYSCTL
++static struct ctl_table_header *uac_sysctl_header;
++
++static int enabled_noprint = 0;
++static int enabled_sigbus = 0;
++static int enabled_nofix = 0;
++
++ctl_table uac_table[] = {
++	{KERN_UAC_NOPRINT, "noprint", &enabled_noprint, sizeof (int), 0644, NULL, NULL, &proc_dointvec},
++	{KERN_UAC_SIGBUS, "sigbus", &enabled_sigbus, sizeof (int), 0644, NULL, NULL, &proc_dointvec},
++	{KERN_UAC_NOFIX, "nofix", &enabled_nofix, sizeof (int), 0644, NULL, NULL, &proc_dointvec},
++        {0}
++};
++
++static int __init init_uac_sysctl(void)
++{
++	/* Initialize sysctls with the #defined UAC policy */
++	enabled_noprint = (test_thread_flag (TIF_UAC_NOPRINT)) ? 1 : 0;
++	enabled_sigbus = (test_thread_flag (TIF_UAC_SIGBUS)) ? 1 : 0;
++	enabled_nofix = (test_thread_flag (TIF_UAC_NOFIX)) ? 1 : 0;
++
++	/* save this for later so we can clean up */
++	uac_sysctl_header = register_sysctl_table(uac_table);
++	return 0;
++}
++
++static void __exit exit_uac_sysctl(void)
++{
++	unregister_sysctl_table(uac_sysctl_header);
++}
++#endif
++
+ static void
+ dik_show_code(unsigned int *pc)
+ {
+@@ -780,7 +813,11 @@ do_entUnaUser(void __user * va, unsigned
+ 	/* Check the UAC bits to decide what the user wants us to do
+ 	   with the unaliged access.  */
+ 
++#ifndef CONFIG_ALPHA_UAC_SYSCTL
+ 	if (!test_thread_flag (TIF_UAC_NOPRINT)) {
++#else  /* CONFIG_ALPHA_UAC_SYSCTL */
++	if (!(enabled_noprint)) {
++#endif /* CONFIG_ALPHA_UAC_SYSCTL */
+ 		if (cnt >= 5 && jiffies - last_time > 5*HZ) {
+ 			cnt = 0;
+ 		}
+@@ -791,10 +828,18 @@ do_entUnaUser(void __user * va, unsigned
+ 		}
+ 		last_time = jiffies;
+ 	}
++#ifndef CONFIG_ALPHA_UAC_SYSCTL
+ 	if (test_thread_flag (TIF_UAC_SIGBUS))
++#else  /* CONFIG_ALPHA_UAC_SYSCTL */
++	if (enabled_sigbus)
++#endif /* CONFIG_ALPHA_UAC_SYSCTL */
+ 		goto give_sigbus;
+ 	/* Not sure why you'd want to use this, but... */
++#ifndef CONFIG_ALPHA_UAC_SYSCTL
+ 	if (test_thread_flag (TIF_UAC_NOFIX))
++#else  /* CONFIG_ALPHA_UAC_SYSCTL */
++	if (enabled_nofix)
++#endif /* CONFIG_ALPHA_UAC_SYSCTL */
+ 		return;
+ 
+ 	/* Don't bother reading ds in the access check since we already
+@@ -1089,3 +1134,7 @@ trap_init(void)
+ 	wrent(entSys, 5);
+ 	wrent(entDbg, 6);
+ }
++
++#ifdef CONFIG_ALPHA_UAC_SYSCTL
++__initcall(init_uac_sysctl);
++#endif
+--- a/include/linux/sysctl.h
++++ b/include/linux/sysctl.h
+@@ -166,6 +166,9 @@ enum
+ 	KERN_NMI_WATCHDOG=75, /* int: enable/disable nmi watchdog */
+ 	KERN_PANIC_ON_NMI=76, /* int: whether we will panic on an unrecovered */
+ 	KERN_FBCON_DECOR=77,	/* string: path to fbsplash helper */
++#ifdef CONFIG_ALPHA_UAC_SYSCTL
++	KERN_UAC_POLICY=78,	/* int: Alpha unaligned access control policy flags */
++#endif /* CONFIG_ALPHA_UAC_SYSCTL */
+ };
+ 
+ 
+@@ -259,6 +262,17 @@ enum
+ 	PTY_NR=2
+ };
+ 
++#ifdef CONFIG_ALPHA_UAC_SYSCTL
++/* /proc/sys/kernel/uac */
++enum
++{
++	/* UAC policy on Alpha */
++	KERN_UAC_NOPRINT=1,	/* int: printk() on unaligned access */
++	KERN_UAC_SIGBUS=2,	/* int: send SIGBUS on unaligned access */
++	KERN_UAC_NOFIX=3,	/* int: don't fix the unaligned access */
++};
++#endif /* CONFIG_ALPHA_UAC_SYSCTL */
++
+ /* /proc/sys/bus/isa */
+ enum
+ {
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -158,6 +158,9 @@ extern ctl_table pty_table[];
+ #ifdef CONFIG_INOTIFY_USER
+ extern ctl_table inotify_table[];
+ #endif
++#ifdef CONFIG_ALPHA_UAC_SYSCTL
++extern ctl_table uac_table[];
++#endif
+ 
+ #ifdef HAVE_ARCH_PICK_MMAP_LAYOUT
+ int sysctl_legacy_va_layout;
+@@ -211,6 +214,14 @@ static ctl_table root_table[] = {
+  * NOTE: do not add new entries to this table unless you have read
+  * Documentation/sysctl/ctl_unnumbered.txt
+  */
++#ifdef CONFIG_ALPHA_UAC_SYSCTL
++	{
++		.ctl_name	= KERN_UAC_POLICY,
++		.procname	= "uac",
++		.mode		= 0555,
++		.child		= uac_table,
++	},
++#endif /* CONFIG_ALPHA_UAC_SYSCTL */
+ 	{ .ctl_name = 0 }
+ };
+ 
