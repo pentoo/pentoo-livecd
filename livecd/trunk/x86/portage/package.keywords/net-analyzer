@@ -89,7 +89,6 @@ net-analyzer/libnasl ~x86
 net-analyzer/linkchecker ~x86
 net-analyzer/macchanger ~x86
 net-analyzer/mbrowse ~x86
-net-analyzer/metadata.xml ~x86
 net-analyzer/metasploit ~x86
 net-analyzer/midas-nms ~x86
 net-analyzer/mirmon ~x86
@@ -254,9 +253,9 @@ net-analyzer/geoedge ~x86
 net-analyzer/httprint ~x86
 net-analyzer/inguma ~x86
 net-analyzer/medusa ~x86
-net-analyzer/metacoretex-ng ~x86
+net-analyzer/metacoretex-ng * ~* **
 net-analyzer/metagoofil ~x86
-net-analyzer/metasploit ~x86
+net-analyzer/metasploit * ~* **
 net-analyzer/mosref ~x86
 net-analyzer/ntp-fingerprint ~x86
 net-analyzer/onesixtyone ~x86
@@ -267,6 +266,6 @@ net-analyzer/subdomainer ~x86
 net-analyzer/theHarvester ~x86
 net-analyzer/upnpscan ~x86
 net-analyzer/voiphopper ~x86
-net-analyzer/w3af ~x86
+net-analyzer/w3af * ~* **
 net-analyzer/wfuzz ~x86
 net-analyzer/yaptest ~x86
