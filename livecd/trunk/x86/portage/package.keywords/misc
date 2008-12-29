@@ -12,6 +12,7 @@ dev-db/oat ~x86
 dev-db/sqlat ~x86
 dev-db/sqlbf ~x86
 dev-db/sqlinject ~x86
+dev-dotnet/wxnet ~x86
 dev-libs/distorm ~x86
 dev-python/Impacket ~x86
 dev-python/cxoracle ~x86
