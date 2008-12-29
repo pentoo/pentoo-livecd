@@ -18,11 +18,11 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss mmx sse sse2
 wifi injection
--quicktime qt qt3 -qt4 -cups -spell lua
+-quicktime -qt -qt3 -qt4 -cups -spell lua
 png jpeg gif dri svg aac 
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid wxwindows sqlite
-#opengl
+opengl dbus
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
 # will be built with the USE flags configured above.  These packages must not
@@ -31,7 +31,7 @@ dvd mpeg ogg rtsp x264 xvid wxwindows sqlite
 # example:
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
-sys-kernel/pentoo-sources
+=sys-kernel/pentoo-sources-2.6.23-r5
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
@@ -56,27 +56,27 @@ app-fuzz/fuzzer-server
 app-fuzz/fusil
 app-fuzz/http-fuzz
 app-fuzz/protos
-app-fuzz/scapy
+#app-fuzz/scapy
 app-fuzz/smtp-fuzz
 app-fuzz/smudge
 #app-fuzz/snmp-fuzzer
 app-fuzz/ohrwurm
-app-misc/examine
+app-fuzz/taof
 app-misc/livecd-tools
 app-mobilephone/obexftp
 app-portage/gentoolkit
 app-text/dos2unix
 dev-db/absinthe
-dev-db/edb
 dev-db/mssqlscan
 dev-db/oat
+dev-db/sqid
 dev-db/sqlat
 dev-db/sqlbf
 #dev-db/sqlinject
+dev-db/sqlix
+dev-db/sqlmap
+dev-db/sqlninja
 dev-java/jad-bin
-dev-libs/eet
-dev-libs/embryo
-dev-libs/engrave
 dev-libs/libxslt
 dev-libs/openobex
 dev-libs/libxml2
@@ -84,15 +84,10 @@ dev-python/pysqlite
 dev-python/pygtk
 =dev-python/lxml-1.3.6
 dev-util/dialog
-dev-util/e_utils
 dev-util/subversion
 dev-util/insight
 gnome-base/gnome-menus
 media-gfx/scrot
-media-libs/edje
-media-libs/epeg
-media-libs/epsilon
-media-libs/imlib2
 media-sound/audacious
 media-sound/alsa-utils
 media-sound/sox
@@ -206,7 +201,7 @@ net-misc/raccess
 net-misc/rdesktop
 net-misc/grdesktop
 net-misc/rsync
-net-misc/sipbomber
+#net-misc/sipbomber
 net-misc/sipp
 #net-misc/siproxd
 net-misc/sipsak
@@ -276,21 +271,21 @@ x11-base/xorg-x11
 x11-libs/ecore
 x11-libs/esmart
 x11-libs/evas
-x11-libs/ewl
 x11-libs/gtk+
 x11-plugins/firecat
 #x11-plugins/e_modules
+x11-plugins/e_modules-bling
+x11-plugins/e_modules-calendar
 x11-plugins/e_modules-cpu
-x11-plugins/e_modules-echo
-x11-plugins/e_modules-mem
-x11-plugins/e_modules-mixer
-x11-plugins/e_modules-net
 x11-plugins/e_modules-language
+x11-plugins/e_modules-mem
+x11-plugins/e_modules-net
 #x11-plugins/e_modules-notification
-x11-plugins/e_modules-screenshot
-x11-plugins/e_modules-taskbar
+#x11-plugins/e_modules-screenshot
 x11-plugins/e_modules-weather
 x11-plugins/e_modules-wlan
-x11-terms/eterm
-x11-terms/xterm
-x11-wm/e
+x11-plugins/itask-ng
+x11-plugins/winlist_ng
+x11-terms/rxvt-unicode
+x11-libs/e_dbus
+x11-wm/enlightenment

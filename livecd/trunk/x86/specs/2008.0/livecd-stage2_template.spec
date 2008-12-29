@@ -121,7 +121,7 @@ livecd/type: generic-livecd
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default gpm|default
+livecd/rcadd: autoconfig|default gpm|default dbusÂ|default esound|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -208,7 +208,7 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: gentoo
 
-boot/kernel/gentoo/sources: pentoo-sources
+boot/kernel/gentoo/sources: =pentoo-sources-2.6.26
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
