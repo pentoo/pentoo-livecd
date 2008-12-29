@@ -16,7 +16,8 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 # pkgcache_path: /tmp/packages
 # pkgcache_path:
 
-livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss mmx sse sse2
+livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
+mmx sse sse2 mpi
 wifi injection
 -quicktime -qt -qt3 -qt4 -cups -spell lua
 png jpeg gif dri svg aac 
@@ -32,6 +33,7 @@ opengl dbus
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 sys-kernel/pentoo-sources
+sys-kernel/linux-headers
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
@@ -241,7 +243,7 @@ net-wireless/wpa_supplicant
 net-www/netscape-flash
 sys-apps/baselayout
 sys-apps/eject
-sys-apps/hwdata-gentoo
+sys-apps/hwdata-redhat
 sys-apps/hwsetup
 sys-apps/iproute2
 sys-apps/less
