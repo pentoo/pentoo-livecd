@@ -44,3 +44,10 @@ do
 done
 tar -jxf milw0rm.tar.bz2 -C exploits/
 rm -f milw0rm.tar.bz2
+
+# Add composite to xorg
+echo '
+Section "Extensions"
+        Option "Composite" "Enable"
+EndSection
+' >> /etc/X11/xorg.conf.in
