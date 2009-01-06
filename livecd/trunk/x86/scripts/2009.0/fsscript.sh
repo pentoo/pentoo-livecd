@@ -3,11 +3,13 @@
 # Purge the uneeded locale, should keeps only en
 localepurge
 
+# Set the timezone
 if [[ -e /etc/conf.d/clock ]]
 then
 	sed -i -e 's/#TIMEZONE="Factory"/TIMEZONE="UTC"/' /etc/conf.d/clock
 fi
 
+# Bunzip all docs since they'll be in sqlzma format
 cd /usr/share/doc
 for maindir in `find ./ -maxdepth 1 -type d | sed -e 's:^./::'`
 do
@@ -20,7 +22,7 @@ do
 done
 
 # Runs the incredible menu generator
-genmenu.py -v
+genmenu.py -v -t urxvt
 
 # Fix the root login by emptying the root password. No ssh will be allowed until 'passwd root'
 sed -i -e 's/^root:\*:/root::/' /etc/shadow
@@ -28,13 +30,15 @@ sed -i -e 's/^root:\*:/root::/' /etc/shadow
 # Setup kismet & airmon-ng
 [ -e /usr/sbin/airmon-ng ] && sed -i -e 's:/kismet::' /usr/sbin/airmon-ng
 [ -e /etc/kismet.conf ] && sed -i -e '/^source=.*/d' /etc/kismet.conf
-[ -e /etc/kismet.conf ] && sed -i -e 's/your_user_here/kismet/' /etc/kismet.conf
+[ -e /etc/kismet.conf ] && sed -i -e 's:configdir=.*:configdir=/root/kismet' -e 's/your_user_here/kismet/' /etc/kismet.conf
 [ -e /etc/kismet.conf ] && useradd -g root kismet
 [ -e /etc/kismet.conf ] && cp -a /etc/kismet.conf /etc/kismet.conf~
+[ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
 
 # compile mingw32
 crossdev i686-mingw32
 
+# Adds sploit collection
 cd /opt/
 mkdir exploits/packetstorm -p
 for file in `ls *.tgz`
@@ -44,10 +48,3 @@ do
 done
 tar -jxf milw0rm.tar.bz2 -C exploits/
 rm -f milw0rm.tar.bz2
-
-# Add composite to xorg
-echo '
-Section "Extensions"
-        Option "Composite" "Enable"
-EndSection
-' >> /etc/X11/xorg.conf.in
