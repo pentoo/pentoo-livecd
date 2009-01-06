@@ -1,10 +1,10 @@
 subarch: i686
-version_stamp: 2008.0
+version_stamp: 2009.0
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/2008.0
 snapshot: 2008.0
-source_subpath: default/livecd-stage1-i686-2008.0
+source_subpath: default/livecd-stage1-i686-2009.0
 portage_confdir: /root/pentoo/x86/portage
 portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 
@@ -29,7 +29,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -root-owned -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-2008.0_alpha5.iso
+livecd/iso: /tmp/pentoo-2009.0_alpha1.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -41,7 +41,7 @@ livecd/iso: /tmp/pentoo-2008.0_alpha5.iso
 # into the chroot by catalyst automatically.
 # example:
 # livecd/fsscript:
-livecd/fsscript: /root/pentoo/x86/scripts/2008.0/fsscript.sh
+livecd/fsscript: /root/pentoo/x86/scripts/2009.0/fsscript.sh
 
 # The splash type determines the automatic arguments for the bootloader on
 # supported architectures.  The possible options are gensplash and bootsplash.
@@ -121,7 +121,7 @@ livecd/type: generic-livecd
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default gpm|default dbusÂ|default esound|default
+livecd/rcadd: autoconfig|default gpm|default dbus|default esound|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -192,7 +192,7 @@ livecd/root_overlay: /root/pentoo/x86/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2008.0_alpha1
+livecd/volid: 2009.0_a1
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
@@ -206,15 +206,15 @@ gamecd/conf:
 # labels that will be used by the CD bootloader to refer to each kernel image.
 # example:
 # boot/kernel: gentoo
-boot/kernel: gentoo
+boot/kernel: pentoo
 
-boot/kernel/gentoo/sources: =pentoo-sources-2.6.26
+boot/kernel/pentoo/sources: =pentoo-sources-2.6.28
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/gentoo/config: /root/pentoo/x86/kernel/config-2.6.26
+boot/kernel/pentoo/config: /root/pentoo/x86/kernel/config-2.6.28
 #/usr/share/genkernel/x86/kernel-config-2.6
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
@@ -224,14 +224,14 @@ boot/kernel/gentoo/config: /root/pentoo/x86/kernel/config-2.6.26
 # syntax as livecd/gk_mainargs.
 # example:
 # boot/kernel/gentoo/gk_kernargs:
-boot/kernel/gentoo/gk_kernargs: --unionfs
+boot/kernel/pentoo/gk_kernargs: --unionfs
 
 # This option sets the USE flags used to build the kernel and also any packages
 # which are defined under this kernel label.  These USE flags are additive from
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/gentoo/use: pcmcia usb madwifi injection wifi
+boot/kernel/pentoo/use: pcmcia usb madwifi injection wifi
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -246,12 +246,12 @@ boot/kernel/gentoo/use: pcmcia usb madwifi injection wifi
 # are configured against this kernel label.
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
-boot/kernel/gentoo/packages: 
+boot/kernel/pentoo/packages: 
 #sys-apps/pcmcia-cs
 =app-admin/genmenu-9999
 sys-apps/pcmciautils
-net-wireless/acx
-net-wireless/at76c503a
+#net-wireless/acx
+#net-wireless/at76c503a
 net-wireless/atmel-firmware
 net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
@@ -264,7 +264,7 @@ net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 #net-wireless/iwlwifi
 #net-wireless/linux-wlan-ng
-net-wireless/madwifi-ng
+#net-wireless/madwifi-ng
 net-wireless/orinoco-fwutils
 #net-wireless/rfswitch
 net-wireless/wpa_supplicant

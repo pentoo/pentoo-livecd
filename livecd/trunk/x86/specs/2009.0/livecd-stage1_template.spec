@@ -187,7 +187,7 @@ net-misc/bridge-utils
 net-misc/curl
 net-misc/dhcp
 net-misc/dhcpcd
-net-misc/ipsorcery
+#net-misc/ipsorcery
 net-misc/iputils
 net-misc/karma
 net-misc/nemesis
