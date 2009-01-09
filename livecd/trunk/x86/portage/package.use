@@ -30,3 +30,4 @@ x11-plugins/firecat recon security
 net-analyzer/autoscan-network samba -gnome snmp nessus
 gnome-menus/gnome-menus -kernel_linux
 net-analyzer/mosref doc sources
+net-analyzer/metasploit gtk httpd sqlite3
