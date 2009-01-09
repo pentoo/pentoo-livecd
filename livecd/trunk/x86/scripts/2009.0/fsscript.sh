@@ -35,6 +35,20 @@ sed -i -e 's/^root:\*:/root::/' /etc/shadow
 [ -e /etc/kismet.conf ] && cp -a /etc/kismet.conf /etc/kismet.conf~
 [ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
 
+# Remove useless opengl setup
+rm /etc/init.d/x-setup
+
+# Setup tor-privoxy
+echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
+cp /etc/tor/torrc.sample /etc/tor/torrc
+mkdir /var/log/tor
+chown tor:tor /var/lib/tor
+chown tor:tor /var/log/tor
+
+# Setup ntop
+chmod 777 -R /var/lib/ntop
+ntop --set-admin-password=pentoo
+
 # compile mingw32
 crossdev i686-mingw32
 
