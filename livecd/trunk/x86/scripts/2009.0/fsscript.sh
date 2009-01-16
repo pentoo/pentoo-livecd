@@ -30,13 +30,14 @@ sed -i -e 's/^root:\*:/root::/' /etc/shadow
 # Setup kismet & airmon-ng
 [ -e /usr/sbin/airmon-ng ] && sed -i -e 's:/kismet::' /usr/sbin/airmon-ng
 [ -e /etc/kismet.conf ] && sed -i -e '/^source=.*/d' /etc/kismet.conf
-[ -e /etc/kismet.conf ] && sed -i -e 's:configdir=.*:configdir=/root/kismet' -e 's/your_user_here/kismet/' /etc/kismet.conf
+[ -e /etc/kismet.conf ] && sed -i -e 's:configdir=.*:configdir=/root/kismet:' -e 's/your_user_here/kismet/' /etc/kismet.conf
 [ -e /etc/kismet.conf ] && useradd -g root kismet
 [ -e /etc/kismet.conf ] && cp -a /etc/kismet.conf /etc/kismet.conf~
 [ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
 
 # Remove useless opengl setup
 rm /etc/init.d/x-setup
+eselect opengl set xorg-x11 --dst-prefix=/etc/opengl
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
@@ -48,6 +49,9 @@ chown tor:tor /var/log/tor
 # Setup ntop
 chmod 777 -R /var/lib/ntop
 ntop --set-admin-password=pentoo
+
+# Build the metadata cache
+emerge --metadata
 
 # compile mingw32
 crossdev i686-mingw32
