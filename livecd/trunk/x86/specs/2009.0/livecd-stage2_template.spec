@@ -3,7 +3,7 @@ version_stamp: 2009.0
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/2008.0
-snapshot: 2008.0
+snapshot: 2009.0
 source_subpath: default/livecd-stage1-i686-2009.0
 portage_confdir: /root/pentoo/x86/portage
 portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
@@ -27,9 +27,9 @@ portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 #kerncache_path:
 
 livecd/fstype: squashfs
-livecd/fsops: -root-owned -b 1048576
+livecd/fsops: -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-2009.0_alpha1.iso
+livecd/iso: /tmp/pentoo-2009.0_alpha1-r1.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -208,7 +208,7 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: =pentoo-sources-2.6.28
+boot/kernel/pentoo/sources: pentoo-sources
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
@@ -224,7 +224,7 @@ boot/kernel/pentoo/config: /root/pentoo/x86/kernel/config-2.6.28
 # syntax as livecd/gk_mainargs.
 # example:
 # boot/kernel/gentoo/gk_kernargs:
-boot/kernel/pentoo/gk_kernargs: --unionfs
+boot/kernel/pentoo/gk_kernargs: 
 
 # This option sets the USE flags used to build the kernel and also any packages
 # which are defined under this kernel label.  These USE flags are additive from
@@ -248,7 +248,7 @@ boot/kernel/pentoo/use: pcmcia usb madwifi injection wifi
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
 #sys-apps/pcmcia-cs
-=app-admin/genmenu-9999
+#=app-admin/genmenu-9999
 sys-apps/pcmciautils
 #net-wireless/acx
 #net-wireless/at76c503a
@@ -304,7 +304,7 @@ livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-j
 # a package that you wish to keep, but won't need the full functionality.
 # example:
 # livecd/empty: /var/tmp /var/cache /var/db /var/empty /var/lock /var/log /var/run /var/spool /var/state /tmp /usr/portage /usr/share/man /usr/share/info /usr/share/unimaps /usr/include /usr/share/zoneinfo /usr/share/dict /usr/share/doc /usr/share/ss /usr/share/state /usr/share/texinfo /usr/lib/python2.2 /usr/lib/portage /usr/share/gettext /usr/share/i18n /usr/share/rfc /usr/lib/X11/config /usr/lib/X11/etc /usr/lib/X11/doc /usr/src /usr/share/doc /usr/share/man /root/.ccache /etc/cron.daily /etc/cron.hourly /etc/cron.monthly /etc/cron.weekly /etc/logrotate.d /etc/rsync /usr/lib/awk /usr/lib/ccache /usr/lib/gcc-config /usr/lib/nfs /usr/local /usr/diet/include /usr/diet/man /usr/share/consolefonts/partialfonts /usr/share/consoletrans /usr/share/emacs /usr/share/gcc-data /usr/share/genkernel /etc/bootsplash/gentoo /etc/bootsplash/gentoo-highquality /etc/splash/gentoo /etc/splash/emergence /usr/share/gnuconfig /usr/share/lcms /usr/share/locale /etc/skel
-livecd/empty: /var/empty /var/lock /var/log /var/tmp /var/spool /var/state /tmp /usr/portage 
+livecd/empty: /var/empty /var/lock /var/tmp /var/spool /var/state /tmp /usr/portage 
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
