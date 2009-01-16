@@ -14,9 +14,9 @@ sys-fs/captive -gtk
 media-sound/sox -encode -ogg -mad
 net-wireless/ipw2200 radiotap
 dev-lang/perl -minimal
+dev-lang/python sqlite
 net-wireless/prism54 pcmcia
 dev-perl/gtk-perl -gnome
-net-analyzer/metasploit -gtk
 x11-libs/cairo svg
 dev-python/pygtk -opengl
 dev-perl/gtk-perl -opengl
@@ -31,3 +31,5 @@ net-analyzer/autoscan-network samba -gnome snmp nessus
 gnome-menus/gnome-menus -kernel_linux
 net-analyzer/mosref doc sources
 net-analyzer/metasploit gtk httpd sqlite3
+net-analyzer/wireshark gcrypt gnutls kerberos threads
+media-video/vlc qt4 run-as-root
