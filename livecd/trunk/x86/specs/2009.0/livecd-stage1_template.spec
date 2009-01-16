@@ -19,7 +19,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse sse2 ssse3 mpi
 wifi injection
--quicktime -qt -qt3 -qt4 -cups -spell lua
+-quicktime -qt -qt3 -qt3support qt4 -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid wxwindows sqlite
@@ -50,14 +50,18 @@ app-editors/ghex
 app-editors/scite
 #app-text/epdf
 app-text/epdfview
+app-forensics/autopsy
 app-forensics/cmospwd
+app-forensics/galleta
+app-forensics/pasco
+app-forensics/sleuthkit
 app-fuzz/Peach
 app-fuzz/bed
 app-fuzz/bss
 app-fuzz/fuzzer-server
 app-fuzz/fusil
 app-fuzz/http-fuzz
-app-fuzz/protos
+#app-fuzz/protos
 #app-fuzz/scapy
 app-fuzz/smtp-fuzz
 app-fuzz/smudge
@@ -67,8 +71,10 @@ app-fuzz/taof
 app-misc/livecd-tools
 app-mobilephone/obexftp
 app-portage/gentoolkit
+app-portage/layman
 app-text/dos2unix
 dev-db/absinthe
+dev-db/minimysqlator
 dev-db/mssqlscan
 dev-db/oat
 dev-db/sqid
@@ -87,7 +93,7 @@ dev-python/pygtk
 =dev-python/lxml-1.3.6
 dev-util/dialog
 dev-util/subversion
-dev-util/insight
+#dev-util/insight
 gnome-base/gnome-menus
 media-gfx/scrot
 media-sound/audacious
@@ -145,7 +151,7 @@ net-analyzer/p0f
 net-analyzer/packit
 net-analyzer/paketto
 net-analyzer/rain
-net-analyzer/sara
+#net-analyzer/sara
 net-analyzer/scanssh
 net-analyzer/siphon
 net-analyzer/sipvicious
@@ -162,6 +168,7 @@ net-analyzer/traceroute
 net-analyzer/upnpscan
 net-analyzer/voiphopper
 net-analyzer/w3af
+net-analyzer/webshag
 net-analyzer/wfuzz
 net-analyzer/wireshark
 net-analyzer/xprobe
@@ -170,10 +177,10 @@ net-dialup/linux-atm
 net-dialup/lrzsz
 net-dialup/minicom
 net-dns/bind-tools
-net-dns/c-ares
+#net-dns/c-ares
 #net-firewall/fwbuilder
 net-fs/nfs-utils
-net-fs/samba
+net-fs/mount-cifs
 net-ftp/ftp
 net-ftp/netkit-ftpd
 net-ftp/oftpd
@@ -182,7 +189,6 @@ net-im/pidgin
 #net-im/ekiga
 net-irc/irssi
 net-irc/xchat
-net-mail/mailbase
 net-misc/bridge-utils
 net-misc/curl
 net-misc/dhcp
@@ -211,7 +217,6 @@ net-misc/socat
 net-misc/stunnel
 net-misc/telnet-bsd
 net-misc/tightvnc
-net-misc/tor
 net-misc/voipong
 net-misc/wget
 net-misc/whois
@@ -219,7 +224,7 @@ net-p2p/bittorrent
 net-proxy/3proxy
 net-proxy/httpush
 net-proxy/paros
-net-proxy/privoxy
+net-proxy/privoxy-tor
 net-proxy/tsocks
 net-proxy/webscarab
 net-wireless/afrag
@@ -243,7 +248,7 @@ net-wireless/wpa_supplicant
 net-www/netscape-flash
 sys-apps/baselayout
 sys-apps/eject
-sys-apps/hwdata-redhat
+#sys-apps/hwdata-redhat
 sys-apps/hwsetup
 sys-apps/iproute2
 sys-apps/less
@@ -273,6 +278,7 @@ x11-base/xorg-x11
 x11-libs/ecore
 x11-libs/esmart
 x11-libs/evas
+x11-libs/gksu
 x11-libs/gtk+
 x11-plugins/firecat
 #x11-plugins/e_modules
