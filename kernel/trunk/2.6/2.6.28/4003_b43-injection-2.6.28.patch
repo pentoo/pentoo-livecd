@@ -1,0 +1,43 @@
+diff -Naur linux-2.6.28-pentoo-r1-orig/drivers/net/wireless/b43/xmit.c linux-2.6.28-pentoo-r1-improved/drivers/net/wireless/b43/xmit.c
+--- linux-2.6.28-pentoo-r1-orig/drivers/net/wireless/b43/xmit.c	2009-01-18 17:49:00.000000000 -0500
++++ linux-2.6.28-pentoo-r1-improved/drivers/net/wireless/b43/xmit.c	2009-01-18 17:52:52.000000000 -0500
+@@ -315,10 +315,16 @@
+ 	}
+ 
+ 	/* MAC control */
+-	if (!(info->flags & IEEE80211_TX_CTL_NO_ACK))
++	/* dev->wl->if_type returns IEEE80211_IF_TYPE_INVALID instead of
++	 * IEEE80211_IF_TYPE_MNTR for monitor interfaces, as monitor mode
++	 * is not considered "operating" by mac80211.
++	 */
++	if (dev->wl->if_type != 5 && dev->wl->if_type != 0 &&
++	      !(info->flags & IEEE80211_TX_CTL_NO_ACK))
+ 		mac_ctl |= B43_TXH_MAC_ACK;
+ 	/* use hardware sequence counter as the non-TID counter */
+-	if (info->flags & IEEE80211_TX_CTL_ASSIGN_SEQ)
++	if (dev->wl->if_type != 5 && dev->wl->if_type != 0 &&
++            info->flags & IEEE80211_TX_CTL_ASSIGN_SEQ)
+ 		mac_ctl |= B43_TXH_MAC_HWSEQ;
+ 	if (info->flags & IEEE80211_TX_CTL_FIRST_FRAGMENT)
+ 		mac_ctl |= B43_TXH_MAC_STMSDU;
+diff -Naur linux-2.6.28-pentoo-r1-orig/drivers/net/wireless/b43legacy/xmit.c linux-2.6.28-pentoo-r1-improved/drivers/net/wireless/b43legacy/xmit.c
+--- linux-2.6.28-pentoo-r1-orig/drivers/net/wireless/b43legacy/xmit.c	2009-01-18 17:49:00.000000000 -0500
++++ linux-2.6.28-pentoo-r1-improved/drivers/net/wireless/b43legacy/xmit.c	2009-01-18 17:52:52.000000000 -0500
+@@ -291,9 +291,15 @@
+ 	}
+ 
+ 	/* MAC control */
+-	if (!(info->flags & IEEE80211_TX_CTL_NO_ACK))
++	/* dev->wl->if_type returns IEEE80211_IF_TYPE_INVALID instead of
++	 * IEEE80211_IF_TYPE_MNTR for monitor interfaces, as monitor mode
++	 * is not considered "operating" by mac80211.
++	 */
++	if (dev->wl->if_type != 5 && dev->wl->if_type != 0 &&
++	      !(info->flags & IEEE80211_TX_CTL_NO_ACK))
+ 		mac_ctl |= B43legacy_TX4_MAC_ACK;
+-	if (info->flags & IEEE80211_TX_CTL_ASSIGN_SEQ)
++	if (dev->wl->if_type != 5 && dev->wl->if_type != 0 &&
++	    info->flags & IEEE80211_TX_CTL_ASSIGN_SEQ)
+ 		mac_ctl |= B43legacy_TX4_MAC_HWSEQ;
+ 	if (info->flags & IEEE80211_TX_CTL_FIRST_FRAGMENT)
+ 		mac_ctl |= B43legacy_TX4_MAC_STMSDU;

@@ -1,0 +1,26 @@
+diff -Naur linux-2.6.28-pentoo-r1-orig/net/mac80211/tx.c linux-2.6.28-pentoo-r1-improved/net/mac80211/tx.c
+--- linux-2.6.28-pentoo-r1-orig/net/mac80211/tx.c	2009-01-18 17:48:59.000000000 -0500
++++ linux-2.6.28-pentoo-r1-improved/net/mac80211/tx.c	2009-01-18 18:02:10.000000000 -0500
+@@ -590,11 +590,19 @@
+ 
+ 	/*
+ 	 * Packet injection may want to control the sequence
+-	 * number, if we have no matching interface then we
+-	 * neither assign one ourselves nor ask the driver to.
++	 * number, so if an injected packet is found, skip
++	 * renumbering it. Also make the packet NO_ACK to avoid
++	 * excessive retries (ACKing and retrying should be
++	 * handled by the injecting application).
++	 * FIXME This may break hostapd and some other injectors.
++	 * This should be done using a radiotap flag.
+ 	 */
+-	if (unlikely(!info->control.vif))
++	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED) &&
++	   !(tx->sdata->u.mntr_flags & MONITOR_FLAG_COOK_FRAMES)) {
++		if (!ieee80211_has_morefrags(hdr->frame_control))
++			info->flags |= IEEE80211_TX_CTL_NO_ACK;
+ 		return TX_CONTINUE;
++	}
+ 
+ 	if (unlikely(ieee80211_is_ctl(hdr->frame_control)))
+ 		return TX_CONTINUE;
