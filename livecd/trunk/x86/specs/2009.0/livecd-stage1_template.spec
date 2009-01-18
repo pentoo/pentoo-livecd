@@ -7,6 +7,9 @@ snapshot: 2009.0
 source_subpath: default/stage3-i686-2009.0
 portage_confdir: /root/pentoo/x86/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
+cflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
+cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
+
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -19,7 +22,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse sse2 ssse3 mpi
 wifi injection
--quicktime -qt -qt3 -qt3support qt4 -cups -spell lua -ipv6
+-quicktime -qt -qt3 qt3support qt4 -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid wxwindows sqlite
@@ -280,7 +283,7 @@ x11-libs/esmart
 x11-libs/evas
 x11-libs/gksu
 x11-libs/gtk+
-x11-plugins/firecat
+#x11-plugins/firecat
 #x11-plugins/e_modules
 x11-plugins/e_modules-bling
 x11-plugins/e_modules-calendar
