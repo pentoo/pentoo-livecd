@@ -34,6 +34,7 @@ net-wireless/ipw3945 ~x86
 net-wireless/ipw3945-ucode ~x86
 net-wireless/ipw3945d ~x86
 net-wireless/irda-utils ~x86
+net-wireless/iw
 net-wireless/iwl3945-ucode ~x86
 net-wireless/iwl4965-ucode ~x86
 net-wireless/iwl5000-ucode ~x86
