@@ -1,5 +1,5 @@
 x11-drivers/xf86-video-ati ~x86
-x11-drivers/xf86-video-intel ~x86
+=x11-drivers/xf86-video-intel-2.4* ~x86
 x11-drivers/xf86-video-nv ~x86
 x11-drivers/xf86-video-radeonhd ~x86
-x11-libs/libdrm ~x86
+#x11-libs/libdrm ~x86
