@@ -36,6 +36,7 @@ sys-devel/crossdev ~x86
 sys-fs/ntfs3g ~x86
 sys-fs/ntfsprogs ~x86
 sys-fs/squashfs-tools ~x86
-=sys-kernel/linux-headers-2.6.28 ~x86
+#=sys-kernel/linux-headers-2.6.28 ~x86
 x11-plugins/firecat ~x86
 sys-apps/pcmciautils ~x86
+=sys-apps/hal-0.5.11-r4 
