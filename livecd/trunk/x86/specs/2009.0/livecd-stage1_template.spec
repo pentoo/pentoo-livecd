@@ -230,7 +230,7 @@ net-proxy/paros
 net-proxy/privoxy-tor
 net-proxy/tsocks
 net-proxy/webscarab
-net-wireless/afrag
+#net-wireless/afrag
 net-wireless/aircrack-ng
 net-wireless/airsnort
 net-wireless/airtraf
@@ -239,7 +239,7 @@ net-wireless/bluez-utils
 net-wireless/btscanner
 net-wireless/kismet
 net-wireless/mdk
-net-wireless/ska
+#net-wireless/ska
 #net-wireless/waveselect
 net-wireless/wepattack
 net-wireless/wepdecrypt
