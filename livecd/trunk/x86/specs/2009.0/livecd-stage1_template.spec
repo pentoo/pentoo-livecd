@@ -248,6 +248,7 @@ net-wireless/wifiscanner
 net-wireless/wifitap
 net-wireless/wireless-tools
 net-wireless/wpa_supplicant
+net-wireless/hostapd
 net-www/netscape-flash
 sys-apps/baselayout
 sys-apps/eject
