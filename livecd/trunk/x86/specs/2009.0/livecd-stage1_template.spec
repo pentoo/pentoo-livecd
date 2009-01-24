@@ -234,6 +234,7 @@ net-proxy/webscarab
 net-wireless/aircrack-ng
 net-wireless/airsnort
 net-wireless/airtraf
+net-wireless/athload
 net-wireless/bluez-libs
 net-wireless/bluez-utils
 net-wireless/btscanner
