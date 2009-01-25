@@ -258,7 +258,7 @@ net-wireless/bcm43xx-fwcutter
 #net-wireless/ieee80211
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-net-wireless/ipw3945-ucode
+#net-wireless/ipw3945-ucode
 net-wireless/iwl3945-ucode
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode

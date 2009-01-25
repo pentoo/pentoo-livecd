@@ -241,6 +241,7 @@ net-wireless/athload
 net-wireless/bluez-libs
 net-wireless/bluez-utils
 net-wireless/btscanner
+net-wireless/crda
 net-wireless/kismet
 net-wireless/mdk
 #net-wireless/ska
