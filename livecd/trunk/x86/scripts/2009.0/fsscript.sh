@@ -54,7 +54,7 @@ ntop --set-admin-password=pentoo
 emerge --metadata
 
 # compile mingw32
-crossdev i686-mingw32
+crossdev --portage -bk i686-mingw32
 
 # Adds sploit collection
 cd /opt/
