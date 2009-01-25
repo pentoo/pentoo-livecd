@@ -50,6 +50,9 @@ chown tor:tor /var/log/tor
 chmod 777 -R /var/lib/ntop
 ntop --set-admin-password=pentoo
 
+# Setup ath5k as the default
+/usr/sbin/athload
+
 # Build the metadata cache
 emerge --metadata
 
