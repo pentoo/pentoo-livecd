@@ -91,8 +91,11 @@ dev-java/jad-bin
 dev-libs/libxslt
 dev-libs/openobex
 dev-libs/libxml2
+dev-python/gnuplot-py
 dev-python/pysqlite
 dev-python/pygtk
+dev-python/pyx
+dev-python/psyco
 =dev-python/lxml-1.3.6
 dev-util/dialog
 dev-util/subversion
