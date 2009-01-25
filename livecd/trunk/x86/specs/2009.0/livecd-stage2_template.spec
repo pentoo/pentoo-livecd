@@ -231,7 +231,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: pcmcia usb madwifi injection wifi
+boot/kernel/pentoo/use: pcmcia usb qt4 qt3support madwifi injection wifi
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -255,7 +255,6 @@ sys-apps/pcmciautils
 net-wireless/atmel-firmware
 net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
-#net-wireless/ieee80211
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
 #net-wireless/ipw3945-ucode
@@ -263,8 +262,7 @@ net-wireless/iwl3945-ucode
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 #net-wireless/iwlwifi
-#net-wireless/linux-wlan-ng
-#net-wireless/madwifi-ng
+net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
 #net-wireless/rfswitch
 net-wireless/wpa_supplicant
