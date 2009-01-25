@@ -30,15 +30,12 @@ net-wireless/hostapd ~x86
 net-wireless/ieee80211 ~x86
 net-wireless/ipw2100-firmware ~x86
 net-wireless/ipw2200-firmware ~x86
-net-wireless/ipw3945 ~x86
-net-wireless/ipw3945-ucode ~x86
 net-wireless/ipw3945d ~x86
 net-wireless/irda-utils ~x86
 net-wireless/iw
 net-wireless/iwl3945-ucode ~x86
 net-wireless/iwl4965-ucode ~x86
 net-wireless/iwl5000-ucode ~x86
-net-wireless/iwlwifi ~x86
 net-wireless/kdebluetooth ~x86
 net-wireless/kismet ~x86
 net-wireless/kwlaninfo ~x86
