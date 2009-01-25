@@ -21,7 +21,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse sse2 ssse3 mpi
-wifi injection
+wifi injection lzma speed gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -239,6 +239,7 @@ net-wireless/athload
 net-wireless/bluez-libs
 net-wireless/bluez-utils
 net-wireless/btscanner
+net-wireless/cowpatty
 net-wireless/crda
 net-wireless/kismet
 net-wireless/mdk
@@ -262,6 +263,7 @@ sys-apps/less
 sys-apps/pciutils
 sys-apps/portage
 sys-apps/slocate
+sys-apps/v86d
 sys-block/disktype
 sys-block/gparted
 sys-boot/grub
@@ -301,6 +303,7 @@ x11-plugins/e_modules-weather
 x11-plugins/e_modules-wlan
 x11-plugins/itask-ng
 x11-plugins/winlist_ng
+x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
 x11-libs/e_dbus
 x11-wm/enlightenment
