@@ -53,6 +53,9 @@ ntop --set-admin-password=pentoo
 # Setup ath5k as the default
 /usr/sbin/athload
 
+# Sets FF as default browser
+echo 'export BROWSER="firefox"' >> /etc/env.d/99local
+
 # Build the metadata cache
 emerge --metadata
 
