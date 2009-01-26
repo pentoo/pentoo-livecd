@@ -56,6 +56,11 @@ ntop --set-admin-password=pentoo
 # Sets FF as default browser
 echo 'export BROWSER="firefox"' >> /etc/env.d/99local
 
+# Sets e17 key bindings
+enlightenment_remote -binding-key-add ANY t ALT 0 exec urxvt
+enlightenment_remote -binding-key-add ANY j ALT 0 exec urxvt
+enlightenment_remote -binding-key-add ANY l ALT 0 exec "enlightenment_remote -lock-desktop"
+
 # Build the metadata cache
 emerge --metadata
 
