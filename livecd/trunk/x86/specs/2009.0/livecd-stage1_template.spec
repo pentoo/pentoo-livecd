@@ -45,7 +45,7 @@ app-arch/gzip
 app-crypt/chntpw
 app-crypt/johntheripper
 app-crypt/md5bf
-app-crypt/plaintoo
+#app-crypt/plaintoo
 app-crypt/SIPcrack
 app-editors/hexedit
 app-editors/nano
@@ -84,6 +84,7 @@ dev-db/sqid
 dev-db/sqlat
 dev-db/sqlbf
 #dev-db/sqlinject
+dev-db/sqlibf
 dev-db/sqlix
 dev-db/sqlmap
 dev-db/sqlninja
@@ -229,6 +230,7 @@ net-proxy/3proxy
 net-proxy/httpush
 net-proxy/paros
 net-proxy/privoxy-tor
+net-proxy/proxystrike
 net-proxy/tsocks
 net-proxy/webscarab
 #net-wireless/afrag
@@ -291,7 +293,7 @@ x11-libs/esmart
 x11-libs/evas
 x11-libs/gksu
 x11-libs/gtk+
-#x11-plugins/firecat
+x11-plugins/firecat
 #x11-plugins/e_modules
 x11-plugins/e_modules-bling
 x11-plugins/e_modules-calendar
