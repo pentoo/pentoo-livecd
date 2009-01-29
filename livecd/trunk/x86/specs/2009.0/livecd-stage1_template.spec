@@ -284,8 +284,6 @@ www-client/mozilla-firefox-bin
 mail-client/mozilla-thunderbird-bin
 x11-base/xorg-server
 x11-base/xorg-x11
-x11-drivers/xf86-input-vmmouse
-x11-drivers/xf86-video-vmware
 x11-libs/ecore
 x11-libs/esmart
 x11-libs/evas
