@@ -1,0 +1,25 @@
+--- etc/init.d/halt.sh.orig	2008-12-28 23:10:15.000000000 +0100
++++ etc/init.d/halt.sh	2009-01-24 03:03:35.000000000 +0100
+@@ -169,6 +169,22 @@
+ 	return ${retval}
+ }
+ 
++# Should cleanly umount files on the changesdev
++umount_aufs () {
++	local x=
++	aufs_modules=`find /.unions/memory/modules/* -maxdepth 0 -type d`
++	for x in ${aufs_modules}; do
++		mount -o remount,del:${x} /
++		umount ${x}
++	done
++	sync
++	mount -o remount,noxino,rw /
++	mount -o remount,mod:/.unions/memory/aufs_changes/default/=ro /
++	sync
++}
++
++umount_aufs
++
+ # Since we use `mount` in mount_readonly(), but we parse /proc/mounts, we 
+ # have to make sure our /etc/mtab and /proc/mounts agree
+ cp /proc/mounts /etc/mtab &>/dev/null

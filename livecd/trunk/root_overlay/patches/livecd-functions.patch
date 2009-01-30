@@ -1,0 +1,17 @@
+--- sbin/livecd-functions.sh.orig	2009-01-30 01:31:37.000000000 +0100
++++ sbin/livecd-functions.sh	2008-03-24 16:58:53.000000000 +0100
+@@ -507,12 +507,12 @@
+ 		case "${x}" in
+ 			cdroot)
+ 				CDBOOT="yes"
+-				RC_NO_UMOUNTS="^(/|/dev|/dev/pts|/lib/rcscripts/init.d|/proc|/proc/.*|/sys|/mnt/livecd|/newroot)$"
++				RC_NO_UMOUNTS="^(/|/dev|/dev/pts|/lib/rcscripts/init.d|/proc|/proc/.*|/sys|/mnt/livecd|/newroot/.*|/.unions/.*)$"
+ 				export CDBOOT RC_NO_UMOUNTS
+ 			;;
+ 			cdroot\=*)
+ 				CDBOOT="yes"
+-				RC_NO_UMOUNTS="^(/|/dev|/dev/pts|/lib/rcscripts/init.d|/proc|/proc/.*|/sys|/mnt/livecd|/newroot)$"
++				RC_NO_UMOUNTS="^(/|/dev|/dev/pts|/lib/rcscripts/init.d|/proc|/proc/.*|/sys|/mnt/livecd|/newroot/.*|/.unions/.*)$"
+ 				export CDBOOT RC_NO_UMOUNTS
+ 			;;
+ 			console\=*)

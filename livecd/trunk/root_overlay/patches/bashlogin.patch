@@ -1,0 +1,15 @@
+--- bin/bashlogin.orig	2009-01-29 22:53:29.000000000 +0100
++++ bin/bashlogin	2007-12-11 18:51:04.000000000 +0100
+@@ -1,6 +1,8 @@
+ #!/bin/bash
++#
++# This is only installed by baselayout when USE=livecd to enable
++# serial consoles for some architectures
++#
++
++exec /bin/login root
+ 
+-cat /etc/motd 2>/dev/null
+-cd /root
+-[[ -e .bash_profile ]] && source .bash_profile
+-exec -l /bin/bash -i

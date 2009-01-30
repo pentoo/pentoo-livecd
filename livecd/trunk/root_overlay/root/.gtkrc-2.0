@@ -1,0 +1,15 @@
+# -- THEME AUTO-WRITTEN DO NOT EDIT
+include "/usr/share/themes/Raleigh/gtk-2.0/gtkrc"
+
+style "user-font" {
+	font_name = "Sans 9"
+}
+
+widget_class "*" style "user-font"
+
+gtk-font-name="Sans 9"
+
+include "/root/.gtkrc.mine"
+
+# -- THEME AUTO-WRITTEN DO NOT EDIT
+
