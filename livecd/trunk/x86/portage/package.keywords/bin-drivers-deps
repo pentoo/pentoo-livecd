@@ -9,6 +9,7 @@ x11-drivers/xf86-input-evdev
 x11-drivers/xf86-input-keyboard
 x11-drivers/xf86-input-mouse
 x11-drivers/xf86-input-synaptics
+x11-drivers/xf86-input-virtualbox
 x11-drivers/xf86-input-vmmouse
 x11-drivers/xf86-video-apm
 x11-drivers/xf86-video-ark
@@ -34,6 +35,7 @@ x11-drivers/xf86-video-sis
 x11-drivers/xf86-video-tdfx
 x11-drivers/xf86-video-trident
 x11-drivers/xf86-video-vesa
+x11-drivers/xf86-video-virtualbox
 x11-drivers/xf86-video-vmware
 x11-drivers/xf86-video-voodoo
 x11-libs/libX11
