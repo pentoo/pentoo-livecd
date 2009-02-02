@@ -33,3 +33,4 @@ net-analyzer/mosref doc sources
 net-analyzer/metasploit gtk httpd sqlite3
 net-analyzer/wireshark gcrypt gnutls kerberos threads
 media-video/vlc qt4 run-as-root
+app-crypt/pyrit cuda padlock stream
