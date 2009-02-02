@@ -1,271 +1,271 @@
-net-analyzer/FlowScan ~x86
-net-analyzer/aimsniff ~x86
-net-analyzer/amap ~x86
-net-analyzer/angst ~x86
-net-analyzer/argus ~x86
-net-analyzer/argus-clients ~x86
-net-analyzer/arp-sk ~x86
-net-analyzer/arping ~x86
-net-analyzer/arpoison ~x86
-net-analyzer/arptools ~x86
-net-analyzer/arpwatch ~x86
-net-analyzer/authforce ~x86
-net-analyzer/barnyard ~x86
-net-analyzer/base ~x86
-net-analyzer/bigeye ~x86
-net-analyzer/bing ~x86
-net-analyzer/bmon ~x86
-net-analyzer/braa ~x86
-net-analyzer/bsnmp ~x86
-net-analyzer/bwbar ~x86
-net-analyzer/bwm-ng ~x86
-net-analyzer/bwmon ~x86
-net-analyzer/cacti ~x86
-net-analyzer/cacti-cactid ~x86
-net-analyzer/cacti-spine ~x86
-net-analyzer/calamaris ~x86
-net-analyzer/carl ~x86
-net-analyzer/centreon ~x86
-net-analyzer/chaosreader ~x86
-net-analyzer/cnet ~x86
-net-analyzer/cryptcat ~x86
-net-analyzer/cutter ~x86
-net-analyzer/darkstat ~x86
-net-analyzer/dhcpdump ~x86
-net-analyzer/dnstracer ~x86
-net-analyzer/dosdetector ~x86
-net-analyzer/driftnet ~x86
-net-analyzer/dsniff ~x86
-net-analyzer/echoping ~x86
-net-analyzer/egressor ~x86
-net-analyzer/etherape ~x86
-net-analyzer/ethloop ~x86
-net-analyzer/ethstatus ~x86
-net-analyzer/ettercap ~x86
-net-analyzer/fail2ban ~x86
-net-analyzer/fe3d ~x86
-net-analyzer/ffp ~x86
-net-analyzer/firewalk ~x86
-net-analyzer/flow-tools ~x86
-net-analyzer/fping ~x86
-net-analyzer/fprobe ~x86
-net-analyzer/fragroute ~x86
-net-analyzer/ftester ~x86
-net-analyzer/fwlogwatch ~x86
-net-analyzer/gensink ~x86
-net-analyzer/gnome-netstatus ~x86
-net-analyzer/gnome-nettool ~x86
-net-analyzer/gnu-netcat ~x86
-net-analyzer/gspoof ~x86
-net-analyzer/honeyd ~x86
-net-analyzer/hping ~x86
-net-analyzer/httping ~x86
-net-analyzer/hunt ~x86
-net-analyzer/hydra ~x86
-net-analyzer/hyperic-hq-agent ~x86
-net-analyzer/ibmonitor ~x86
-net-analyzer/ifmetric ~x86
-net-analyzer/ifstat ~x86
-net-analyzer/ifstatus ~x86
-net-analyzer/iftop ~x86
-net-analyzer/ike-scan ~x86
-net-analyzer/ipac-ng ~x86
-net-analyzer/ipaudit ~x86
-net-analyzer/ipband ~x86
-net-analyzer/ipcad ~x86
-net-analyzer/iplog ~x86
-net-analyzer/ippl ~x86
-net-analyzer/iptraf ~x86
-net-analyzer/iptstate ~x86
-net-analyzer/isic ~x86
-net-analyzer/jffnms ~x86
-net-analyzer/jnettop ~x86
-net-analyzer/knetscan ~x86
-net-analyzer/knocker ~x86
-net-analyzer/ksniffer ~x86
-net-analyzer/labrea ~x86
-net-analyzer/lft ~x86
-net-analyzer/libnasl ~x86
-net-analyzer/linkchecker ~x86
-net-analyzer/macchanger ~x86
-net-analyzer/mbrowse ~x86
-net-analyzer/metasploit ~x86
-net-analyzer/midas-nms ~x86
-net-analyzer/mirmon ~x86
-net-analyzer/mping ~x86
-net-analyzer/mrtg ~x86
-net-analyzer/mrtg-ping-probe ~x86
-net-analyzer/mtr ~x86
-net-analyzer/munin ~x86
-net-analyzer/mwcollect ~x86
-net-analyzer/nagios ~x86
-net-analyzer/nagios-check_logfiles ~x86
-net-analyzer/nagios-core ~x86
-net-analyzer/nagios-imagepack ~x86
-net-analyzer/nagios-nrpe ~x86
-net-analyzer/nagios-nsca ~x86
-net-analyzer/nagios-plugins ~x86
-net-analyzer/nagios-plugins-snmp ~x86
-net-analyzer/nagios-sap-ccms-plugin ~x86
-net-analyzer/nagircbot ~x86
-net-analyzer/nagstamon ~x86
-net-analyzer/nagvis ~x86
-net-analyzer/nam ~x86
-net-analyzer/nast ~x86
-net-analyzer/nb ~x86
-net-analyzer/nbaudit ~x86
-net-analyzer/nbtscan ~x86
-net-analyzer/ndoutils ~x86
-net-analyzer/ndsad ~x86
-net-analyzer/nepenthes ~x86
-net-analyzer/nessus ~x86
-net-analyzer/nessus-bin ~x86
-net-analyzer/nessus-client ~x86
-net-analyzer/nessus-core ~x86
-net-analyzer/nessus-libraries ~x86
-net-analyzer/nessus-plugins ~x86
-net-analyzer/net-snmp ~x86
-net-analyzer/netcat ~x86
-net-analyzer/netcat6 ~x86
-net-analyzer/netdiscover ~x86
-net-analyzer/netdude ~x86
-net-analyzer/nethogs ~x86
-net-analyzer/neti ~x86
-net-analyzer/netio ~x86
-net-analyzer/netperf ~x86
-net-analyzer/netselect ~x86
-net-analyzer/netspeed_applet ~x86
-net-analyzer/nettop ~x86
-net-analyzer/netwag ~x86
-net-analyzer/netwox ~x86
-net-analyzer/nfdump ~x86
-net-analyzer/ngrep ~x86
-net-analyzer/nikto ~x86
-net-analyzer/nipper ~x86
-net-analyzer/nload ~x86
-net-analyzer/nmap ~x86
-net-analyzer/nmbscan ~x86
-net-analyzer/ns ~x86
-net-analyzer/nsat ~x86
-net-analyzer/nstats ~x86
-net-analyzer/ntop ~x86
-net-analyzer/nttcp ~x86
-net-analyzer/oinkmaster ~x86
-net-analyzer/openvas ~x86
-net-analyzer/openvas-client ~x86
-net-analyzer/openvas-libnasl ~x86
-net-analyzer/openvas-libraries ~x86
-net-analyzer/openvas-plugins ~x86
-net-analyzer/openvas-server ~x86
-net-analyzer/p0f ~x86
-net-analyzer/packit ~x86
-net-analyzer/paketto ~x86
-net-analyzer/pathload ~x86
-net-analyzer/pathrate ~x86
-net-analyzer/pbnj ~x86
-net-analyzer/pchar ~x86
-net-analyzer/pinger ~x86
-net-analyzer/pktstat ~x86
-net-analyzer/pmacct ~x86
-net-analyzer/pnp4nagios ~x86
-net-analyzer/poink ~x86
-net-analyzer/portbunny ~x86
-net-analyzer/portmon ~x86
-net-analyzer/portsentry ~x86
-net-analyzer/postal ~x86
-net-analyzer/prelude-nessus ~x86
-net-analyzer/prewikka ~x86
-net-analyzer/quidscor ~x86
-net-analyzer/raddump ~x86
-net-analyzer/rain ~x86
-net-analyzer/rrdcollect ~x86
-net-analyzer/rrdtool ~x86
-net-analyzer/rtg ~x86
-net-analyzer/rtpbreak ~x86
-net-analyzer/sancp ~x86
-net-analyzer/sara ~x86
-net-analyzer/sarg ~x86
-net-analyzer/sbd ~x86
-net-analyzer/scanlogd ~x86
-net-analyzer/scanssh ~x86
-net-analyzer/scapy ~x86
-net-analyzer/scli ~x86
-net-analyzer/sec ~x86
-net-analyzer/sflowtool ~x86
-net-analyzer/sguil-client ~x86
-net-analyzer/sguil-sensor ~x86
-net-analyzer/sguil-server ~x86
-net-analyzer/siphon ~x86
-net-analyzer/slurm ~x86
-net-analyzer/smokeping ~x86
-net-analyzer/sniffit ~x86
-net-analyzer/snips ~x86
-net-analyzer/snmptt ~x86
-net-analyzer/snort ~x86
-net-analyzer/snortalog ~x86
-net-analyzer/snortsam ~x86
-net-analyzer/squid-graph ~x86
-net-analyzer/squidsites ~x86
-net-analyzer/ssldump ~x86
-net-analyzer/ssmping ~x86
-net-analyzer/sussen ~x86
-net-analyzer/symon ~x86
-net-analyzer/sysmon ~x86
-net-analyzer/syweb ~x86
-net-analyzer/tcpdump ~x86
-net-analyzer/tcpflow ~x86
-net-analyzer/tcpreen ~x86
-net-analyzer/tcpreplay ~x86
-net-analyzer/tcpslice ~x86
-net-analyzer/tcpstat ~x86
-net-analyzer/tcptrace ~x86
-net-analyzer/tcptraceroute ~x86
-net-analyzer/tcptrack ~x86
-net-analyzer/thcrut ~x86
-net-analyzer/thrulay ~x86
-net-analyzer/tleds ~x86
-net-analyzer/tptest ~x86
-net-analyzer/traceproto ~x86
-net-analyzer/traceroute ~x86
-net-analyzer/traceroute-nanog ~x86
-net-analyzer/trafd ~x86
-net-analyzer/traffic-vis ~x86
-net-analyzer/trafshow ~x86
-net-analyzer/ttcp ~x86
-net-analyzer/ttt ~x86
-net-analyzer/upnpscan ~x86
-net-analyzer/vnstat ~x86
-net-analyzer/webfuzzer ~x86
-net-analyzer/wireshark ~x86
-net-analyzer/xnetload ~x86
-net-analyzer/xprobe ~x86
-net-analyzer/yersinia ~x86
-net-analyzer/zabbix ~x86
-net-analyzer/zabbix-agent ~x86
-net-analyzer/zabbix-frontend ~x86
-net-analyzer/zabbix-server ~x86
-net-analyzer/zniper ~x86
-net-analyzer/autoscan-network ~x86
-net-analyzer/dnsa ~x86
-net-analyzer/dnsenum ~x86
-net-analyzer/fierce ~x86
-net-analyzer/geoedge ~x86
-net-analyzer/httprint ~x86
-net-analyzer/inguma ~x86
-net-analyzer/medusa ~x86
+net-analyzer/FlowScan
+net-analyzer/aimsniff
+net-analyzer/amap
+net-analyzer/angst
+net-analyzer/argus
+net-analyzer/argus-clients
+net-analyzer/arp-sk
+net-analyzer/arping
+net-analyzer/arpoison
+net-analyzer/arptools
+net-analyzer/arpwatch
+net-analyzer/authforce
+net-analyzer/barnyard
+net-analyzer/base
+net-analyzer/bigeye
+net-analyzer/bing
+net-analyzer/bmon
+net-analyzer/braa
+net-analyzer/bsnmp
+net-analyzer/bwbar
+net-analyzer/bwm-ng
+net-analyzer/bwmon
+net-analyzer/cacti
+net-analyzer/cacti-cactid
+net-analyzer/cacti-spine
+net-analyzer/calamaris
+net-analyzer/carl
+net-analyzer/centreon
+net-analyzer/chaosreader
+net-analyzer/cnet
+net-analyzer/cryptcat
+net-analyzer/cutter
+net-analyzer/darkstat
+net-analyzer/dhcpdump
+net-analyzer/dnstracer
+net-analyzer/dosdetector
+net-analyzer/driftnet
+net-analyzer/dsniff
+net-analyzer/echoping
+net-analyzer/egressor
+net-analyzer/etherape
+net-analyzer/ethloop
+net-analyzer/ethstatus
+net-analyzer/ettercap
+net-analyzer/fail2ban
+net-analyzer/fe3d
+net-analyzer/ffp
+net-analyzer/firewalk
+net-analyzer/flow-tools
+net-analyzer/fping
+net-analyzer/fprobe
+net-analyzer/fragroute
+net-analyzer/ftester
+net-analyzer/fwlogwatch
+net-analyzer/gensink
+net-analyzer/gnome-netstatus
+net-analyzer/gnome-nettool
+net-analyzer/gnu-netcat
+net-analyzer/gspoof
+net-analyzer/honeyd
+net-analyzer/hping
+net-analyzer/httping
+net-analyzer/hunt
+net-analyzer/hydra
+net-analyzer/hyperic-hq-agent
+net-analyzer/ibmonitor
+net-analyzer/ifmetric
+net-analyzer/ifstat
+net-analyzer/ifstatus
+net-analyzer/iftop
+net-analyzer/ike-scan
+net-analyzer/ipac-ng
+net-analyzer/ipaudit
+net-analyzer/ipband
+net-analyzer/ipcad
+net-analyzer/iplog
+net-analyzer/ippl
+net-analyzer/iptraf
+net-analyzer/iptstate
+net-analyzer/isic
+net-analyzer/jffnms
+net-analyzer/jnettop
+net-analyzer/knetscan
+net-analyzer/knocker
+net-analyzer/ksniffer
+net-analyzer/labrea
+net-analyzer/lft
+net-analyzer/libnasl
+net-analyzer/linkchecker
+net-analyzer/macchanger
+net-analyzer/mbrowse
+net-analyzer/metasploit
+net-analyzer/midas-nms
+net-analyzer/mirmon
+net-analyzer/mping
+net-analyzer/mrtg
+net-analyzer/mrtg-ping-probe
+net-analyzer/mtr
+net-analyzer/munin
+net-analyzer/mwcollect
+net-analyzer/nagios
+net-analyzer/nagios-check_logfiles
+net-analyzer/nagios-core
+net-analyzer/nagios-imagepack
+net-analyzer/nagios-nrpe
+net-analyzer/nagios-nsca
+net-analyzer/nagios-plugins
+net-analyzer/nagios-plugins-snmp
+net-analyzer/nagios-sap-ccms-plugin
+net-analyzer/nagircbot
+net-analyzer/nagstamon
+net-analyzer/nagvis
+net-analyzer/nam
+net-analyzer/nast
+net-analyzer/nb
+net-analyzer/nbaudit
+net-analyzer/nbtscan
+net-analyzer/ndoutils
+net-analyzer/ndsad
+net-analyzer/nepenthes
+net-analyzer/nessus
+net-analyzer/nessus-bin
+net-analyzer/nessus-client
+net-analyzer/nessus-core
+net-analyzer/nessus-libraries
+net-analyzer/nessus-plugins
+net-analyzer/net-snmp
+net-analyzer/netcat
+net-analyzer/netcat6
+net-analyzer/netdiscover
+net-analyzer/netdude
+net-analyzer/nethogs
+net-analyzer/neti
+net-analyzer/netio
+net-analyzer/netperf
+net-analyzer/netselect
+net-analyzer/netspeed_applet
+net-analyzer/nettop
+net-analyzer/netwag
+net-analyzer/netwox
+net-analyzer/nfdump
+net-analyzer/ngrep
+net-analyzer/nikto
+net-analyzer/nipper
+net-analyzer/nload
+net-analyzer/nmap
+net-analyzer/nmbscan
+net-analyzer/ns
+net-analyzer/nsat
+net-analyzer/nstats
+net-analyzer/ntop
+net-analyzer/nttcp
+net-analyzer/oinkmaster
+net-analyzer/openvas
+net-analyzer/openvas-client
+net-analyzer/openvas-libnasl
+net-analyzer/openvas-libraries
+net-analyzer/openvas-plugins
+net-analyzer/openvas-server
+net-analyzer/p0f
+net-analyzer/packit
+net-analyzer/paketto
+net-analyzer/pathload
+net-analyzer/pathrate
+net-analyzer/pbnj
+net-analyzer/pchar
+net-analyzer/pinger
+net-analyzer/pktstat
+net-analyzer/pmacct
+net-analyzer/pnp4nagios
+net-analyzer/poink
+net-analyzer/portbunny
+net-analyzer/portmon
+net-analyzer/portsentry
+net-analyzer/postal
+net-analyzer/prelude-nessus
+net-analyzer/prewikka
+net-analyzer/quidscor
+net-analyzer/raddump
+net-analyzer/rain
+net-analyzer/rrdcollect
+net-analyzer/rrdtool
+net-analyzer/rtg
+net-analyzer/rtpbreak
+net-analyzer/sancp
+net-analyzer/sara
+net-analyzer/sarg
+net-analyzer/sbd
+net-analyzer/scanlogd
+net-analyzer/scanssh
+net-analyzer/scapy
+net-analyzer/scli
+net-analyzer/sec
+net-analyzer/sflowtool
+net-analyzer/sguil-client
+net-analyzer/sguil-sensor
+net-analyzer/sguil-server
+net-analyzer/siphon
+net-analyzer/slurm
+net-analyzer/smokeping
+net-analyzer/sniffit
+net-analyzer/snips
+net-analyzer/snmptt
+net-analyzer/snort
+net-analyzer/snortalog
+net-analyzer/snortsam
+net-analyzer/squid-graph
+net-analyzer/squidsites
+net-analyzer/ssldump
+net-analyzer/ssmping
+net-analyzer/sussen
+net-analyzer/symon
+net-analyzer/sysmon
+net-analyzer/syweb
+net-analyzer/tcpdump
+net-analyzer/tcpflow
+net-analyzer/tcpreen
+net-analyzer/tcpreplay
+net-analyzer/tcpslice
+net-analyzer/tcpstat
+net-analyzer/tcptrace
+net-analyzer/tcptraceroute
+net-analyzer/tcptrack
+net-analyzer/thcrut
+net-analyzer/thrulay
+net-analyzer/tleds
+net-analyzer/tptest
+net-analyzer/traceproto
+net-analyzer/traceroute
+net-analyzer/traceroute-nanog
+net-analyzer/trafd
+net-analyzer/traffic-vis
+net-analyzer/trafshow
+net-analyzer/ttcp
+net-analyzer/ttt
+net-analyzer/upnpscan
+net-analyzer/vnstat
+net-analyzer/webfuzzer
+net-analyzer/wireshark
+net-analyzer/xnetload
+net-analyzer/xprobe
+net-analyzer/yersinia
+net-analyzer/zabbix
+net-analyzer/zabbix-agent
+net-analyzer/zabbix-frontend
+net-analyzer/zabbix-server
+net-analyzer/zniper
+net-analyzer/autoscan-network
+net-analyzer/dnsa
+net-analyzer/dnsenum
+net-analyzer/fierce
+net-analyzer/geoedge
+net-analyzer/httprint
+net-analyzer/inguma
+net-analyzer/medusa
 net-analyzer/metacoretex-ng * ~* **
-net-analyzer/metagoofil ~x86
+net-analyzer/metagoofil
 net-analyzer/metasploit * ~* **
-net-analyzer/mosref ~x86
-net-analyzer/ntp-fingerprint ~x86
-net-analyzer/onesixtyone ~x86
-net-analyzer/sipvicious ~x86
-net-analyzer/smtpmap ~x86
-net-analyzer/snmpenum ~x86
-net-analyzer/subdomainer ~x86
-net-analyzer/theHarvester ~x86
-net-analyzer/upnpscan ~x86
-net-analyzer/voiphopper ~x86
+net-analyzer/mosref
+net-analyzer/ntp-fingerprint
+net-analyzer/onesixtyone
+net-analyzer/sipvicious
+net-analyzer/smtpmap
+net-analyzer/snmpenum
+net-analyzer/subdomainer
+net-analyzer/theHarvester
+net-analyzer/upnpscan
+net-analyzer/voiphopper
 net-analyzer/w3af * ~* **
-net-analyzer/wfuzz ~x86
-net-analyzer/yaptest ~x86
+net-analyzer/wfuzz
+net-analyzer/yaptest

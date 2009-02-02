@@ -1,15 +1,15 @@
-app-fuzz/Peach ~x86
-app-fuzz/bed ~x86
-app-fuzz/bss ~x86
-app-fuzz/fusil ~x86
-app-fuzz/fuzzer ~x86
-app-fuzz/fuzzer-server ~x86
-app-fuzz/http-fuzz ~x86
-app-fuzz/ohrwurm ~x86
-app-fuzz/protos ~x86
-app-fuzz/scapy ~x86
-app-fuzz/sftf ~x86
-app-fuzz/smtp-fuzz ~x86
-app-fuzz/smudge ~x86
-app-fuzz/snmp-fuzzer ~x86
-app-fuzz/taof ~x86
+app-fuzz/Peach
+app-fuzz/bed
+app-fuzz/bss
+app-fuzz/fusil
+app-fuzz/fuzzer
+app-fuzz/fuzzer-server
+app-fuzz/http-fuzz
+app-fuzz/ohrwurm
+app-fuzz/protos
+app-fuzz/scapy
+app-fuzz/sftf
+app-fuzz/smtp-fuzz
+app-fuzz/smudge
+app-fuzz/snmp-fuzzer
+app-fuzz/taof

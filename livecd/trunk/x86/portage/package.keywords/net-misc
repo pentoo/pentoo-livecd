@@ -1,345 +1,345 @@
-net-misc/6tunnel ~x86
-net-misc/LinNeighborhood ~x86
-net-misc/adjtimex ~x86
-net-misc/aget ~x86
-net-misc/aggregate ~x86
-net-misc/aggregate-flim ~x86
-net-misc/aiccu ~x86
-net-misc/ajaxterm ~x86
-net-misc/amazonmp3 ~x86
-net-misc/amazonmp3-libcompat ~x86
-net-misc/apt-proxy ~x86
-net-misc/aqbanking3-tool ~x86
-net-misc/aria2 ~x86
-net-misc/arpd ~x86
-net-misc/arpstar ~x86
-net-misc/asterisk ~x86
-net-misc/asterisk-addons ~x86
-net-misc/asterisk-app_authenticate_ldap ~x86
-net-misc/asterisk-app_conference ~x86
-net-misc/asterisk-app_event ~x86
-net-misc/asterisk-app_icd ~x86
-net-misc/asterisk-app_iconv ~x86
-net-misc/asterisk-app_intercept ~x86
-net-misc/asterisk-app_ldap ~x86
-net-misc/asterisk-app_notify ~x86
-net-misc/asterisk-app_nv_faxdetect ~x86
-net-misc/asterisk-app_rtxfax ~x86
-net-misc/asterisk-cdr_shell ~x86
-net-misc/asterisk-chan_bluetooth ~x86
-net-misc/asterisk-chan_capi ~x86
-net-misc/asterisk-chan_misdn ~x86
-net-misc/asterisk-chan_sccp ~x86
-net-misc/asterisk-chan_unicall ~x86
-net-misc/asterisk-chan_unistim ~x86
-net-misc/asterisk-rate_engine ~x86
-net-misc/asterisk-res_bondia ~x86
-net-misc/asterisk-res_bonjour ~x86
-net-misc/asterisk-sounds ~x86
-net-misc/asterisk-sounds-de-pforzheim ~x86
-net-misc/asterisk-spandsp_codec_g726 ~x86
-net-misc/astmanproxy ~x86
-net-misc/autossh ~x86
-net-misc/axel ~x86
-net-misc/balance ~x86
-net-misc/batmand ~x86
-net-misc/blinkperl ~x86
-net-misc/blogtk ~x86
-net-misc/bo2k_console ~x86
-net-misc/bo2k_plugins ~x86
-net-misc/bopm ~x86
-net-misc/br2684ctl ~x86
-net-misc/bridge-utils ~x86
-net-misc/bsdwhois ~x86
-net-misc/bti ~x86
-net-misc/bwwhois ~x86
-net-misc/cadaver ~x86
-net-misc/capi4hylafax ~x86
-net-misc/capiisdnmon ~x86
-net-misc/cbqinit ~x86
-net-misc/cfengine ~x86
-net-misc/cgterm ~x86
-net-misc/chrony ~x86
-net-misc/cisco-aironet-client-utils ~x86
-net-misc/cisco-vpnclient-3des ~x86
-net-misc/clipgrab ~x86
-net-misc/clockspeed ~x86
-net-misc/clockspeed-conf ~x86
-net-misc/connect ~x86
-net-misc/corkscrew ~x86
-net-misc/curl ~x86
-net-misc/d4x ~x86
-net-misc/datapipe ~x86
-net-misc/dcetest ~x86
-net-misc/dhcdbd ~x86
-net-misc/dhcp ~x86
-net-misc/dhcpcd ~x86
-net-misc/dhcping ~x86
-net-misc/dhcpv6 ~x86
-net-misc/dibbler ~x86
-net-misc/directvnc ~x86
-net-misc/drivel ~x86
-net-misc/dropbear ~x86
-net-misc/efax ~x86
-net-misc/elianna-pack ~x86
-net-misc/emirror ~x86
-net-misc/emphetamine ~x86
-net-misc/ethercard-diag ~x86
-net-misc/fakeidentd ~x86
-net-misc/ferm ~x86
-net-misc/fmirror ~x86
-net-misc/freenet6 ~x86
-net-misc/fsh ~x86
-net-misc/geekcredit ~x86
-net-misc/getdate ~x86
-net-misc/gfax ~x86
-net-misc/ghamachi ~x86
-net-misc/gip ~x86
-net-misc/gnome-blog ~x86
-net-misc/gofish ~x86
-net-misc/goog-sitemapgen ~x86
-net-misc/grdesktop ~x86
-net-misc/gsasl ~x86
-net-misc/guidedog ~x86
-net-misc/gupnp-tools ~x86
-net-misc/gwget ~x86
-net-misc/gwhois ~x86
-net-misc/hamachi ~x86
-net-misc/hashcash ~x86
-net-misc/hlfl ~x86
-net-misc/hsc ~x86
-net-misc/htbinit ~x86
-net-misc/htpdate ~x86
-net-misc/httptunnel ~x86
-net-misc/httptype ~x86
-net-misc/htun ~x86
-net-misc/hylafax ~x86
-net-misc/iaxmodem ~x86
-net-misc/icaclient ~x86
-net-misc/icecast ~x86
-net-misc/ices ~x86
-net-misc/ifenslave ~x86
-net-misc/ip-sentinel ~x86
-net-misc/ipcalc ~x86
-net-misc/iperf ~x86
-net-misc/ipsc ~x86
-net-misc/ipsorcery ~x86
-net-misc/ipsvd ~x86
-net-misc/iputils ~x86
-net-misc/ipv6calc ~x86
-net-misc/ipx-utils ~x86
-net-misc/italc ~x86
-net-misc/ixp4xx ~x86
-net-misc/java-wakeonlan ~x86
-net-misc/jigdo ~x86
-net-misc/jlj ~x86
-net-misc/jumpgate ~x86
-net-misc/jwhois ~x86
-net-misc/kbandwidth ~x86
-net-misc/keychain ~x86
-net-misc/kiax ~x86
-net-misc/kickpim ~x86
-net-misc/knemo ~x86
-net-misc/knetload ~x86
-net-misc/knock ~x86
-net-misc/knutclient ~x86
-net-misc/kovpn ~x86
-net-misc/kphone ~x86
-net-misc/ksb26 ~x86
-net-misc/kssh ~x86
-net-misc/ktraynetworker ~x86
-net-misc/kvpnc ~x86
-net-misc/kwebget ~x86
-net-misc/l7-filter ~x86
-net-misc/l7-filter-userspace ~x86
-net-misc/l7-protocols ~x86
-net-misc/lambdamoo ~x86
-net-misc/linux-identd ~x86
-net-misc/linux-igd ~x86
-net-misc/liveice ~x86
-net-misc/lksctp-tools ~x86
-net-misc/logjam ~x86
-net-misc/ltsp ~x86
-net-misc/mDNSResponder ~x86
-net-misc/mdidentd ~x86
-net-misc/mediatomb ~x86
-net-misc/memcached ~x86
-net-misc/metacafe-dl ~x86
-net-misc/metadata.xml ~x86
-net-misc/midentd ~x86
-net-misc/mindterm ~x86
-net-misc/miniupnpd ~x86
-net-misc/mknbi ~x86
-net-misc/mmsclient ~x86
-net-misc/monmotha ~x86
-net-misc/mrouted ~x86
-net-misc/nat-traverse ~x86
-net-misc/ndtpd ~x86
-net-misc/nemesis ~x86
-net-misc/neon ~x86
-net-misc/netcomics-cvs ~x86
-net-misc/netdate ~x86
-net-misc/netgo ~x86
-net-misc/netkit-bootparamd ~x86
-net-misc/netkit-bootpd ~x86
-net-misc/netkit-fingerd ~x86
-net-misc/netkit-routed ~x86
-net-misc/netkit-rsh ~x86
-net-misc/netkit-rusers ~x86
-net-misc/netkit-rwall ~x86
-net-misc/netkit-rwho ~x86
-net-misc/netkit-talk ~x86
-net-misc/netkit-telnetd ~x86
-net-misc/netkit-timed ~x86
-net-misc/netpipe ~x86
-net-misc/netpipes ~x86
-net-misc/netprofiles-ims ~x86
-net-misc/netsed ~x86
-net-misc/netstat-nat ~x86
-net-misc/networkmanager ~x86
-net-misc/networkmanager-openvpn ~x86
-net-misc/networkmanager-pptp ~x86
-net-misc/networkmanager-vpnc ~x86
-net-misc/ng-utils ~x86
-net-misc/noarp ~x86
-net-misc/nstx ~x86
-net-misc/ntp ~x86
-net-misc/ntpclient ~x86
-net-misc/nx ~x86
-net-misc/nxcl ~x86
-net-misc/nxclient ~x86
-net-misc/nxclient-2xterminalserver ~x86
-net-misc/nxnode ~x86
-net-misc/nxserver-2xterminalserver ~x86
-net-misc/nxserver-freeedition ~x86
-net-misc/nxserver-freenx ~x86
-net-misc/oidentd ~x86
-net-misc/olsrd ~x86
-net-misc/omniORB ~x86
-net-misc/omnievents ~x86
-net-misc/openntpd ~x86
-net-misc/openrdate ~x86
-net-misc/openswan ~x86
-net-misc/openvpn ~x86
-net-misc/ossh ~x86
-net-misc/packETH ~x86
-net-misc/partysip ~x86
-net-misc/pavuk ~x86
-net-misc/pen ~x86
-net-misc/pimpd ~x86
-net-misc/pipes ~x86
-net-misc/portfwd ~x86
-net-misc/proxychains ~x86
-net-misc/proxyper ~x86
-net-misc/proxytunnel ~x86
-net-misc/ptrtd ~x86
-net-misc/puf ~x86
-net-misc/pump ~x86
-net-misc/putty ~x86
-net-misc/qtnx ~x86
-net-misc/quagga ~x86
-net-misc/raccess ~x86
-net-misc/radvd ~x86
-net-misc/rarpd ~x86
-net-misc/rdate ~x86
-net-misc/rdesktop ~x86
-net-misc/rdist ~x86
-net-misc/redir ~x86
-net-misc/rinetd ~x86
-net-misc/rsync ~x86
-net-misc/rwbs ~x86
-net-misc/s3cmd ~x86
-net-misc/sambasentinel ~x86
-net-misc/scponly ~x86
-net-misc/secpanel ~x86
-net-misc/selfdhcp ~x86
-net-misc/sendfile ~x86
-net-misc/ser ~x86
-net-misc/ser2net ~x86
-net-misc/shmux ~x86
-net-misc/shout ~x86
-net-misc/sipcalc ~x86
-net-misc/siproxd ~x86
-net-misc/sipsak ~x86
-net-misc/sitecopy ~x86
-net-misc/sjphone ~x86
-net-misc/slidentd ~x86
-net-misc/smb4k ~x86
-net-misc/smbc ~x86
-net-misc/snarf ~x86
-net-misc/snitch ~x86
-net-misc/sobby ~x86
-net-misc/socat ~x86
-net-misc/sock ~x86
-net-misc/spread ~x86
-net-misc/ssh-askpass-fullscreen ~x86
-net-misc/ssh-installkeys ~x86
-net-misc/sslwrap ~x86
-net-misc/stone ~x86
-net-misc/streamtuner ~x86
-net-misc/strongswan ~x86
-net-misc/stunnel ~x86
-net-misc/suite3270 ~x86
-net-misc/switzerland ~x86
-net-misc/taylor-uucp ~x86
-net-misc/tcpsound ~x86
-net-misc/telnet-bsd ~x86
-net-misc/termpkg ~x86
-net-misc/throttle ~x86
-net-misc/tiers ~x86
-net-misc/tightvnc ~x86
-net-misc/tinc ~x86
-net-misc/tipcutils ~x86
-net-misc/tkusr ~x86
-net-misc/tn5250 ~x86
-net-misc/tor ~x86
-net-misc/tsclient ~x86
-net-misc/twitux ~x86
-net-misc/ucarp ~x86
-net-misc/udhcp ~x86
-net-misc/udpcast ~x86
-net-misc/unison ~x86
-net-misc/unix2tcp ~x86
-net-misc/ups-monitor ~x86
-net-misc/urlview ~x86
-net-misc/utelnetd ~x86
-net-misc/valve ~x86
-net-misc/vconfig ~x86
-net-misc/vde ~x86
-net-misc/vget ~x86
-net-misc/vidalia ~x86
-net-misc/vinagre ~x86
-net-misc/vino ~x86
-net-misc/vmnet ~x86
-net-misc/vmpsd ~x86
-net-misc/vnc ~x86
-net-misc/vncrec ~x86
-net-misc/vncsnapshot ~x86
-net-misc/vpnc ~x86
-net-misc/vtun ~x86
-net-misc/wakeonlan ~x86
-net-misc/wget ~x86
-net-misc/whatmask ~x86
-net-misc/whois ~x86
-net-misc/whoischk ~x86
-net-misc/wicd ~x86
-net-misc/wol ~x86
-net-misc/wput ~x86
-net-misc/wso2-wsf-c ~x86
-net-misc/wxdfast ~x86
-net-misc/x-lite ~x86
-net-misc/x11-ssh-askpass ~x86
-net-misc/x25_utils ~x86
-net-misc/xf4vnc ~x86
-net-misc/xrdp ~x86
-net-misc/xsupplicant ~x86
-net-misc/youtube-dl ~x86
-net-misc/ytalk ~x86
-net-misc/zaptel ~x86
-net-misc/zebedee ~x86
-net-misc/zssh ~x86
-net-misc/karma ~x86
-net-misc/sipbomber ~x86
-net-misc/sipp ~x86
-net-misc/voipong ~x86
-net-misc/yarssr ~x86
+net-misc/6tunnel
+net-misc/LinNeighborhood
+net-misc/adjtimex
+net-misc/aget
+net-misc/aggregate
+net-misc/aggregate-flim
+net-misc/aiccu
+net-misc/ajaxterm
+net-misc/amazonmp3
+net-misc/amazonmp3-libcompat
+net-misc/apt-proxy
+net-misc/aqbanking3-tool
+net-misc/aria2
+net-misc/arpd
+net-misc/arpstar
+net-misc/asterisk
+net-misc/asterisk-addons
+net-misc/asterisk-app_authenticate_ldap
+net-misc/asterisk-app_conference
+net-misc/asterisk-app_event
+net-misc/asterisk-app_icd
+net-misc/asterisk-app_iconv
+net-misc/asterisk-app_intercept
+net-misc/asterisk-app_ldap
+net-misc/asterisk-app_notify
+net-misc/asterisk-app_nv_faxdetect
+net-misc/asterisk-app_rtxfax
+net-misc/asterisk-cdr_shell
+net-misc/asterisk-chan_bluetooth
+net-misc/asterisk-chan_capi
+net-misc/asterisk-chan_misdn
+net-misc/asterisk-chan_sccp
+net-misc/asterisk-chan_unicall
+net-misc/asterisk-chan_unistim
+net-misc/asterisk-rate_engine
+net-misc/asterisk-res_bondia
+net-misc/asterisk-res_bonjour
+net-misc/asterisk-sounds
+net-misc/asterisk-sounds-de-pforzheim
+net-misc/asterisk-spandsp_codec_g726
+net-misc/astmanproxy
+net-misc/autossh
+net-misc/axel
+net-misc/balance
+net-misc/batmand
+net-misc/blinkperl
+net-misc/blogtk
+net-misc/bo2k_console
+net-misc/bo2k_plugins
+net-misc/bopm
+net-misc/br2684ctl
+net-misc/bridge-utils
+net-misc/bsdwhois
+net-misc/bti
+net-misc/bwwhois
+net-misc/cadaver
+net-misc/capi4hylafax
+net-misc/capiisdnmon
+net-misc/cbqinit
+net-misc/cfengine
+net-misc/cgterm
+net-misc/chrony
+net-misc/cisco-aironet-client-utils
+net-misc/cisco-vpnclient-3des
+net-misc/clipgrab
+net-misc/clockspeed
+net-misc/clockspeed-conf
+net-misc/connect
+net-misc/corkscrew
+net-misc/curl
+net-misc/d4x
+net-misc/datapipe
+net-misc/dcetest
+net-misc/dhcdbd
+net-misc/dhcp
+net-misc/dhcpcd
+net-misc/dhcping
+net-misc/dhcpv6
+net-misc/dibbler
+net-misc/directvnc
+net-misc/drivel
+net-misc/dropbear
+net-misc/efax
+net-misc/elianna-pack
+net-misc/emirror
+net-misc/emphetamine
+net-misc/ethercard-diag
+net-misc/fakeidentd
+net-misc/ferm
+net-misc/fmirror
+net-misc/freenet6
+net-misc/fsh
+net-misc/geekcredit
+net-misc/getdate
+net-misc/gfax
+net-misc/ghamachi
+net-misc/gip
+net-misc/gnome-blog
+net-misc/gofish
+net-misc/goog-sitemapgen
+net-misc/grdesktop
+net-misc/gsasl
+net-misc/guidedog
+net-misc/gupnp-tools
+net-misc/gwget
+net-misc/gwhois
+net-misc/hamachi
+net-misc/hashcash
+net-misc/hlfl
+net-misc/hsc
+net-misc/htbinit
+net-misc/htpdate
+net-misc/httptunnel
+net-misc/httptype
+net-misc/htun
+net-misc/hylafax
+net-misc/iaxmodem
+net-misc/icaclient
+net-misc/icecast
+net-misc/ices
+net-misc/ifenslave
+net-misc/ip-sentinel
+net-misc/ipcalc
+net-misc/iperf
+net-misc/ipsc
+net-misc/ipsorcery
+net-misc/ipsvd
+net-misc/iputils
+net-misc/ipv6calc
+net-misc/ipx-utils
+net-misc/italc
+net-misc/ixp4xx
+net-misc/java-wakeonlan
+net-misc/jigdo
+net-misc/jlj
+net-misc/jumpgate
+net-misc/jwhois
+net-misc/kbandwidth
+net-misc/keychain
+net-misc/kiax
+net-misc/kickpim
+net-misc/knemo
+net-misc/knetload
+net-misc/knock
+net-misc/knutclient
+net-misc/kovpn
+net-misc/kphone
+net-misc/ksb26
+net-misc/kssh
+net-misc/ktraynetworker
+net-misc/kvpnc
+net-misc/kwebget
+net-misc/l7-filter
+net-misc/l7-filter-userspace
+net-misc/l7-protocols
+net-misc/lambdamoo
+net-misc/linux-identd
+net-misc/linux-igd
+net-misc/liveice
+net-misc/lksctp-tools
+net-misc/logjam
+net-misc/ltsp
+net-misc/mDNSResponder
+net-misc/mdidentd
+net-misc/mediatomb
+net-misc/memcached
+net-misc/metacafe-dl
+net-misc/metadata.xml
+net-misc/midentd
+net-misc/mindterm
+net-misc/miniupnpd
+net-misc/mknbi
+net-misc/mmsclient
+net-misc/monmotha
+net-misc/mrouted
+net-misc/nat-traverse
+net-misc/ndtpd
+net-misc/nemesis
+net-misc/neon
+net-misc/netcomics-cvs
+net-misc/netdate
+net-misc/netgo
+net-misc/netkit-bootparamd
+net-misc/netkit-bootpd
+net-misc/netkit-fingerd
+net-misc/netkit-routed
+net-misc/netkit-rsh
+net-misc/netkit-rusers
+net-misc/netkit-rwall
+net-misc/netkit-rwho
+net-misc/netkit-talk
+net-misc/netkit-telnetd
+net-misc/netkit-timed
+net-misc/netpipe
+net-misc/netpipes
+net-misc/netprofiles-ims
+net-misc/netsed
+net-misc/netstat-nat
+net-misc/networkmanager
+net-misc/networkmanager-openvpn
+net-misc/networkmanager-pptp
+net-misc/networkmanager-vpnc
+net-misc/ng-utils
+net-misc/noarp
+net-misc/nstx
+net-misc/ntp
+net-misc/ntpclient
+net-misc/nx
+net-misc/nxcl
+net-misc/nxclient
+net-misc/nxclient-2xterminalserver
+net-misc/nxnode
+net-misc/nxserver-2xterminalserver
+net-misc/nxserver-freeedition
+net-misc/nxserver-freenx
+net-misc/oidentd
+net-misc/olsrd
+net-misc/omniORB
+net-misc/omnievents
+net-misc/openntpd
+net-misc/openrdate
+net-misc/openswan
+net-misc/openvpn
+net-misc/ossh
+net-misc/packETH
+net-misc/partysip
+net-misc/pavuk
+net-misc/pen
+net-misc/pimpd
+net-misc/pipes
+net-misc/portfwd
+net-misc/proxychains
+net-misc/proxyper
+net-misc/proxytunnel
+net-misc/ptrtd
+net-misc/puf
+net-misc/pump
+net-misc/putty
+net-misc/qtnx
+net-misc/quagga
+net-misc/raccess
+net-misc/radvd
+net-misc/rarpd
+net-misc/rdate
+net-misc/rdesktop
+net-misc/rdist
+net-misc/redir
+net-misc/rinetd
+net-misc/rsync
+net-misc/rwbs
+net-misc/s3cmd
+net-misc/sambasentinel
+net-misc/scponly
+net-misc/secpanel
+net-misc/selfdhcp
+net-misc/sendfile
+net-misc/ser
+net-misc/ser2net
+net-misc/shmux
+net-misc/shout
+net-misc/sipcalc
+net-misc/siproxd
+net-misc/sipsak
+net-misc/sitecopy
+net-misc/sjphone
+net-misc/slidentd
+net-misc/smb4k
+net-misc/smbc
+net-misc/snarf
+net-misc/snitch
+net-misc/sobby
+net-misc/socat
+net-misc/sock
+net-misc/spread
+net-misc/ssh-askpass-fullscreen
+net-misc/ssh-installkeys
+net-misc/sslwrap
+net-misc/stone
+net-misc/streamtuner
+net-misc/strongswan
+net-misc/stunnel
+net-misc/suite3270
+net-misc/switzerland
+net-misc/taylor-uucp
+net-misc/tcpsound
+net-misc/telnet-bsd
+net-misc/termpkg
+net-misc/throttle
+net-misc/tiers
+net-misc/tightvnc
+net-misc/tinc
+net-misc/tipcutils
+net-misc/tkusr
+net-misc/tn5250
+net-misc/tor
+net-misc/tsclient
+net-misc/twitux
+net-misc/ucarp
+net-misc/udhcp
+net-misc/udpcast
+net-misc/unison
+net-misc/unix2tcp
+net-misc/ups-monitor
+net-misc/urlview
+net-misc/utelnetd
+net-misc/valve
+net-misc/vconfig
+net-misc/vde
+net-misc/vget
+net-misc/vidalia
+net-misc/vinagre
+net-misc/vino
+net-misc/vmnet
+net-misc/vmpsd
+net-misc/vnc
+net-misc/vncrec
+net-misc/vncsnapshot
+net-misc/vpnc
+net-misc/vtun
+net-misc/wakeonlan
+net-misc/wget
+net-misc/whatmask
+net-misc/whois
+net-misc/whoischk
+net-misc/wicd
+net-misc/wol
+net-misc/wput
+net-misc/wso2-wsf-c
+net-misc/wxdfast
+net-misc/x-lite
+net-misc/x11-ssh-askpass
+net-misc/x25_utils
+net-misc/xf4vnc
+net-misc/xrdp
+net-misc/xsupplicant
+net-misc/youtube-dl
+net-misc/ytalk
+net-misc/zaptel
+net-misc/zebedee
+net-misc/zssh
+net-misc/karma
+net-misc/sipbomber
+net-misc/sipp
+net-misc/voipong
+net-misc/yarssr
