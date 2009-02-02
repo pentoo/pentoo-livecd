@@ -23,7 +23,7 @@ livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr 
 mmx sse sse2 ssse3 mpi
 wifi injection lzma speed gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -cups -spell lua -ipv6
-png jpeg gif dri svg aac nsplugin
+png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid wxwindows sqlite
 opengl dbus
@@ -137,8 +137,8 @@ net-analyzer/metagoofil
 net-analyzer/metasploit
 net-analyzer/mosref
 net-analyzer/nbtscan
-net-analyzer/nessus
-net-analyzer/nessus-plugins
+#net-analyzer/openvas
+#net-analyzer/nessus-plugins
 net-analyzer/netcat
 net-analyzer/netdiscover
 #net-analyzer/netdude
@@ -286,8 +286,8 @@ www-client/mozilla-firefox-bin
 mail-client/mozilla-thunderbird-bin
 x11-base/xorg-server
 x11-base/xorg-x11
-x11-drivers/xf86-input-virtualbox
-x11-drivers/xf86-video-virtualbox
+#x11-drivers/xf86-input-virtualbox
+#x11-drivers/xf86-video-virtualbox
 x11-libs/ecore
 x11-libs/esmart
 x11-libs/evas
