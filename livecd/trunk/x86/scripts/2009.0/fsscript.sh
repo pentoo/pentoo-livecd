@@ -27,6 +27,13 @@ genmenu.py -v -t urxvt
 # Fix the root login by emptying the root password. No ssh will be allowed until 'passwd root'
 sed -i -e 's/^root:\*:/root::/' /etc/shadow
 
+# Apply patches to root
+cd /
+patch patches/bashlogin.patch bin/bashlogin
+patch patches/halt.sh etc/init.d/halt.sh
+patch patches/livecd-functions.patch sbin/livecd-functions.sh
+patch patches/rc.patch sbin/rc
+
 # Setup kismet & airmon-ng
 [ -e /usr/sbin/airmon-ng ] && sed -i -e 's:/kismet::' /usr/sbin/airmon-ng
 [ -e /etc/kismet.conf ] && sed -i -e '/^source=.*/d' /etc/kismet.conf
@@ -36,8 +43,8 @@ sed -i -e 's/^root:\*:/root::/' /etc/shadow
 [ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
 
 # Remove useless opengl setup
-rm /etc/init.d/x-setup
-eselect opengl set xorg-x11 --dst-prefix=/etc/opengl
+#rm /etc/init.d/x-setup
+#eselect opengl set xorg-x11 --dst-prefix=/etc/opengl
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
@@ -57,9 +64,9 @@ ntop --set-admin-password=pentoo
 echo 'export BROWSER="firefox"' >> /etc/env.d/99local
 
 # Sets e17 key bindings
-enlightenment_remote -binding-key-add ANY t ALT 0 exec urxvt
-enlightenment_remote -binding-key-add ANY j ALT 0 exec urxvt
-enlightenment_remote -binding-key-add ANY l ALT 0 exec "enlightenment_remote -lock-desktop"
+#enlightenment_remote -binding-key-add ANY t ALT 0 exec urxvt
+#enlightenment_remote -binding-key-add ANY j ALT 0 exec urxvt
+#enlightenment_remote -binding-key-add ANY l ALT 0 exec "enlightenment_remote -lock-desktop"
 
 # Build the metadata cache
 emerge --metadata
