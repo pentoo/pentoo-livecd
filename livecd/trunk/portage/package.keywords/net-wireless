@@ -20,7 +20,6 @@ net-wireless/bluez-libs
 net-wireless/bluez-utils
 net-wireless/bss
 net-wireless/chillispot
-net-wireless/crda
 net-wireless/fsam7400
 net-wireless/fwlanusb
 net-wireless/gnome-bluetooth
@@ -73,7 +72,6 @@ net-wireless/wepattack
 net-wireless/wepdecrypt
 net-wireless/wifi-radar
 net-wireless/wifiscanner
-net-wireless/wireless-regdb
 net-wireless/wireless-tools
 net-wireless/wispy-tools
 net-wireless/wlassistant
