@@ -40,3 +40,5 @@ sys-fs/squashfs-tools
 x11-plugins/firecat
 sys-apps/pcmciautils
 =sys-apps/hal-0.5.11-r4 
+dev-util/edb
+dev-util/radare

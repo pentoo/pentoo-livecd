@@ -23,7 +23,7 @@ dev-perl/gtk-perl -opengl
 sys-apps/pmount -crypt
 # dep required from e
 x11-libs/ecore dbus
-dev-db/freetds mssql
+dev-db/freetds mssql odbc
 net-im/skype qt-static
 app-fuzz/protos http ldap snmp sip h2250 isakmp
 x11-plugins/firecat recon security
@@ -34,3 +34,4 @@ net-analyzer/metasploit gtk httpd sqlite3
 net-analyzer/wireshark gcrypt gnutls kerberos threads
 media-video/vlc qt4 run-as-root
 app-crypt/pyrit cuda padlock stream
+sys-apps/hal X crypt acpi dell disk-partition laptop
