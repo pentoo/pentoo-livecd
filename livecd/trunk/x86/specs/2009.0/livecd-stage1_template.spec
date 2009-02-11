@@ -21,7 +21,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 # pkgcache_path:
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
-mmx sse mpi
+mmx sse mpi hal
 wifi injection lzma speed gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin xrandr
@@ -52,7 +52,7 @@ app-editors/hexedit
 app-editors/nano
 app-editors/ghex
 app-editors/scite
-#app-text/epdf
+app-editors/vim
 app-text/epdfview
 app-forensics/autopsy
 app-forensics/cmospwd
@@ -65,11 +65,8 @@ app-fuzz/bss
 app-fuzz/fuzzer-server
 app-fuzz/fusil
 app-fuzz/http-fuzz
-#app-fuzz/protos
-#app-fuzz/scapy
 app-fuzz/smtp-fuzz
 app-fuzz/smudge
-#app-fuzz/snmp-fuzzer
 app-fuzz/ohrwurm
 app-fuzz/taof
 app-misc/livecd-tools
@@ -94,7 +91,6 @@ dev-libs/libxslt
 dev-libs/openobex
 dev-libs/libxml2
 dev-python/pysqlite
-#dev-python/pygtk
 dev-python/psyco
 =dev-python/lxml-1.3.6
 dev-util/dialog
@@ -141,12 +137,10 @@ net-analyzer/metagoofil
 net-analyzer/metasploit
 net-analyzer/mosref
 net-analyzer/nbtscan
-#net-analyzer/openvas
-#net-analyzer/nessus-plugins
+net-analyzer/openvas
 net-analyzer/netcat
 net-analyzer/netdiscover
 #net-analyzer/netdude
-#net-analyzer/net-snmp+++Replaced-by-onesixtyone
 net-analyzer/netwag
 net-analyzer/netwox
 net-analyzer/ngrep
@@ -186,12 +180,11 @@ net-dialup/linux-atm
 net-dialup/lrzsz
 net-dialup/minicom
 net-dns/bind-tools
-#net-dns/c-ares
 net-firewall/fwbuilder
 net-fs/nfs-utils
 net-fs/mount-cifs
 net-ftp/ftp
-net-ftp/netkit-ftpd
+net-ftp/gproftpd
 net-ftp/oftpd
 net-im/pidgin
 net-irc/irssi
@@ -229,12 +222,11 @@ net-misc/wget
 net-misc/whois
 net-p2p/bittorrent
 net-proxy/3proxy
+net-proxy/burpsuite
 net-proxy/httpush
-#net-proxy/paros
 net-proxy/privoxy-tor
 net-proxy/proxystrike
 net-proxy/tsocks
-net-proxy/webscarab
 #net-wireless/afrag
 net-wireless/aircrack-ng
 #net-wireless/airsnort
@@ -260,7 +252,6 @@ net-wireless/hostapd
 net-www/netscape-flash
 sys-apps/baselayout
 sys-apps/eject
-#sys-apps/hwdata-redhat
 sys-apps/hwsetup
 sys-apps/iproute2
 sys-apps/less
@@ -289,7 +280,7 @@ mail-client/mozilla-thunderbird-bin
 x11-base/xorg-server
 x11-base/xorg-x11
 #x11-drivers/xf86-input-virtualbox
-#x11-drivers/xf86-video-virtualbox
+x11-drivers/xf86-video-virtualbox
 x11-libs/ecore
 x11-libs/esmart
 x11-libs/evas
