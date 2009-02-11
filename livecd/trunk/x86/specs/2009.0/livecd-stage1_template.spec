@@ -5,8 +5,9 @@ rel_type: default
 profile: default/linux/x86/2008.0
 snapshot: 2009.0
 source_subpath: default/stage3-i686-2009.0
-portage_confdir: /root/pentoo/x86/portage
+portage_confdir: /root/pentoo/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
+# /usr/portage/local/layman/jokey
 cflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 
@@ -20,13 +21,13 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 # pkgcache_path:
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
-mmx sse sse2 ssse3 mpi
+mmx sse mpi
 wifi injection lzma speed gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid wxwindows sqlite
-opengl dbus
+opengl dbus binary-drivers
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
 # will be built with the USE flags configured above.  These packages must not
@@ -45,7 +46,7 @@ app-arch/gzip
 app-crypt/chntpw
 app-crypt/johntheripper
 app-crypt/md5bf
-#app-crypt/plaintoo
+#app-crypt/pyrit
 app-crypt/SIPcrack
 app-editors/hexedit
 app-editors/nano
@@ -93,14 +94,17 @@ dev-libs/libxslt
 dev-libs/openobex
 dev-libs/libxml2
 dev-python/pysqlite
-dev-python/pygtk
+#dev-python/pygtk
 dev-python/psyco
 =dev-python/lxml-1.3.6
 dev-util/dialog
 dev-util/subversion
+dev-util/nvidia-cuda-sdk
+dev-util/amd-stream-sdk-bin
 #dev-util/insight
 gnome-base/gnome-menus
 media-gfx/scrot
+media-fonts/font-misc-misc
 media-sound/audacious
 media-sound/alsa-utils
 media-sound/sox
@@ -183,15 +187,13 @@ net-dialup/lrzsz
 net-dialup/minicom
 net-dns/bind-tools
 #net-dns/c-ares
-#net-firewall/fwbuilder
+net-firewall/fwbuilder
 net-fs/nfs-utils
 net-fs/mount-cifs
 net-ftp/ftp
 net-ftp/netkit-ftpd
 net-ftp/oftpd
 net-im/pidgin
-#net-im/skype
-#net-im/ekiga
 net-irc/irssi
 net-irc/xchat
 net-misc/bridge-utils
@@ -228,15 +230,15 @@ net-misc/whois
 net-p2p/bittorrent
 net-proxy/3proxy
 net-proxy/httpush
-net-proxy/paros
+#net-proxy/paros
 net-proxy/privoxy-tor
 net-proxy/proxystrike
 net-proxy/tsocks
 net-proxy/webscarab
 #net-wireless/afrag
 net-wireless/aircrack-ng
-net-wireless/airsnort
-net-wireless/airtraf
+#net-wireless/airsnort
+#net-wireless/airtraf
 net-wireless/athload
 net-wireless/bluez-libs
 net-wireless/bluez-utils
@@ -250,7 +252,7 @@ net-wireless/mdk
 net-wireless/wepattack
 net-wireless/wepdecrypt
 net-wireless/wifi-radar
-net-wireless/wifiscanner
+#net-wireless/wifiscanner
 net-wireless/wifitap
 net-wireless/wireless-tools
 net-wireless/wpa_supplicant
@@ -264,7 +266,7 @@ sys-apps/iproute2
 sys-apps/less
 sys-apps/pciutils
 sys-apps/portage
-sys-apps/slocate
+#sys-apps/slocate
 sys-apps/v86d
 sys-block/disktype
 sys-block/gparted
@@ -293,6 +295,36 @@ x11-libs/esmart
 x11-libs/evas
 x11-libs/gksu
 x11-libs/gtk+
+x11-drivers/xf86-input-evdev
+x11-drivers/xf86-input-keyboard
+x11-drivers/xf86-input-mouse
+x11-drivers/xf86-video-apm
+x11-drivers/xf86-video-ark
+x11-drivers/xf86-video-ati
+x11-drivers/xf86-video-chips
+x11-drivers/xf86-video-cirrus
+x11-drivers/xf86-video-fbdev
+x11-drivers/xf86-video-glint
+x11-drivers/xf86-video-i128
+x11-drivers/xf86-video-intel
+x11-drivers/xf86-video-mach64
+x11-drivers/xf86-video-mga
+x11-drivers/xf86-video-neomagic
+x11-drivers/xf86-video-nv
+#x11-drivers/xf86-video-openchrome
+#x11-drivers/xf86-video-r128
+x11-drivers/xf86-video-rendition
+x11-drivers/xf86-video-radeonhd
+x11-drivers/xf86-video-s3
+x11-drivers/xf86-video-s3virge
+x11-drivers/xf86-video-savage
+x11-drivers/xf86-video-siliconmotion
+x11-drivers/xf86-video-sis
+x11-drivers/xf86-video-tdfx
+x11-drivers/xf86-video-trident
+x11-drivers/xf86-video-vesa
+x11-drivers/xf86-video-vmware
+x11-drivers/xf86-video-voodoo
 x11-plugins/firecat
 #x11-plugins/e_modules
 x11-plugins/e_modules-bling
@@ -302,7 +334,7 @@ x11-plugins/e_modules-language
 x11-plugins/e_modules-mem
 x11-plugins/e_modules-net
 #x11-plugins/e_modules-notification
-#x11-plugins/e_modules-screenshot
+x11-plugins/e_modules-screenshot
 x11-plugins/e_modules-weather
 x11-plugins/e_modules-wlan
 x11-plugins/itask-ng
