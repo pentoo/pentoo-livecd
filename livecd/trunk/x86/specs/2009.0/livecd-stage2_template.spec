@@ -5,7 +5,7 @@ rel_type: default
 profile: default/linux/x86/2008.0
 snapshot: 2009.0
 source_subpath: default/livecd-stage1-i686-2009.0
-portage_confdir: /root/pentoo/x86/portage
+portage_confdir: /root/pentoo/portage
 portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 
 # This allows the optional directory containing the output packages for
@@ -68,7 +68,7 @@ livecd/bootargs: aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --makeopts=-j5
+livecd/gk_mainargs: --makeopts=-j4
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
@@ -121,7 +121,7 @@ livecd/type: generic-livecd
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default gpm|default dbus|default esound|default
+livecd/rcadd: autoconfig|default gpm|default dbus|default esound|default alsasound|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -192,7 +192,7 @@ livecd/root_overlay: /root/pentoo/x86/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2009.0_a1
+livecd/volid: 2009.0_a3
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
@@ -215,7 +215,6 @@ boot/kernel/pentoo/sources: pentoo-sources
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
 boot/kernel/pentoo/config: /root/pentoo/x86/kernel/config-2.6.28
-#/usr/share/genkernel/x86/kernel-config-2.6
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -247,24 +246,20 @@ boot/kernel/pentoo/use: pcmcia usb qt4 qt3support madwifi injection wifi
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-#sys-apps/pcmcia-cs
+x11-misc/mkxf86config
 #=app-admin/genmenu-9999
 sys-apps/pcmciautils
-#net-wireless/acx
-#net-wireless/at76c503a
 net-wireless/atmel-firmware
 net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-#net-wireless/ipw3945-ucode
 net-wireless/iwl3945-ucode
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 #net-wireless/iwlwifi
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
-#net-wireless/rfswitch
 net-wireless/wpa_supplicant
 net-wireless/prism54-firmware
 #net-wireless/rt2x00
@@ -274,7 +269,12 @@ net-wireless/zd1211-firmware
 sys-fs/fuse
 sys-fs/ntfs3g
 net-firewall/firehol
-#sys-apps/pmount
+x11-drivers/ati-drivers
+x11-drivers/nvidia-drivers
+x11-drivers/xf86-input-synaptics
+=x11-drivers/xf86-video-virtualbox-2.0.6
+app-crypt/pyrit
+app-crypt/cuda-multiforcer
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
 # entry used for booting a ibm powerpc machine.
