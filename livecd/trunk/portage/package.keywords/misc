@@ -42,3 +42,7 @@ sys-apps/pcmciautils
 =sys-apps/hal-0.5.11-r4 
 dev-util/edb
 dev-util/radare
+dev-util/kbuild
+dev-util/nvidia-cuda-sdk
+dev-util/nvidia-cuda-toolkit
+

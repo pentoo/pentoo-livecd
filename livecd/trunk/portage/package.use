@@ -35,3 +35,4 @@ net-analyzer/wireshark gcrypt gnutls kerberos threads
 media-video/vlc qt4 run-as-root
 app-crypt/pyrit cuda padlock stream
 sys-apps/hal X crypt acpi dell disk-partition laptop
+x11-terms/rxvt-unicode afterimage iso14755 perl truetype
