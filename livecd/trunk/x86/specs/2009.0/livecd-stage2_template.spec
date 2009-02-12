@@ -121,7 +121,7 @@ livecd/type: generic-livecd
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default gpm|default dbus|default esound|default alsasound|default
+livecd/rcadd: autoconfig|default gpm|default dbus|default esound|default alsasound|default microcode_ctl|boot
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using

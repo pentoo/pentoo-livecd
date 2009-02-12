@@ -255,6 +255,8 @@ sys-apps/eject
 sys-apps/hwsetup
 sys-apps/iproute2
 sys-apps/less
+sys-apps/microcode-ctl
+sys-apps/microcode-data
 sys-apps/pciutils
 sys-apps/portage
 #sys-apps/slocate
