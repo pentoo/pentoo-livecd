@@ -46,6 +46,7 @@ app-arch/gzip
 app-crypt/chntpw
 app-crypt/johntheripper
 app-crypt/md5bf
+app-crypt/ophcrack
 #app-crypt/pyrit
 app-crypt/SIPcrack
 app-editors/hexedit
