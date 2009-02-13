@@ -23,7 +23,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse mpi
 wifi injection lzma speed gnuplot pyx
--quicktime -qt -qt3 qt3support qt4 -cups -spell lua -ipv6
+-quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid wxwindows sqlite truetype
