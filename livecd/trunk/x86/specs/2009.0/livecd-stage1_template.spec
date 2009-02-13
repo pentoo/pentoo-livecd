@@ -21,13 +21,13 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 # pkgcache_path:
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
-mmx sse mpi hal
+mmx sse mpi
 wifi injection lzma speed gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid wxwindows sqlite
-opengl dbus binary-drivers
+dvd mpeg ogg rtsp x264 xvid wxwindows sqlite truetype
+opengl dbus binary-drivers -hal acpi
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
 # will be built with the USE flags configured above.  These packages must not
@@ -37,7 +37,6 @@ opengl dbus binary-drivers
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 sys-kernel/pentoo-sources
-sys-kernel/linux-headers
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
@@ -47,7 +46,6 @@ app-crypt/chntpw
 app-crypt/johntheripper
 app-crypt/md5bf
 app-crypt/ophcrack
-#app-crypt/pyrit
 app-crypt/SIPcrack
 app-editors/hexedit
 app-editors/nano
@@ -138,7 +136,7 @@ net-analyzer/metagoofil
 net-analyzer/metasploit
 net-analyzer/mosref
 net-analyzer/nbtscan
-net-analyzer/openvas
+#openvas
 net-analyzer/netcat
 net-analyzer/netdiscover
 #net-analyzer/netdude
@@ -283,13 +281,13 @@ mail-client/mozilla-thunderbird-bin
 x11-base/xorg-server
 x11-base/xorg-x11
 #x11-drivers/xf86-input-virtualbox
-x11-drivers/xf86-video-virtualbox
+#x11-drivers/xf86-video-virtualbox
 x11-libs/ecore
 x11-libs/esmart
 x11-libs/evas
 x11-libs/gksu
 x11-libs/gtk+
-x11-drivers/xf86-input-evdev
+#x11-drivers/xf86-input-evdev
 x11-drivers/xf86-input-keyboard
 x11-drivers/xf86-input-mouse
 x11-drivers/xf86-video-apm
@@ -337,3 +335,4 @@ x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
 x11-libs/e_dbus
 x11-wm/enlightenment
+x11-base/xorg-x11
