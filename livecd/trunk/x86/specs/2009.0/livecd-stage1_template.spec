@@ -114,6 +114,7 @@ net-analyzer/dnsa
 net-analyzer/dnsenum
 #net-analyzer/driftnet
 net-analyzer/dsniff
+net-analyzer/etherape
 net-analyzer/ettercap
 net-analyzer/fierce
 net-analyzer/firewalk
