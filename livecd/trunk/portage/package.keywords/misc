@@ -27,10 +27,11 @@ dev-ruby/wxruby
 dev-util/premake
 sys-apps/hwdata-redhat
 sys-apps/hwsetup
+sys-apps/microcode-data
+sys-apps/microcode-ctl
 sys-apps/parted
 sys-apps/pciutils
 sys-apps/pkgcore
-sys-apps/microcode-data
 sys-libs/libkudzu
 sys-block/gparted
 sys-devel/crossdev
