@@ -86,9 +86,10 @@ dev-db/sqlix
 dev-db/sqlmap
 dev-db/sqlninja
 dev-java/jad-bin
+dev-libs/klibc
+dev-libs/libxml2
 dev-libs/libxslt
 dev-libs/openobex
-dev-libs/libxml2
 dev-python/pysqlite
 dev-python/psyco
 =dev-python/lxml-1.3.6
@@ -193,7 +194,7 @@ net-misc/bridge-utils
 net-misc/curl
 net-misc/dhcp
 net-misc/dhcpcd
-net-misc/ipsorcery
+#net-misc/ipsorcery
 net-misc/iputils
 net-misc/karma
 net-misc/nemesis
