@@ -257,6 +257,7 @@ net-wireless/ipw2200-firmware
 net-wireless/iwl3945-ucode
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
+net-wireless/ralink-firmware
 #net-wireless/iwlwifi
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
