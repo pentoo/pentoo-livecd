@@ -30,6 +30,7 @@ sys-apps/hwsetup
 sys-apps/parted
 sys-apps/pciutils
 sys-apps/pkgcore
+sys-apps/microcode-data
 sys-libs/libkudzu
 sys-block/gparted
 sys-devel/crossdev
