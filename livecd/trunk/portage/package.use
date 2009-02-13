@@ -1,39 +1,27 @@
-sys-block/gparted fat jfs ntfs reiser4 reiserfs xfs
-sys-devel/gcc gtk
-sys-apps/iproute2 -minimal
-sys-libs/libkudzu -minimal livecd python
-net-wireless/linux-wlan-ng-modules pci pcmcia plx usb
-net-wireless/linux-wlan-ng pcmcia
+app-crypt/johntheripper mmx mpi sse2 custom-cflags
+app-crypt/ophcrack-tables -vistafree -xpfast -xpsmall
+app-crypt/pyrit cuda padlock stream
+app-fuzz/protos http ldap snmp sip h2250 isakmp
+dev-db/freetds mssql odbc
+dev-lang/php crypt ctype mysql pcre session unicode cli pcre xml zlib
+dev-lang/python sqlite
+gnome-menus/gnome-menus -kernel_linux
+media-sound/sox -encode -ogg -mad
+media-video/vlc qt4 run-as-root
+net-analyzer/autoscan-network samba -gnome snmp nessus
+net-analyzer/metasploit gtk httpd sqlite3
+net-analyzer/mosref doc sources
+net-analyzer/wireshark gcrypt gnutls kerberos threads
 net-wireless/acx pcmcia
 net-wireless/atmel-firmware pcmcia usb
-www-client/links -X -directfb -fbcon gpm -javascript -jpeg -png
-media-sound/xmms esd -mad
-net-wireless/hostap-driver pcmcia
-net-wireless/wpa_supplicant readline
-sys-fs/captive -gtk
-media-sound/sox -encode -ogg -mad
-net-wireless/ipw2200 radiotap
-dev-lang/perl -minimal
-dev-lang/python sqlite
 net-wireless/prism54 pcmcia
-dev-perl/gtk-perl -gnome
-x11-libs/cairo svg
-dev-python/pygtk -opengl
-dev-perl/gtk-perl -opengl
-sys-apps/pmount -crypt
-# dep required from e
-x11-libs/ecore dbus
-dev-db/freetds mssql odbc
-net-im/skype qt-static
-app-fuzz/protos http ldap snmp sip h2250 isakmp
-x11-plugins/firecat recon security
-net-analyzer/autoscan-network samba -gnome snmp nessus
-gnome-menus/gnome-menus -kernel_linux
-net-analyzer/mosref doc sources
-net-analyzer/metasploit gtk httpd sqlite3
-net-analyzer/wireshark gcrypt gnutls kerberos threads
-media-video/vlc qt4 run-as-root
-app-crypt/pyrit cuda padlock stream
+net-wireless/wpa_supplicant readline
 sys-apps/hal X crypt acpi dell disk-partition laptop
-x11-terms/rxvt-unicode afterimage iso14755 perl truetype
-dev-lang/php crypt ctype mysql pcre session unicode cli pcre xml zlib
+sys-apps/pmount -crypt
+sys-block/gparted fat jfs ntfs reiser4 reiserfs xfs
+sys-devel/gcc gtk
+sys-libs/libkudzu -minimal livecd python
+www-client/links -X -directfb -fbcon gpm -javascript -jpeg -png
+x11-libs/cairo svg
+x11-libs/ecore dbus
+x11-terms/rxvt-unicode perl truetype
