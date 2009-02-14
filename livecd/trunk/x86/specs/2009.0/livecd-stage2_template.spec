@@ -29,7 +29,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-2009.0_alpha1-r1.iso
+livecd/iso: /tmp/pentoo-2009.0_beta_pre1.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -192,7 +192,7 @@ livecd/root_overlay: /root/pentoo/x86/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2009.0_a3
+livecd/volid: 2009.0_b
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
@@ -230,7 +230,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: pcmcia usb qt4 qt3support madwifi injection wifi
+boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support madwifi injection wifi
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -247,7 +247,7 @@ boot/kernel/pentoo/use: pcmcia usb qt4 qt3support madwifi injection wifi
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
 x11-misc/mkxf86config
-#=app-admin/genmenu-9999
+=app-admin/genmenu-9999
 sys-apps/pcmciautils
 net-wireless/atmel-firmware
 net-wireless/b43-fwcutter
@@ -296,7 +296,7 @@ app-crypt/cuda-multiforcer
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc
+livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner app-text/texlive-core dev-texlive/texlive-basic dev-texlive/texlive-latex dev-texlive/texlive-latexrecommended
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
