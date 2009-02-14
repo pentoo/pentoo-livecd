@@ -57,6 +57,7 @@ net-wireless/orinoco-sn
 net-wireless/orinoco-usb
 net-wireless/prism54
 net-wireless/prism54-firmware
+net-wireless/ralink-firmware
 net-wireless/ralink-rt61
 net-wireless/ralink-firmware
 net-wireless/rfswitch
