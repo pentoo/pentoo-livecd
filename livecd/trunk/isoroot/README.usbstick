@@ -1,0 +1,38 @@
+Mini-Pentoo HowTo usbstick.
+
+To write this iso image to a usbstick is simple. Let's see:
+
+Create a bootable Linux partition on your USB pen drive. 
+ie /dev/sdc1 with fdisk like the following sentence
+(Watch out, it will suppress all data...)
+fdisk /dev/sdc
+d (delete)
+n (new)
+p (primary)
+1 (number 1)
+Choose the size you want...
+a (bootable flag)
+1 (number 1)
+w (write)
+
+Format is Ext3 filesystem.
+mkfs.ext3 /dev/sda1
+
+Put the file mbr.bin on the whole filesystem:
+cat tools/usbboot/mbr.in > /dev/sdc
+(This file resides in the iso/cd in tools/usbboot/)
+
+Mount it on /mnt/stick:
+mkdir /mnt/stick
+mount /dev/sdc1 /mnt/stick
+
+Copy all files on /mnt/stick.
+
+Use extlinux to write the bootloader on the stick :
+extlinux /mnt/usbstick/isolinux
+
+If you don't have extlinux, use the static binary provided
+under tools/usbboot/extlinux
+
+You're done. Hope you'll enjoy it.
+
