@@ -73,7 +73,7 @@ app-mobilephone/obexftp
 app-portage/gentoolkit
 app-portage/layman
 app-text/dos2unix
-dev-db/absinthe
+#dev-db/absinthe
 dev-db/minimysqlator
 dev-db/mssqlscan
 dev-db/oat
@@ -321,6 +321,7 @@ x11-drivers/xf86-video-trident
 x11-drivers/xf86-video-vesa
 x11-drivers/xf86-video-vmware
 x11-drivers/xf86-video-voodoo
+x11-misc/dmenu
 x11-plugins/firecat
 #x11-plugins/e_modules
 x11-plugins/e_modules-bling
@@ -339,5 +340,6 @@ x11-plugins/winlist_ng
 x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
 x11-libs/e_dbus
+x11-wm/dwm
 x11-wm/enlightenment
 x11-base/xorg-x11
