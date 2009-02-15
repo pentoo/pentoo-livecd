@@ -26,7 +26,7 @@ wifi injection lzma speed gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid wxwindows sqlite truetype
+dvd mpeg ogg rtsp x264 xvid sqlite truetype
 opengl dbus binary-drivers -hal acpi
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
@@ -281,7 +281,7 @@ sys-libs/gpm
 sys-libs/libkudzu
 sys-power/acpid
 www-client/mozilla-firefox-bin
-www-server/lighttpd
+www-servers/lighttpd
 x11-base/xorg-server
 x11-base/xorg-x11
 #x11-drivers/xf86-input-virtualbox
