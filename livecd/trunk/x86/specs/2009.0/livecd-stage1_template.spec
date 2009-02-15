@@ -99,6 +99,7 @@ dev-util/nvidia-cuda-sdk
 dev-util/amd-stream-sdk-bin
 #dev-util/insight
 gnome-base/gnome-menus
+mail-client/mozilla-thunderbird-bin
 media-gfx/scrot
 media-fonts/font-misc-misc
 media-sound/audacious
@@ -280,7 +281,7 @@ sys-libs/gpm
 sys-libs/libkudzu
 sys-power/acpid
 www-client/mozilla-firefox-bin
-mail-client/mozilla-thunderbird-bin
+www-server/lighttpd
 x11-base/xorg-server
 x11-base/xorg-x11
 #x11-drivers/xf86-input-virtualbox
@@ -289,7 +290,7 @@ x11-libs/ecore
 x11-libs/esmart
 x11-libs/evas
 x11-libs/gksu
-x11-libs/gtk+
+#x11-libs/gtk+
 #x11-drivers/xf86-input-evdev
 x11-drivers/xf86-input-keyboard
 x11-drivers/xf86-input-mouse
@@ -333,6 +334,7 @@ x11-plugins/e_modules-screenshot
 x11-plugins/e_modules-weather
 x11-plugins/e_modules-wlan
 x11-plugins/itask-ng
+x11-plugins/pidgin-encryption
 x11-plugins/winlist_ng
 x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
