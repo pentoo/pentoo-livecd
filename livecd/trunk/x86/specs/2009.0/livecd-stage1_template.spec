@@ -190,6 +190,7 @@ net-ftp/oftpd
 net-im/pidgin
 net-irc/irssi
 net-irc/xchat
+net-misc/axel
 net-misc/bridge-utils
 net-misc/curl
 net-misc/dhcp
