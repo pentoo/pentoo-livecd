@@ -29,7 +29,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-2009.0_beta_pre1.iso
+livecd/iso: /tmp/pentoo-2009.0_beta_pre2.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -254,7 +254,7 @@ net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-net-wireless/iwl3945-ucode
+=net-wireless/iwl3945-ucode-15.28.1.8
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 net-wireless/ralink-firmware
