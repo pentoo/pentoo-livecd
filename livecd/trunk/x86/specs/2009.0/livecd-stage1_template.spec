@@ -222,6 +222,7 @@ net-misc/tightvnc
 net-misc/voipong
 net-misc/wget
 net-misc/whois
+net-misc/wicd
 net-p2p/bittorrent
 net-proxy/3proxy
 net-proxy/burpsuite
