@@ -24,15 +24,27 @@ done
 # Runs the incredible menu generator
 genmenu.py -v -t urxvt
 
+# Fixes icons
+cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
+
 # Fix the root login by emptying the root password. No ssh will be allowed until 'passwd root'
 sed -i -e 's/^root:\*:/root::/' /etc/shadow
 
 # Apply patches to root
 cd /
-patch patches/bashlogin.patch bin/bashlogin
-patch patches/halt.sh etc/init.d/halt.sh
-patch patches/livecd-functions.patch sbin/livecd-functions.sh
-patch patches/rc.patch sbin/rc
+patch bin/bashlogin patches/bashlogin.patch 
+patch etc/init.d/halt.sh patches/halt.patch 
+patch sbin/livecd-functions.sh patches/livecd-functions.patch
+patch sbin/rc patches/rc.patch 
+rm -rf patches
+
+# Fix the kernel dir
+rm /usr/src/linux
+ln -s /usr/src/linu-2.6.28-pentoo-r3 /usr/src/linux
+
+# Setup fonts
+cd /usr/share/fonts
+mkfontdir *
 
 # Setup kismet & airmon-ng
 [ -e /usr/sbin/airmon-ng ] && sed -i -e 's:/kismet::' /usr/sbin/airmon-ng
@@ -58,7 +70,7 @@ chmod 777 -R /var/lib/ntop
 ntop --set-admin-password=pentoo
 
 # Setup ath5k as the default
-/usr/sbin/athload
+VER="2.6.28-pentoo-r3" /usr/sbin/athload
 
 # Sets FF as default browser
 echo 'export BROWSER="firefox"' >> /etc/env.d/99local
