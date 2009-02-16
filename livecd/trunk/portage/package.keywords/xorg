@@ -26,3 +26,4 @@
 =x11-libs/libXft-2.1.13
 =x11-apps/xwd-1.0.2
 =x11-libs/libXi-1.2.0
+=x11-proto/dri2proto-1.99.3
