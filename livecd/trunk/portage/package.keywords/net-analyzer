@@ -43,6 +43,7 @@ net-analyzer/ethloop
 net-analyzer/ethstatus
 net-analyzer/ettercap
 net-analyzer/fail2ban
+net-analyzer/fasttrack
 net-analyzer/fe3d
 net-analyzer/ffp
 net-analyzer/firewalk

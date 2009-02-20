@@ -118,6 +118,7 @@ net-analyzer/dnsenum
 net-analyzer/dsniff
 net-analyzer/etherape
 net-analyzer/ettercap
+net-analyzer/fasttrack
 net-analyzer/fierce
 net-analyzer/firewalk
 net-analyzer/fragroute
