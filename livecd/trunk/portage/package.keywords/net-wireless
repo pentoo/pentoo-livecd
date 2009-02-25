@@ -36,7 +36,7 @@ net-wireless/iwl3945-ucode
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 net-wireless/kdebluetooth
-net-wireless/kismet
+net-wireless/kismet-newcore
 net-wireless/kwlaninfo
 net-wireless/libbtctl
 net-wireless/linux-wlan-ng
@@ -67,6 +67,7 @@ net-wireless/rt2570
 net-wireless/rt61
 net-wireless/rtl8180
 net-wireless/rtl8187
+net-wireless/spectools
 net-wireless/ussp-push
 net-wireless/wavemon
 net-wireless/waveselect
