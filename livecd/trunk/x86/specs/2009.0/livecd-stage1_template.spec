@@ -47,6 +47,7 @@ app-crypt/johntheripper
 app-crypt/md5bf
 app-crypt/ophcrack
 app-crypt/SIPcrack
+app-crypt/sslstrip
 app-editors/hexedit
 app-editors/nano
 app-editors/ghex
