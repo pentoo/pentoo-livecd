@@ -208,6 +208,8 @@ net-analyzer/snortsam
 net-analyzer/squid-graph
 net-analyzer/squidsites
 net-analyzer/ssldump
+net-analyzer/sslsniff
+net-analyzer/sslstrip
 net-analyzer/ssmping
 net-analyzer/sussen
 net-analyzer/symon

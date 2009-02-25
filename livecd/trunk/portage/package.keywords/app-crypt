@@ -68,7 +68,6 @@ app-crypt/shash
 app-crypt/sign
 app-crypt/signing-party
 app-crypt/ssh-multiadd
-app-crypt/sslstrip
 app-crypt/stan
 app-crypt/steghide
 app-crypt/tinyca
