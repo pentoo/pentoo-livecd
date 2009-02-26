@@ -282,6 +282,7 @@ net-misc/stunnel
 net-misc/suite3270
 net-misc/switzerland
 net-misc/taylor-uucp
+net-misc/tcpick
 net-misc/tcpsound
 net-misc/telnet-bsd
 net-misc/termpkg
@@ -322,6 +323,7 @@ net-misc/wget
 net-misc/whatmask
 net-misc/whois
 net-misc/whoischk
+net-misc/wlan2eth
 net-misc/wicd
 net-misc/wol
 net-misc/wput
