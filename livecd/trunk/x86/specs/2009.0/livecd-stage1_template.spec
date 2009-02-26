@@ -3,7 +3,7 @@ version_stamp: 2009.0
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/2008.0
-snapshot: 2009.0
+snapshot: 2009.0-2
 source_subpath: default/stage3-i686-2009.0
 portage_confdir: /root/pentoo/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
@@ -47,7 +47,6 @@ app-crypt/johntheripper
 app-crypt/md5bf
 app-crypt/ophcrack
 app-crypt/SIPcrack
-app-crypt/sslstrip
 app-editors/hexedit
 app-editors/nano
 app-editors/ghex
@@ -79,7 +78,7 @@ dev-db/minimysqlator
 dev-db/mssqlscan
 dev-db/oat
 dev-db/sqid
-dev-db/sqlat
+#dev-db/sqlat
 dev-db/sqlbf
 #dev-db/sqlinject
 dev-db/sqlibf
@@ -94,11 +93,11 @@ dev-libs/openobex
 dev-python/pysqlite
 dev-python/psyco
 =dev-python/lxml-1.3.6
+dev-util/edb
 dev-util/dialog
 dev-util/subversion
 dev-util/nvidia-cuda-sdk
 dev-util/amd-stream-sdk-bin
-#dev-util/insight
 gnome-base/gnome-menus
 mail-client/mozilla-thunderbird-bin
 media-gfx/scrot
@@ -141,7 +140,6 @@ net-analyzer/metagoofil
 net-analyzer/metasploit
 net-analyzer/mosref
 net-analyzer/nbtscan
-#openvas
 net-analyzer/netcat
 net-analyzer/netdiscover
 #net-analyzer/netdude
@@ -151,7 +149,7 @@ net-analyzer/ngrep
 net-analyzer/nikto
 net-analyzer/nmap
 net-analyzer/nmbscan
-net-analyzer/ntop
+=net-analyzer/ntop-3.3.8
 net-analyzer/ntp-fingerprint
 net-analyzer/onesixtyone
 net-analyzer/p0f
@@ -166,6 +164,8 @@ net-analyzer/smtpmap
 net-analyzer/sniffit
 net-analyzer/snmpenum
 net-analyzer/snort
+net-analyzer/sslstrip
+net-analyzer/sslsniff
 net-analyzer/subdomainer
 net-analyzer/tcpdump
 net-analyzer/tcptraceroute
@@ -220,12 +220,14 @@ net-misc/sipp
 net-misc/sipsak
 net-misc/socat
 net-misc/stunnel
+net-misc/tcpick
 net-misc/telnet-bsd
 net-misc/tightvnc
 net-misc/voipong
 net-misc/wget
 net-misc/whois
 net-misc/wicd
+net-misc/wlan2eth
 net-proxy/3proxy
 net-proxy/burpsuite
 net-proxy/httpush
@@ -340,6 +342,7 @@ x11-plugins/e_modules-wlan
 x11-plugins/itask-ng
 x11-plugins/pidgin-encryption
 x11-plugins/winlist_ng
+x11-proto/dri2proto
 x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
 x11-libs/e_dbus
