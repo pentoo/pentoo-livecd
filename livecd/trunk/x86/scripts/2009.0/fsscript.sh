@@ -38,6 +38,10 @@ patch sbin/livecd-functions.sh patches/livecd-functions.patch
 patch sbin/rc patches/rc.patch 
 rm -rf patches
 
+# Fix net services
+sed -e '/PORTMAP_OPTS/ s/^#//' -i /etc/conf.d/portmap
+sed -e '/ESD_OPTIONS/ s/ -public//' -i /etc/conf.d/esound
+
 # Fix the kernel dir
 rm /usr/src/linux
 ln -s /usr/src/linu-2.6.28-pentoo-r3 /usr/src/linux
