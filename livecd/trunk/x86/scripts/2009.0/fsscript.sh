@@ -70,7 +70,7 @@ chmod 777 -R /var/lib/ntop
 ntop --set-admin-password=pentoo
 
 # Setup ath5k as the default
-VER="2.6.28-pentoo-r3" /usr/sbin/athload
+VER="2.6.28-pentoo-r4" /usr/sbin/athload
 
 # Sets FF as default browser
 echo 'export BROWSER="firefox"' >> /etc/env.d/99local
@@ -84,7 +84,7 @@ echo 'export BROWSER="firefox"' >> /etc/env.d/99local
 emerge --metadata
 
 # compile mingw32
-crossdev --portage -bk i686-mingw32
+#crossdev --portage -bk i686-mingw32
 
 # Adds sploit collection
 cd /opt/
