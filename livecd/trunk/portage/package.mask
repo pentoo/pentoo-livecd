@@ -1,3 +1,4 @@
+>=sys-libs/glibc-2.8
 =net-analyzer/nessus-libraries-2.3.1
 =net-analyzer/libnasl-2.3.1
 =net-analyzer/nessus-core-2.3.1
