@@ -45,6 +45,7 @@ app-arch/gzip
 app-crypt/chntpw
 app-crypt/johntheripper
 app-crypt/md5bf
+app-crypt/openvpn-blacklist
 app-crypt/ophcrack
 app-crypt/SIPcrack
 app-editors/hexedit
@@ -69,6 +70,7 @@ app-fuzz/smudge
 app-fuzz/ohrwurm
 app-fuzz/taof
 app-misc/livecd-tools
+app-misc/screen
 app-mobilephone/obexftp
 app-portage/gentoolkit
 app-portage/layman
@@ -86,6 +88,7 @@ dev-db/sqlix
 dev-db/sqlmap
 dev-db/sqlninja
 dev-java/jad-bin
+dev-lang/nasm
 dev-libs/klibc
 dev-libs/libxml2
 dev-libs/libxslt
@@ -208,6 +211,7 @@ net-misc/netkit-rsh
 net-misc/netsed
 net-misc/ntp
 net-misc/openssh
+net-misc/openvpn
 net-misc/partysip
 net-misc/proxychains
 net-misc/raccess
