@@ -21,7 +21,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 # pkgcache_path:
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
-mmx sse mpi
+mmx sse mpi wps
 wifi injection lzma speed gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6
 png jpeg gif dri svg aac nsplugin xrandr
