@@ -243,6 +243,7 @@ net-wireless/aircrack-ng
 #net-wireless/airsnort
 #net-wireless/airtraf
 net-wireless/athload
+net-wireless/b43-openfwwf
 net-wireless/bluez-libs
 net-wireless/bluez-utils
 net-wireless/btscanner

@@ -8,6 +8,7 @@ net-wireless/ap-utils
 net-wireless/at76c503a
 net-wireless/atmel-firmware
 net-wireless/b43-fwcutter
+net-wireless/b43-openfwwf
 net-wireless/bcm43xx-fwcutter
 net-wireless/blueproxy
 net-wireless/bluez
