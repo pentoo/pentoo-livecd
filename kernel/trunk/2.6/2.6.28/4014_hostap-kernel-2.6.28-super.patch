@@ -1,0 +1,810 @@
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_80211_tx.c linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_80211_tx.c
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_80211_tx.c	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_80211_tx.c	2009-04-08 00:46:13.000000000 -0400
+@@ -71,6 +71,9 @@
+ 	iface = netdev_priv(dev);
+ 	local = iface->local;
+ 
++	if (local->iw_mode == IW_MODE_MONITOR)
++		goto xmit;
++
+ 	if (skb->len < ETH_HLEN) {
+ 		printk(KERN_DEBUG "%s: hostap_data_start_xmit: short skb "
+ 		       "(len=%d)\n", dev->name, skb->len);
+@@ -241,6 +244,7 @@
+ 		memcpy(skb_put(skb, ETH_ALEN), &hdr.addr4, ETH_ALEN);
+ 	}
+ 
++xmit:
+ 	iface->stats.tx_packets++;
+ 	iface->stats.tx_bytes += skb->len;
+ 
+@@ -416,8 +420,6 @@
+ 	}
+ 
+ 	if (skb->len < 24) {
+-		printk(KERN_DEBUG "%s: hostap_master_start_xmit: short skb "
+-		       "(len=%d)\n", dev->name, skb->len);
+ 		ret = 0;
+ 		iface->stats.tx_dropped++;
+ 		goto fail;
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_common.h linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_common.h
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_common.h	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_common.h	2009-04-08 00:46:13.000000000 -0400
+@@ -249,6 +249,7 @@
+ #define PRISM2_IOCTL_ADDMAC (SIOCIWFIRSTPRIV + 18)
+ #define PRISM2_IOCTL_DELMAC (SIOCIWFIRSTPRIV + 20)
+ #define PRISM2_IOCTL_KICKMAC (SIOCIWFIRSTPRIV + 22)
++#define PRISM2_IOCTL_DSSSTEST (SIOCIWFIRSTPRIV + 24)
+ 
+ /* following are not in SIOCGIWPRIV list; check permission in the driver code
+  */
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_config.h linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_config.h
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_config.h	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_config.h	2009-04-08 00:46:13.000000000 -0400
+@@ -45,4 +45,22 @@
+  */
+ /* #define PRISM2_NO_STATION_MODES */
+ 
++/* Enable setting txpower */
++#define RAW_TXPOWER_SETTING
++
++
++//PATCH:
++/* Convert TX power to and from dBm (which does not work, it's just a
++ * very rough estimate) */
++/* #define PRISM2_DBM_CONVERSION */
++
++//PATCH
++/* define what settings should be restored after card reset */
++#define PRISM2_RESTORE_POWER
++/* #define PRISM2_RESTORE_SENS */
++/* #define PRISM2_RESTORE_RETRY */
++/* #define PRISM2_RESTORE_RATE */
++
++#define RAW_TXPOWER_SETTING
++
+ #endif /* HOSTAP_CONFIG_H */
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap.h linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap.h
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap.h	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap.h	2009-04-08 00:46:13.000000000 -0400
+@@ -54,6 +54,10 @@
+ int prism2_wds_del(local_info_t *local, u8 *remote_addr,
+ 		   int rtnl_locked, int do_not_remove);
+ 
++int prism2_set_rate_from_local(struct net_device *dev);
++int prism2_set_power_from_local(struct net_device *dev);
++int prism2_set_sens_from_local(struct net_device *dev);
++int prism2_set_retry_from_local(struct net_device *dev);
+ 
+ /* hostap_ap.c */
+ 
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_hw.c linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_hw.c
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_hw.c	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_hw.c	2009-04-08 00:46:13.000000000 -0400
+@@ -1001,6 +1001,65 @@
+ 	return fid;
+ }
+ 
++static int prism2_monitor_enable(struct net_device *dev)
++{
++	if (hostap_set_word(dev, HFA384X_RID_CNFPORTTYPE, 5)) {
++		printk(KERN_DEBUG "Port type setting for monitor mode "
++			"failed\n");
++		return -EOPNOTSUPP;
++	}
++
++	if (hfa384x_cmd(dev, HFA384X_CMDCODE_TEST | (0x0a << 8),
++			     0, NULL, NULL)) {
++		printk(KERN_DEBUG "Could not enter testmode 0x0a\n");
++		return -EOPNOTSUPP;
++	}
++
++	if (hostap_set_word(dev, HFA384X_RID_CNFWEPFLAGS,
++			    HFA384X_WEPFLAGS_PRIVACYINVOKED |
++			    HFA384X_WEPFLAGS_HOSTENCRYPT |
++			    HFA384X_WEPFLAGS_HOSTDECRYPT)) {
++		printk(KERN_DEBUG "WEP flags setting failed\n");
++		return -EOPNOTSUPP;
++	}
++
++	if (hostap_set_word(dev, HFA384X_RID_PROMISCUOUSMODE, 1)) {
++		printk(KERN_DEBUG "Could not set promiscuous mode\n");
++		return -EOPNOTSUPP;
++	}
++
++	return 0;
++}
++
++static int prism2_dssstest_enable(struct net_device *dev)
++{
++	if (hostap_set_word(dev, HFA384X_RID_CNFPORTTYPE, 5)) {
++		printk(KERN_DEBUG "Port type setting for monitor mode "
++			"failed\n");
++		return -EOPNOTSUPP;
++	}
++
++	if (hfa384x_cmd(dev, HFA384X_CMDCODE_TEST | (0x0e << 8),
++			     0xa010, NULL, NULL)) {
++		printk(KERN_DEBUG "Could not enter testmode 0x0a\n");
++		return -EOPNOTSUPP;
++	}
++
++	if (hostap_set_word(dev, HFA384X_RID_CNFWEPFLAGS,
++			    HFA384X_WEPFLAGS_PRIVACYINVOKED |
++			    HFA384X_WEPFLAGS_HOSTENCRYPT |
++			    HFA384X_WEPFLAGS_HOSTDECRYPT)) {
++		printk(KERN_DEBUG "WEP flags setting failed\n");
++		return -EOPNOTSUPP;
++	}
++
++	if (hostap_set_word(dev, HFA384X_RID_PROMISCUOUSMODE, 1)) {
++		printk(KERN_DEBUG "Could not set promiscuous mode\n");
++		return -EOPNOTSUPP;
++	}
++
++	return 0;
++}
+ 
+ static int prism2_reset_port(struct net_device *dev)
+ {
+@@ -1027,6 +1086,14 @@
+ 			       "port\n", dev->name);
+ 	}
+ 
++	if (local->iw_mode == IW_MODE_DSSSTEST)
++		/* force mode 0x0a after port 0 reset */
++		return prism2_dssstest_enable(dev);
++
++	if (local->iw_mode == IW_MODE_MONITOR)
++		/* force mode 0x0a after port 0 reset */
++		return prism2_monitor_enable(dev);
++
+ 	/* It looks like at least some STA firmware versions reset
+ 	 * fragmentation threshold back to 2346 after enable command. Restore
+ 	 * the configured value, if it differs from this default. */
+@@ -1462,6 +1529,10 @@
+ 		return 1;
+ 	}
+ 
++	if (local->iw_mode == IW_MODE_MONITOR)
++		/* force mode 0x0a after port 0 reset */
++		prism2_monitor_enable(dev);
++
+ 	local->hw_ready = 1;
+ 	local->hw_reset_tries = 0;
+ 	local->hw_resetting = 0;
+@@ -1488,6 +1559,7 @@
+ 
+ static int prism2_hw_config(struct net_device *dev, int initial)
+ {
++	int ret=0;
+ 	struct hostap_interface *iface;
+ 	local_info_t *local;
+ 
+@@ -1510,11 +1582,32 @@
+ 	    (initial == 0 || (initial == 2 && local->num_dev_open > 0))) {
+ 		if (!local->dev_enabled)
+ 			prism2_callback(local, PRISM2_CALLBACK_ENABLE);
++	}
++	
++	// PATCH: Set saved txpower, rate, sens & retry values after HW reset
++#ifdef PRISM2_RESTORE_POWER
++	prism2_set_power_from_local(dev);
++#endif
++
++#ifdef PRISM2_RESTORE_RATE
++	prism2_set_rate_from_local(dev);
++#endif
++
++#ifdef PRISM2_RESTORE_SENS
++	prism2_set_sens_from_local(dev);
++#endif
++	
++#ifdef PRISM2_RESTORE_RETRY
++	prism2_set_retry_from_local(dev);
++#endif
++	
++	if (!local->pri_only && !initial) {
+ 		local->dev_enabled = 1;
+-		return prism2_hw_enable(dev, initial);
++		ret = prism2_hw_enable(dev, initial);
+ 	}
+ 
+-	return 0;
++
++	return ret;
+ }
+ 
+ 
+@@ -3168,6 +3261,8 @@
+ 	local->func->hw_config = prism2_hw_config;
+ 	local->func->hw_reset = prism2_hw_reset;
+ 	local->func->hw_shutdown = prism2_hw_shutdown;
++	local->func->monitor_enable = prism2_monitor_enable;
++	local->func->dssstest_enable = prism2_dssstest_enable;
+ 	local->func->reset_port = prism2_reset_port;
+ 	local->func->schedule_reset = prism2_schedule_reset;
+ #ifdef PRISM2_DOWNLOAD_SUPPORT
+@@ -3221,6 +3316,18 @@
+ 	local->scan_channel_mask = 0xffff;
+ 	local->monitor_type = PRISM2_MONITOR_RADIOTAP;
+ 
++	// PATCH: set default txpower, rate, sens and retry
++             
++    	local->txpower_type = PRISM2_TXPOWER_FIXED;
++     	local->txpower = 127;   /* minimal */
++     	local->tx_rate_control = HFA384X_RATES_1MBPS |
++            HFA384X_RATES_2MBPS | HFA384X_RATES_5MBPS |
++            HFA384X_RATES_11MBPS; /* auto */
++     	local->sensitivity = 1;
++     	local->manual_retry_count = 8;
++     	local->client_post_assoc_setup=0; /* a lock variable */
++ 
++
+ 	/* Initialize task queue structures */
+ 	INIT_WORK(&local->reset_queue, handle_reset_queue);
+ 	INIT_WORK(&local->set_multicast_list_queue,
+@@ -3269,7 +3376,8 @@
+ 	local->tick_timer.expires = jiffies + 2 * HZ;
+ 	add_timer(&local->tick_timer);
+ 
+-	INIT_LIST_HEAD(&local->bss_list);
++ 	   
++    INIT_LIST_HEAD(&local->bss_list);
+ 
+ 	hostap_setup_dev(dev, local, HOSTAP_INTERFACE_MASTER);
+ 
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_info.c linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_info.c
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_info.c	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_info.c	2009-04-08 00:46:13.000000000 -0400
+@@ -454,6 +454,26 @@
+ 	if (connected || local->prev_linkstatus_connected)
+ 		wireless_send_event(local->dev, SIOCGIWAP, &wrqu, NULL);
+ 	local->prev_linkstatus_connected = connected;
++	
++	// PATCH: Set saved txpower, & retry after linkstatus change
++	    if (connected) {
++	#ifdef PRISM2_RESTORE_POWER
++	    prism2_set_power_from_local(local->dev);
++	#endif
++	 
++	#ifdef PRISM2_RESTORE_RETRY
++	 	prism2_set_retry_from_local(local->dev);
++	#endif
++	    }
++	 
++	/* note: setting rate or sens triggers a new de-and-association
++	I tried to work around this in version 0.1 of the psrrr patch.
++	
++	However, in some cases, the new association would cancel the correctly 
++	restored txpower, which is by far the most important value to be restored. 
++	See version 0.1 for detail.
++	
++	*/
+ }
+ 
+ 
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_ioctl.c linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_ioctl.c
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_ioctl.c	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_ioctl.c	2009-04-08 00:46:13.000000000 -0400
+@@ -340,8 +340,12 @@
+ 		printk(KERN_WARNING "%s: TXRateControl/cnfSupportedRates "
+ 		       "setting to 0x%x failed\n",
+ 		       dev->name, local->tx_rate_control);
++	} else {
++		printk(KERN_DEBUG "%s: TX Rate set to 0x%x\n",
++		       dev->name, local->tx_rate_control);
+ 	}
+ 
++
+ 	/* Update TX rate configuration for all STAs based on new operational
+ 	 * rate set. */
+ 	hostap_update_rates(local);
+@@ -349,6 +353,11 @@
+ 	return ret;
+ }
+ 
++// PATCH: Global set rate function
++int prism2_set_rate_from_local(struct net_device *dev)
++{
++	return hostap_set_rate(dev);
++}
+ 
+ static int prism2_ioctl_siwrate(struct net_device *dev,
+ 				struct iw_request_info *info,
+@@ -483,11 +492,11 @@
+ 	if (sens->value < 1 || sens->value > 3)
+ 		return -EINVAL;
+ 
+-	if (hostap_set_word(dev, HFA384X_RID_CNFSYSTEMSCALE, sens->value) ||
+-	    local->func->reset_port(dev))
+-		return -EINVAL;
++	local->sensitivity = sens->value;
++
++	return prism2_set_sens_from_local(dev);
++	
+ 
+-	return 0;
+ }
+ 
+ static int prism2_ioctl_giwsens(struct net_device *dev,
+@@ -1104,44 +1113,43 @@
+ 
+ 	printk(KERN_DEBUG "Enabling monitor mode\n");
+ 	hostap_monitor_set_type(local);
++	return local->func->reset_port(dev);
++}
+ 
+-	if (hostap_set_word(dev, HFA384X_RID_CNFPORTTYPE,
+-			    HFA384X_PORTTYPE_PSEUDO_IBSS)) {
+-		printk(KERN_DEBUG "Port type setting for monitor mode "
+-		       "failed\n");
+-		return -EOPNOTSUPP;
+-	}
+ 
+-	/* Host decrypt is needed to get the IV and ICV fields;
+-	 * however, monitor mode seems to remove WEP flag from frame
+-	 * control field */
+-	if (hostap_set_word(dev, HFA384X_RID_CNFWEPFLAGS,
+-			    HFA384X_WEPFLAGS_HOSTENCRYPT |
+-			    HFA384X_WEPFLAGS_HOSTDECRYPT)) {
+-		printk(KERN_DEBUG "WEP flags setting failed\n");
+-		return -EOPNOTSUPP;
+-	}
++static int hostap_monitor_mode_disable(local_info_t *local)
++{
++	struct net_device *dev = local->ddev;
+ 
+-	if (local->func->reset_port(dev) ||
+-	    local->func->cmd(dev, HFA384X_CMDCODE_TEST |
+-			     (HFA384X_TEST_MONITOR << 8),
+-			     0, NULL, NULL)) {
+-		printk(KERN_DEBUG "Setting monitor mode failed\n");
+-		return -EOPNOTSUPP;
+-	}
++	if (dev == NULL)
++		return -1;
+ 
+-	return 0;
++	printk(KERN_DEBUG "%s: Disabling monitor mode\n", dev->name);
++	dev->type = ARPHRD_ETHER;
++	dev->hard_header_parse = local->saved_eth_header_parse;
++	if (local->func->cmd(dev, HFA384X_CMDCODE_TEST |
++			     (HFA384X_TEST_STOP << 8),
++			     0, NULL, NULL))
++		return -1;
++	return hostap_set_encryption(local);
+ }
+ 
++static int hostap_dssstest_mode_enable(local_info_t *local)
++{
++	struct net_device *dev = local->dev;
+ 
+-static int hostap_monitor_mode_disable(local_info_t *local)
++	printk(KERN_DEBUG "Enabling dssstest mode\n");
++	return local->func->reset_port(dev);
++}
++
++static int hostap_dssstest_mode_disable(local_info_t *local)
+ {
+ 	struct net_device *dev = local->ddev;
+ 
+ 	if (dev == NULL)
+ 		return -1;
+ 
+-	printk(KERN_DEBUG "%s: Disabling monitor mode\n", dev->name);
++	printk(KERN_DEBUG "%s: Disabling dssstest mode\n", dev->name);
+ 	dev->type = ARPHRD_ETHER;
+ 
+ 	if (local->func->cmd(dev, HFA384X_CMDCODE_TEST |
+@@ -1151,7 +1159,6 @@
+ 	return hostap_set_encryption(local);
+ }
+ 
+-
+ static int prism2_ioctl_siwmode(struct net_device *dev,
+ 				struct iw_request_info *info,
+ 				__u32 *mode, char *extra)
+@@ -1165,7 +1172,7 @@
+ 
+ 	if (*mode != IW_MODE_ADHOC && *mode != IW_MODE_INFRA &&
+ 	    *mode != IW_MODE_MASTER && *mode != IW_MODE_REPEAT &&
+-	    *mode != IW_MODE_MONITOR)
++	    *mode != IW_MODE_MONITOR && *mode != IW_MODE_DSSSTEST)
+ 		return -EOPNOTSUPP;
+ 
+ #ifdef PRISM2_NO_STATION_MODES
+@@ -1182,11 +1189,15 @@
+ 		return -EINVAL;
+ 	}
+ 
++	if (local->iw_mode == IW_MODE_DSSSTEST)
++		hostap_dssstest_mode_disable(local);
++
+ 	if (local->iw_mode == IW_MODE_MONITOR)
+ 		hostap_monitor_mode_disable(local);
+ 
+ 	if ((local->iw_mode == IW_MODE_ADHOC ||
+-	     local->iw_mode == IW_MODE_MONITOR) && *mode == IW_MODE_MASTER) {
++	     local->iw_mode == IW_MODE_MONITOR ||
++	     local->iw_mode == IW_MODE_DSSSTEST) && *mode == IW_MODE_MASTER) {
+ 		/* There seems to be a firmware bug in at least STA f/w v1.5.6
+ 		 * that leaves beacon frames to use IBSS type when moving from
+ 		 * IBSS to Host AP mode. Doing double Port0 reset seems to be
+@@ -1198,8 +1209,11 @@
+ 	       "%d -> %d\n", dev->name, local->iw_mode, *mode);
+ 	local->iw_mode = *mode;
+ 
++	if (local->iw_mode == IW_MODE_DSSSTEST)
++		return hostap_dssstest_mode_enable(local);
++
+ 	if (local->iw_mode == IW_MODE_MONITOR)
+-		hostap_monitor_mode_enable(local);
++		return hostap_monitor_mode_enable(local);
+ 	else if (local->iw_mode == IW_MODE_MASTER && !local->host_encrypt &&
+ 		 !local->fw_encrypt_ok) {
+ 		printk(KERN_DEBUG "%s: defaulting to host-based encryption as "
+@@ -1392,16 +1406,14 @@
+ 			local->manual_retry_count = -1;
+ 			local->tx_control &= ~HFA384X_TX_CTRL_ALT_RTRY;
+ 		} else {
+-			if (hostap_set_word(dev, HFA384X_RID_CNFALTRETRYCOUNT,
+-					    rrq->value)) {
+-				printk(KERN_DEBUG "%s: Alternate retry count "
+-				       "setting to %d failed\n",
+-				       dev->name, rrq->value);
++			local->manual_retry_count = rrq->value;
++			local->tx_control |= HFA384X_TX_CTRL_ALT_RTRY;
++
++			if (prism2_set_retry_from_local(dev)) {
++				local->manual_retry_count = -1;
+ 				return -EOPNOTSUPP;
+ 			}
+ 
+-			local->manual_retry_count = rrq->value;
+-			local->tx_control |= HFA384X_TX_CTRL_ALT_RTRY;
+ 		}
+ 		return 0;
+ 	}
+@@ -1494,6 +1506,8 @@
+  * increasing dBm value should correspond to increasing TX power.
+  */
+ 
++
++#ifdef PRISM2_DBM_CONVERSION
+ static int prism2_txpower_hfa386x_to_dBm(u16 val)
+ {
+ 	signed char tmp;
+@@ -1522,6 +1536,8 @@
+ 
+ 	return (unsigned char) tmp;
+ }
++#endif /* PRISM2_DBM_CONVERSION */
++
+ #endif /* RAW_TXPOWER_SETTING */
+ 
+ 
+@@ -1561,24 +1577,15 @@
+ 		       dev->name, ret ? "failed" : "OK");
+ 		local->txpower_type = PRISM2_TXPOWER_UNKNOWN;
+ 	}
+-
+ #ifdef RAW_TXPOWER_SETTING
+-	if (!rrq->fixed && local->txpower_type != PRISM2_TXPOWER_AUTO) {
+-		printk(KERN_DEBUG "Setting ALC on\n");
+-		val = HFA384X_TEST_CFG_BIT_ALC;
+-		local->func->cmd(dev, HFA384X_CMDCODE_TEST |
+-				 (HFA384X_TEST_CFG_BITS << 8), 1, &val, NULL);
+-		local->txpower_type = PRISM2_TXPOWER_AUTO;
+-		return 0;
+-	}
+ 
+-	if (local->txpower_type != PRISM2_TXPOWER_FIXED) {
+-		printk(KERN_DEBUG "Setting ALC off\n");
+-		val = HFA384X_TEST_CFG_BIT_ALC;
+-		local->func->cmd(dev, HFA384X_CMDCODE_TEST |
+-				 (HFA384X_TEST_CFG_BITS << 8), 0, &val, NULL);
+-			local->txpower_type = PRISM2_TXPOWER_FIXED;
+-	}
++// PATCH: Removed buggy/overengineered functions for setting txpower
++// they relied on local variables and hardware being in sync, which was
++// seldom true
++ 
++	local->txpower_type = rrq->fixed?
++		PRISM2_TXPOWER_FIXED:PRISM2_TXPOWER_AUTO;
++	
+ 
+ 	if (rrq->flags == IW_TXPOW_DBM)
+ 		tmp = "dBm";
+@@ -1586,23 +1593,40 @@
+ 		tmp = "mW";
+ 	else
+ 		tmp = "UNKNOWN";
+-	printk(KERN_DEBUG "Setting TX power to %d %s\n", rrq->value, tmp);
+ 
+ 	if (rrq->flags != IW_TXPOW_DBM) {
+ 		printk("SIOCSIWTXPOW with mW is not supported; use dBm\n");
+ 		return -EOPNOTSUPP;
+ 	}
+-
++// PATCH: crappy dBm concersion may be turned on/off 
++#ifdef PRISM2_DBM_CONVERSION
++	local->txpower = prism2_txpower_dBm_to_hfa386x(rrq->value);
++#else
+ 	local->txpower = rrq->value;
+-	val = prism2_txpower_dBm_to_hfa386x(local->txpower);
+-	if (local->func->cmd(dev, HFA384X_CMDCODE_WRITEMIF,
+-			     HFA386X_CR_MANUAL_TX_POWER, &val, NULL))
+-		ret = -EOPNOTSUPP;
++#endif
++// PATCH: Use global function instead of setting locally
++
++	/* in client mode, setting power has no efect without reset */
++	if (local->iw_mode == IW_MODE_MASTER) 
++		ret = prism2_set_power_from_local(dev);
++	else {
++#ifdef PRISM2_RESTORE_POWER
++		/* Disable and enable card */
++		local->func->hw_shutdown(dev, 1);
++		local->func->hw_config(dev, 0); 
++		ret=0;
++		/* calls prism2_set_power_from_local() */
++#else
++		/* if a reset wouldn't set the txpower, do the original, 
++		 even tho' it does not work well... */
++		ret = prism2_set_power_from_local(dev);
++#endif
++	}
++
+ #else /* RAW_TXPOWER_SETTING */
+ 	if (rrq->fixed)
+ 		ret = -EOPNOTSUPP;
+ #endif /* RAW_TXPOWER_SETTING */
+-
+ 	return ret;
+ }
+ 
+@@ -1622,25 +1646,24 @@
+ 	rrq->disabled = 0;
+ 	rrq->fixed = 0;
+ 
+-	if (local->txpower_type == PRISM2_TXPOWER_AUTO) {
+-		if (local->func->cmd(dev, HFA384X_CMDCODE_READMIF,
+-				     HFA386X_CR_MANUAL_TX_POWER,
+-				     NULL, &resp0) == 0) {
+-			rrq->value = prism2_txpower_hfa386x_to_dBm(resp0);
+-		} else {
+-			/* Could not get real txpower; guess 15 dBm */
+-			rrq->value = 15;
+-		}
+-	} else if (local->txpower_type == PRISM2_TXPOWER_OFF) {
+-		rrq->value = 0;
+-		rrq->disabled = 1;
+-	} else if (local->txpower_type == PRISM2_TXPOWER_FIXED) {
+-		rrq->value = local->txpower;
+-		rrq->fixed = 1;
++// PATCH: read the real values from HW, don't return contents of local
++// vars
++	if (local->func->cmd(dev, HFA384X_CMDCODE_READMIF,
++			     HFA386X_CR_MANUAL_TX_POWER,
++			     NULL, &resp0) == 0) {
++	
++// PATCH: crappy dBm concersion may be turned on/off 
++#ifdef PRISM2_DBM_CONVERSION
++		rrq->value = prism2_txpower_hfa386x_to_dBm(resp0);
++#else
++		rrq->value = resp0;
++#endif
++
+ 	} else {
+-		printk("SIOCGIWTXPOW - unknown txpower_type=%d\n",
+-		       local->txpower_type);
++		/* Could not get real txpower; guess 0 dBm */
++		rrq->value = 0;
+ 	}
++	
+ 	return 0;
+ #else /* RAW_TXPOWER_SETTING */
+ 	return -EOPNOTSUPP;
+@@ -1732,7 +1755,6 @@
+ 	return -EOPNOTSUPP;
+ }
+ 
+-
+ static inline int prism2_request_scan(struct net_device *dev)
+ {
+ 	return -EOPNOTSUPP;
+@@ -2132,6 +2154,8 @@
+ static const struct iw_priv_args prism2_priv[] = {
+ 	{ PRISM2_IOCTL_MONITOR,
+ 	  IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1, 0, "monitor" },
++	{ PRISM2_IOCTL_DSSSTEST,
++	  IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1, 0, "dssstest" },
+ 	{ PRISM2_IOCTL_READMIF,
+ 	  IW_PRIV_TYPE_BYTE | IW_PRIV_SIZE_FIXED | 1,
+ 	  IW_PRIV_TYPE_BYTE | IW_PRIV_SIZE_FIXED | 1, "readmif" },
+@@ -2960,6 +2984,32 @@
+ }
+ 
+ 
++static int prism2_ioctl_priv_dssstest(struct net_device *dev, int *i)
++{
++	struct hostap_interface *iface;
++	local_info_t *local;
++	int ret = 0;
++	u32 mode;
++
++	iface = netdev_priv(dev);
++	local = iface->local;
++
++	if (*i == 0) {
++		/* Disable dssstest mode - old mode was not saved, so go to
++		 * Master mode */
++		mode = IW_MODE_MASTER;
++		ret = prism2_ioctl_siwmode(dev, NULL, &mode, NULL);
++	} else if (*i == 1) {
++		mode = IW_MODE_DSSSTEST;
++		ret = prism2_ioctl_siwmode(dev, NULL, &mode, NULL);
++		hostap_dssstest_mode_enable(local);
++	} else
++		ret = -EINVAL;
++
++	return ret;
++}
++
++
+ static int prism2_ioctl_priv_reset(struct net_device *dev, int *i)
+ {
+ 	struct hostap_interface *iface;
+@@ -4016,6 +4066,11 @@
+ 		else ret = prism2_ioctl_priv_monitor(dev, (int *) wrq->u.name);
+ 		break;
+ 
++	case PRISM2_IOCTL_DSSSTEST:
++		if (!capable(CAP_NET_ADMIN)) ret = -EPERM;
++		else ret = prism2_ioctl_priv_dssstest(dev, (int *) wrq->u.name);
++		break;
++
+ 	case PRISM2_IOCTL_RESET:
+ 		if (!capable(CAP_NET_ADMIN)) ret = -EPERM;
+ 		else ret = prism2_ioctl_priv_reset(dev, (int *) wrq->u.name);
+@@ -4083,3 +4138,5 @@
+ 
+ 	return ret;
+ }
++
++EXPORT_SYMBOL(prism2_set_rate_from_local);
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_main.c linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_main.c
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_main.c	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_main.c	2009-04-08 00:46:13.000000000 -0400
+@@ -331,7 +331,7 @@
+ 	if (local->iw_mode == IW_MODE_REPEAT)
+ 		return HFA384X_PORTTYPE_WDS;
+ 	if (local->iw_mode == IW_MODE_MONITOR)
+-		return HFA384X_PORTTYPE_PSEUDO_IBSS;
++		return 5; /*HFA384X_PORTTYPE_PSEUDO_IBSS;*/
+ 	return HFA384X_PORTTYPE_HOSTAP;
+ }
+ 
+@@ -1098,6 +1098,69 @@
+ }
+ 
+ 
++// PATCH: Global set txpower function
++
++int prism2_set_power_from_local(struct net_device *dev)
++{
++	int alc;
++	u16 val;
++        struct hostap_interface *iface = dev->priv;
++	local_info_t *local = iface->local;
++		
++	/* set the ALC */
++	alc = local->txpower_type != PRISM2_TXPOWER_FIXED;
++	printk(KERN_DEBUG "%s: Setting ALC to %d\n", dev->name, alc);
++
++	val = HFA384X_TEST_CFG_BIT_ALC;
++	local->func->cmd(dev, HFA384X_CMDCODE_TEST |
++			 (HFA384X_TEST_CFG_BITS << 8), alc, &val, NULL);
++
++	/* if ALC is on, don't set the power */
++	if (alc) return 0;
++	
++	/* set the txpower */
++	val = local->txpower;
++	printk(KERN_DEBUG "%s: Setting TX power to %d \n", dev->name, val);
++	if (local->func->cmd(dev, HFA384X_CMDCODE_WRITEMIF,
++			     HFA386X_CR_MANUAL_TX_POWER, &val, NULL))
++		return  -EOPNOTSUPP;
++	else return 0;
++}
++
++// PATCH: Global set sensitivity function
++
++int prism2_set_sens_from_local(struct net_device *dev)
++{
++	struct hostap_interface *iface = dev->priv;
++	local_info_t *local = iface->local;
++
++	if (hostap_set_word(dev, HFA384X_RID_CNFSYSTEMSCALE, local->sensitivity)
++			|| local->func->reset_port(dev))
++		return -EINVAL;
++	
++	printk(KERN_DEBUG "%s: sensitivity set to %d\n", dev->name, local->sensitivity);
++
++	return 0;
++}
++					
++
++// PATCH: Global set retry function
++int prism2_set_retry_from_local(struct net_device *dev)
++{
++	int ret=0;
++	struct hostap_interface *iface = dev->priv;
++	local_info_t *local = iface->local;
++	ret = hostap_set_word(dev, HFA384X_RID_CNFALTRETRYCOUNT,
++			local->manual_retry_count);
++	if (ret) 
++		printk(KERN_DEBUG "%s: Alternate retry count "
++		"setting to %d failed\n", dev->name, local->manual_retry_count);
++	else 
++		printk(KERN_DEBUG "%s: Alternate retry count "
++			"set to %d\n", dev->name, local->manual_retry_count);
++	return ret;
++}
++
+ struct proc_dir_entry *hostap_proc;
+ 
+ static int __init hostap_init(void)
+@@ -1142,5 +1205,9 @@
+ EXPORT_SYMBOL(hostap_remove_interface);
+ EXPORT_SYMBOL(prism2_update_comms_qual);
+ 
++EXPORT_SYMBOL(prism2_set_power_from_local);
++EXPORT_SYMBOL(prism2_set_sens_from_local);
++EXPORT_SYMBOL(prism2_set_retry_from_local);
++
+ module_init(hostap_init);
+ module_exit(hostap_exit);
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_plx.c linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_plx.c
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_plx.c	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_plx.c	2009-04-08 00:46:13.000000000 -0400
+@@ -99,6 +99,7 @@
+ 	{ 0xc250, 0x0002 } /* EMTAC A2424i */,
+ 	{ 0xd601, 0x0002 } /* Z-Com XI300 */,
+ 	{ 0xd601, 0x0005 } /* Zcomax XI-325H 200mW */,
++	{ 0xd601, 0x0010 } /* Zcomax XI-325H 100mW */,
+ 	{ 0, 0}
+ };
+ 
+diff -Naur linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_wlan.h linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_wlan.h
+--- linux-2.6.28-pentoo-r4/drivers/net/wireless/hostap/hostap_wlan.h	2008-12-24 18:26:37.000000000 -0500
++++ linux-2.6.28-pentoo-r4-patched/drivers/net/wireless/hostap/hostap_wlan.h	2009-04-08 00:46:13.000000000 -0400
+@@ -15,6 +15,7 @@
+ #define DEF_INTS -1, -1, -1, -1, -1, -1, -1
+ #define GET_INT_PARM(var,idx) var[var[idx] < 0 ? 0 : idx]
+ 
++#define IW_MODE_DSSSTEST 7
+ 
+ /* Specific skb->protocol value that indicates that the packet already contains
+  * txdesc header.
+@@ -588,6 +589,8 @@
+ 	int (*hw_config)(struct net_device *dev, int initial);
+ 	void (*hw_reset)(struct net_device *dev);
+ 	void (*hw_shutdown)(struct net_device *dev, int no_disable);
++	int (*monitor_enable)(struct net_device *dev);
++	int (*dssstest_enable)(struct net_device *dev);
+ 	int (*reset_port)(struct net_device *dev);
+ 	void (*schedule_reset)(local_info_t *local);
+ 	int (*download)(local_info_t *local,
+@@ -711,6 +714,9 @@
+ 		PRISM2_TXPOWER_FIXED, PRISM2_TXPOWER_UNKNOWN
+ 	} txpower_type;
+ 	int txpower; /* if txpower_type == PRISM2_TXPOWER_FIXED */
++	int sensitivity;
++	int client_post_assoc_setup;
++
+ 
+ 	/* command queue for hfa384x_cmd(); protected with cmdlock */
+ 	struct list_head cmd_queue;
