@@ -44,8 +44,6 @@ net-wireless/linux-wlan-ng
 net-wireless/linux-wlan-ng-firmware
 net-wireless/linux-wlan-ng-modules
 net-wireless/linux-wlan-ng-utils
-net-wireless/madwifi-hal
-net-wireless/madwifi-hal-tools
 net-wireless/madwifi-ng
 net-wireless/madwifi-ng-tools
 net-wireless/madwifi-old
