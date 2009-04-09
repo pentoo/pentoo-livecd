@@ -44,12 +44,8 @@ net-wireless/linux-wlan-ng
 net-wireless/linux-wlan-ng-firmware
 net-wireless/linux-wlan-ng-modules
 net-wireless/linux-wlan-ng-utils
-net-wireless/madwifi-ng
-net-wireless/madwifi-ng-tools
-net-wireless/madwifi-old
-net-wireless/madwifi-old-tools
+net-wireless/lorcon
 net-wireless/metadata.xml
-net-wireless/ndiswrapper
 net-wireless/opd
 net-wireless/orinoco-fwutils
 net-wireless/orinoco-sn
