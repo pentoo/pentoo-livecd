@@ -157,6 +157,7 @@ net-analyzer/nmbscan
 net-analyzer/ntp-fingerprint
 net-analyzer/onesixtyone
 net-analyzer/p0f
+net-analyzer/packet-o-matic
 net-analyzer/packit
 net-analyzer/paketto
 net-analyzer/rain
