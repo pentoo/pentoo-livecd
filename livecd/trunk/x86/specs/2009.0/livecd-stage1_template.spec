@@ -42,6 +42,7 @@ app-admin/gamin
 app-admin/localepurge
 app-admin/syslog-ng
 app-arch/gzip
+app-crypt/asleap
 app-crypt/chntpw
 app-crypt/johntheripper
 app-crypt/md5bf
