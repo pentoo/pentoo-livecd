@@ -21,9 +21,9 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 # pkgcache_path:
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
-mmx sse mpi wps
+mmx sse sse2 mpi wps
 wifi injection lzma speed gnuplot pyx
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6
+-quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
@@ -170,7 +170,7 @@ net-analyzer/sniffit
 net-analyzer/snmpenum
 net-analyzer/snort
 net-analyzer/sslstrip
-net-analyzer/sslsniff
+#net-analyzer/sslsniff
 net-analyzer/subdomainer
 net-analyzer/tcpdump
 net-analyzer/tcptraceroute
