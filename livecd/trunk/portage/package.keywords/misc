@@ -2,6 +2,7 @@
 #sys-fs/fuse
 #sys-kernel/genkernel
 www-client/mozilla-firefox
+www-client/mozilla-firefox-bin
 app-admin/genmenu -* **
 app-forensics/cmospwd
 app-misc/emelfm2
