@@ -15,6 +15,7 @@ dev-db/sqlbf
 dev-db/sqlinject
 dev-dotnet/wxnet
 dev-libs/distorm
+dev-libs/distorm64
 dev-python/Impacket
 dev-python/cxoracle
 dev-python/fpconst
@@ -48,4 +49,4 @@ dev-util/radare
 dev-util/kbuild
 dev-util/nvidia-cuda-sdk
 dev-util/nvidia-cuda-toolkit
-
+net-libs/libnids
