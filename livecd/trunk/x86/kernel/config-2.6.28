@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# Linux kernel version: 2.6.28-pentoo-r4
-# Thu Feb 26 01:20:11 2009
+# Linux kernel version: 2.6.28-pentoo-r5
+# Fri May  1 20:05:17 2009
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -424,7 +424,7 @@ CONFIG_PCIEAER=y
 CONFIG_PCIEASPM=y
 # CONFIG_PCIEASPM_DEBUG is not set
 CONFIG_ARCH_SUPPORTS_MSI=y
-# CONFIG_PCI_MSI is not set
+CONFIG_PCI_MSI=y
 CONFIG_PCI_LEGACY=y
 CONFIG_HT_IRQ=y
 CONFIG_ISA_DMA_API=y
