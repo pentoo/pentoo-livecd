@@ -56,3 +56,5 @@ net-ftp/gproftpd
 =dev-python/pysnmp-3.4.2 ~amd64
 net-libs/libnids
 dev-python/urwid
+net-wireless/orinoco-fwutils **
+net-firewall/firehol
