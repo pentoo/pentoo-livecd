@@ -27,3 +27,7 @@
 =x11-apps/xwd-1.0.2
 =x11-libs/libXi-1.2.0
 =x11-proto/dri2proto-1.99.3
+=x11-apps/smproxy-1.0.2
+=x11-apps/xcmsdb-1.0.1
+=x11-apps/xkbevd-1.0.2
+=x11-apps/xpr-1.0.2

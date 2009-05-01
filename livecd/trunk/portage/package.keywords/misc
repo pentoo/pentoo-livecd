@@ -22,6 +22,7 @@ dev-python/fpconst
 dev-python/lxml
 dev-python/pyPdf
 dev-python/pycrypto
+dev-python/pygoogle
 dev-python/python-ptrace
 dev-python/snakeoil
 dev-python/utidylib
@@ -49,5 +50,8 @@ dev-util/radare
 dev-util/kbuild
 dev-util/nvidia-cuda-sdk
 dev-util/nvidia-cuda-toolkit
-net-ftp/gproftpd ~amd64
+net-ftp/gproftpd
+=net-libs/netwib-5.33.0 ~amd64
+=dev-python/pysnmp-3.4.2 ~amd64
 net-libs/libnids
+dev-python/urwid
