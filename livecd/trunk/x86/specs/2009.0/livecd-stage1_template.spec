@@ -3,7 +3,7 @@ version_stamp: 2009.0
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/2008.0
-snapshot: 2009.0-2
+snapshot: 2009.0
 source_subpath: default/stage3-i686-2009.0
 portage_confdir: /root/pentoo/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
@@ -22,7 +22,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps
-wifi injection lzma speed gnuplot pyx
+wifi injection lzma speed gnuplot pyx bluetooth
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -115,7 +115,7 @@ net-analyzer/amap
 net-analyzer/angst
 net-analyzer/arpwatch
 net-analyzer/authforce
-net-analyzer/autoscan-network
+#net-analyzer/autoscan-network
 net-analyzer/dnsa
 net-analyzer/dnsenum
 #net-analyzer/driftnet
@@ -177,7 +177,7 @@ net-analyzer/tcptraceroute
 net-analyzer/thcrut
 net-analyzer/theHarvester
 net-analyzer/traceroute
-net-analyzer/upnpscan
+#net-analyzer/upnpscan
 net-analyzer/voiphopper
 net-analyzer/w3af
 net-analyzer/webshag
@@ -264,7 +264,7 @@ net-wireless/wifitap
 net-wireless/wireless-tools
 net-wireless/wpa_supplicant
 net-wireless/hostapd
-net-www/netscape-flash
+www-plugins/adobe-flash
 sys-apps/baselayout
 sys-apps/eject
 sys-apps/hwsetup
@@ -346,6 +346,7 @@ x11-plugins/e_modules-net
 x11-plugins/e_modules-screenshot
 x11-plugins/e_modules-weather
 x11-plugins/e_modules-wlan
+x11-plugins/extramenu
 x11-plugins/itask-ng
 x11-plugins/pidgin-encryption
 x11-plugins/winlist_ng
