@@ -49,4 +49,5 @@ dev-util/radare
 dev-util/kbuild
 dev-util/nvidia-cuda-sdk
 dev-util/nvidia-cuda-toolkit
+net-ftp/gproftpd ~amd64
 net-libs/libnids
