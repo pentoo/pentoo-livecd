@@ -2,10 +2,11 @@ app-crypt/johntheripper mmx mpi sse2 custom-cflags
 app-crypt/ophcrack-tables -vistafree -xpfast -xpsmall
 app-crypt/pyrit cuda padlock stream
 app-fuzz/protos http ldap snmp sip h2250 isakmp
+app-mobilephone/obexftp ruby
 dev-db/freetds mssql odbc
 dev-lang/php crypt ctype mysql pcre session unicode cli pcre xml zlib
 dev-lang/python sqlite
-gnome-menus/gnome-menus -kernel_linux
+gnome-base/gnome-menus -python
 media-sound/sox -encode -ogg -mad
 media-video/vlc qt4 run-as-root
 net-analyzer/autoscan-network samba -gnome snmp nessus

@@ -144,7 +144,7 @@ net-misc/knetload
 net-misc/knock
 net-misc/knutclient
 net-misc/kovpn
-net-misc/kphone
+net-voip/kphone
 net-misc/ksb26
 net-misc/kssh
 net-misc/ktraynetworker
