@@ -3,7 +3,7 @@ x11-apps/rgb
 x11-apps/xauth
 x11-apps/xinit
 x11-base/xorg-server
-=x11-drivers/ati-drivers-8.561
+=x11-drivers/ati-drivers-8.593
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-evdev
 x11-drivers/xf86-input-keyboard
