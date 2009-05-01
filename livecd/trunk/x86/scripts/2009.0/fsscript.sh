@@ -60,7 +60,7 @@ mkfontdir *
 
 # Remove useless opengl setup
 rm /etc/init.d/x-setup
-eselect opengl set xorg-x11
+#eselect opengl set xorg-x11
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
