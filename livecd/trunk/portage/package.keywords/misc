@@ -50,6 +50,7 @@ dev-util/radare
 dev-util/kbuild
 dev-util/nvidia-cuda-sdk
 dev-util/nvidia-cuda-toolkit
+dev-util/ati-stream-sdk-bin
 net-ftp/gproftpd
 =net-libs/netwib-5.33.0 ~amd64
 =dev-python/pysnmp-3.4.2 ~amd64
