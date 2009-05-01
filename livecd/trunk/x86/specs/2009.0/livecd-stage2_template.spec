@@ -262,7 +262,7 @@ net-wireless/ralink-firmware
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
 net-wireless/wpa_supplicant
-net-wireless/prism54-firmware
+#net-wireless/prism54-firmware
 #net-wireless/rt2x00
 #net-wireless/rtl8180
 net-wireless/zd1201-firmware
@@ -273,8 +273,8 @@ net-firewall/firehol
 x11-drivers/ati-drivers
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-synaptics
-=x11-drivers/xf86-video-virtualbox-2.0.6
-app-crypt/pyrit
+x11-drivers/xf86-video-virtualbox
+=app-crypt/pyrit-0.2.2
 app-crypt/cuda-multiforcer
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf

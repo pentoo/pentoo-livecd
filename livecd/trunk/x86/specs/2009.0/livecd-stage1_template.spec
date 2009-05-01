@@ -101,7 +101,7 @@ dev-util/edb
 dev-util/dialog
 dev-util/subversion
 dev-util/nvidia-cuda-sdk
-dev-util/amd-stream-sdk-bin
+dev-util/ati-stream-sdk-bin
 gnome-base/gnome-menus
 mail-client/mozilla-thunderbird-bin
 media-gfx/scrot
