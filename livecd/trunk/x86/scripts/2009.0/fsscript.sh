@@ -44,7 +44,7 @@ sed -e '/ESD_OPTIONS/ s/ -public//' -i /etc/conf.d/esound
 
 # Fix the kernel dir
 rm /usr/src/linux
-ln -s /usr/src/linu-2.6.28-pentoo-r3 /usr/src/linux
+ln -s /usr/src/linu-2.6.28-pentoo-r5 /usr/src/linux
 
 # Setup fonts
 cd /usr/share/fonts
