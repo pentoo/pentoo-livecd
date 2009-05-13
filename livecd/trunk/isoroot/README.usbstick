@@ -6,30 +6,35 @@ Create a bootable Linux partition on your USB pen drive.
 ie /dev/sdc1 with fdisk like the following sentence
 (Watch out, it will suppress all data...)
 fdisk /dev/sdc
-d (delete)
+d (delete the partitions you might have)
 n (new)
 p (primary)
 1 (number 1)
 Choose the size you want...
 a (bootable flag)
 1 (number 1)
+Do it the size you want 1 GB is ebough, the whole is better
 w (write)
 
-Format is Ext3 filesystem.
-mkfs.ext3 /dev/sda1
+Format is Ext3 filesystem. Be sure to use the correct partition!!!
+mkfs.ext3 /dev/sdc1
 
-Put the file mbr.bin on the whole filesystem:
+Put the file mbr.bin on the whole filesystem ie sdc without partition number:
 cat tools/usbboot/mbr.in > /dev/sdc
-(This file resides in the iso/cd in tools/usbboot/)
+This file resides in the iso/cd in tools/usbboot/ and will put a MBR on the
+stick, allowing it to be bootable for the BIOS.
 
 Mount it on /mnt/stick:
 mkdir /mnt/stick
 mount /dev/sdc1 /mnt/stick
 
-Copy all files on /mnt/stick.
+Copy all files from the cdrom on /mnt/stick.
+Go in /mnt/stick/isolinux/
+Move isolinux.cfg to extlinux.conf
+You can eventually edit it to pass wanted arguments, like keymap=43 and remove dokeymap, xres=1024x768 or so
 
 Use extlinux to write the bootloader on the stick :
-extlinux /mnt/usbstick/isolinux
+extlinux -i /mnt/stick/isolinux/
 
 If you don't have extlinux, use the static binary provided
 under tools/usbboot/extlinux
