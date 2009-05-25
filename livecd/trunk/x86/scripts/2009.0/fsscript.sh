@@ -21,14 +21,31 @@ do
         cd ..
 done
 
-# Runs the incredible menu generator
+# Runs the incredible menu generator! Twice !
 genmenu.py -v -t urxvt
+genmenu.py -e -v -t urxvt
 
 # Fixes icons
 cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
 
 # Fix the root login by emptying the root password. No ssh will be allowed until 'passwd root'
 sed -i -e 's/^root:\*:/root::/' /etc/shadow
+
+# Add e17 repo
+layman -L
+layman -a enlightenment
+
+# Fix /etc/make.conf
+echo 'USE="X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
+mmx sse sse2 mpi wps
+wifi injection lzma speed gnuplot pyx bluetooth test-programs
+-quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
+png jpeg gif dri svg aac nsplugin xrandr
+alsa esd gstreamer jack mp3 vorbis wavpack wma
+dvd mpeg ogg rtsp x264 xvid sqlite truetype
+opengl dbus binary-drivers -hal acpi"' >> /etc/make.conf
+echo 'PORTDIR_OVERLAY="/usr/local/portage"' >> /etc/make.conf
+echo 'source /usr/portage/local/layman/make.conf' >> /etc/make.conf
 
 # Apply patches to root
 cd /
@@ -42,9 +59,12 @@ rm -rf patches
 sed -e '/PORTMAP_OPTS/ s/^#//' -i /etc/conf.d/portmap
 sed -e '/ESD_OPTIONS/ s/ -public//' -i /etc/conf.d/esound
 
-# Fix the kernel dir
+# Fix the kernel dir & config
 rm /usr/src/linux
-ln -s /usr/src/linu-2.6.28-pentoo-r5 /usr/src/linux
+ln -s /usr/src/linux-2.6.28-pentoo-r5 /usr/src/linux
+cp /config /usr/src/linux/.config
+cd /usr/src/linux
+make prepare && make modules_prepare
 
 # Setup fonts
 cd /usr/share/fonts
