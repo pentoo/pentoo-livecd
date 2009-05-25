@@ -58,3 +58,4 @@ net-libs/libnids
 dev-python/urwid
 net-wireless/orinoco-fwutils **
 net-firewall/firehol
+sys-kernel/pentoo-sources

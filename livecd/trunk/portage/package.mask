@@ -5,3 +5,5 @@
 =net-analyzer/nessus-plugins-2.3.1
 =net-analyzer/nessus-2.3.1
 >=dev-python/lxml-2.0.0
+net-wireless/madwifi-ng-tools
+net-wireless/madwifi-old-tools
