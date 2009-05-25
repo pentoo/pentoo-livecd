@@ -5,7 +5,7 @@ rel_type: default
 profile: default/linux/x86/2008.0
 snapshot: 2009.0
 source_subpath: default/stage3-i686-2009.0
-portage_confdir: /root/pentoo/portage
+portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 # /usr/portage/local/layman/jokey
 cflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
@@ -22,7 +22,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps
-wifi injection lzma speed gnuplot pyx bluetooth
+wifi injection lzma speed gnuplot pyx bluetooth test-programs
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -244,8 +244,8 @@ net-proxy/tsocks
 net-wireless/aircrack-ng
 #net-wireless/airsnort
 #net-wireless/airtraf
-net-wireless/athload
 net-wireless/b43-openfwwf
+net-wireless/bluemaho
 net-wireless/bluez-libs
 net-wireless/bluez-utils
 net-wireless/btscanner
@@ -354,6 +354,7 @@ x11-proto/dri2proto
 x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
 x11-libs/e_dbus
+x11-misc/entrance
 x11-wm/dwm
 x11-wm/enlightenment
 x11-base/xorg-x11
