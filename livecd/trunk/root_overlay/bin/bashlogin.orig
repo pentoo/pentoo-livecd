@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# This is only installed by baselayout when USE=livecd to enable
+# serial consoles for some architectures
+#
+
+exec /bin/login
+
