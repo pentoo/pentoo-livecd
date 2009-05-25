@@ -5,7 +5,7 @@ rel_type: default
 profile: default/linux/x86/2008.0
 snapshot: 2009.0
 source_subpath: default/livecd-stage1-i686-2009.0
-portage_confdir: /root/pentoo/portage
+portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 
 # This allows the optional directory containing the output packages for
@@ -29,7 +29,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-2009.0_beta_pre2.iso
+livecd/iso: /tmp/pentoo-i686-2009.0_beta_pre4.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -41,7 +41,7 @@ livecd/iso: /tmp/pentoo-2009.0_beta_pre2.iso
 # into the chroot by catalyst automatically.
 # example:
 # livecd/fsscript:
-livecd/fsscript: /root/pentoo/x86/scripts/2009.0/fsscript.sh
+livecd/fsscript: /var/svn/pentoo/livecd/trunk/x86/scripts/2009.0/fsscript.sh
 
 # The splash type determines the automatic arguments for the bootloader on
 # supported architectures.  The possible options are gensplash and bootsplash.
@@ -68,7 +68,7 @@ livecd/bootargs: aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --makeopts=-j4
+livecd/gk_mainargs: --makeopts=-j8 --dmraid
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
@@ -121,7 +121,7 @@ livecd/type: generic-livecd
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default gpm|default dbus|default esound|default alsasound|default microcode_ctl|boot
+livecd/rcadd: autoconfig|default gpm|default dbus|default microcode_ctl|boot
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -138,7 +138,7 @@ livecd/rcdel: spind|default
 # be available if docache is enabled, as they are outside the loop.
 # example:
 # livecd/overlay: /tmp/overlay-minimal
-livecd/overlay: /root/pentoo/isoroot
+livecd/overlay: /var/svn/pentoo/livecd/trunk/isoroot
 
 # This overlay is dropped onto the filesystem within the loop.  This can be used
 # for such things as updating configuration files or adding anything else you
@@ -147,7 +147,7 @@ livecd/overlay: /root/pentoo/isoroot
 # it blank below.
 # example:
 # livecd/root_overlay:
-livecd/root_overlay: /root/pentoo/x86/root_overlay
+livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
 
 # This is here to enable udev support in both catalyst and genkernel.  This
 # option requires genkernel >= 3.1.0, and is not needed with genkernel >=3.2.0,
@@ -208,13 +208,13 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: pentoo-sources
+boot/kernel/pentoo/sources: =pentoo-sources-2.6.28-r5
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /root/pentoo/x86/kernel/config-2.6.28
+boot/kernel/pentoo/config:  /var/svn/pentoo/livecd/trunk/x86/kernel/config-2.6.28
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -252,6 +252,7 @@ sys-apps/pcmciautils
 net-wireless/atmel-firmware
 net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
+net-wireless/compat-wireless
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
 =net-wireless/iwl3945-ucode-15.28.1.8
@@ -270,7 +271,7 @@ net-wireless/zd1211-firmware
 sys-fs/fuse
 sys-fs/ntfs3g
 net-firewall/firehol
-x11-drivers/ati-drivers
+=x11-drivers/ati-drivers-8.593
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
