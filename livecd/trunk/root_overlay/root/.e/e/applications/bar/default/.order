@@ -1,4 +1,7 @@
 urxvt.desktop
-firefox.desktop
-audacious.desktop
+mozilla-firefox-bin.desktop
+scite.desktop
+wireshark.desktop
 xchat.desktop
+audacious.desktop
+
