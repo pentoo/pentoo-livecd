@@ -12,7 +12,7 @@ RC_TTY_NUMBER=11
 # You can stop this from happening on the command line by passing --verbose
 # to the init script or by setting RC_VERBOSE="yes" below.
 
-RC_PARALLEL_STARTUP="no"
+RC_PARALLEL_STARTUP="yes"
 
 # Set RC_INTERACTIVE to "yes" and you'll be able to press the I key during
 # boot so you can choose to start specific services. Set to "no" to disable
