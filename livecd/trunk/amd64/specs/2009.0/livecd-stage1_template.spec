@@ -251,7 +251,7 @@ net-wireless/bluez-utils
 net-wireless/btscanner
 net-wireless/cowpatty
 net-wireless/crda
-net-wireless/kismet-newcore
+net-wireless/kismet
 net-wireless/spectools
 net-wireless/mdk
 #net-wireless/ska

@@ -37,7 +37,7 @@ net-wireless/iwl3945-ucode
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 net-wireless/kdebluetooth
-net-wireless/kismet-newcore
+net-wireless/kismet
 net-wireless/kwlaninfo
 net-wireless/libbtctl
 net-wireless/linux-wlan-ng
