@@ -60,11 +60,16 @@ sed -e '/PORTMAP_OPTS/ s/^#//' -i /etc/conf.d/portmap
 sed -e '/ESD_OPTIONS/ s/ -public//' -i /etc/conf.d/esound
 
 # Fix the kernel dir & config
-rm /usr/src/linux
-ln -s /usr/src/linux-2.6.28-pentoo-r5 /usr/src/linux
-cp /config /usr/src/linux/.config
-cd /usr/src/linux
-make prepare && make modules_prepare
+for krnl in `ls /lib/modules/`; do
+	rm /usr/src/linux
+	ln -s /usr/src/linux-$krnl /usr/src/linux
+	cp /var/tmp/pentoo.config /usr/src/linux/.config
+	rm /lib/modules/$krnl/source /lib/modules/$krnl/build
+	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/build
+	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
+	cd /usr/src/linux
+	make prepare && make modules_prepare
+done
 
 # Setup fonts
 cd /usr/share/fonts
@@ -80,7 +85,9 @@ mkfontdir *
 
 # Remove useless opengl setup
 rm /etc/init.d/x-setup
-#eselect opengl set xorg-x11
+eselect opengl set xorg-x11 --dst-prefix=/etc/opengl/
+rm /usr/lib/libGLcore.so
+[ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
