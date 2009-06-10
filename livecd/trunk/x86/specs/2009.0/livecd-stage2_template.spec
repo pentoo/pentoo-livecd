@@ -208,13 +208,13 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: =pentoo-sources-2.6.28-r5
+boot/kernel/pentoo/sources: =pentoo-sources-2.6.29-r2
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config:  /var/svn/pentoo/livecd/trunk/x86/kernel/config-2.6.28
+boot/kernel/pentoo/config:  /var/svn/pentoo/livecd/trunk/x86/kernel/config-2.6.29
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -230,7 +230,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support madwifi injection wifi
+boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support madwifi injection wifi -karma
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -271,12 +271,13 @@ net-wireless/zd1211-firmware
 sys-fs/fuse
 sys-fs/ntfs3g
 net-firewall/firehol
-=x11-drivers/ati-drivers-8.593
+=x11-drivers/ati-drivers-8.612
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
 =app-crypt/pyrit-0.2.2
 app-crypt/cuda-multiforcer
+app-crypt/cuda-rarcrypt
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
 # entry used for booting a ibm powerpc machine.
@@ -297,7 +298,7 @@ app-crypt/cuda-multiforcer
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner app-text/texlive-core dev-texlive/texlive-basic dev-texlive/texlive-latex dev-texlive/texlive-latexrecommended
+livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner app-text/texlive-core dev-texlive/texlive-basic dev-texlive/texlive-latex dev-texlive/texlive-latexrecommended gentoo-sources
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from

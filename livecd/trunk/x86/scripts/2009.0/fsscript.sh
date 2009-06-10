@@ -88,6 +88,7 @@ rm /etc/init.d/x-setup
 eselect opengl set xorg-x11 --dst-prefix=/etc/opengl/
 rm /usr/lib/libGLcore.so
 [ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
+[ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config

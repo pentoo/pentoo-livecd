@@ -36,7 +36,7 @@ opengl dbus binary-drivers -hal acpi
 # example:
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
-sys-kernel/pentoo-sources
+=sys-kernel/pentoo-sources-2.6.29-r2
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
@@ -75,6 +75,7 @@ app-misc/screen
 app-mobilephone/obexftp
 app-portage/gentoolkit
 app-portage/layman
+app-portage/eix
 app-text/dos2unix
 #dev-db/absinthe
 dev-db/minimysqlator
@@ -115,8 +116,9 @@ net-analyzer/amap
 net-analyzer/angst
 net-analyzer/arpwatch
 net-analyzer/authforce
-#net-analyzer/autoscan-network
+net-analyzer/autoscan-network
 net-analyzer/dnsa
+net-analyzer/chaosreader
 net-analyzer/dnsenum
 #net-analyzer/driftnet
 net-analyzer/dsniff
@@ -274,7 +276,7 @@ sys-apps/microcode-ctl
 sys-apps/microcode-data
 sys-apps/pciutils
 sys-apps/portage
-#sys-apps/slocate
+sys-apps/slocate
 sys-apps/v86d
 sys-block/disktype
 sys-block/gparted
