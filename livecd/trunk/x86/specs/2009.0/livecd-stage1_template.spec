@@ -98,11 +98,12 @@ dev-libs/openobex
 dev-python/pysqlite
 dev-python/psyco
 =dev-python/lxml-1.3.6
-dev-util/edb
-dev-util/dialog
-dev-util/subversion
-dev-util/nvidia-cuda-sdk
 dev-util/ati-stream-sdk-bin
+dev-util/dialog
+dev-util/edb
+dev-util/nvidia-cuda-sdk
+dev-util/subversion
+dev-util/radare
 gnome-base/gnome-menus
 mail-client/mozilla-thunderbird-bin
 media-gfx/scrot
@@ -155,7 +156,7 @@ net-analyzer/ngrep
 net-analyzer/nikto
 net-analyzer/nmap
 net-analyzer/nmbscan
-=net-analyzer/ntop-3.3.8
+net-analyzer/ntop
 net-analyzer/ntp-fingerprint
 net-analyzer/onesixtyone
 net-analyzer/p0f
@@ -244,8 +245,7 @@ net-proxy/proxystrike
 net-proxy/tsocks
 #net-wireless/afrag
 net-wireless/aircrack-ng
-#net-wireless/airsnort
-#net-wireless/airtraf
+net-wireless/airoscript
 net-wireless/b43-openfwwf
 net-wireless/bluemaho
 net-wireless/bluez-libs
