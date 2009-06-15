@@ -14,6 +14,7 @@ dev-db/sqlat
 dev-db/sqlbf
 dev-db/sqlinject
 dev-dotnet/wxnet
+=dev-lang/yasm-0.8.0 ~amd64
 dev-libs/distorm
 dev-libs/distorm64
 dev-python/Impacket
@@ -28,6 +29,9 @@ dev-python/snakeoil
 dev-python/utidylib
 dev-ruby/wxruby
 dev-util/premake
+=media-libs/alsa-lib-1.0.19*
+=media-sound/alsa-utils-1.0.19*
+=media-sound/alsa-headers-1.0.19*
 sys-apps/hwdata-redhat
 sys-apps/hwsetup
 sys-apps/microcode-data
@@ -40,7 +44,7 @@ sys-block/gparted
 sys-devel/crossdev
 sys-fs/ntfs3g
 sys-fs/ntfsprogs
-sys-fs/squashfs-tools
+=sys-fs/squashfs-tools-3.4-r1
 #=sys-kernel/linux-headers-2.6.28
 x11-plugins/firecat
 sys-apps/pcmciautils
