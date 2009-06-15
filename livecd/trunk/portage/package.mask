@@ -1,4 +1,4 @@
->=sys-libs/glibc-2.8
+#>=sys-libs/glibc-2.8
 =net-analyzer/nessus-libraries-2.3.1
 =net-analyzer/libnasl-2.3.1
 =net-analyzer/nessus-core-2.3.1
@@ -7,3 +7,4 @@
 >=dev-python/lxml-2.0.0
 net-wireless/madwifi-ng-tools
 net-wireless/madwifi-old-tools
+>sys-fs/squashfs-tools-3.4-r1
