@@ -1,0 +1,84 @@
+--- autoconfig.orig	2009-02-01 16:21:07.000000000 +0000
++++ autoconfig	2009-06-16 16:12:26.000000000 +0000
+@@ -421,7 +421,7 @@
+ 		then
+ 			start_service hotplug
+ 		else
+-			unpack_firmware
++			#unpack_firmware
+ 			[ -x /sbin/udevtrigger ] && /sbin/udevtrigger
+ 		fi
+ 		[ -e /etc/sysconfig ] || mkdir -p /etc/sysconfig
+@@ -471,19 +471,6 @@
+ 		ewarn "PCMCIA disabled via cmdline ..."
+ 	fi
+ 
+-	if [ "${DHCP}" = "no" ]
+-	then
+-		sed -i -e '/^ifconfig_eth.*dhcp.*/ s/^/#/' \
+-			-e '/^iface_eth.*dhcp.*/ s/^/#/' \
+-			-e '/^config_eth.*dhcp.*/ s/^/#/' \
+-			/etc/conf.d/net
+-		for i in `seq 0 4`
+-		do
+-			echo "config_eth${i}=( \"none\" )" >> /etc/conf.d/net
+-		done
+-		ewarn "Skipping DHCP broadcast ..."
+-	fi
+-
+ 	# Read in what hwsetup has found
+ 	[ -f /etc/sysconfig/gentoo ] && source /etc/sysconfig/gentoo
+ 
+@@ -514,52 +501,6 @@
+ 	fi
+ 
+ 	[ "${DETECT}" = "no" ] && DHCP="no"
+-	[ "${DETECT}" = "yes" ] \
+-		&& NETDEVICES="$(awk -F: '/eth.:|tr.:|ath.:|wlan.:/{print $1}' /proc/net/dev 2>/dev/null)"
+-
+-	if [ -n "${NETDEVICES}" ]
+-	then
+-		for nics in ${NETDEVICES}
+-		do
+-			if [ "${DHCP}" = "yes" ]
+-			then
+-				einfo "Network device ${HILITE}${nics}${NORMAL} detected, DHCP broadcasting for IP ..."
+-				if [ -f /var/run/dhcpcd-${nics}.pid ]
+-				then
+-					if [ -z "$(/sbin/ifconfig ${nics} | grep 'inet addr')" ]
+-					then
+-						kill $(cat /var/run/dhcpcd-${nics}.pid)
+-						sleep 2
+-						dhcpcd -n -h $(hostname) ${nics}
+-					fi
+-				fi
+-			fi
+-		done
+-		if [ "${NFS}" = "yes" ]
+-		then
+-			[ -x /etc/init.d/portmap ] && start_service portmap
+-			[ -x /etc/init.d/nfsmount ] && start_service nfsmount
+-		fi
+-		if [ "${PASSWD}" = "no" ]
+-		then
+-			echo "root:${PASSWORD}" | chpasswd  > /dev/null 2>&1
+-		else
+-			start_service pwgen
+-		fi
+-		if [ "${SSHD}" = "yes" ]
+-		then
+-			# If we have passwd= on the command line, we do not run pwgen and we
+-			# set the root password to PASSWORD.
+-			if [ "${PASSWD}" = "yes" ]
+-			then
+-				ewarn "WARNING: You are starting sshd with a scrambled root password!!!"
+-				ewarn "WARNING: You need to set a root password to be able to login remotely."
+-			fi
+-			[ -x /etc/init.d/sshd ] && start_service sshd
+-		fi
+-	else
+-		ewarn "No Network device auto detected ..."
+-	fi
+ 
+ 	if [ "${ALSA}" = "yes" ]
+ 	then
