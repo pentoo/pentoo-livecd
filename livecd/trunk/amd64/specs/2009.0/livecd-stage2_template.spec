@@ -29,7 +29,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2009.0_beta_pre1.iso
+livecd/iso: /tmp/pentoo-x86_64-2009.0_beta_pre2.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -68,7 +68,7 @@ livecd/bootargs: aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --makeopts=-j8
+livecd/gk_mainargs: --makeopts=-j8 --dmraid
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
@@ -121,7 +121,7 @@ livecd/type: generic-livecd
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default gpm|default dbus|default esound|default alsasound|default microcode_ctl|boot
+livecd/rcadd: autoconfig|default gpm|default dbus|default microcode_ctl|boot
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -147,7 +147,7 @@ livecd/overlay: /var/svn/pentoo/livecd/trunk/isoroot
 # it blank below.
 # example:
 # livecd/root_overlay:
-livecd/root_overlay: /root/pentoo/livecd/trunk/x86/root_overlay
+livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
 
 # This is here to enable udev support in both catalyst and genkernel.  This
 # option requires genkernel >= 3.1.0, and is not needed with genkernel >=3.2.0,
@@ -214,7 +214,7 @@ boot/kernel/pentoo/sources: pentoo-sources
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /var/svn/pentoo/livecd/trunk/amd64/kernel/config-2.6.28
+boot/kernel/pentoo/config: /var/svn/pentoo/livecd/trunk/amd64/kernel/config-2.6.29
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -230,7 +230,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support injection wifi
+boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support injection wifi -karma
 #boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support madwifi injection wifi
 
 # This option appends an extension to the name of your kernel, as viewed by a
@@ -253,29 +253,27 @@ sys-apps/pcmciautils
 net-wireless/atmel-firmware
 net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
+net-wireless/compat-wireless
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-=net-wireless/iwl3945-ucode-15.28.1.8
+net-wireless/iwl3945-ucode
 net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 net-wireless/ralink-firmware
-#net-wireless/iwlwifi
-#net-wireless/madwifi-hal
+net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
-net-wireless/wpa_supplicant
 #net-wireless/prism54-firmware
-#net-wireless/rt2x00
-#net-wireless/rtl8180
 net-wireless/zd1201-firmware
 net-wireless/zd1211-firmware
+net-wireless/wpa_supplicant
 sys-fs/fuse
 sys-fs/ntfs3g
 net-firewall/firehol
-=x11-drivers/ati-drivers-8.593
+=x11-drivers/ati-drivers-8.612
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
-#=app-crypt/pyrit-0.2.2
+=app-crypt/pyrit-0.2.2*
 app-crypt/cuda-multiforcer
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
