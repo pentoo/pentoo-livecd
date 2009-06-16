@@ -8,8 +8,8 @@ source_subpath: default/stage3-amd64-2009.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 # /usr/portage/local/layman/jokey
-#cflags: -Os -mtune=prescott -pipe
-#cxxflags: -Os -mtune=prescott -pipe
+cflags: -Os -mtune=prescott -pipe
+cxxflags: -Os -mtune=prescott -pipe
 
 
 # This allows the optional directory containing the output packages for
@@ -37,6 +37,7 @@ opengl dbus binary-drivers -hal acpi
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 sys-kernel/pentoo-sources
+dev-libs/klibc
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
@@ -73,6 +74,7 @@ app-forensics/sleuthkit
 app-misc/livecd-tools
 app-misc/screen
 app-mobilephone/obexftp
+app-portage/eix
 app-portage/gentoolkit
 app-portage/layman
 app-text/dos2unix
@@ -101,7 +103,7 @@ dev-python/pysqlite
 dev-util/dialog
 dev-util/subversion
 dev-util/nvidia-cuda-sdk
-dev-util/amd-stream-sdk-bin
+dev-util/ati-stream-sdk-bin
 gnome-base/gnome-menus
 mail-client/mozilla-thunderbird-bin
 media-gfx/scrot
@@ -115,7 +117,7 @@ net-analyzer/amap
 #net-analyzer/angst
 net-analyzer/arpwatch
 net-analyzer/authforce
-#net-analyzer/autoscan-network
+net-analyzer/chaosreader
 net-analyzer/dnsa
 net-analyzer/dnsenum
 #net-analyzer/driftnet
@@ -144,6 +146,7 @@ net-analyzer/metagoofil
 net-analyzer/metasploit
 #net-analyzer/mosref
 net-analyzer/nbtscan
+net-analyzer/nessus
 net-analyzer/netcat
 net-analyzer/netdiscover
 #net-analyzer/netdude
@@ -153,7 +156,7 @@ net-analyzer/ngrep
 net-analyzer/nikto
 net-analyzer/nmap
 net-analyzer/nmbscan
-=net-analyzer/ntop-3.3.8
+net-analyzer/ntop
 net-analyzer/ntp-fingerprint
 net-analyzer/onesixtyone
 net-analyzer/p0f
@@ -242,9 +245,8 @@ net-proxy/proxystrike
 net-proxy/tsocks
 #net-wireless/afrag
 net-wireless/aircrack-ng
-#net-wireless/airsnort
+net-wireless/airoscript
 #net-wireless/airtraf
-net-wireless/athload
 net-wireless/b43-openfwwf
 net-wireless/bluez-libs
 net-wireless/bluez-utils
@@ -274,7 +276,7 @@ sys-apps/microcode-ctl
 sys-apps/microcode-data
 sys-apps/pciutils
 sys-apps/portage
-#sys-apps/slocate
+sys-apps/slocate
 sys-apps/v86d
 sys-block/disktype
 sys-block/gparted
@@ -346,6 +348,7 @@ x11-plugins/e_modules-net
 x11-plugins/e_modules-screenshot
 x11-plugins/e_modules-weather
 x11-plugins/e_modules-wlan
+x11-plugins/extramenu
 x11-plugins/itask-ng
 x11-plugins/pidgin-encryption
 x11-plugins/winlist_ng
