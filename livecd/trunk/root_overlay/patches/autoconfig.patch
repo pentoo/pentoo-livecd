@@ -1,6 +1,32 @@
---- autoconfig.orig	2009-02-01 16:21:07.000000000 +0000
-+++ autoconfig	2009-06-16 16:12:26.000000000 +0000
-@@ -421,7 +421,7 @@
+--- autoconfig.orig	2009-06-15 19:55:01.000000000 +0200
++++ autoconfig	2009-06-17 22:17:42.000000000 +0200
+@@ -7,6 +7,7 @@
+ ALSA="yes"
+ APM="no"
+ BRLTTY="no"
++CPUFREQ="yes"
+ COLDPLUG="yes"
+ DETECT="yes"
+ DHCP="yes"
+@@ -39,6 +40,7 @@
+ 				ACPI="no"
+ 				ALSA="no"
+ 				APM="no"
++				CPUFREQ="no"
+ 				COLDPLUG="no"
+ 				DETECT="no"
+ 				DMRAID="no"
+@@ -60,6 +62,9 @@
+ 			noapm)
+ 				APM="no"
+ 			;;
++			nocpufreq)
++				CPUFREQ="no"
++			;;
+ 			nocoldplug|nohotplug)
+ 				COLDPLUG="no"
+ 			;;
+@@ -421,7 +426,7 @@
  		then
  			start_service hotplug
  		else
@@ -9,7 +35,41 @@
  			[ -x /sbin/udevtrigger ] && /sbin/udevtrigger
  		fi
  		[ -e /etc/sysconfig ] || mkdir -p /etc/sysconfig
-@@ -471,19 +471,6 @@
+@@ -447,6 +452,8 @@
+ 		modprobe fan >/dev/null 2>&1
+ 		modprobe button >/dev/null 2>&1
+ 		modprobe battery >/dev/null 2>&1
++		modprobe sbs >/dev/null 2>&1
++		modprobe sbshc >/dev/null 2>&1
+ 		modprobe ac >/dev/null 2>&1
+ 		modprobe thermal >/dev/null 2>&1
+ 		modprobe video >/dev/null 2>&1
+@@ -457,6 +464,24 @@
+ 		einfo "Not Loading ACPI support ..."
+ 	fi
+ 
++	if [ "${CPUFREQ}" = "yes" ]
++	then
++		modprobe acpi-cpufreq >/dev/null 2>&1
++		modprobe cpufreq-nforce2 >/dev/null 2>&1
++		modprobe e_powersaver >/dev/null 2>&1
++		modprobe gx-suspmod >/dev/null 2>&1
++		modprobe longhaul >/dev/null 2>&1
++		modprobe longrun >/dev/null 2>&1
++		modprobe p4-clockmod >/dev/null 2>&1
++		modprobe powernow-k6 >/dev/null 2>&1
++		modprobe powernow-k7 >/dev/null 2>&1
++		modprobe powernow-k8 >/dev/null 2>&1
++		modprobe speedstep-centrino >/dev/null 2>&1
++		modprobe speedstep-ich >/dev/null 2>&1
++		modprobe speedstep-lib >/dev/null 2>&1
++		modprobe speedstep-smi >/dev/null 2>&1
++	fi
++
+ 	if [ "${IDEDMA}" = "yes" ]
+ 	then
+ 		[ -x /etc/init.d/hdparm ] && start_service hdparm
+@@ -471,19 +496,6 @@
  		ewarn "PCMCIA disabled via cmdline ..."
  	fi
  
@@ -29,7 +89,7 @@
  	# Read in what hwsetup has found
  	[ -f /etc/sysconfig/gentoo ] && source /etc/sysconfig/gentoo
  
-@@ -514,52 +501,6 @@
+@@ -514,52 +526,6 @@
  	fi
  
  	[ "${DETECT}" = "no" ] && DHCP="no"
