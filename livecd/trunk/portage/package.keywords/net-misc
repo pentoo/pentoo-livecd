@@ -119,6 +119,7 @@ net-misc/icaclient
 net-misc/icecast
 net-misc/ices
 net-misc/ifenslave
+net-misc/iodine
 net-misc/ip-sentinel
 net-misc/ipcalc
 net-misc/iperf
