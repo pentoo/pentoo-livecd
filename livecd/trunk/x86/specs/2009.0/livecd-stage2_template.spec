@@ -255,10 +255,10 @@ net-wireless/bcm43xx-fwcutter
 net-wireless/compat-wireless
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-=net-wireless/iwl3945-ucode-15.28.1.8
-net-wireless/iwl4965-ucode
-net-wireless/iwl5000-ucode
-net-wireless/ralink-firmware
+#=net-wireless/iwl3945-ucode-15.28.1.8
+#net-wireless/iwl4965-ucode
+#net-wireless/iwl5000-ucode
+#net-wireless/ralink-firmware
 #net-wireless/iwlwifi
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
