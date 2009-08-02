@@ -101,17 +101,6 @@ chown tor:tor /var/log/tor
 chmod 777 -R /var/lib/ntop
 ntop --set-admin-password=pentoo
 
-# Setup ath5k as the default
-VER="2.6.28-pentoo-r4" /usr/sbin/athload
-
-# Sets FF as default browser
-echo 'export BROWSER="firefox"' >> /etc/env.d/99local
-
-# Sets e17 key bindings
-#enlightenment_remote -binding-key-add ANY t ALT 0 exec urxvt
-#enlightenment_remote -binding-key-add ANY j ALT 0 exec urxvt
-#enlightenment_remote -binding-key-add ANY l ALT 0 exec "enlightenment_remote -lock-desktop"
-
 # Build the metadata cache
 emerge --metadata
 
