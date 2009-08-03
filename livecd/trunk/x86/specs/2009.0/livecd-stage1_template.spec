@@ -296,6 +296,7 @@ sys-fs/udev
 sys-libs/gpm
 sys-libs/libkudzu
 sys-power/acpid
+www-client/lynx
 www-client/mozilla-firefox-bin
 www-servers/lighttpd
 x11-base/xorg-server
