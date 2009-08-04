@@ -254,6 +254,7 @@ net-wireless/bluez-utils
 net-wireless/btscanner
 net-wireless/cowpatty
 net-wireless/crda
+net-wireless/gerix
 net-wireless/karmetasploit
 net-wireless/kismet
 net-wireless/spectools
