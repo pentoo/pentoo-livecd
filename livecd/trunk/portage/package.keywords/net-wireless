@@ -56,6 +56,7 @@ net-wireless/prism54-firmware
 net-wireless/ralink-firmware
 net-wireless/ralink-rt61
 net-wireless/ralink-firmware
+net-wireless/rfkill
 net-wireless/rfswitch
 net-wireless/rt2400
 net-wireless/rt2500

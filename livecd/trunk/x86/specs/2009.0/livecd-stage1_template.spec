@@ -259,6 +259,7 @@ net-wireless/karmetasploit
 net-wireless/kismet
 net-wireless/spectools
 net-wireless/mdk
+net-wireless/rfkill
 #net-wireless/ska
 #net-wireless/waveselect
 net-wireless/wepattack
