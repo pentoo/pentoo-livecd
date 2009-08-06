@@ -7,7 +7,6 @@ net-wireless/airtraf
 net-wireless/ap-utils
 net-wireless/at76c503a
 net-wireless/atmel-firmware
-net-wireless/b43-fwcutter
 net-wireless/b43-openfwwf
 net-wireless/b43-tools
 net-wireless/bcm43xx-fwcutter
@@ -20,6 +19,8 @@ net-wireless/bluez-hcidump
 net-wireless/bluez-hciemu
 net-wireless/bluez-libs
 net-wireless/bluez-utils
+net-wireless/broadcom-firmware-downloader
+net-wireless/broadcom-firmware-installer
 net-wireless/bss
 net-wireless/chillispot
 net-wireless/fsam7400

@@ -251,6 +251,7 @@ net-wireless/b43-openfwwf
 net-wireless/bluemaho
 net-wireless/bluez-libs
 net-wireless/bluez-utils
+net-wireless/broadcom-firmware-downloader
 net-wireless/btscanner
 net-wireless/cowpatty
 net-wireless/crda
