@@ -3,6 +3,10 @@ echo "User action is installing the broadcom commercial firmware."
 echo "Broadcom prohibits the distribution of firmware in a"
 echo "usable form for Linux users."
 emerge broadcom-firmware-installer
+modprobe -r b43
+modprobe -r b43legacy
+modprobe b43
+modprobe b43legacy
 echo "Firmware has been installed and is NOT permitted to be redistributed."
 echo "You can make a module for your personal use and put it in the modules"
 echo "folder of your usb/cd for personal use only. Try flushchanges."
