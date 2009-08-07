@@ -238,6 +238,7 @@ net-analyzer/trafshow
 net-analyzer/ttcp
 net-analyzer/ttt
 net-analyzer/upnpscan
+net-analyzer/videojak
 net-analyzer/vnstat
 net-analyzer/webfuzzer
 net-analyzer/wireshark

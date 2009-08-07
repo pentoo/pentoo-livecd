@@ -173,7 +173,7 @@ net-analyzer/sniffit
 net-analyzer/snmpenum
 net-analyzer/snort
 net-analyzer/sslstrip
-#net-analyzer/sslsniff
+net-analyzer/sslsniff
 net-analyzer/subdomainer
 net-analyzer/tcpdump
 net-analyzer/tcptraceroute
@@ -181,6 +181,7 @@ net-analyzer/thcrut
 net-analyzer/theHarvester
 net-analyzer/traceroute
 #net-analyzer/upnpscan
+net-analyzer/videojak
 net-analyzer/voiphopper
 net-analyzer/w3af
 net-analyzer/webshag
