@@ -35,6 +35,11 @@ sed -i -e 's/^root:\*:/root::/' /etc/shadow
 layman -L
 layman -a enlightenment
 
+# Build the metadata cache
+emerge --metadata
+update-eix
+updatedb
+
 # Fix /etc/make.conf
 echo 'USE="X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps
@@ -45,7 +50,7 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
 opengl dbus binary-drivers -hal acpi"' >> /etc/make.conf
 echo 'PORTDIR_OVERLAY="/usr/local/portage"' >> /etc/make.conf
-echo 'source /usr/portage/local/layman/make.conf' >> /etc/make.conf
+#echo 'source /usr/portage/local/layman/make.conf' >> /etc/make.conf
 
 # Apply patches to root
 cd /
@@ -53,6 +58,7 @@ patch bin/bashlogin patches/bashlogin.patch
 patch etc/init.d/halt.sh patches/halt.patch 
 patch sbin/livecd-functions.sh patches/livecd-functions.patch
 patch sbin/rc patches/rc.patch 
+patch etc/init.d/autoconfig patches/autoconfig.patch
 rm -rf patches
 
 # Fix net services
@@ -101,19 +107,17 @@ chown tor:tor /var/log/tor
 chmod 777 -R /var/lib/ntop
 ntop --set-admin-password=pentoo
 
-# Build the metadata cache
-emerge --metadata
-
 # compile mingw32
 #crossdev --portage -bk i686-mingw32
 
 # Adds sploit collection
 cd /opt/
-mkdir exploits/packetstorm -p
-for file in `ls *.tgz`
-do
-	tar -zxf ${file} -C exploits/packetstorm/
-	rm -f ${file}
-done
+mkdir exploits
+#mkdir exploits/packetstorm -p
+#for file in `ls *.tgz`
+#do
+#	tar -zxf ${file} -C exploits/packetstorm/
+#	rm -f ${file}
+#done
 tar -jxf milw0rm.tar.bz2 -C exploits/
 rm -f milw0rm.tar.bz2
