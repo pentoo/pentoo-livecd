@@ -22,7 +22,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps
-wifi injection lzma speed gnuplot pyx bluetooth test-programs
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
 png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -36,7 +36,7 @@ opengl dbus binary-drivers -hal acpi
 # example:
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
-=sys-kernel/pentoo-sources-2.6.29-r2
+=sys-kernel/pentoo-sources-2.6.29-r5
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
@@ -208,7 +208,6 @@ net-misc/curl
 net-misc/dhcp
 net-misc/dhcpcd
 #net-misc/ipsorcery
-net-misc/iodine
 net-misc/iputils
 net-misc/karma
 net-misc/nemesis

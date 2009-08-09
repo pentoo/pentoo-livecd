@@ -208,7 +208,7 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: =pentoo-sources-2.6.29-r4
+boot/kernel/pentoo/sources: =pentoo-sources-2.6.29-r5
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
@@ -263,6 +263,7 @@ net-wireless/ipw2200-firmware
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
 net-wireless/wpa_supplicant
+net-misc/iodine
 #net-wireless/prism54-firmware
 #net-wireless/rt2x00
 #net-wireless/rtl8180
