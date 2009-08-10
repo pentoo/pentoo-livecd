@@ -24,7 +24,7 @@ livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr 
 mmx sse sse2 mpi wps
 wifi injection lzma gnuplot pyx
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
-png jpeg gif dri svg aac nsplugin xrandr
+png jpeg gif dri svg aac nsplugin xrandr offensive
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
 opengl dbus binary-drivers -hal acpi
