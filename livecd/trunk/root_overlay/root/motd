@@ -17,7 +17,7 @@ Welcome to Pentoo on Gentoo linux...
 * [1;31;37m All network interfaces are now down at boot.                          [1;31;30m*
 * [1;31;37m You can type net-setup/dhcpcd ethX to setup your network interface.   [1;31;30m*
 * [1;31;37m If you have a broadcom wifi card it is currently using b43-openfwwf.  [1;31;30m*
-* [1;31;37m If this is undesirable or non-functional type "b43-commercial.sh"     [1;31;30m*
+* [1;31;37m If this is undesirable or non-functional type "./b43-commercial.sh"   [1;31;30m*
 *                                                                        *
 * [1;31;37m Type startx to launch the Enlightenment windows manager               [1;31;30m*
 *                                                                        *
