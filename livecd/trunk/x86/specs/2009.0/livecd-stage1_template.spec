@@ -73,9 +73,9 @@ app-fuzz/taof
 app-misc/livecd-tools
 app-misc/screen
 app-mobilephone/obexftp
+app-portage/eix
 app-portage/gentoolkit
 app-portage/layman
-app-portage/eix
 app-text/dos2unix
 #dev-db/absinthe
 dev-db/minimysqlator
@@ -102,6 +102,7 @@ dev-util/ati-stream-sdk-bin
 dev-util/dialog
 dev-util/edb
 dev-util/nvidia-cuda-sdk
+dev-util/strace
 dev-util/subversion
 dev-util/radare
 gnome-base/gnome-menus
@@ -118,8 +119,8 @@ net-analyzer/angst
 net-analyzer/arpwatch
 net-analyzer/authforce
 net-analyzer/autoscan-network
-net-analyzer/dnsa
 net-analyzer/chaosreader
+net-analyzer/dnsa
 net-analyzer/dnsenum
 #net-analyzer/driftnet
 net-analyzer/dsniff
@@ -147,6 +148,7 @@ net-analyzer/metagoofil
 net-analyzer/metasploit
 net-analyzer/mosref
 net-analyzer/nbtscan
+net-analyzer/nessus
 net-analyzer/netcat
 net-analyzer/netdiscover
 #net-analyzer/netdude
@@ -343,6 +345,7 @@ x11-drivers/xf86-video-vesa
 x11-drivers/xf86-video-vmware
 x11-drivers/xf86-video-voodoo
 x11-misc/dmenu
+x11-misc/entrance
 x11-plugins/firecat
 #x11-plugins/e_modules
 x11-plugins/e_modules-bling
@@ -363,7 +366,6 @@ x11-proto/dri2proto
 x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
 x11-libs/e_dbus
-x11-misc/entrance
 x11-wm/dwm
 x11-wm/enlightenment
 x11-base/xorg-x11
