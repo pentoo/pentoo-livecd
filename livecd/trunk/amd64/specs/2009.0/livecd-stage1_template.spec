@@ -21,10 +21,10 @@ cxxflags: -Os -mtune=prescott -pipe
 # pkgcache_path:
 
 livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
-mmx sse sse2 mpi wps
-wifi injection lzma gnuplot pyx
+mmx sse sse2 mpi wps offensive
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
-png jpeg gif dri svg aac nsplugin xrandr offensive
+png jpeg gif dri svg aac nsplugin xrandr
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
 opengl dbus binary-drivers -hal acpi
@@ -36,7 +36,7 @@ opengl dbus binary-drivers -hal acpi
 # example:
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
-sys-kernel/pentoo-sources
+=sys-kernel/pentoo-sources-2.6.29-r5
 dev-libs/klibc
 app-admin/gamin
 =app-admin/genmenu-9999
@@ -99,11 +99,13 @@ dev-libs/openobex
 dev-python/pysqlite
 #dev-python/psyco
 =dev-python/lxml-1.3.6
-#dev-util/edb
-dev-util/dialog
-dev-util/subversion
-dev-util/nvidia-cuda-sdk
 dev-util/ati-stream-sdk-bin
+dev-util/dialog
+dev-util/edb
+dev-util/nvidia-cuda-sdk
+dev-util/strace
+dev-util/subversion
+dev-util/radare
 gnome-base/gnome-menus
 mail-client/mozilla-thunderbird-bin
 media-gfx/scrot
@@ -117,6 +119,7 @@ net-analyzer/amap
 #net-analyzer/angst
 net-analyzer/arpwatch
 net-analyzer/authforce
+#net-analyzer/autoscan-network
 net-analyzer/chaosreader
 net-analyzer/dnsa
 net-analyzer/dnsenum
@@ -173,7 +176,7 @@ net-analyzer/sniffit
 net-analyzer/snmpenum
 net-analyzer/snort
 net-analyzer/sslstrip
-#net-analyzer/sslsniff
+net-analyzer/sslsniff
 net-analyzer/subdomainer
 net-analyzer/tcpdump
 net-analyzer/tcptraceroute
@@ -181,6 +184,7 @@ net-analyzer/thcrut
 net-analyzer/theHarvester
 net-analyzer/traceroute
 net-analyzer/upnpscan
+net-analyzer/videojak
 net-analyzer/voiphopper
 net-analyzer/w3af
 net-analyzer/webshag
@@ -246,16 +250,20 @@ net-proxy/tsocks
 #net-wireless/afrag
 net-wireless/aircrack-ng
 net-wireless/airoscript
-#net-wireless/airtraf
 net-wireless/b43-openfwwf
+#net-wireless/bluemaho
 net-wireless/bluez-libs
 net-wireless/bluez-utils
+net-wireless/broadcom-firmware-downloader
 net-wireless/btscanner
 net-wireless/cowpatty
 net-wireless/crda
+net-wireless/gerix
+net-wireless/karmetasploit
 net-wireless/kismet
 net-wireless/spectools
 net-wireless/mdk
+net-wireless/rfkill
 #net-wireless/ska
 #net-wireless/waveselect
 net-wireless/wepattack
@@ -294,6 +302,8 @@ sys-fs/udev
 sys-libs/gpm
 sys-libs/libkudzu
 sys-power/acpid
+sys-power/powertop
+www-client/lynx
 www-client/mozilla-firefox-bin
 www-servers/lighttpd
 x11-base/xorg-server
@@ -336,6 +346,7 @@ x11-drivers/xf86-video-vesa
 x11-drivers/xf86-video-vmware
 x11-drivers/xf86-video-voodoo
 x11-misc/dmenu
+x11-misc/entrance
 x11-plugins/firecat
 #x11-plugins/e_modules
 x11-plugins/e_modules-bling
