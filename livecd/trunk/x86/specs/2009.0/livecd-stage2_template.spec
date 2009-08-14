@@ -6,7 +6,7 @@ profile: default/linux/x86/2008.0
 snapshot: 2009.0
 source_subpath: default/livecd-stage1-i686-2009.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
-portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
+portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -15,8 +15,6 @@ portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 # example:
 # pkgcache_path: /tmp/packages
 # pkgcache_path:
-
-# livecd/use: -gnome -nls gtk fbcon opengl -gnome -kde -eds gtk2 cairo -pam gpm dvdr oss mmx sse sse2 -quicktime -qt -cups -spell
 
 # This allows the optional directory containing the output packages for kernel
 # builds.  Mainly used as a way for different spec files to access the same
@@ -29,7 +27,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-i686-2009.0_beta_pre4.iso
+livecd/iso: /tmp/pentoo-i686-2009.0_beta_pre5.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -111,7 +109,7 @@ livecd/type: generic-livecd
 # even if ti is detected by hotplug.
 # example:
 # livecd/modblacklist: 8139cp
-livecd/modblacklist: arusb_lnx rt2870sta
+#livecd/modblacklist: arusb_lnx rt2870sta
 
 # This is for adding init scripts to runlevels.  The syntax for the init script
 # is the script name, followed by a pipe, followed by the runlevel in which you
@@ -230,7 +228,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support madwifi injection wifi -karma
+boot/kernel/pentoo/use: X gtk gtk2 pcmcia usb qt4 qt3support madwifi injection wifi -karma
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -248,9 +246,10 @@ boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support madwifi injection wifi -karm
 boot/kernel/pentoo/packages: 
 x11-misc/mkxf86config
 =app-admin/genmenu-9999
+dev-lang/ruby
 sys-apps/pcmciautils
+net-misc/iodine
 net-wireless/atmel-firmware
-net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
 net-wireless/compat-wireless
 net-wireless/ipw2100-firmware
@@ -262,11 +261,10 @@ net-wireless/ipw2200-firmware
 #net-wireless/iwlwifi
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
-net-wireless/wpa_supplicant
-net-misc/iodine
 #net-wireless/prism54-firmware
 #net-wireless/rt2x00
 #net-wireless/rtl8180
+net-wireless/wpa_supplicant
 net-wireless/zd1201-firmware
 net-wireless/zd1211-firmware
 sys-fs/fuse
@@ -276,7 +274,7 @@ net-firewall/firehol
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
-=app-crypt/pyrit-0.2.2
+=app-crypt/pyrit-0.2.2*
 app-crypt/cuda-multiforcer
 app-crypt/cuda-rarcrypt
 
