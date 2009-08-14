@@ -29,7 +29,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2009.0_beta_pre2.iso
+livecd/iso: /tmp/pentoo-x86_64-2009.0_beta_pre5.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -208,7 +208,7 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: pentoo-sources
+boot/kernel/pentoo/sources: =pentoo-sources-2.6.29-r6
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
@@ -230,8 +230,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support injection wifi -karma
-#boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support madwifi injection wifi
+boot/kernel/pentoo/use: X gtk gtk2 pcmcia usb qt4 qt3support madwifi injection wifi -karma
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -249,23 +248,24 @@ boot/kernel/pentoo/use: X pcmcia usb qt4 qt3support injection wifi -karma
 boot/kernel/pentoo/packages: 
 x11-misc/mkxf86config
 =app-admin/genmenu-9999
+dev-lang/ruby
 sys-apps/pcmciautils
+net-misc/iodine
 net-wireless/atmel-firmware
-net-wireless/b43-fwcutter
 net-wireless/bcm43xx-fwcutter
 net-wireless/compat-wireless
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-net-wireless/iwl3945-ucode
-net-wireless/iwl4965-ucode
-net-wireless/iwl5000-ucode
-net-wireless/ralink-firmware
+#net-wireless/iwl3945-ucode
+#net-wireless/iwl4965-ucode
+#net-wireless/iwl5000-ucode
+#net-wireless/ralink-firmware
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
 #net-wireless/prism54-firmware
+net-wireless/wpa_supplicant
 net-wireless/zd1201-firmware
 net-wireless/zd1211-firmware
-net-wireless/wpa_supplicant
 sys-fs/fuse
 sys-fs/ntfs3g
 net-firewall/firehol
@@ -275,6 +275,7 @@ x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
 =app-crypt/pyrit-0.2.2*
 app-crypt/cuda-multiforcer
+#app-crypt/cuda-rarcrypt
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
 # entry used for booting a ibm powerpc machine.
@@ -295,7 +296,7 @@ app-crypt/cuda-multiforcer
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner app-text/texlive-core dev-texlive/texlive-basic dev-texlive/texlive-latex dev-texlive/texlive-latexrecommended
+livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner app-text/texlive-core dev-texlive/texlive-basic dev-texlive/texlive-latex dev-texlive/texlive-latexrecommended gentoo-sources
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
