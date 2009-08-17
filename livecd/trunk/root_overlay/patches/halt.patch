@@ -14,7 +14,7 @@
 +	done
 +	sync
 +	mount -o remount,noxino,rw /
-+	mount -o remount,mod:/.unions/memory/aufs_changes/default/=ro /
++#	mount -o remount,mod:/.unions/memory/aufs_changes/default/=ro /
 +	sync
 +}
 +
