@@ -9,6 +9,11 @@ then
 	sed -i -e 's/#TIMEZONE="Factory"/TIMEZONE="UTC"/' /etc/conf.d/clock
 fi
 
+# Fix provide rc-script annoyance
+cd /etc/init.d/
+ln -s net.lo net.wlan0
+sed -e '/provide net/D' -i dhcpcd
+
 # Bunzip all docs since they'll be in sqlzma format
 cd /usr/share/doc
 for maindir in `find ./ -maxdepth 1 -type d | sed -e 's:^./::'`
@@ -59,6 +64,7 @@ patch etc/init.d/halt.sh patches/halt.patch
 patch sbin/livecd-functions.sh patches/livecd-functions.patch
 patch sbin/rc patches/rc.patch 
 patch etc/init.d/autoconfig patches/autoconfig.patch
+patch /usr/lib/metasploit3/lib/rex/socket/ssl_tcp_server.rb patches/patch-sslsniff.patch
 rm -rf patches
 
 # Fix net services
@@ -75,6 +81,7 @@ for krnl in `ls /lib/modules/`; do
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
 	cd /usr/src/linux
 	make prepare && make modules_prepare
+	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
 done
 
 # Setup fonts
