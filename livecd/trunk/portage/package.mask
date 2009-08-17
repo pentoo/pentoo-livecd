@@ -13,3 +13,4 @@ net-wireless/madwifi-old-tools
 >sys-fs/squashfs-tools-3.4-r1
 >sys-kernel/genkernel-3.4.10-r3
 >x11-drivers/ati-drivers-9.5
+>=www-client/mozilla-firefox-bin-3.5

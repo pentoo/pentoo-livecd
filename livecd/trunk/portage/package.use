@@ -6,6 +6,7 @@ app-mobilephone/obexftp ruby
 dev-db/freetds mssql odbc
 dev-lang/php crypt ctype mysql pcre session unicode cli pcre xml zlib
 dev-lang/python sqlite
+dev-lang/ruby ipv6
 gnome-base/gnome-menus -python
 media-libs/libsndfile -jack
 media-sound/sox -encode -ogg -mad
