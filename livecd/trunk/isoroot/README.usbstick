@@ -13,7 +13,7 @@ p (primary)
 Choose the size you want...
 a (bootable flag)
 1 (number 1)
-Do it the size you want 1 GB is ebough, the whole is better
+Do it the size you want 1 GB is enough, the whole is better
 w (write)
 
 Format is Ext3 filesystem. Be sure to use the correct partition!!!
