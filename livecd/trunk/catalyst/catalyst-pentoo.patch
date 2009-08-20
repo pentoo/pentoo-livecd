@@ -1,0 +1,73 @@
+diff -Naur catalyst-2.0.6.orig/arch/amd64.py catalyst-2.0.6/arch/amd64.py
+--- catalyst-2.0.6.orig/arch/amd64.py	2008-05-29 06:30:10.000000000 +0200
++++ catalyst-2.0.6/arch/amd64.py	2009-04-23 01:16:51.000000000 +0200
+@@ -11,7 +11,7 @@
+ 	"builder class for generic amd64 (athlon64/opteron)"
+ 	def __init__(self,myspec):
+ 		generic_amd64.__init__(self,myspec)
+-		self.settings["CFLAGS"]="-O2 -pipe"
++		self.settings["CFLAGS"]="-Os -pipe"
+ 		self.settings["CHOST"]="x86_64-pc-linux-gnu"
+ 		self.settings["HOSTUSE"]=["mmx","sse","sse2"]
+ 
+diff -Naur catalyst-2.0.6.orig/arch/x86.py catalyst-2.0.6/arch/x86.py
+--- catalyst-2.0.6.orig/arch/x86.py	2008-05-29 06:30:10.000000000 +0200
++++ catalyst-2.0.6/arch/x86.py	2009-05-15 18:54:57.000000000 +0200
+@@ -42,7 +42,7 @@
+ class arch_i686(generic_x86):
+ 	def __init__(self,myspec):
+ 		generic_x86.__init__(self,myspec)
+-		self.settings["CFLAGS"]="-O2 -march=i686 -pipe"
++		self.settings["CFLAGS"]="-Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer"
+ 		self.settings["CHOST"]="i686-pc-linux-gnu"
+ 
+ class arch_athlon(generic_x86):
+diff -Naur catalyst-2.0.6.orig/modules/livecd_stage2_target.py catalyst-2.0.6/modules/livecd_stage2_target.py
+--- catalyst-2.0.6.orig/modules/livecd_stage2_target.py	2008-05-29 06:30:10.000000000 +0200
++++ catalyst-2.0.6/modules/livecd_stage2_target.py	2009-08-20 22:12:53.000000000 +0200
+@@ -63,10 +63,10 @@
+ 		# what modules do we want to blacklist?
+ 		if self.settings.has_key("livecd/modblacklist"):
+ 			try:
+-				myf=open(self.settings["chroot_path"]+"/etc/hotplug/blacklist","a")
++				myf=open(self.settings["chroot_path"]+"/etc/modprobe.d/blacklist.conf","a")
+ 			except:
+ 				self.unbind()
+-				raise CatalystError,"Couldn't open "+self.settings["chroot_path"]+"/etc/hotplug/blacklist."
++				raise CatalystError,"Couldn't open "+self.settings["chroot_path"]+"/etc/modprobe.d/blacklist.conf."
+ 			
+ 			myf.write("\n#Added by Catalyst:")
+ 			for x in self.settings["livecd/modblacklist"]:
+diff -Naur catalyst-2.0.6.orig/targets/support/livecdfs-update.sh catalyst-2.0.6/targets/support/livecdfs-update.sh
+--- catalyst-2.0.6.orig/targets/support/livecdfs-update.sh	2008-05-29 06:30:09.000000000 +0200
++++ catalyst-2.0.6/targets/support/livecdfs-update.sh	2009-06-17 00:13:16.000000000 +0200
+@@ -27,8 +27,8 @@
+ 	echo 'HOSTNAME="gamecd"' > /etc/conf.d/hostname
+ 	echo "127.0.0.1 gamecd.gentoo gamecd localhost" > /etc/hosts
+ else
+-	echo 'HOSTNAME="livecd"' > /etc/conf.d/hostname
+-	echo "127.0.0.1 livecd.gentoo livecd localhost" > /etc/hosts
++	echo 'HOSTNAME="pentoo"' > /etc/conf.d/hostname
++	echo "127.0.0.1 pentoo.gentoo pentoo localhost" > /etc/hosts
+ fi
+ 
+ # Since we're an official Gentoo release, we do things the official Gentoo way.
+@@ -224,12 +224,12 @@
+ [ ! -d /lib/firmware ] && mkdir -p /lib/firmware
+ 
+ # tar up the firmware so that it does not get clobbered by the livecd mounts
+-if [ -n "$(ls /lib/firmware)" ]
+-then
+-	cd /lib/firmware
+-	/bin/tar cjpf /lib/firmware.tar.bz2 .
+-	rm -rf /lib/firmware/*
+-fi
++#if [ -n "$(ls /lib/firmware)" ]
++#then
++#	cd /lib/firmware
++#	/bin/tar cjpf /lib/firmware.tar.bz2 .
++#	rm -rf /lib/firmware/*
++#fi
+ 
+ # Clear out locales
+ case ${clst_livecd_type} in
