@@ -55,6 +55,7 @@ app-editors/ghex
 app-editors/scite
 app-editors/vim
 app-text/epdfview
+app-text/wgetpaste
 app-forensics/autopsy
 app-forensics/cmospwd
 app-forensics/galleta
