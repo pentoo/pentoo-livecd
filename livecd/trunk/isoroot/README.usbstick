@@ -20,7 +20,7 @@ Format is Ext3 filesystem. Be sure to use the correct partition!!!
 mkfs.ext3 /dev/sdc1
 
 Put the file mbr.bin on the whole filesystem ie sdc without partition number:
-cat tools/usbboot/mbr.in > /dev/sdc
+cat tools/usbboot/mbr.bin > /dev/sdc
 This file resides in the iso/cd in tools/usbboot/ and will put a MBR on the
 stick, allowing it to be bootable for the BIOS.
 
