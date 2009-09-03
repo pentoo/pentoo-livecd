@@ -303,6 +303,7 @@ sys-fs/udev
 sys-libs/gpm
 sys-libs/libkudzu
 sys-power/acpid
+sys-power/acpitool
 sys-power/powertop
 www-client/lynx
 www-client/mozilla-firefox-bin
