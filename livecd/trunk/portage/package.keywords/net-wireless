@@ -31,6 +31,9 @@ net-wireless/hostap-driver
 net-wireless/hostap-utils
 net-wireless/hostapd
 net-wireless/ieee80211
+net-wireless/intel-wimax-network-service
+net-wireless/intel-wimax-tools
+net-wireless/intel-wimax-binary-supplicant
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
 net-wireless/ipw3945d

@@ -260,6 +260,7 @@ net-wireless/btscanner
 net-wireless/cowpatty
 net-wireless/crda
 net-wireless/gerix
+#net-wireless/intel-wimax-network-service
 net-wireless/karmetasploit
 net-wireless/kismet
 net-wireless/spectools
