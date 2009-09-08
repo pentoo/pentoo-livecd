@@ -37,10 +37,13 @@ cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
 sed -i -e 's/^root:\*:/root::/' /etc/shadow
 
 # Add e17 repo
+rm -rf /usr/local/portage
 layman -L
+layman -a pentoo
 layman -a enlightenment
 
 # Build the metadata cache
+sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf
 emerge --metadata
 update-eix
 updatedb
