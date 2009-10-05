@@ -58,7 +58,7 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
 opengl dbus binary-drivers -hal acpi"' >> /etc/make.conf
 echo 'PORTDIR_OVERLAY="/usr/local/portage"' >> /etc/make.conf
-#echo 'source /usr/portage/local/layman/make.conf' >> /etc/make.conf
+echo 'source /usr/local/portage/layman/make.conf' >> /etc/make.conf
 
 # Apply patches to root
 cd /
