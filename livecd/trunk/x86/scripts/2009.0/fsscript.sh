@@ -25,6 +25,9 @@ do
         done
         cd ..
 done
+# Over 1Mb doc is too much for now, we save some space
+cd /usr/share/doc
+du -sh * | grep M | sed -e 's/.*\t//' | xargs rm -rf
 
 # Runs the incredible menu generator! Twice !
 genmenu.py -v -t urxvt
