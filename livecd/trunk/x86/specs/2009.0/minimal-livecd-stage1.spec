@@ -37,6 +37,7 @@ dvd mpeg ogg rtsp x264 xvid sqlite -truetype
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 =sys-kernel/pentoo-sources-2.6.31
+sys-apps/pentoo
 app-admin/localepurge
 app-admin/syslog-ng
 app-arch/gzip
