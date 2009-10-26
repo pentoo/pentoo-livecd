@@ -1,5 +1,5 @@
 subarch: i686
-version_stamp: 2009.0
+version_stamp: minimal
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/2008.0
@@ -20,13 +20,13 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 # pkgcache_path: /tmp/packages
 # pkgcache_path:
 
-livecd/use: -X livecd -gnome -nls -gtk -kde -eds -gtk2 -cairo pam -firefox gpm dvdr oss
+livecd/use: -X livecd -gnome -nls -gtk -kde -eds -gtk2 -cairo pam -firefox gpm
 mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter subversion
 -quicktime -qt -qt3 -qt3support -qt4 -webkit -cups -spell lua curl
-png jpeg gif dri svg aac -nsplugin xrandr consolekit
-alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite -truetype
+-xrandr
+consolekit
+sqlite -truetype
 -opengl dbus binary-drivers -hal acpi usb
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
@@ -48,7 +48,6 @@ app-forensics/cmospwd
 app-misc/livecd-tools
 app-misc/screen
 app-portage/layman
-app-text/dos2unix
 net-analyzer/netcat
 net-analyzer/nmap
 #net-analyzer/ntop

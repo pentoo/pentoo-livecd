@@ -1,10 +1,10 @@
 subarch: i686
-version_stamp: 2009.0
+version_stamp: minimal
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/2008.0
 snapshot: 2009.0
-source_subpath: default/livecd-stage1-i686-2009.0
+source_subpath: default/livecd-stage1-i686-minimal
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 
@@ -228,7 +228,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: -X -gtk -gtk2 pcmcia usb -qt4 qt3support madwifi injection wifi -karma
+boot/kernel/pentoo/use: -X -gtk -gtk2 pcmcia usb -qt4 -qt3support madwifi injection wifi -karma
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -244,7 +244,7 @@ boot/kernel/pentoo/use: -X -gtk -gtk2 pcmcia usb -qt4 qt3support madwifi injecti
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-x11-misc/mkxf86config
+#x11-misc/mkxf86config
 sys-apps/pcmciautils
 net-misc/iodine
 net-wireless/atmel-firmware
