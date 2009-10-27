@@ -14,3 +14,6 @@ net-wireless/madwifi-old-tools
 >sys-kernel/genkernel-3.4.10-r3
 >x11-drivers/ati-drivers-9.5
 >=www-client/mozilla-firefox-bin-3.5
+
+#fixing portage not knowing to upgrade sysvinit
+<sys-apps/sysvinit-2.86-r12
