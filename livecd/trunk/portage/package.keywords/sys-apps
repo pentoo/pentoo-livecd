@@ -1,2 +1,3 @@
-=sys-apps/sysvinit-2.86-r12
+~sys-apps/baselayout-2.0.1
 =sys-apps/openrc-0.5.2-r1
+=sys-apps/sysvinit-2.86-r12
