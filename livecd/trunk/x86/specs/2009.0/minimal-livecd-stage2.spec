@@ -128,7 +128,7 @@ livecd/rcadd: autoconfig|default gpm|default dbus|default microcode_ctl|boot
 # use this on the official media, so it is left blank.
 # example:
 # livecd/rcdel:
-livecd/rcdel: spind|default
+livecd/rcdel: spind|default keymaps|boot
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,
@@ -228,7 +228,14 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: -X -gtk -gtk2 pcmcia usb -qt4 -qt3support madwifi injection wifi -karma
+boot/kernel/pentoo/use:  -X livecd -gnome -nls -gtk -kde -eds -gtk2 -cairo pam -firefox gpm
+mmx sse sse2 mpi wps offensive
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter subversion
+-quicktime -qt -qt3 -qt3support -qt4 -webkit -cups -spell lua curl
+-xrandr
+consolekit
+sqlite -truetype
+-opengl dbus binary-drivers -hal acpi usb -dso
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
