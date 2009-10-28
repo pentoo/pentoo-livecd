@@ -20,14 +20,14 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 # pkgcache_path: /tmp/packages
 # pkgcache_path:
 
-livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
+livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
 wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
-png jpeg gif dri svg aac nsplugin xrandr
+-quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl
+png jpeg gif dri svg aac nsplugin xrandr consolekit
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
-opengl dbus binary-drivers -hal acpi
+opengl dbus binary-drivers -hal acpi usb
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
 # will be built with the USE flags configured above.  These packages must not
