@@ -83,6 +83,7 @@ sys-apps/less
 sys-apps/microcode-ctl
 sys-apps/microcode-data
 sys-apps/pciutils
+sys-apps/sysvinit
 sys-apps/v86d
 sys-block/disktype
 sys-boot/grub
