@@ -16,3 +16,8 @@ net-wireless/madwifi-old-tools
 
 #fixing portage not knowing to upgrade sysvinit
 <sys-apps/sysvinit-2.86-r12
+
+#finally fixed the led bug in rtl8187, mask affected versions
+net-wireless/compat-wireless-2.6.31_rc7
+net-wireless/compat-wireless-2.6.32_rc1
+net-wireless/compat-wireless-2.6.32_rc5
