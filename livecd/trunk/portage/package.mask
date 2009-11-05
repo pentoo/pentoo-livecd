@@ -11,13 +11,11 @@
 net-wireless/madwifi-ng-tools
 net-wireless/madwifi-old-tools
 >sys-kernel/genkernel-3.4.10-r4
->x11-drivers/ati-drivers-9.5
+#>x11-drivers/ati-drivers-9.5
 >=www-client/mozilla-firefox-bin-3.5
 
-#fixing portage not knowing to upgrade sysvinit
-<sys-apps/sysvinit-2.86-r12
+# Upper doesn't support mpi
+>app-crypt/johntheripper-1.7.3.1-r1
 
 #finally fixed the led bug in rtl8187, mask affected versions
-net-wireless/compat-wireless-2.6.31_rc7
-net-wireless/compat-wireless-2.6.32_rc1
-net-wireless/compat-wireless-2.6.32_rc5
+<=net-wireless/compat-wireless-2.6.32_rc5

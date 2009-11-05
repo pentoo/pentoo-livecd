@@ -63,3 +63,4 @@ dev-python/urwid
 net-wireless/orinoco-fwutils **
 net-firewall/firehol
 sys-kernel/pentoo-sources
+=sys-cluster/openmpi-1.3.3

@@ -28,3 +28,6 @@ www-client/links -X -directfb -fbcon gpm -javascript -jpeg -png
 x11-libs/cairo svg
 x11-libs/ecore dbus
 x11-terms/rxvt-unicode perl truetype
+gnome-base/gvfs gnome
+net-libs/libsoup gnome
+net-dialup/ppp atm eap-tls radius dhcp
