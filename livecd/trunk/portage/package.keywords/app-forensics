@@ -1,2 +1,4 @@
 app-forensics/autopsy
 app-forensics/sleuthkit
+=app-forensics/afflib-3.3.4
+=app-forensics/libewf-20090209
