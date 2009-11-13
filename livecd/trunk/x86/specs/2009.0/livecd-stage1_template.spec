@@ -195,6 +195,7 @@ net-analyzer/wfuzz
 net-analyzer/wireshark
 net-analyzer/xprobe
 net-analyzer/yersinia
+=net-dialup/freeradius-2.1.7
 net-dialup/linux-atm
 net-dialup/lrzsz
 net-dialup/minicom
