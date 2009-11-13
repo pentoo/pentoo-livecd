@@ -307,6 +307,7 @@ sys-libs/libkudzu
 sys-power/acpid
 sys-power/acpitool
 sys-power/powertop
+sys-process/htop
 www-client/lynx
 www-client/mozilla-firefox-bin
 www-servers/lighttpd
