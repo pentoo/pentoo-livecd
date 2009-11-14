@@ -88,7 +88,6 @@ sys-apps/v86d
 sys-block/disktype
 sys-boot/grub
 sys-boot/syslinux
-sys-fs/device-mapper
 sys-fs/jfsutils
 sys-fs/reiserfsprogs
 sys-fs/reiser4progs

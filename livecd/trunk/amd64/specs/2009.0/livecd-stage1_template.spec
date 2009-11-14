@@ -296,7 +296,6 @@ sys-boot/syslinux
 sys-devel/gettext
 sys-devel/crossdev
 sys-devel/gdb
-sys-fs/device-mapper
 sys-fs/jfsutils
 sys-fs/reiserfsprogs
 sys-fs/reiser4progs
