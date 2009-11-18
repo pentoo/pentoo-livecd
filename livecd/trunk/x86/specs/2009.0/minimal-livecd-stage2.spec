@@ -109,7 +109,7 @@ livecd/type: generic-livecd
 # even if ti is detected by hotplug.
 # example:
 # livecd/modblacklist: 8139cp
-livecd/modblacklist: arusb_lnx rt2870sta prism54
+livecd/modblacklist: arusb_lnx rt2870sta rt3070 prism54
 
 # This is for adding init scripts to runlevels.  The syntax for the init script
 # is the script name, followed by a pipe, followed by the runlevel in which you
