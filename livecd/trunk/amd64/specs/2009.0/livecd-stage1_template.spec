@@ -36,7 +36,7 @@ opengl dbus binary-drivers -hal acpi
 # example:
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
-=sys-kernel/pentoo-sources-2.6.29-r6
+=sys-kernel/pentoo-sources-2.6.31-r3
 dev-libs/klibc
 app-admin/gamin
 =app-admin/genmenu-9999
