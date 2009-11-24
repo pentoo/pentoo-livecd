@@ -2,7 +2,7 @@ subarch: amd64
 version_stamp: 2009.0
 target: livecd-stage1
 rel_type: default
-profile: default/linux/amd64/2008.0
+profile: default/linux/amd64/10.0
 snapshot: 2009.0
 source_subpath: default/stage3-amd64-2009.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
@@ -20,14 +20,14 @@ cxxflags: -Os -mtune=prescott -pipe
 # pkgcache_path: /tmp/packages
 # pkgcache_path:
 
-livecd/use: X livecd -gnome -nls gtk -kde -eds gtk2 cairo -pam firefox gpm dvdr oss
+livecd/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
 wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua -ipv6 curl
-png jpeg gif dri svg aac nsplugin xrandr
+-quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
+png jpeg gif dri svg aac nsplugin xrandr consolekit
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
-opengl dbus binary-drivers -hal acpi
+opengl dbus binary-drivers -hal acpi usb subversion
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
 # will be built with the USE flags configured above.  These packages must not
@@ -37,14 +37,16 @@ opengl dbus binary-drivers -hal acpi
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 =sys-kernel/pentoo-sources-2.6.31-r3
-dev-libs/klibc
+sys-apps/pentoo
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
 app-admin/syslog-ng
 app-arch/gzip
+app-arch/unzip
+app-arch/unrar
 app-crypt/asleap
-#app-crypt/chntpw
+app-crypt/chntpw
 app-crypt/johntheripper
 #app-crypt/md5bf
 app-crypt/openvpn-blacklist
@@ -196,6 +198,7 @@ net-analyzer/yersinia
 =net-dialup/freeradius-2.1.7
 net-dialup/linux-atm
 net-dialup/lrzsz
+net-dialup/ppp
 net-dialup/minicom
 net-dns/bind-tools
 net-firewall/fwbuilder
@@ -254,8 +257,6 @@ net-wireless/aircrack-ng
 net-wireless/airoscript
 net-wireless/b43-openfwwf
 #net-wireless/bluemaho
-net-wireless/bluez-libs
-net-wireless/bluez-utils
 net-wireless/broadcom-firmware-downloader
 net-wireless/btscanner
 net-wireless/cowpatty
@@ -288,6 +289,7 @@ sys-apps/microcode-data
 sys-apps/pciutils
 sys-apps/portage
 sys-apps/slocate
+sys-apps/sysvinit
 sys-apps/v86d
 sys-block/disktype
 sys-block/gparted
@@ -310,8 +312,6 @@ sys-process/htop
 www-client/lynx
 www-client/mozilla-firefox-bin
 www-servers/lighttpd
-x11-base/xorg-server
-x11-base/xorg-x11
 #x11-drivers/xf86-input-virtualbox
 #x11-drivers/xf86-video-virtualbox
 x11-libs/ecore
