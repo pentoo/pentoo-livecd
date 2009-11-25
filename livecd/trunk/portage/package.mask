@@ -7,12 +7,12 @@
 =net-analyzer/nessus-core-2.3.1
 =net-analyzer/nessus-plugins-2.3.1
 =net-analyzer/nessus-2.3.1
->=dev-python/lxml-2.0.0
+#>=dev-python/lxml-2.0.0
 net-wireless/madwifi-ng-tools
 net-wireless/madwifi-old-tools
 >sys-kernel/genkernel-3.4.10-r4
 #>x11-drivers/ati-drivers-9.5
->=www-client/mozilla-firefox-bin-3.5
+#>=www-client/mozilla-firefox-bin-3.5
 
 # Upper doesn't support mpi
 >app-crypt/johntheripper-1.7.3.1-r1
