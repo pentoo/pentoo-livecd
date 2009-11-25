@@ -24,7 +24,7 @@ livecd/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
 wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg gif dri svg aac nsplugin xrandr consolekit
+png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
 opengl dbus binary-drivers -hal acpi usb subversion
@@ -94,6 +94,7 @@ dev-db/sqlix
 dev-db/sqlmap
 dev-db/sqlninja
 dev-java/jad-bin
+dev-java/sun-jre-bin
 dev-lang/nasm
 dev-libs/klibc
 dev-libs/libxml2
@@ -160,7 +161,7 @@ net-analyzer/netwox
 net-analyzer/ngrep
 net-analyzer/nikto
 net-analyzer/nmap
-net-analyzer/nmbscan
+#net-analyzer/nmbscan needs samba
 net-analyzer/ntop
 net-analyzer/ntp-fingerprint
 net-analyzer/onesixtyone
