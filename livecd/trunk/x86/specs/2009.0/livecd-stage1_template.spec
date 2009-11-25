@@ -6,7 +6,7 @@ profile: default/linux/x86/10.0
 snapshot: 2009.0
 source_subpath: default/stage3-i686-2009.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
-portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
+portage_overlay: /usr/portage/local/layman/enlightenment /usr/local/portage
 # /usr/portage/local/layman/jokey
 cflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
