@@ -101,7 +101,6 @@ dev-libs/libxslt
 dev-libs/openobex
 dev-python/pysqlite
 dev-python/psyco
-=dev-python/lxml-1.3.6
 dev-util/ati-stream-sdk-bin
 dev-util/dialog
 dev-util/edb
