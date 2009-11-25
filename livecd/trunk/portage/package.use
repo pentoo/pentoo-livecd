@@ -4,7 +4,7 @@ app-crypt/pyrit cuda padlock stream
 app-fuzz/protos http ldap snmp sip h2250 isakmp
 app-mobilephone/obexftp ruby
 dev-db/freetds mssql odbc
-dev-lang/php crypt ctype mysql pcre session unicode cli pcre xml zlib
+dev-lang/php cgi crypt ctype mysql pcre session unicode cli pcre xml zlib
 dev-lang/python sqlite
 dev-lang/ruby ipv6
 gnome-base/gnome-menus -python
@@ -15,13 +15,14 @@ net-analyzer/autoscan-network samba -gnome snmp nessus
 net-analyzer/metasploit gtk httpd sqlite3
 net-analyzer/mosref doc sources
 net-analyzer/wireshark gcrypt gnutls kerberos threads
+net-dialup/freeradius threads
 net-wireless/acx pcmcia
 net-wireless/atmel-firmware pcmcia usb
 net-wireless/prism54 pcmcia
 net-wireless/wpa_supplicant readline
 sys-apps/hal X crypt acpi dell disk-partition laptop
 sys-apps/pmount -crypt
-sys-block/gparted fat jfs ntfs reiser4 reiserfs xfs
+sys-block/gparted dmraid hfs fat jfs ntfs reiser4 reiserfs xfs
 sys-devel/gcc gtk
 sys-libs/libkudzu -minimal livecd python
 www-client/links -X -directfb -fbcon gpm -javascript -jpeg -png
@@ -31,3 +32,9 @@ x11-terms/rxvt-unicode perl truetype
 gnome-base/gvfs gnome
 net-libs/libsoup gnome
 net-dialup/ppp atm eap-tls radius dhcp
+app-forensics/sleuthkit aff ewf
+www-servers/lighttpd fastcgi mysql php
+
+# Striving for small size
+app-editors/vim minimal
+net-analyzer/net-snmp minimal
