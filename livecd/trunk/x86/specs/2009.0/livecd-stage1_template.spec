@@ -38,6 +38,7 @@ opengl dbus binary-drivers -hal acpi usb subversion
 livecd/packages:
 =sys-kernel/pentoo-sources-2.6.31-r3
 sys-apps/pentoo
+sys-apps/zerosmagic
 app-admin/gamin
 =app-admin/genmenu-9999
 app-admin/localepurge
