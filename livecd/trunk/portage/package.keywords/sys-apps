@@ -3,3 +3,12 @@
 =sys-apps/sysvinit-2.86-r12
 sys-apps/pentoo
 =sys-apps/util-linux-2.16.1 ~amd64
+=sys-apps/hal-0.5.13-r2
+sys-apps/hwdata-redhat
+sys-apps/hwsetup
+sys-apps/microcode-data
+sys-apps/microcode-ctl
+sys-apps/parted 
+sys-apps/pciutils
+sys-apps/pkgcore
+

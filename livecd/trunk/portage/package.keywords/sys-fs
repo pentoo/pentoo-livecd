@@ -1,0 +1,6 @@
+=sys-fs/lvm2-2.02.51-r1
+sys-fs/ntfs3g   
+sys-fs/ntfsprogs  
+=sys-fs/squashfs-tools-3.4-r1
+=sys-fs/udev-146-r1
+=sys-fs/e2fsprogs-1.41.9
