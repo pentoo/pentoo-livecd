@@ -230,6 +230,7 @@ net-misc/openvpn
 net-misc/partysip
 net-misc/proxychains
 net-misc/raccess
+net-misc/rdesktop-brute
 net-misc/rdesktop
 net-misc/grdesktop
 net-misc/rsync

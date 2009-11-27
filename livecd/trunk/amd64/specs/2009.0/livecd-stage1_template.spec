@@ -6,7 +6,7 @@ profile: default/linux/amd64/10.0
 snapshot: 2009.0
 source_subpath: default/stage3-amd64-2009.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
-portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
+portage_overlay: /usr/portage/local/layman/enlightenment /usr/local/portage
 # /usr/portage/local/layman/jokey
 cflags: -Os -mtune=prescott -pipe
 cxxflags: -Os -mtune=prescott -pipe
@@ -103,7 +103,6 @@ dev-libs/libxslt
 dev-libs/openobex
 dev-python/pysqlite
 #dev-python/psyco
-=dev-python/lxml-1.3.6
 dev-util/ati-stream-sdk-bin
 dev-util/dialog
 dev-util/edb
@@ -232,6 +231,7 @@ net-misc/openvpn
 net-misc/proxychains
 net-misc/raccess
 net-misc/rdesktop
+net-misc/rdesktop-brute
 net-misc/grdesktop
 net-misc/rsync
 #net-misc/sipbomber

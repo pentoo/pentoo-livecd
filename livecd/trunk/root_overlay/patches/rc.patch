@@ -1,13 +1,18 @@
---- sbin/rc.orig	2009-01-30 01:29:59.000000000 +0100
-+++ sbin/rc	2008-03-23 15:14:06.000000000 +0100
-@@ -207,8 +207,8 @@
- 	${RC_DMESG_LEVEL+/bin/dmesg -n ${RC_DMESG_LEVEL}}
- 
- 	echo
--	echo -e "${GOOD}Gentoo Linux${GENTOO_VERS}; ${BRACKET}http://www.gentoo.org/${NORMAL}"
--	echo -e " Copyright 1999-2007 Gentoo Foundation; Distributed under the GPLv2"
-+	echo -e "${GOOD}Pentoo Linux${GENTOO_VERS}; ${BRACKET}http://www.pentoo.ch/${NORMAL}"
-+	echo -e " Distributed under the GPLv2"
- 	echo
- 	if [[ ${RC_INTERACTIVE} == "yes" ]] ; then
- 		echo -e "Press ${GOOD}I${NORMAL} to enter interactive boot mode"
+--- /lib/rc/sh/init.sh.orig     2009-10-27 21:19:57.000000000 +0000
++++ /lib/rc/sh/init.sh  2009-10-28 13:10:22.000000000 +0000
+@@ -68,4 +68,15 @@
+ 	eend $?
+ fi
+
++[ -f "/sbin/livecd-functions.sh" ] && source /sbin/livecd-functions.sh
++[ -f "/sbin/livecd-functions.sh" ] && livecd_read_commandline
++
++if [ -f "/sbin/livecd-functions.sh" -a -n "${CDBOOT}" ]
++then
++	ebegin "Updating inittab"
++	livecd_fix_inittab
++	eend $?
++	/sbin/telinit q &>/dev/null
++fi
++
+ . "$RC_LIBEXECDIR"/sh/init-common-post.sh
