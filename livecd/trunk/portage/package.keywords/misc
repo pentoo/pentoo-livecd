@@ -44,9 +44,7 @@ dev-util/kbuild
 <dev-util/nvidia-cuda-toolkit-2.3
 dev-util/ati-stream-sdk-bin
 net-ftp/gproftpd
-=net-libs/netwib-5.33.0 ~amd64
 =dev-python/pysnmp-3.4.2 ~amd64
-net-libs/libnids
 dev-python/urwid
 net-wireless/orinoco-fwutils **
 net-firewall/firehol
