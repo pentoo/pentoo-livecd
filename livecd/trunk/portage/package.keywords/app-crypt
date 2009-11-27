@@ -50,7 +50,6 @@ app-crypt/pdfcrack
 app-crypt/pgpdump
 app-crypt/pinentry
 app-crypt/pkcrack
-app-crypt/pyrit * ** ~*
 app-crypt/qca
 app-crypt/qca-cyrus-sasl
 app-crypt/qca-gnupg
