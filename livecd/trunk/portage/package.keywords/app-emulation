@@ -1,2 +1,4 @@
 x11-drivers/xf86-input-virtualbox
 x11-drivers/xf86-video-virtualbox
+app-emulation/open-vm-tools
+app-emulation/open-vm-tools-kmod
