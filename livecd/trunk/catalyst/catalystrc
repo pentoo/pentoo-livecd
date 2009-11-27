@@ -2,12 +2,12 @@
 # This is an example catalystrc. As such, it doesn't actually *do* anything.
 
 # Uncomment the following to increase the number of threads used to compile.
-# export MAKEOPTS="-j16"
+export MAKEOPTS="-j8"
 
-export MAKEOPTS="-j4"
+#export ESVN_OFFLINE="True"
 #export GENTOO_MIRRORS="ftp://mirror.switch.ch/mirror/gentoo"
-export INPUT_DEVICES="evdev keyboard mouse synaptics vmmouse"
-export VIDEO_CARDS="fbdev glint intel mach64 mga neomagic nv r128 radeon savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
+export INPUT_DEVICES="keyboard mouse"
+export VIDEO_CARDS="fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 #export FETCHCOMMAND="/usr/bin/wget --no-check-certificate -t 5 -T 60 --passive-ftp \${URI} -P \${DISTDIR}"
 #export RESUMECOMMAND="/usr/bin/wget --no-check-certificate -c -t 5 -T 60 --passive-ftp \${URI} -P \${DISTDIR}"
 
