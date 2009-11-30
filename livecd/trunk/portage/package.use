@@ -1,6 +1,7 @@
 app-crypt/johntheripper mmx mpi sse2 custom-cflags
 app-crypt/ophcrack-tables -vistafree -xpfast -xpsmall
 app-crypt/pyrit cuda padlock stream
+app-emulation/qemu gnutls
 app-fuzz/protos http ldap snmp sip h2250 isakmp
 app-mobilephone/obexftp ruby
 dev-db/freetds mssql odbc

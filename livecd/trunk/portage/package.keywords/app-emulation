@@ -1,4 +1,9 @@
 x11-drivers/xf86-input-virtualbox
 x11-drivers/xf86-video-virtualbox
+app-emulation/kqemu
+app-emulation/libvirt
 app-emulation/open-vm-tools
 app-emulation/open-vm-tools-kmod
+app-emulation/virt-manager
+app-emulation/virtinst
+app-emulation/qemu
