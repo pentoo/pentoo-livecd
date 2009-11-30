@@ -47,8 +47,8 @@ cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
 # Fixes menu
 cp -a /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu
 
-# Fixes mkxf86config
-sed -i -e 's:/sbin/functions.sh:/lib/rc/sh/functions.sh:' /usr/sbin/mkxf86config.sh
+# Fixes functions.sh location since baselayout-2
+ln -s /lib/rc/sh/functions.sh /sbin/functions.sh
 
 # Fix the root login by emptying the root password. No ssh will be allowed until 'passwd root'
 sed -i -e 's/^root:\*:/root::/' /etc/shadow
@@ -84,7 +84,7 @@ eix-update
 updatedb
 
 # Fix /etc/make.conf
-echo 'USE="X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+echo 'USE="X -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
 wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
@@ -99,6 +99,9 @@ MAKEOPTS="-j2"
 #SYNC="rsync://rsync.europe.gentoo.org"' >> /etc/make.conf
 echo 'PORTDIR_OVERLAY="/usr/local/portage"' >> /etc/make.conf
 echo 'source /usr/local/portage/layman/make.conf' >> /etc/make.conf
+
+rm -rf /etc/portage
+emerge sys-apps/pentoo
 
 # Apply patches to root
 cd /
