@@ -175,6 +175,7 @@ net-analyzer/portbunny
 net-analyzer/portmon
 net-analyzer/portsentry
 net-analyzer/postal
+net-analyzer/ppscan
 net-analyzer/prelude-nessus
 net-analyzer/prewikka
 net-analyzer/quidscor
@@ -271,5 +272,7 @@ net-analyzer/theHarvester
 net-analyzer/upnpscan
 net-analyzer/voiphopper
 net-analyzer/w3af * ~* **
+net-analyzer/wapiti
 net-analyzer/wfuzz
+net-analyzer/xplico
 net-analyzer/yaptest

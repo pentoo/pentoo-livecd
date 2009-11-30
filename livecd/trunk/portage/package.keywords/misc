@@ -51,5 +51,4 @@ net-firewall/firehol
 sys-kernel/pentoo-sources
 =sys-cluster/openmpi-1.3.3
 =sys-devel/dev86-0.16.17-r6 ~amd64
-net-libs/libnids
-=net-libs/netwib-5.33.0 ~amd64
+net-fs/winexe
