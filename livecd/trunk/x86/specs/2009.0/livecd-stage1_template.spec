@@ -116,6 +116,7 @@ media-gfx/scrot
 media-fonts/font-misc-misc
 media-sound/audacious
 media-sound/alsa-utils
+media-sound/alsamixergui
 media-sound/sox
 media-video/vlc
 net-analyzer/aimsniff
@@ -170,6 +171,7 @@ net-analyzer/p0f
 net-analyzer/packet-o-matic
 net-analyzer/packit
 net-analyzer/paketto
+net-analyzer/ppscan
 net-analyzer/rain
 #net-analyzer/sara
 net-analyzer/scanssh
@@ -191,6 +193,7 @@ net-analyzer/traceroute
 net-analyzer/videojak
 net-analyzer/voiphopper
 net-analyzer/w3af
+net-analyzer/wapiti
 net-analyzer/webshag
 net-analyzer/wfuzz
 net-analyzer/wireshark
@@ -205,6 +208,7 @@ net-dns/bind-tools
 net-firewall/fwbuilder
 net-fs/nfs-utils
 net-fs/mount-cifs
+net-fs/winexe
 net-ftp/ftp
 net-ftp/gproftpd
 net-ftp/oftpd
@@ -220,7 +224,6 @@ net-misc/dhcpcd
 net-misc/iputils
 net-misc/karma
 net-misc/nemesis
-net-misc/neon
 net-misc/netkit-fingerd
 net-misc/netkit-rsh
 net-misc/netsed
@@ -244,6 +247,7 @@ net-misc/tcpick
 net-misc/telnet-bsd
 net-misc/tightvnc
 net-misc/voipong
+net-misc/vpnc
 net-misc/wget
 net-misc/whois
 net-misc/wicd
