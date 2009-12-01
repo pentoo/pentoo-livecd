@@ -230,7 +230,7 @@ boot/kernel/pentoo/gk_kernargs:
 # boot/kernel/gentoo/use: pcmcia usb -X
 boot/kernel/pentoo/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu kqemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -254,6 +254,7 @@ boot/kernel/pentoo/packages:
 x11-misc/mkxf86config
 =app-admin/genmenu-9999
 app-emulation/open-vm-tools
+app-emulation/qemu
 sys-apps/pcmciautils
 net-misc/iodine
 net-wireless/atmel-firmware
