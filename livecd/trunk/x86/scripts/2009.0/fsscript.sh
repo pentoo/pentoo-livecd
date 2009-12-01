@@ -16,6 +16,12 @@ then
 	sed -i -e '/#rc_hotplug/ s/\*/!net.\*/' -e '/#rc_hotplug/ s/#//' /etc/rc.conf
 fi
 
+# Fixes libvirtd
+if [[ -e /etc/libvirtd/libvirtd.conf ]]
+then
+	sed -i -e '/#listen_addr/ s/192.168.0.1/127.0.0.1/' -e '/#listen_addr/ s/#//' /etc/libvirtd/libvirtd.conf
+fi
+
 # Fix provide rc-script annoyance
 cd /etc/init.d/
 ln -s net.lo net.wlan0
@@ -86,7 +92,7 @@ updatedb
 # Fix /etc/make.conf
 echo 'USE="X -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu kqemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
