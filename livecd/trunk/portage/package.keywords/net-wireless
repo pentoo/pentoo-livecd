@@ -3,6 +3,7 @@ net-wireless/acx
 net-wireless/acx-firmware
 net-wireless/adm8211
 net-wireless/aircrack-ng
+net-wireless/airpwn
 net-wireless/airsnort
 net-wireless/airtraf
 net-wireless/ap-utils
@@ -51,6 +52,7 @@ net-wireless/linux-wlan-ng-firmware
 net-wireless/linux-wlan-ng-modules
 net-wireless/linux-wlan-ng-utils
 net-wireless/lorcon
+net-wireless/lorcon-old
 net-wireless/metadata.xml
 net-wireless/opd
 net-wireless/orinoco-fwutils
