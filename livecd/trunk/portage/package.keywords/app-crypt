@@ -60,6 +60,7 @@ app-crypt/qca-tls
 app-crypt/quickcrypt
 app-crypt/quintuple-agent
 app-crypt/rainbowcrack
+app-crypt/rcracki_mt
 app-crypt/rotix
 app-crypt/scsign
 app-crypt/seahorse
