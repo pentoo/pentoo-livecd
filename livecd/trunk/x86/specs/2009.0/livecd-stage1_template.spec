@@ -22,7 +22,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 
 livecd/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -37,6 +37,7 @@ opengl dbus binary-drivers -hal acpi usb subversion
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 =sys-kernel/pentoo-sources-2.6.31-r3
+app-emulation/virt-manager
 sys-apps/pentoo
 sys-apps/zerosmagic
 app-admin/gamin
@@ -155,7 +156,7 @@ net-analyzer/metasploit
 net-analyzer/mosref
 net-analyzer/nbtscan
 net-analyzer/nessus
-net-analyzer/netcat
+net-analyzer/netcat6
 net-analyzer/netdiscover
 #net-analyzer/netdude
 net-analyzer/netwag
@@ -261,6 +262,7 @@ net-proxy/tsocks
 #net-wireless/afrag
 net-wireless/aircrack-ng
 net-wireless/airoscript
+net-wireless/airpwn
 net-wireless/b43-openfwwf
 net-wireless/bluemaho
 net-wireless/broadcom-firmware-downloader

@@ -27,7 +27,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-i686-2009.0_pre2-r1.iso
+livecd/iso: /tmp/pentoo-i686-2009.0_pre3.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -230,7 +230,7 @@ boot/kernel/pentoo/gk_kernargs:
 # boot/kernel/gentoo/use: pcmcia usb -X
 boot/kernel/pentoo/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu kqemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -254,6 +254,7 @@ boot/kernel/pentoo/packages:
 x11-misc/mkxf86config
 =app-admin/genmenu-9999
 app-emulation/open-vm-tools
+app-emulation/qemu
 sys-apps/pcmciautils
 net-misc/iodine
 net-wireless/atmel-firmware
