@@ -43,16 +43,6 @@ done
 cd /usr/share/doc
 du -sh * | grep M | sed -e 's/.*\t//' | xargs rm -rf
 
-# Runs the incredible menu generator! Twice !
-genmenu.py -v -t urxvt
-genmenu.py -e -v -t urxvt
-
-# Fixes icons
-cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
-
-# Fixes menu
-cp -a /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu
-
 # Fixes functions.sh location since baselayout-2
 ln -s /lib/rc/sh/functions.sh /sbin/functions.sh
 
@@ -108,6 +98,19 @@ echo 'source /usr/local/portage/layman/make.conf' >> /etc/make.conf
 
 rm -rf /etc/portage
 emerge sys-apps/pentoo
+
+# This makes sure we have the latest and greatest genmenu!
+emerge app-admin/genmenu
+
+# Runs the incredible menu generator! Twice !
+genmenu.py -v -t urxvt
+genmenu.py -e -v -t urxvt
+
+# Fixes icons
+cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
+
+# Fixes menu
+cp -a /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu
 
 # Apply patches to root
 cd /
