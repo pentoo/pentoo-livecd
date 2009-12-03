@@ -19,3 +19,6 @@ net-wireless/madwifi-old-tools
 
 #finally fixed the led bug in rtl8187 and the deauth bug, mask affected versions
 <net-wireless/compat-wireless-2.6.32_rc6
+
+#intel video driver has known issues below this version
+<x11-drivers/xf86-video-intel-2.9.0
