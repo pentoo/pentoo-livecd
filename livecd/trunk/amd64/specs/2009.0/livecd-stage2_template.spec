@@ -27,7 +27,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2009.0_pre3.iso
+livecd/iso: /tmp/pentoo-x86_64-2009.0.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -190,7 +190,7 @@ livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2009.0_b
+livecd/volid: 2009.0
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
