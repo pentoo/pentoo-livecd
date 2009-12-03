@@ -22,7 +22,7 @@ cxxflags: -Os -mtune=prescott -pipe
 
 livecd/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -37,6 +37,7 @@ opengl dbus binary-drivers -hal acpi usb subversion
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 =sys-kernel/pentoo-sources-2.6.31-r3
+app-emulation/virt-manager
 sys-apps/pentoo
 sys-apps/zerosmagic
 app-admin/gamin
@@ -116,6 +117,7 @@ media-gfx/scrot
 media-fonts/font-misc-misc
 media-sound/audacious
 media-sound/alsa-utils
+media-sound/alsamixergui
 media-sound/sox
 media-video/vlc
 net-analyzer/aimsniff
@@ -148,13 +150,13 @@ net-analyzer/isic
 net-analyzer/macchanger
 net-analyzer/mbrowse
 net-analyzer/medusa
-net-analyzer/metacoretex-ng
+#net-analyzer/metacoretex-ng saving space...
 net-analyzer/metagoofil
 net-analyzer/metasploit
 #net-analyzer/mosref
 net-analyzer/nbtscan
 net-analyzer/nessus
-net-analyzer/netcat
+net-analyzer/netcat6
 net-analyzer/netdiscover
 #net-analyzer/netdude
 net-analyzer/netwag
@@ -170,6 +172,7 @@ net-analyzer/p0f
 net-analyzer/packet-o-matic
 net-analyzer/packit
 net-analyzer/paketto
+net-analyzer/ppscan
 net-analyzer/rain
 #net-analyzer/sara
 net-analyzer/scanssh
@@ -191,6 +194,7 @@ net-analyzer/upnpscan
 net-analyzer/videojak
 net-analyzer/voiphopper
 net-analyzer/w3af
+net-analyzer/wapiti
 net-analyzer/webshag
 net-analyzer/wfuzz
 net-analyzer/wireshark
@@ -199,12 +203,13 @@ net-analyzer/yersinia
 =net-dialup/freeradius-2.1.7
 net-dialup/linux-atm
 net-dialup/lrzsz
-net-dialup/ppp
 net-dialup/minicom
+net-dialup/ppp
 net-dns/bind-tools
 net-firewall/fwbuilder
 net-fs/nfs-utils
 net-fs/mount-cifs
+net-fs/winexe
 net-ftp/ftp
 net-ftp/gproftpd
 net-ftp/oftpd
@@ -220,7 +225,6 @@ net-misc/dhcpcd
 net-misc/iputils
 net-misc/karma
 net-misc/nemesis
-net-misc/neon
 net-misc/netkit-fingerd
 net-misc/netkit-rsh
 net-misc/netsed
@@ -230,8 +234,8 @@ net-misc/openvpn
 #net-misc/partysip
 net-misc/proxychains
 net-misc/raccess
-net-misc/rdesktop
 net-misc/rdesktop-brute
+net-misc/rdesktop
 net-misc/grdesktop
 net-misc/rsync
 #net-misc/sipbomber
@@ -244,6 +248,7 @@ net-misc/tcpick
 net-misc/telnet-bsd
 net-misc/tightvnc
 net-misc/voipong
+net-misc/vpnc
 net-misc/wget
 net-misc/whois
 net-misc/wicd
@@ -257,6 +262,7 @@ net-proxy/tsocks
 #net-wireless/afrag
 net-wireless/aircrack-ng
 net-wireless/airoscript
+net-wireless/airpwn
 net-wireless/b43-openfwwf
 #net-wireless/bluemaho
 net-wireless/broadcom-firmware-downloader
