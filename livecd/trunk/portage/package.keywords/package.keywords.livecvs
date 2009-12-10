@@ -1,3 +1,7 @@
+##Warning!!!########################################################################################################
+#Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
+##Warning!!!########################################################################################################
+
 # List all livecvs ebuilds here for the lazy.
 #
 # Symlink this file into your /etc/portage/package.keywords/ directory:

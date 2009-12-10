@@ -1,3 +1,6 @@
+##Warning!!!########################################################################################################
+#Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
+##Warning!!!########################################################################################################
 =x11-base/xorg-x11-7.4
 =x11-apps/x11perf-1.5
 =x11-apps/xev-1.0.3
