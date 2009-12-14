@@ -137,6 +137,7 @@ for krnl in `ls /lib/modules/`; do
 	cd /usr/src/linux
 	make prepare && make modules_prepare
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
+	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
 done
 
 # Setup fonts
