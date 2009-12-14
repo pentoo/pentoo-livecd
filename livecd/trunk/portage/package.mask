@@ -22,3 +22,5 @@ net-wireless/madwifi-old-tools
 
 #intel video driver has known issues below this version
 <x11-drivers/xf86-video-intel-2.9.0
+
+<sys-kernel/linux-firmware-99999999
