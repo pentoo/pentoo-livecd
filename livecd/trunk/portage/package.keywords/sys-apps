@@ -4,7 +4,6 @@
 =sys-apps/baselayout-2.0.1
 =sys-apps/openrc-0.5.2-r2
 =sys-apps/sysvinit-2.86-r12
-sys-apps/pentoo
 =sys-apps/util-linux-2.16.1 ~amd64
 =sys-apps/hal-0.5.13-r2
 sys-apps/hwdata-redhat

@@ -23,7 +23,7 @@ cxxflags: -Os -march=i686 -mtune=prescott -pipe -fomit-frame-pointer
 livecd/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive
 wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
+-quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso dwm enlightenment
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
@@ -379,6 +379,3 @@ x11-proto/dri2proto
 x11-themes/gtk-chtheme
 x11-terms/rxvt-unicode
 x11-libs/e_dbus
-x11-wm/dwm
-x11-wm/enlightenment
-x11-base/xorg-x11
