@@ -97,3 +97,4 @@ sys-power/acpid
 sys-power/acpitool
 sys-power/powertop
 www-client/lynx
+www-client/links

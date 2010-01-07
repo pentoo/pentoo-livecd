@@ -28,6 +28,7 @@ livecd/packages:
 	gpm
 	syslog-ng
 	parted
+	lynx
 	links
 	raidtools
 	dosfstools

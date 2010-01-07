@@ -318,6 +318,7 @@ sys-power/acpitool
 sys-power/powertop
 sys-process/htop
 www-client/lynx
+www-client/links
 www-client/mozilla-firefox-bin
 www-servers/lighttpd
 #x11-drivers/xf86-input-virtualbox
