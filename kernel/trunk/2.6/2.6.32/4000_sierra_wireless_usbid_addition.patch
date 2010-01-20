@@ -1,0 +1,11 @@
+diff -Naur linux-2.6.32-gentoo-r2/drivers/usb/serial/sierra.c linux-2.6.32-gentoo-r2-sierrafix/drivers/usb/serial/sierra.c
+--- linux-2.6.32-gentoo-r2/drivers/usb/serial/sierra.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-sierrafix/drivers/usb/serial/sierra.c	2010-01-20 16:00:34.000000000 -0500
+@@ -264,6 +264,7 @@
+ 	{ USB_DEVICE(0x1199, 0x68A3), 	/* Sierra Wireless Direct IP modems */
+ 	  .driver_info = (kernel_ulong_t)&direct_ip_interface_blacklist
+ 	},
++	{ USB_DEVICE(0x413C, 0x08133) }, /* Dell Computer Corp. Wireless 5720 VZW Mobile Broadband (EVDO Rev-A) Minicard GPS Port */
+ 
+ 	{ }
+ };
