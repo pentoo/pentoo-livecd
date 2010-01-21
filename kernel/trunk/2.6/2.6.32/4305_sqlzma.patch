@@ -1,35 +1,6 @@
-diff --git a/fs/squashfs/Kconfig b/fs/squashfs/Kconfig
-index 25a00d1..7ec5d7e 100644
---- a/fs/squashfs/Kconfig
-+++ b/fs/squashfs/Kconfig
-@@ -26,6 +26,12 @@ config SQUASHFS
- 
- 	  If unsure, say N.
- 
-+config SQUASHFS_LZMA
-+	bool "Include support for LZMA compressed file systems"
-+	depends on SQUASHFS
-+	select DECOMPRESS_LZMA
-+	select DECOMPRESS_LZMA_NEEDED
-+
- config SQUASHFS_EMBEDDED
- 
- 	bool "Additional option for memory-constrained systems" 
-diff --git a/fs/squashfs/Makefile b/fs/squashfs/Makefile
-index 70e3244..45aaefd 100644
---- a/fs/squashfs/Makefile
-+++ b/fs/squashfs/Makefile
-@@ -4,4 +4,5 @@
- 
- obj-$(CONFIG_SQUASHFS) += squashfs.o
- squashfs-y += block.o cache.o dir.o export.o file.o fragment.o id.o inode.o
--squashfs-y += namei.o super.o symlink.o
-+squashfs-y += namei.o super.o symlink.o zlib_wrapper.o decompressor.o
-+squashfs-$(CONFIG_SQUASHFS_LZMA) += lzma_wrapper.o
-diff --git a/fs/squashfs/block.c b/fs/squashfs/block.c
-index 2a79603..1cb0d81 100644
---- a/fs/squashfs/block.c
-+++ b/fs/squashfs/block.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/block.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/block.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/block.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/block.c	2010-01-21 12:52:36.000000000 -0500
 @@ -29,15 +29,14 @@
  #include <linux/fs.h>
  #include <linux/vfs.h>
@@ -47,7 +18,7 @@ index 2a79603..1cb0d81 100644
  
  /*
   * Read the metadata block length, this is stored in the first two
-@@ -153,72 +152,10 @@ int squashfs_read_data(struct super_block *sb, void **buffer, u64 index,
+@@ -153,72 +152,10 @@
  	}
  
  	if (compressed) {
@@ -124,7 +95,7 @@ index 2a79603..1cb0d81 100644
  	} else {
  		/*
  		 * Block is uncompressed.
-@@ -255,9 +192,6 @@ int squashfs_read_data(struct super_block *sb, void **buffer, u64 index,
+@@ -255,9 +192,6 @@
  	kfree(bh);
  	return length;
  
@@ -134,10 +105,9 @@ index 2a79603..1cb0d81 100644
  block_release:
  	for (; k < b; k++)
  		put_bh(bh[k]);
-diff --git a/fs/squashfs/cache.c b/fs/squashfs/cache.c
-index 40c98fa..57314be 100644
---- a/fs/squashfs/cache.c
-+++ b/fs/squashfs/cache.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/cache.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/cache.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/cache.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/cache.c	2010-01-21 12:52:36.000000000 -0500
 @@ -51,7 +51,6 @@
  #include <linux/sched.h>
  #include <linux/spinlock.h>
@@ -146,11 +116,9 @@ index 40c98fa..57314be 100644
  #include <linux/pagemap.h>
  
  #include "squashfs_fs.h"
-diff --git a/fs/squashfs/decompressor.c b/fs/squashfs/decompressor.c
-new file mode 100644
-index 0000000..0b6ad9b
---- /dev/null
-+++ b/fs/squashfs/decompressor.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/decompressor.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/decompressor.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/decompressor.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/decompressor.c	2010-01-21 12:52:36.000000000 -0500
 @@ -0,0 +1,72 @@
 +/*
 + * Squashfs - a compressed read only filesystem for Linux
@@ -224,11 +192,9 @@ index 0000000..0b6ad9b
 +
 +	return decompressor[i];
 +}
-diff --git a/fs/squashfs/decompressor.h b/fs/squashfs/decompressor.h
-new file mode 100644
-index 0000000..7425f80
---- /dev/null
-+++ b/fs/squashfs/decompressor.h
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/decompressor.h linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/decompressor.h
+--- linux-2.6.32-gentoo-r2/fs/squashfs/decompressor.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/decompressor.h	2010-01-21 12:52:36.000000000 -0500
 @@ -0,0 +1,55 @@
 +#ifndef DECOMPRESSOR_H
 +#define DECOMPRESSOR_H
@@ -285,10 +251,9 @@ index 0000000..7425f80
 +		length, srclength, pages);
 +}
 +#endif
-diff --git a/fs/squashfs/dir.c b/fs/squashfs/dir.c
-index 566b0ea..12b933a 100644
---- a/fs/squashfs/dir.c
-+++ b/fs/squashfs/dir.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/dir.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/dir.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/dir.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/dir.c	2010-01-21 12:52:36.000000000 -0500
 @@ -30,7 +30,6 @@
  #include <linux/fs.h>
  #include <linux/vfs.h>
@@ -297,10 +262,9 @@ index 566b0ea..12b933a 100644
  
  #include "squashfs_fs.h"
  #include "squashfs_fs_sb.h"
-diff --git a/fs/squashfs/export.c b/fs/squashfs/export.c
-index 2b1b8fe..7f93d5a 100644
---- a/fs/squashfs/export.c
-+++ b/fs/squashfs/export.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/export.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/export.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/export.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/export.c	2010-01-21 12:52:36.000000000 -0500
 @@ -39,7 +39,6 @@
  #include <linux/vfs.h>
  #include <linux/dcache.h>
@@ -309,10 +273,9 @@ index 2b1b8fe..7f93d5a 100644
  #include <linux/slab.h>
  
  #include "squashfs_fs.h"
-diff --git a/fs/squashfs/file.c b/fs/squashfs/file.c
-index 717767d..a25c506 100644
---- a/fs/squashfs/file.c
-+++ b/fs/squashfs/file.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/file.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/file.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/file.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/file.c	2010-01-21 12:52:36.000000000 -0500
 @@ -47,7 +47,6 @@
  #include <linux/string.h>
  #include <linux/pagemap.h>
@@ -321,10 +284,9 @@ index 717767d..a25c506 100644
  
  #include "squashfs_fs.h"
  #include "squashfs_fs_sb.h"
-diff --git a/fs/squashfs/fragment.c b/fs/squashfs/fragment.c
-index b5a2c15..7c90bbd 100644
---- a/fs/squashfs/fragment.c
-+++ b/fs/squashfs/fragment.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/fragment.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/fragment.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/fragment.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/fragment.c	2010-01-21 12:52:36.000000000 -0500
 @@ -36,7 +36,6 @@
  #include <linux/fs.h>
  #include <linux/vfs.h>
@@ -333,10 +295,9 @@ index b5a2c15..7c90bbd 100644
  
  #include "squashfs_fs.h"
  #include "squashfs_fs_sb.h"
-diff --git a/fs/squashfs/id.c b/fs/squashfs/id.c
-index 3795b83..b7f64bc 100644
---- a/fs/squashfs/id.c
-+++ b/fs/squashfs/id.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/id.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/id.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/id.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/id.c	2010-01-21 12:52:36.000000000 -0500
 @@ -34,7 +34,6 @@
  #include <linux/fs.h>
  #include <linux/vfs.h>
@@ -345,10 +306,9 @@ index 3795b83..b7f64bc 100644
  
  #include "squashfs_fs.h"
  #include "squashfs_fs_sb.h"
-diff --git a/fs/squashfs/inode.c b/fs/squashfs/inode.c
-index 9101dbd..49daaf6 100644
---- a/fs/squashfs/inode.c
-+++ b/fs/squashfs/inode.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/inode.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/inode.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/inode.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/inode.c	2010-01-21 12:52:36.000000000 -0500
 @@ -40,7 +40,6 @@
  
  #include <linux/fs.h>
@@ -357,11 +317,25 @@ index 9101dbd..49daaf6 100644
  
  #include "squashfs_fs.h"
  #include "squashfs_fs_sb.h"
-diff --git a/fs/squashfs/lzma_wrapper.c b/fs/squashfs/lzma_wrapper.c
-new file mode 100644
-index 0000000..cef06d6
---- /dev/null
-+++ b/fs/squashfs/lzma_wrapper.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/Kconfig linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/Kconfig
+--- linux-2.6.32-gentoo-r2/fs/squashfs/Kconfig	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/Kconfig	2010-01-21 12:52:36.000000000 -0500
+@@ -26,6 +26,12 @@
+ 
+ 	  If unsure, say N.
+ 
++config SQUASHFS_LZMA
++	bool "Include support for LZMA compressed file systems"
++	depends on SQUASHFS
++	select DECOMPRESS_LZMA
++	select DECOMPRESS_LZMA_NEEDED
++
+ config SQUASHFS_EMBEDDED
+ 
+ 	bool "Additional option for memory-constrained systems" 
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/lzma_wrapper.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/lzma_wrapper.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/lzma_wrapper.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/lzma_wrapper.c	2010-01-21 12:52:36.000000000 -0500
 @@ -0,0 +1,151 @@
 +/*
 + * Squashfs - a compressed read only filesystem for Linux
@@ -514,10 +488,19 @@ index 0000000..cef06d6
 +	.supported = 1
 +};
 +
-diff --git a/fs/squashfs/namei.c b/fs/squashfs/namei.c
-index 9e39865..5266bd8 100644
---- a/fs/squashfs/namei.c
-+++ b/fs/squashfs/namei.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/Makefile linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/Makefile
+--- linux-2.6.32-gentoo-r2/fs/squashfs/Makefile	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/Makefile	2010-01-21 12:52:36.000000000 -0500
+@@ -4,4 +4,5 @@
+ 
+ obj-$(CONFIG_SQUASHFS) += squashfs.o
+ squashfs-y += block.o cache.o dir.o export.o file.o fragment.o id.o inode.o
+-squashfs-y += namei.o super.o symlink.o
++squashfs-y += namei.o super.o symlink.o zlib_wrapper.o decompressor.o
++squashfs-$(CONFIG_SQUASHFS_LZMA) += lzma_wrapper.o
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/namei.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/namei.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/namei.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/namei.c	2010-01-21 12:52:36.000000000 -0500
 @@ -57,7 +57,6 @@
  #include <linux/slab.h>
  #include <linux/string.h>
@@ -526,44 +509,10 @@ index 9e39865..5266bd8 100644
  
  #include "squashfs_fs.h"
  #include "squashfs_fs_sb.h"
-diff --git a/fs/squashfs/squashfs.h b/fs/squashfs/squashfs.h
-index 0e9feb6..d094886 100644
---- a/fs/squashfs/squashfs.h
-+++ b/fs/squashfs/squashfs.h
-@@ -51,6 +51,9 @@ extern struct squashfs_cache_entry *squashfs_get_datablock(struct super_block *,
- 				u64, int);
- extern int squashfs_read_table(struct super_block *, void *, u64, int);
- 
-+/* decompressor.c */
-+extern const struct squashfs_decompressor *squashfs_lookup_decompressor(int);
-+
- /* export.c */
- extern __le64 *squashfs_read_inode_lookup_table(struct super_block *, u64,
- 				unsigned int);
-@@ -71,7 +74,7 @@ extern struct inode *squashfs_iget(struct super_block *, long long,
- extern int squashfs_read_inode(struct inode *, long long);
- 
- /*
-- * Inodes and files operations
-+ * Inodes, files and decompressor operations
-  */
- 
- /* dir.c */
-@@ -88,3 +91,9 @@ extern const struct inode_operations squashfs_dir_inode_ops;
- 
- /* symlink.c */
- extern const struct address_space_operations squashfs_symlink_aops;
-+
-+/* zlib_wrapper.c */
-+extern const struct squashfs_decompressor squashfs_zlib_comp_ops;
-+
-+/* lzma wrapper.c */
-+extern const struct squashfs_decompressor squashfs_lzma_comp_ops;
-diff --git a/fs/squashfs/squashfs_fs.h b/fs/squashfs/squashfs_fs.h
-index 283daaf..36e1604 100644
---- a/fs/squashfs/squashfs_fs.h
-+++ b/fs/squashfs/squashfs_fs.h
-@@ -211,7 +211,9 @@ struct meta_index {
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/squashfs_fs.h linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/squashfs_fs.h
+--- linux-2.6.32-gentoo-r2/fs/squashfs/squashfs_fs.h	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/squashfs_fs.h	2010-01-21 12:52:36.000000000 -0500
+@@ -211,7 +211,9 @@
  /*
   * definitions for structures on disk
   */
@@ -574,11 +523,10 @@ index 283daaf..36e1604 100644
  
  struct squashfs_super_block {
  	__le32			s_magic;
-diff --git a/fs/squashfs/squashfs_fs_sb.h b/fs/squashfs/squashfs_fs_sb.h
-index c8c6561..7533350 100644
---- a/fs/squashfs/squashfs_fs_sb.h
-+++ b/fs/squashfs/squashfs_fs_sb.h
-@@ -52,25 +52,26 @@ struct squashfs_cache_entry {
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/squashfs_fs_sb.h linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/squashfs_fs_sb.h
+--- linux-2.6.32-gentoo-r2/fs/squashfs/squashfs_fs_sb.h	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/squashfs_fs_sb.h	2010-01-21 12:52:36.000000000 -0500
+@@ -52,25 +52,26 @@
  };
  
  struct squashfs_sb_info {
@@ -625,10 +573,41 @@ index c8c6561..7533350 100644
 +	unsigned int				inodes;
  };
  #endif
-diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
-index 6c197ef..3550aec 100644
---- a/fs/squashfs/super.c
-+++ b/fs/squashfs/super.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/squashfs.h linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/squashfs.h
+--- linux-2.6.32-gentoo-r2/fs/squashfs/squashfs.h	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/squashfs.h	2010-01-21 12:52:36.000000000 -0500
+@@ -51,6 +51,9 @@
+ 				u64, int);
+ extern int squashfs_read_table(struct super_block *, void *, u64, int);
+ 
++/* decompressor.c */
++extern const struct squashfs_decompressor *squashfs_lookup_decompressor(int);
++
+ /* export.c */
+ extern __le64 *squashfs_read_inode_lookup_table(struct super_block *, u64,
+ 				unsigned int);
+@@ -71,7 +74,7 @@
+ extern int squashfs_read_inode(struct inode *, long long);
+ 
+ /*
+- * Inodes and files operations
++ * Inodes, files and decompressor operations
+  */
+ 
+ /* dir.c */
+@@ -88,3 +91,9 @@
+ 
+ /* symlink.c */
+ extern const struct address_space_operations squashfs_symlink_aops;
++
++/* zlib_wrapper.c */
++extern const struct squashfs_decompressor squashfs_zlib_comp_ops;
++
++/* lzma wrapper.c */
++extern const struct squashfs_decompressor squashfs_lzma_comp_ops;
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/super.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/super.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/super.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/super.c	2010-01-21 12:52:36.000000000 -0500
 @@ -35,34 +35,41 @@
  #include <linux/pagemap.h>
  #include <linux/init.h>
@@ -678,7 +657,7 @@ index 6c197ef..3550aec 100644
  }
  
  
-@@ -87,13 +94,6 @@ static int squashfs_fill_super(struct super_block *sb, void *data, int silent)
+@@ -87,13 +94,6 @@
  	}
  	msblk = sb->s_fs_info;
  
@@ -692,7 +671,7 @@ index 6c197ef..3550aec 100644
  	sblk = kzalloc(sizeof(*sblk), GFP_KERNEL);
  	if (sblk == NULL) {
  		ERROR("Failed to allocate squashfs_super_block\n");
-@@ -120,25 +120,25 @@ static int squashfs_fill_super(struct super_block *sb, void *data, int silent)
+@@ -120,25 +120,25 @@
  		goto failed_mount;
  	}
  
@@ -724,7 +703,7 @@ index 6c197ef..3550aec 100644
  	/*
  	 * Check if there's xattrs in the filesystem.  These are not
  	 * supported in this version, so warn that they will be ignored.
-@@ -205,6 +205,10 @@ static int squashfs_fill_super(struct super_block *sb, void *data, int silent)
+@@ -205,6 +205,10 @@
  
  	err = -ENOMEM;
  
@@ -735,7 +714,7 @@ index 6c197ef..3550aec 100644
  	msblk->block_cache = squashfs_cache_init("metadata",
  			SQUASHFS_CACHED_BLKS, SQUASHFS_METADATA_SIZE);
  	if (msblk->block_cache == NULL)
-@@ -292,17 +296,16 @@ failed_mount:
+@@ -292,17 +296,16 @@
  	squashfs_cache_delete(msblk->block_cache);
  	squashfs_cache_delete(msblk->fragment_cache);
  	squashfs_cache_delete(msblk->read_page);
@@ -754,7 +733,7 @@ index 6c197ef..3550aec 100644
  	kfree(sb->s_fs_info);
  	sb->s_fs_info = NULL;
  	return -ENOMEM;
-@@ -346,10 +349,10 @@ static void squashfs_put_super(struct super_block *sb)
+@@ -346,10 +349,10 @@
  		squashfs_cache_delete(sbi->block_cache);
  		squashfs_cache_delete(sbi->fragment_cache);
  		squashfs_cache_delete(sbi->read_page);
@@ -766,10 +745,9 @@ index 6c197ef..3550aec 100644
  		kfree(sb->s_fs_info);
  		sb->s_fs_info = NULL;
  	}
-diff --git a/fs/squashfs/symlink.c b/fs/squashfs/symlink.c
-index 83d8788..e80be20 100644
---- a/fs/squashfs/symlink.c
-+++ b/fs/squashfs/symlink.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/symlink.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/symlink.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/symlink.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/symlink.c	2010-01-21 12:52:36.000000000 -0500
 @@ -36,7 +36,6 @@
  #include <linux/slab.h>
  #include <linux/string.h>
@@ -778,11 +756,9 @@ index 83d8788..e80be20 100644
  
  #include "squashfs_fs.h"
  #include "squashfs_fs_sb.h"
-diff --git a/fs/squashfs/zlib_wrapper.c b/fs/squashfs/zlib_wrapper.c
-new file mode 100644
-index 0000000..4dd70e0
---- /dev/null
-+++ b/fs/squashfs/zlib_wrapper.c
+diff -Naur linux-2.6.32-gentoo-r2/fs/squashfs/zlib_wrapper.c linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/zlib_wrapper.c
+--- linux-2.6.32-gentoo-r2/fs/squashfs/zlib_wrapper.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/fs/squashfs/zlib_wrapper.c	2010-01-21 12:52:36.000000000 -0500
 @@ -0,0 +1,150 @@
 +/*
 + * Squashfs - a compressed read only filesystem for Linux
@@ -934,11 +910,9 @@ index 0000000..4dd70e0
 +	.supported = 1
 +};
 +
-diff --git a/include/linux/decompress/bunzip2_mm.h b/include/linux/decompress/bunzip2_mm.h
-new file mode 100644
-index 0000000..863efd0
---- /dev/null
-+++ b/include/linux/decompress/bunzip2_mm.h
+diff -Naur linux-2.6.32-gentoo-r2/include/linux/decompress/bunzip2_mm.h linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/bunzip2_mm.h
+--- linux-2.6.32-gentoo-r2/include/linux/decompress/bunzip2_mm.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/bunzip2_mm.h	2010-01-21 12:52:36.000000000 -0500
 @@ -0,0 +1,13 @@
 +#ifndef BUNZIP2_MM_H
 +#define BUNZIP2_MM_H
@@ -953,11 +927,9 @@ index 0000000..863efd0
 +#endif
 +
 +#endif
-diff --git a/include/linux/decompress/inflate_mm.h b/include/linux/decompress/inflate_mm.h
-new file mode 100644
-index 0000000..87a742b
---- /dev/null
-+++ b/include/linux/decompress/inflate_mm.h
+diff -Naur linux-2.6.32-gentoo-r2/include/linux/decompress/inflate_mm.h linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/inflate_mm.h
+--- linux-2.6.32-gentoo-r2/include/linux/decompress/inflate_mm.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/inflate_mm.h	2010-01-21 12:52:36.000000000 -0500
 @@ -0,0 +1,13 @@
 +#ifndef INFLATE_MM_H
 +#define INFLATE_MM_H
@@ -972,11 +944,10 @@ index 0000000..87a742b
 +#endif
 +
 +#endif
-diff --git a/include/linux/decompress/mm.h b/include/linux/decompress/mm.h
-index 5032b9a..44f6e14 100644
---- a/include/linux/decompress/mm.h
-+++ b/include/linux/decompress/mm.h
-@@ -53,8 +53,6 @@ static void free(void *where)
+diff -Naur linux-2.6.32-gentoo-r2/include/linux/decompress/mm.h linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/mm.h
+--- linux-2.6.32-gentoo-r2/include/linux/decompress/mm.h	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/mm.h	2010-01-21 12:52:36.000000000 -0500
+@@ -53,8 +53,6 @@
  
  #define set_error_fn(x)
  
@@ -985,7 +956,7 @@ index 5032b9a..44f6e14 100644
  #else /* STATIC */
  
  /* Code active when compiled standalone for use when loading ramdisk: */
-@@ -74,10 +72,8 @@ static void free(void *where)
+@@ -74,10 +72,8 @@
  #define large_malloc(a) vmalloc(a)
  #define large_free(a) vfree(a)
  
@@ -996,11 +967,9 @@ index 5032b9a..44f6e14 100644
  #define STATIC
  
  #include <linux/init.h>
-diff --git a/include/linux/decompress/unlzma_mm.h b/include/linux/decompress/unlzma_mm.h
-new file mode 100644
-index 0000000..859287e
---- /dev/null
-+++ b/include/linux/decompress/unlzma_mm.h
+diff -Naur linux-2.6.32-gentoo-r2/include/linux/decompress/unlzma_mm.h linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/unlzma_mm.h
+--- linux-2.6.32-gentoo-r2/include/linux/decompress/unlzma_mm.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/include/linux/decompress/unlzma_mm.h	2010-01-21 12:52:36.000000000 -0500
 @@ -0,0 +1,20 @@
 +#ifndef UNLZMA_MM_H
 +#define UNLZMA_MM_H
@@ -1022,37 +991,9 @@ index 0000000..859287e
 +#endif
 +
 +#endif
-diff --git a/lib/Kconfig b/lib/Kconfig
-index 97b136f..40e92e2 100644
---- a/lib/Kconfig
-+++ b/lib/Kconfig
-@@ -121,6 +121,9 @@ config DECOMPRESS_LZO
- 	select LZO_DECOMPRESS
- 	tristate
- 
-+config DECOMPRESS_LZMA_NEEDED
-+	 boolean
-+
- #
- # Generic allocator support is selected if needed
- #
-diff --git a/lib/Makefile b/lib/Makefile
-index 3b0b4a6..94a5f4c 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -68,7 +68,7 @@ obj-$(CONFIG_LZO_DECOMPRESS) += lzo/
- 
- lib-$(CONFIG_DECOMPRESS_GZIP) += decompress_inflate.o
- lib-$(CONFIG_DECOMPRESS_BZIP2) += decompress_bunzip2.o
--lib-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
-+obj-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
- 
- obj-$(CONFIG_TEXTSEARCH) += textsearch.o
-
-diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
-index a4e971d..04386b3 100644
---- a/lib/decompress_bunzip2.c
-+++ b/lib/decompress_bunzip2.c
+diff -Naur linux-2.6.32-gentoo-r2/lib/decompress_bunzip2.c linux-2.6.32-gentoo-r2-pentoo/lib/decompress_bunzip2.c
+--- linux-2.6.32-gentoo-r2/lib/decompress_bunzip2.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/lib/decompress_bunzip2.c	2010-01-21 12:52:36.000000000 -0500
 @@ -52,6 +52,7 @@
  #include <linux/slab.h>
  #endif /* STATIC */
@@ -1061,10 +1002,9 @@ index a4e971d..04386b3 100644
  #include <linux/decompress/mm.h>
  
  #ifndef INT_MAX
-diff --git a/lib/decompress_inflate.c b/lib/decompress_inflate.c
-index fc686c7..cb6bcab 100644
---- a/lib/decompress_inflate.c
-+++ b/lib/decompress_inflate.c
+diff -Naur linux-2.6.32-gentoo-r2/lib/decompress_inflate.c linux-2.6.32-gentoo-r2-pentoo/lib/decompress_inflate.c
+--- linux-2.6.32-gentoo-r2/lib/decompress_inflate.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/lib/decompress_inflate.c	2010-01-21 12:52:36.000000000 -0500
 @@ -23,6 +23,7 @@
  
  #endif /* STATIC */
@@ -1073,10 +1013,9 @@ index fc686c7..cb6bcab 100644
  #include <linux/decompress/mm.h>
  
  #define GZIP_IOBUF_SIZE (16*1024)
-diff --git a/lib/decompress_unlzma.c b/lib/decompress_unlzma.c
-index ca82fde..3e85763 100644
---- a/lib/decompress_unlzma.c
-+++ b/lib/decompress_unlzma.c
+diff -Naur linux-2.6.32-gentoo-r2/lib/decompress_unlzma.c linux-2.6.32-gentoo-r2-pentoo/lib/decompress_unlzma.c
+--- linux-2.6.32-gentoo-r2/lib/decompress_unlzma.c	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/lib/decompress_unlzma.c	2010-01-21 12:52:36.000000000 -0500
 @@ -36,6 +36,7 @@
  #include <linux/slab.h>
  #endif /* STATIC */
@@ -1085,7 +1024,7 @@ index ca82fde..3e85763 100644
  #include <linux/decompress/mm.h>
  
  #define	MIN(a, b) (((a) < (b)) ? (a) : (b))
-@@ -88,7 +89,7 @@ static int nofill(void *buffer, unsigned int len)
+@@ -88,7 +89,7 @@
  }
  
  /* Called twice: once at startup and once in rc_normalize() */
@@ -1094,7 +1033,7 @@ index ca82fde..3e85763 100644
  {
  	rc->buffer_size = rc->fill((char *)rc->buffer, LZMA_IOBUF_SIZE);
  	if (rc->buffer_size <= 0)
-@@ -115,13 +116,13 @@ static inline void INIT rc_init(struct rc *rc,
+@@ -115,13 +116,13 @@
  	rc->range = 0xFFFFFFFF;
  }
  
@@ -1110,7 +1049,7 @@ index ca82fde..3e85763 100644
  		rc->code = (rc->code << 8) | *rc->ptr++;
  	}
  }
-@@ -134,32 +135,33 @@ static inline void INIT rc_free(struct rc *rc)
+@@ -134,32 +135,33 @@
  }
  
  /* Called twice, but one callsite is in inline'd rc_is_bit_0_helper() */
@@ -1152,7 +1091,7 @@ index ca82fde..3e85763 100644
  	return rc->code < t;
  }
  
-@@ -177,9 +179,9 @@ static inline void rc_update_bit_1(struct rc *rc, uint16_t *p)
+@@ -177,9 +179,9 @@
  }
  
  /* Called 4 times in unlzma loop */
@@ -1164,7 +1103,7 @@ index ca82fde..3e85763 100644
  		rc_update_bit_0(rc, p);
  		*symbol *= 2;
  		return 0;
-@@ -191,9 +193,9 @@ static int INIT rc_get_bit(struct rc *rc, uint16_t *p, int *symbol)
+@@ -191,9 +193,9 @@
  }
  
  /* Called once */
@@ -1176,7 +1115,7 @@ index ca82fde..3e85763 100644
  	rc->range >>= 1;
  	if (rc->code >= rc->range) {
  		rc->code -= rc->range;
-@@ -204,13 +206,14 @@ static inline int INIT rc_direct_bit(struct rc *rc)
+@@ -204,13 +206,14 @@
  
  /* Called twice */
  static inline void INIT
@@ -1193,7 +1132,7 @@ index ca82fde..3e85763 100644
  	*symbol -= 1 << num_levels;
  }
  
-@@ -347,7 +350,8 @@ static inline void INIT copy_bytes(struct writer *wr,
+@@ -347,7 +350,8 @@
  static inline void INIT process_bit0(struct writer *wr, struct rc *rc,
  				     struct cstate *cst, uint16_t *p,
  				     int pos_state, uint16_t *prob,
@@ -1203,7 +1142,7 @@ index ca82fde..3e85763 100644
  	int mi = 1;
  	rc_update_bit_0(rc, prob);
  	prob = (p + LZMA_LITERAL +
-@@ -365,7 +369,7 @@ static inline void INIT process_bit0(struct writer *wr, struct rc *rc,
+@@ -365,7 +369,7 @@
  			match_byte <<= 1;
  			bit = match_byte & 0x100;
  			prob_lit = prob + 0x100 + bit + mi;
@@ -1212,7 +1151,7 @@ index ca82fde..3e85763 100644
  				if (!bit)
  					break;
  			} else {
-@@ -376,7 +380,7 @@ static inline void INIT process_bit0(struct writer *wr, struct rc *rc,
+@@ -376,7 +380,7 @@
  	}
  	while (mi < 0x100) {
  		uint16_t *prob_lit = prob + mi;
@@ -1221,7 +1160,7 @@ index ca82fde..3e85763 100644
  	}
  	write_byte(wr, mi);
  	if (cst->state < 4)
-@@ -389,7 +393,8 @@ static inline void INIT process_bit0(struct writer *wr, struct rc *rc,
+@@ -389,7 +393,8 @@
  
  static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
  					    struct cstate *cst, uint16_t *p,
@@ -1231,7 +1170,7 @@ index ca82fde..3e85763 100644
    int offset;
  	uint16_t *prob_len;
  	int num_bits;
-@@ -397,7 +402,7 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -397,7 +402,7 @@
  
  	rc_update_bit_1(rc, prob);
  	prob = p + LZMA_IS_REP + cst->state;
@@ -1240,7 +1179,7 @@ index ca82fde..3e85763 100644
  		rc_update_bit_0(rc, prob);
  		cst->rep3 = cst->rep2;
  		cst->rep2 = cst->rep1;
-@@ -407,13 +412,13 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -407,13 +412,13 @@
  	} else {
  		rc_update_bit_1(rc, prob);
  		prob = p + LZMA_IS_REP_G0 + cst->state;
@@ -1256,7 +1195,7 @@ index ca82fde..3e85763 100644
  				rc_update_bit_0(rc, prob);
  
  				cst->state = cst->state < LZMA_NUM_LIT_STATES ?
-@@ -428,13 +433,13 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -428,13 +433,13 @@
  
  			rc_update_bit_1(rc, prob);
  			prob = p + LZMA_IS_REP_G1 + cst->state;
@@ -1272,7 +1211,7 @@ index ca82fde..3e85763 100644
  					rc_update_bit_0(rc, prob);
  					distance = cst->rep2;
  				} else {
-@@ -452,7 +457,7 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -452,7 +457,7 @@
  	}
  
  	prob_len = prob + LZMA_LEN_CHOICE;
@@ -1281,7 +1220,7 @@ index ca82fde..3e85763 100644
  		rc_update_bit_0(rc, prob_len);
  		prob_len = (prob + LZMA_LEN_LOW
  			    + (pos_state <<
-@@ -462,7 +467,7 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -462,7 +467,7 @@
  	} else {
  		rc_update_bit_1(rc, prob_len);
  		prob_len = prob + LZMA_LEN_CHOICE_2;
@@ -1290,7 +1229,7 @@ index ca82fde..3e85763 100644
  			rc_update_bit_0(rc, prob_len);
  			prob_len = (prob + LZMA_LEN_MID
  				    + (pos_state <<
-@@ -478,7 +483,7 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -478,7 +483,7 @@
  		}
  	}
  
@@ -1299,7 +1238,7 @@ index ca82fde..3e85763 100644
  	len += offset;
  
  	if (cst->state < 4) {
-@@ -493,7 +498,7 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -493,7 +498,7 @@
  			 << LZMA_NUM_POS_SLOT_BITS);
  		rc_bit_tree_decode(rc, prob,
  				   LZMA_NUM_POS_SLOT_BITS,
@@ -1308,7 +1247,7 @@ index ca82fde..3e85763 100644
  		if (pos_slot >= LZMA_START_POS_MODEL_INDEX) {
  			int i, mi;
  			num_bits = (pos_slot >> 1) - 1;
-@@ -506,7 +511,7 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -506,7 +511,7 @@
  				num_bits -= LZMA_NUM_ALIGN_BITS;
  				while (num_bits--)
  					cst->rep0 = (cst->rep0 << 1) |
@@ -1317,7 +1256,7 @@ index ca82fde..3e85763 100644
  				prob = p + LZMA_ALIGN;
  				cst->rep0 <<= LZMA_NUM_ALIGN_BITS;
  				num_bits = LZMA_NUM_ALIGN_BITS;
-@@ -514,7 +519,7 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -514,7 +519,7 @@
  			i = 1;
  			mi = 1;
  			while (num_bits--) {
@@ -1326,7 +1265,7 @@ index ca82fde..3e85763 100644
  					cst->rep0 |= i;
  				i <<= 1;
  			}
-@@ -531,12 +536,12 @@ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+@@ -531,12 +536,12 @@
  
  
  
@@ -1341,7 +1280,7 @@ index ca82fde..3e85763 100644
  	)
  {
  	struct lzma_header header;
-@@ -552,8 +557,6 @@ STATIC inline int INIT unlzma(unsigned char *buf, int in_len,
+@@ -552,8 +557,6 @@
  	unsigned char *inbuf;
  	int ret = -1;
  
@@ -1350,7 +1289,7 @@ index ca82fde..3e85763 100644
  	if (buf)
  		inbuf = buf;
  	else
-@@ -576,7 +579,7 @@ STATIC inline int INIT unlzma(unsigned char *buf, int in_len,
+@@ -576,7 +579,7 @@
  
  	for (i = 0; i < sizeof(header); i++) {
  		if (rc.ptr >= rc.buffer_end)
@@ -1359,7 +1298,7 @@ index ca82fde..3e85763 100644
  		((unsigned char *)&header)[i] = *rc.ptr++;
  	}
  
-@@ -621,17 +624,17 @@ STATIC inline int INIT unlzma(unsigned char *buf, int in_len,
+@@ -621,17 +624,17 @@
  	for (i = 0; i < num_probs; i++)
  		p[i] = (1 << RC_MODEL_TOTAL_BITS) >> 1;
  
@@ -1381,7 +1320,7 @@ index ca82fde..3e85763 100644
  			if (cst.rep0 == 0)
  				break;
  		}
-@@ -652,6 +655,9 @@ exit_1:
+@@ -652,6 +655,9 @@
  exit_0:
  	return ret;
  }
@@ -1391,3 +1330,28 @@ index ca82fde..3e85763 100644
  
  #ifdef PREBOOT
  STATIC int INIT decompress(unsigned char *buf, int in_len,
+diff -Naur linux-2.6.32-gentoo-r2/lib/Kconfig linux-2.6.32-gentoo-r2-pentoo/lib/Kconfig
+--- linux-2.6.32-gentoo-r2/lib/Kconfig	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/lib/Kconfig	2010-01-21 12:52:36.000000000 -0500
+@@ -117,6 +117,9 @@
+ config DECOMPRESS_LZMA
+ 	tristate
+ 
++config DECOMPRESS_LZMA_NEEDED
++	 boolean
++
+ #
+ # Generic allocator support is selected if needed
+ #
+diff -Naur linux-2.6.32-gentoo-r2/lib/Makefile linux-2.6.32-gentoo-r2-pentoo/lib/Makefile
+--- linux-2.6.32-gentoo-r2/lib/Makefile	2009-12-02 22:51:21.000000000 -0500
++++ linux-2.6.32-gentoo-r2-pentoo/lib/Makefile	2010-01-21 12:52:36.000000000 -0500
+@@ -68,7 +68,7 @@
+ 
+ lib-$(CONFIG_DECOMPRESS_GZIP) += decompress_inflate.o
+ lib-$(CONFIG_DECOMPRESS_BZIP2) += decompress_bunzip2.o
+-lib-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
++obj-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
+ 
+ obj-$(CONFIG_TEXTSEARCH) += textsearch.o
+ obj-$(CONFIG_TEXTSEARCH_KMP) += ts_kmp.o
