@@ -1,10 +1,10 @@
-subarch: amd64
-version_stamp: 2009.0
+subarch: i686
+version_stamp: minimal
 target: livecd-stage2
 rel_type: default
-profile: default/linux/amd64/10.0
+profile: default/linux/x86/2008.0
 snapshot: 2009.0
-source_subpath: default/livecd-stage1-amd64-2009.0
+source_subpath: default/livecd-stage1-i686-minimal
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 
@@ -25,9 +25,9 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 #kerncache_path:
 
 livecd/fstype: squashfs
-livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery
+livecd/fsops: -b 1048576 -comp lzma
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2009.0.iso
+livecd/iso: /tmp/pentoo-i686-2009.0-minimal.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -109,7 +109,7 @@ livecd/type: generic-livecd
 # even if ti is detected by hotplug.
 # example:
 # livecd/modblacklist: 8139cp
-livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 ipv6
+livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54
 
 # This is for adding init scripts to runlevels.  The syntax for the init script
 # is the script name, followed by a pipe, followed by the runlevel in which you
@@ -190,7 +190,7 @@ livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2009.0
+livecd/volid: 2009.0_b
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
@@ -212,7 +212,7 @@ boot/kernel/pentoo/sources: =pentoo-sources-2.6.31-r3
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /var/svn/pentoo/livecd/trunk/amd64/kernel/config-2.6.31
+boot/kernel/pentoo/config:  /var/svn/pentoo/livecd/trunk/x86/kernel/config-2.6.31
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -228,14 +228,14 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+boot/kernel/pentoo/use:  -X livecd -gnome -nls -gtk -kde -eds -gtk2 -cairo pam -firefox gpm
 mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu kqemu
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg gif dri svg aac nsplugin xrandr consolekit
-alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite truetype
-opengl dbus binary-drivers -hal acpi usb subversion
+wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter subversion
+-quicktime -qt -qt3 -qt3support -qt4 -webkit -cups -spell lua curl
+-xrandr
+consolekit
+sqlite -truetype
+-opengl dbus binary-drivers -hal acpi usb -dso
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -251,36 +251,33 @@ opengl dbus binary-drivers -hal acpi usb subversion
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-x11-misc/mkxf86config
-=app-admin/genmenu-9999
-app-emulation/open-vm-tools
-app-emulation/qemu
+#x11-misc/mkxf86config
 sys-apps/pcmciautils
 net-misc/iodine
 net-wireless/atmel-firmware
 net-wireless/bcm43xx-fwcutter
 net-wireless/compat-wireless
+#net-wireless/intel-wimax-network-service
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-#net-wireless/iwl3945-ucode
+#=net-wireless/iwl3945-ucode-15.28.1.8
 #net-wireless/iwl4965-ucode
 #net-wireless/iwl5000-ucode
 #net-wireless/ralink-firmware
+#net-wireless/iwlwifi
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
 #net-wireless/prism54-firmware
+#net-wireless/rt2x00
+#net-wireless/rtl8180
 net-wireless/wpa_supplicant
 net-wireless/zd1201-firmware
 net-wireless/zd1211-firmware
 sys-fs/fuse
 sys-fs/ntfs3g
 net-firewall/firehol
-x11-drivers/ati-drivers
-x11-drivers/nvidia-drivers
-x11-drivers/xf86-input-synaptics
-x11-drivers/xf86-video-virtualbox
-=app-crypt/pyrit-0.2.4*
-app-crypt/cuda-multiforcer
+#=app-crypt/pyrit-0.2.2*
+#app-crypt/cuda-multiforcer
 #app-crypt/cuda-rarcrypt
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
@@ -302,14 +299,14 @@ app-crypt/cuda-multiforcer
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: sys-apps/zerosmagic dev-java/ant-core dev-java/sun-jdk dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner dev-texlive/texlive-latexrecommended dev-texlive/texlive-latex dev-texlive/texlive-basic app-text/texlive-core gentoo-sources
+livecd/unmerge: dev-java/ant-core dev-java/antlr dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner app-text/texlive-core dev-texlive/texlive-basic dev-texlive/texlive-latex dev-texlive/texlive-latexrecommended gentoo-sources
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
 # livecd/empty: /var/tmp /var/cache /var/db /var/empty /var/lock /var/log /var/run /var/spool /var/state /tmp /usr/portage /usr/share/man /usr/share/info /usr/share/unimaps /usr/include /usr/share/zoneinfo /usr/share/dict /usr/share/doc /usr/share/ss /usr/share/state /usr/share/texinfo /usr/lib/python2.2 /usr/lib/portage /usr/share/gettext /usr/share/i18n /usr/share/rfc /usr/lib/X11/config /usr/lib/X11/etc /usr/lib/X11/doc /usr/src /usr/share/doc /usr/share/man /root/.ccache /etc/cron.daily /etc/cron.hourly /etc/cron.monthly /etc/cron.weekly /etc/logrotate.d /etc/rsync /usr/lib/awk /usr/lib/ccache /usr/lib/gcc-config /usr/lib/nfs /usr/local /usr/diet/include /usr/diet/man /usr/share/consolefonts/partialfonts /usr/share/consoletrans /usr/share/emacs /usr/share/gcc-data /usr/share/genkernel /etc/bootsplash/gentoo /etc/bootsplash/gentoo-highquality /etc/splash/gentoo /etc/splash/emergence /usr/share/gnuconfig /usr/share/lcms /usr/share/locale /etc/skel
-livecd/empty: /var/empty /var/lock /var/tmp /var/spool /var/state /tmp /usr/portage /usr/src/linux/Documentation
+livecd/empty: /var/empty /var/lock /var/tmp /var/spool /var/state /tmp /usr/portage 
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

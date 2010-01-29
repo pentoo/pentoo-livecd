@@ -1,10 +1,10 @@
-subarch: amd64
+subarch: i686
 version_stamp: 2009.0
 target: livecd-stage2
 rel_type: default
-profile: default/linux/amd64/10.0
+profile: default/linux/x86/10.0
 snapshot: 2009.0
-source_subpath: default/livecd-stage1-amd64-2009.0
+source_subpath: default/livecd-stage1-i686-2009.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 
@@ -27,7 +27,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2009.0.iso
+livecd/iso: /tmp/pentoo-i686-2009.0.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -128,7 +128,7 @@ livecd/rcadd: autoconfig|default gpm|default dbus|default microcode_ctl|boot
 # use this on the official media, so it is left blank.
 # example:
 # livecd/rcdel:
-livecd/rcdel: spind|default keymaps|boot
+livecd/rcdel: keymaps|boot spind|default
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,
@@ -206,13 +206,13 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: =pentoo-sources-2.6.31-r3
+boot/kernel/pentoo/sources: =pentoo-sources-2.6.31*
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /var/svn/pentoo/livecd/trunk/amd64/kernel/config-2.6.31
+boot/kernel/pentoo/config:  /var/svn/pentoo/livecd/trunk/x86/kernel/config-2.6.31
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -232,7 +232,7 @@ boot/kernel/pentoo/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm d
 mmx sse sse2 mpi wps offensive
 wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu kqemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg gif dri svg aac nsplugin xrandr consolekit
+png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype
 opengl dbus binary-drivers -hal acpi usb subversion
@@ -262,13 +262,16 @@ net-wireless/bcm43xx-fwcutter
 net-wireless/compat-wireless
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-#net-wireless/iwl3945-ucode
+#=net-wireless/iwl3945-ucode-15.28.1.8
 #net-wireless/iwl4965-ucode
 #net-wireless/iwl5000-ucode
 #net-wireless/ralink-firmware
+#net-wireless/iwlwifi
 net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
 #net-wireless/prism54-firmware
+#net-wireless/rt2x00
+#net-wireless/rtl8180
 net-wireless/wpa_supplicant
 net-wireless/zd1201-firmware
 net-wireless/zd1211-firmware
@@ -281,7 +284,7 @@ x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
 =app-crypt/pyrit-0.2.4*
 app-crypt/cuda-multiforcer
-#app-crypt/cuda-rarcrypt
+app-crypt/cuda-rarcrypt
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
 # entry used for booting a ibm powerpc machine.
@@ -302,18 +305,16 @@ app-crypt/cuda-multiforcer
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: sys-apps/zerosmagic dev-java/ant-core dev-java/sun-jdk dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner dev-texlive/texlive-latexrecommended dev-texlive/texlive-latex dev-texlive/texlive-basic app-text/texlive-core gentoo-sources
+livecd/unmerge: sys-apps/zerosmagic dev-java/ant-core dev-java/sun-jdk dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner dev-texlive/texlive-latex dev-texlive/texlive-basic dev-texlive/texlive-latexrecommended app-text/texlive-core gentoo-sources
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
-# livecd/empty: /var/tmp /var/cache /var/db /var/empty /var/lock /var/log /var/run /var/spool /var/state /tmp /usr/portage /usr/share/man /usr/share/info /usr/share/unimaps /usr/include /usr/share/zoneinfo /usr/share/dict /usr/share/doc /usr/share/ss /usr/share/state /usr/share/texinfo /usr/lib/python2.2 /usr/lib/portage /usr/share/gettext /usr/share/i18n /usr/share/rfc /usr/lib/X11/config /usr/lib/X11/etc /usr/lib/X11/doc /usr/src /usr/share/doc /usr/share/man /root/.ccache /etc/cron.daily /etc/cron.hourly /etc/cron.monthly /etc/cron.weekly /etc/logrotate.d /etc/rsync /usr/lib/awk /usr/lib/ccache /usr/lib/gcc-config /usr/lib/nfs /usr/local /usr/diet/include /usr/diet/man /usr/share/consolefonts/partialfonts /usr/share/consoletrans /usr/share/emacs /usr/share/gcc-data /usr/share/genkernel /etc/bootsplash/gentoo /etc/bootsplash/gentoo-highquality /etc/splash/gentoo /etc/splash/emergence /usr/share/gnuconfig /usr/share/lcms /usr/share/locale /etc/skel
-livecd/empty: /var/empty /var/lock /var/tmp /var/spool /var/state /tmp /usr/portage /usr/src/linux/Documentation
+livecd/empty: /var/empty /var/lock /var/tmp /var/spool /var/state /tmp /usr/portage 
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
 # example:
-# livecd/rm: /lib/*.a /usr/lib/*.a /usr/lib/gcc-lib/*/*/libgcj* /etc/dispatch-conf.conf /etc/etc-update.conf /etc/*- /etc/issue* /etc/make.conf /etc/man.conf /etc/*.old /root/.viminfo /usr/sbin/bootsplash* /usr/sbin/fb* /usr/sbin/fsck.cramfs /usr/sbin/fsck.minix /usr/sbin/mkfs.minix /usr/sbin/mkfs.bfs /usr/sbin/mkfs.cramfs /lib/security/pam_access.so /lib/security/pam_chroot.so /lib/security/pam_debug.so /lib/security/pam_ftp.so /lib/security/pam_issue.so /lib/security/pam_mail.so /lib/security/pam_motd.so /lib/security/pam_mkhomedir.so /lib/security/pam_postgresok.so /lib/security/pam_rhosts_auth.so /lib/security/pam_userdb.so /usr/share/consolefonts/1* /usr/share/consolefonts/7* /usr/share/consolefonts/8* /usr/share/consolefonts/9* /usr/share/consolefonts/A* /usr/share/consolefonts/C* /usr/share/consolefonts/E* /usr/share/consolefonts/G* /usr/share/consolefonts/L* /usr/share/consolefonts/M* /usr/share/consolefonts/R* /usr/share/consolefonts/a* /usr/share/consolefonts/c* /usr/share/consolefonts/dr* /usr/share/consolefonts/g* /usr/share/consolefonts/i* /usr/share/consolefonts/k* /usr/share/consolefonts/l* /usr/share/consolefonts/r* /usr/share/consolefonts/s* /usr/share/consolefonts/t* /usr/share/consolefonts/v* /etc/splash/livecd-2005.0/16* /etc/splash/livecd-2005.0/12* /etc/splash/livecd-2005.0/6* /etc/splash/livecd-2005.0/8* /etc/splash/livecd-2005.0/images/silent-16* /etc/splash/livecd-2005.0/images/silent-12* /etc/splash/livecd-2005.0/images/silent-6* /etc/splash/livecd-2005.0/images/silent-8* /etc/splash/livecd-2005.0/images/verbose-16* /etc/splash/livecd-2005.0/images/verbose-12* /etc/splash/livecd-2005.0/images/verbose-6* /etc/splash/livecd-2005.0/images/verbose-8* /etc/make.conf.example /etc/make.globals /etc/resolv.conf
-livecd/rm: /etc/resolv.conf /usr/share/gtk-doc /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre*  /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline* 
+livecd/rm: /etc/resolv.conf /usr/share/gtk-doc /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre* /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline*
 # /usr/src/linux* we keep the sources

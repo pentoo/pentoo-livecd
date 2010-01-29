@@ -16,7 +16,7 @@ livecd/splash_type: gensplash
 livecd/splash_theme: livecd-2005.1
 
 livecd/type: gentoo-release-minimal
-livecd/modblacklist: arusb_lnx rt2870sta rt3070 prism54
+livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54
 
 livecd/bootargs: dokeymap
 livecd/gk_mainargs: --lvm2 --dmraid --evms2
