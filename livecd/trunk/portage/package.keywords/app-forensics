@@ -2,6 +2,7 @@
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
 app-forensics/autopsy
+app-forensics/memdump
 app-forensics/sleuthkit
 =app-forensics/afflib-3.3.4
 =app-forensics/libewf-20090209

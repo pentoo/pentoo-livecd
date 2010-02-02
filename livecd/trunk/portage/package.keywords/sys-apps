@@ -2,6 +2,7 @@
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
 =sys-apps/baselayout-2.0.1
+sys-apps/dcfldd
 =sys-apps/openrc-0.5.2-r2
 =sys-apps/sysvinit-2.86-r12
 =sys-apps/util-linux-2.16.1 ~amd64

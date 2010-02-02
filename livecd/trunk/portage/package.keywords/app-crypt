@@ -81,6 +81,7 @@ app-crypt/trousers
 app-crypt/truecrypt
 app-crypt/wxchecksums
 app-crypt/xca
+app-crypt/xor-analyze
 app-crypt/SIPcrack
 app-crypt/md5bf
 app-crypt/plaintoo
