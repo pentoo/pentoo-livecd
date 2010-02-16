@@ -18,6 +18,7 @@ app-crypt/chntpw
 app-crypt/coolkey
 app-crypt/cryptoapi
 app-crypt/cryptplug
+=app-crypt/cuda-multiforcer-0.7-r1
 app-crypt/dirmngr
 app-crypt/elettra
 app-crypt/gifshuffle
