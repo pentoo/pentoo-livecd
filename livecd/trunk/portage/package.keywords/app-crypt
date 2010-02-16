@@ -39,7 +39,6 @@ app-crypt/mcrypt
 app-crypt/md4sum
 app-crypt/md5deep
 app-crypt/mdcrack
-app-crypt/metadata.xml
 app-crypt/mhash
 app-crypt/nasty
 app-crypt/nistp224
