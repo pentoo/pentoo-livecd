@@ -1,4 +1,5 @@
-pp-emulation/virt-manager -policykit
+dev-db/sqlite fts3
+app-emulation/virt-manager -policykit
 net-misc/openvpn -static
 net-misc/openssh -ldap
 dev-db/mysql -static
