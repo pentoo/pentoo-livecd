@@ -1,3 +1,7 @@
+pp-emulation/virt-manager -policykit
+net-misc/openvpn -static
+net-misc/openssh -ldap
+dev-db/mysql -static
 app-crypt/johntheripper mmx mpi sse2 custom-cflags
 app-crypt/ophcrack-tables -vistafree -xpfast -xpsmall
 app-crypt/pyrit cuda padlock stream

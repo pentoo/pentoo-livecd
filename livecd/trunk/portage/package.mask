@@ -17,6 +17,9 @@ net-wireless/madwifi-old-tools
 # Upper doesn't support mpi
 >app-crypt/johntheripper-1.7.3.1-r1
 
+#Prevent downgrades
+<sys-apps/baselayout-2.0.0
+
 #finally fixed the led bug in rtl8187 and the deauth bug, mask affected versions
 <net-wireless/compat-wireless-2.6.32_rc6
 
