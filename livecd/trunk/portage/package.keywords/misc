@@ -4,7 +4,7 @@
 #dev-libs/nss
 #sys-fs/fuse
 #sys-kernel/genkernel
-www-client/mozilla-firefox
+#www-client/mozilla-firefox <- we don't install this, so don't unmask it
 www-client/firefox-bin
 app-admin/genmenu -* **
 app-forensics/cmospwd
