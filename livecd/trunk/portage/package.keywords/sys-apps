@@ -14,4 +14,4 @@ sys-apps/microcode-ctl
 sys-apps/parted 
 sys-apps/pciutils
 sys-apps/pkgcore
-
+=sys-apps/module-init-tools-3.11
