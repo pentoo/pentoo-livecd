@@ -11,3 +11,4 @@ x11-drivers/xf86-video-virtualbox
 =gnome-extra/polkit-gnome-0.94
 =app-emulation/virtinst-0.500.2
 =app-emulation/qemu-0.11.1
+~dev-libs/libxml2-2.7.6
