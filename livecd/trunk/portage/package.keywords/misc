@@ -7,6 +7,7 @@
 #www-client/mozilla-firefox <- we don't install this, so don't unmask it
 www-client/firefox-bin
 app-admin/genmenu -* **
+app-antivirus/malheur
 app-forensics/cmospwd
 app-text/cewl
 app-misc/emelfm2
