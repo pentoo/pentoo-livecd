@@ -230,6 +230,7 @@ net-analyzer/tcpstat
 net-analyzer/tcptrace
 net-analyzer/tcptraceroute
 net-analyzer/tcptrack
+net-analyzer/thc-pptp-bruter
 net-analyzer/thcrut
 net-analyzer/thrulay
 net-analyzer/tleds
