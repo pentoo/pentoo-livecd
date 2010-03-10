@@ -92,6 +92,7 @@ net-analyzer/lft
 net-analyzer/libnasl
 net-analyzer/linkchecker
 net-analyzer/macchanger
+net-analyzer/maketh
 net-analyzer/mbrowse
 net-analyzer/metasploit
 net-analyzer/midas-nms
