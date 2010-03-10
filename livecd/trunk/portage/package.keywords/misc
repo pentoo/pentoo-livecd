@@ -8,6 +8,7 @@
 www-client/firefox-bin
 app-admin/genmenu -* **
 app-forensics/cmospwd
+app-text/cewl
 app-misc/emelfm2
 app-portage/maintainer-helper
 dev-db/absinthe
