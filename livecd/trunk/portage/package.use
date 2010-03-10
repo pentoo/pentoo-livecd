@@ -10,7 +10,7 @@ app-emulation/qemu gnutls
 app-fuzz/protos http ldap snmp sip h2250 isakmp
 app-mobilephone/obexftp ruby
 dev-db/freetds mssql odbc
-dev-lang/php cgi crypt ctype mysql pcre session unicode cli pcre xml zlib
+dev-lang/php cgi crypt ctype filter mysql pcre session unicode cli pcre xml zlib
 dev-lang/python sqlite
 dev-lang/ruby ipv6
 gnome-base/gnome-menus -python
