@@ -81,6 +81,7 @@ net-misc/dhcping
 net-misc/dhcpv6
 net-misc/dibbler
 net-misc/directvnc
+app-misc/dradis
 net-misc/drivel
 net-misc/dropbear
 net-misc/efax
