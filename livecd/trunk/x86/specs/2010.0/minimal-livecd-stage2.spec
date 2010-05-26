@@ -66,7 +66,7 @@ livecd/bootargs: aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --makeopts=-j8 --dmraid
+livecd/gk_mainargs: --makeopts=-j8 --dmraid --lvm --gpg --luks
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
