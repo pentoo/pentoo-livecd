@@ -16,7 +16,7 @@ dev-lang/ruby ipv6
 gnome-base/gnome-menus -python
 media-libs/libsndfile -jack
 media-sound/sox -encode -ogg -mad
-media-video/vlc qt4 run-as-root
+media-video/vlc dvd ffmpeg mpeg mad wxwindows aac dts a52 ogg flac theora oggvorbis matroska freetype bidi xv svga gnutls stream vlm httpd cdda vcd cdio live qt4 run-as-root
 net-analyzer/autoscan-network samba -gnome snmp nessus
 net-analyzer/metasploit gtk httpd sqlite3
 net-analyzer/mosref doc sources
