@@ -1,10 +1,10 @@
 subarch: amd64
-version_stamp: 2009.0
+version_stamp: 2010.0
 target: livecd-stage1
 rel_type: default
 profile: default/linux/amd64/10.0
-snapshot: 2009.0
-source_subpath: default/stage3-amd64-2009.0
+snapshot: 2010.0
+source_subpath: default/stage3-amd64-2010.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/portage/local/layman/enlightenment /usr/local/portage
 # /usr/portage/local/layman/jokey

@@ -1,10 +1,10 @@
 subarch: amd64
-version_stamp: 2009.0
+version_stamp: 2010.0
 target: livecd-stage2
 rel_type: default
 profile: default/linux/amd64/10.0
-snapshot: 2009.0
-source_subpath: default/livecd-stage1-amd64-2009.0
+snapshot: 2010.0
+source_subpath: default/livecd-stage1-amd64-2010.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
 portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 
@@ -27,7 +27,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2009.0.iso
+livecd/iso: /tmp/pentoo-x86_64-2010.0.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -39,7 +39,7 @@ livecd/iso: /tmp/pentoo-x86_64-2009.0.iso
 # into the chroot by catalyst automatically.
 # example:
 # livecd/fsscript:
-livecd/fsscript: /var/svn/pentoo/livecd/trunk/x86/scripts/2009.0/fsscript.sh
+livecd/fsscript: /var/svn/pentoo/livecd/trunk/x86/scripts/2010.0/fsscript.sh
 
 # The splash type determines the automatic arguments for the bootloader on
 # supported architectures.  The possible options are gensplash and bootsplash.
@@ -190,7 +190,7 @@ livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2009.0
+livecd/volid: 2010.0
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
