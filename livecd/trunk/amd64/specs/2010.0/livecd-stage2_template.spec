@@ -26,7 +26,7 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery
-livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
+livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-memtest86+-cdtar.tar.bz2
 livecd/iso: /tmp/pentoo-x86_64-2010.0.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
@@ -206,13 +206,13 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: =pentoo-sources-2.6.31-r3
+boot/kernel/pentoo/sources: =pentoo-sources-2.6.34-r4
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /var/svn/pentoo/livecd/trunk/amd64/kernel/config-2.6.31
+boot/kernel/pentoo/config: /var/svn/pentoo/livecd/trunk/amd64/kernel/config-2.6.34
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -279,7 +279,7 @@ x11-drivers/ati-drivers
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
-=app-crypt/pyrit-0.2.4*
+app-crypt/pyrit
 app-crypt/cuda-multiforcer
 #app-crypt/cuda-rarcrypt
 
