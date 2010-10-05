@@ -1,0 +1,7 @@
+net-analyzer/wireshark
+app-misc/livecd-tools
+x11-misc/mkxf86config
+sys-apps/hwsetup
+=dev-util/nvidia-cuda-sdk-2.10.1215.2015-r1
+=dev-util/nvidia-cuda-toolkit-2.1-r1
+<=x11-drivers/ati-drivers-9.5

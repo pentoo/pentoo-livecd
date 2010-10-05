@@ -1,0 +1,26 @@
+#>=sys-libs/glibc-2.8
+=net-analyzer/nessus-libraries-2.3.1
+=net-analyzer/libnasl-2.3.1
+=net-analyzer/nessus-core-2.3.1
+=net-analyzer/nessus-plugins-2.3.1
+=net-analyzer/nessus-2.3.1
+#>=dev-python/lxml-2.0.0
+net-wireless/madwifi-ng-tools
+net-wireless/madwifi-old-tools
+>sys-kernel/genkernel-3.4.10-r4
+#>x11-drivers/ati-drivers-9.5
+#>=www-client/mozilla-firefox-bin-3.5
+
+# Upper doesn't support mpi
+>app-crypt/johntheripper-1.7.3.1-r1
+
+#Prevent downgrades
+<sys-apps/baselayout-2.0.0
+
+#finally fixed the led bug in rtl8187 and the deauth bug, mask affected versions
+<net-wireless/compat-wireless-2.6.32_rc6
+
+#intel video driver has known issues below this version
+<x11-drivers/xf86-video-intel-2.9.0
+
+<sys-kernel/linux-firmware-99999999
