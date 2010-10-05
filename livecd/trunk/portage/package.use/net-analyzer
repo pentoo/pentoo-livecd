@@ -1,6 +1,6 @@
 net-analyzer/autoscan-network samba -gnome snmp nessus
 net-analyzer/metasploit gtk httpd sqlite3
 net-analyzer/mosref doc sources
-net-analyzer/wireshark gcrypt gnutls kerberos threads
-# Striving for small size
 net-analyzer/net-snmp minimal
+net-analyzer/snort dynamicplugin zlib
+net-analyzer/wireshark gcrypt gnutls kerberos threads
