@@ -119,7 +119,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 ipv6 r8187 pcspkr nou
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default gpm|default dbus|default microcode_ctl|boot cpufreqd|default
+livecd/rcadd: autoconfig|default gpm|default dbus|default microcode_ctl|boot
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
