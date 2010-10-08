@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# Linux kernel version: 2.6.35-pentoo-r5
-# Sun Oct  3 00:54:12 2010
+# Linux kernel version: 2.6.35-pentoo-r6
+# Thu Oct  7 22:17:39 2010
 #
 CONFIG_64BIT=y
 # CONFIG_X86_32 is not set
@@ -4978,7 +4978,7 @@ CONFIG_PAX_RANDMMAP=y
 CONFIG_PAX_MEMORY_SANITIZE=y
 # CONFIG_PAX_MEMORY_UDEREF is not set
 CONFIG_PAX_REFCOUNT=y
-CONFIG_PAX_USERCOPY=y
+# CONFIG_PAX_USERCOPY is not set
 CONFIG_KEYS=y
 CONFIG_KEYS_DEBUG_PROC_KEYS=y
 CONFIG_SECURITY=y
