@@ -6,8 +6,9 @@
 net-wireless/madwifi-ng-tools
 net-wireless/madwifi-old-tools
 
-# We don't need it for now
+# We don't want python-3 for now
 >=dev-lang/python-3.0
+>=lxml/lxml-2.2.7
 
 # Upper doesn't support mpi
 >app-crypt/johntheripper-1.7.3.1-r1
