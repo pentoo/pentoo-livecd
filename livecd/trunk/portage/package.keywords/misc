@@ -25,7 +25,6 @@ dev-libs/distorm64
 dev-python/Impacket
 dev-python/cxoracle
 dev-python/fpconst
-dev-python/lxml
 dev-python/pyPdf
 dev-python/pycrypto
 dev-python/pygoogle

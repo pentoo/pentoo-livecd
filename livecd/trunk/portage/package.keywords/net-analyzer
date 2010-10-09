@@ -8,6 +8,7 @@ net-analyzer/angst
 net-analyzer/argus
 net-analyzer/argus-clients
 net-analyzer/arp-sk
+net-analyzer/arpantispoofer
 net-analyzer/arping
 net-analyzer/arpoison
 net-analyzer/arptools
