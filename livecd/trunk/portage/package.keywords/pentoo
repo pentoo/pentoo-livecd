@@ -3,3 +3,4 @@ pentoo/pentoo-forensics **
 pentoo/pentoo-rce **
 pentoo/pentoo-wireless **
 pentoo/pentoo-etc-portage
+~sys-devel/gcc-4.4.3
