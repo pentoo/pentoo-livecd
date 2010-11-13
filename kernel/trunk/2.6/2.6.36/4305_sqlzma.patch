@@ -1,97 +1,37 @@
-diff -Nru linux-2.6.36.orig/fs/squashfs/decompressor.c linux-2.6.36/fs/squashfs/decompressor.c
---- linux-2.6.36.orig/fs/squashfs/decompressor.c	2010-11-10 18:06:07.603046157 +0100
-+++ linux-2.6.36/fs/squashfs/decompressor.c	2010-11-10 18:31:18.737955324 +0100
-@@ -40,11 +40,9 @@
- 	NULL, NULL, NULL, LZMA_COMPRESSION, "lzma", 0
- };
- 
--#ifndef CONFIG_SQUASHFS_LZO
- static const struct squashfs_decompressor squashfs_lzo_unsupported_comp_ops = {
- 	NULL, NULL, NULL, LZO_COMPRESSION, "lzo", 0
- };
--#endif
- 
- static const struct squashfs_decompressor squashfs_unknown_comp_ops = {
- 	NULL, NULL, NULL, 0, "unknown", 0
-@@ -52,12 +50,12 @@
+diff -Nru a/fs/squashfs/decompressor.c b/fs/squashfs/decompressor.c
+--- a/fs/squashfs/decompressor.c	2010-05-16 23:17:36.000000000 +0200
++++ b/fs/squashfs/decompressor.c	2010-05-17 14:57:45.271547099 +0200
+@@ -52,7 +52,11 @@
  
  static const struct squashfs_decompressor *decompressor[] = {
  	&squashfs_zlib_comp_ops,
--	&squashfs_lzma_unsupported_comp_ops,
--#ifdef CONFIG_SQUASHFS_LZO
--	&squashfs_lzo_comp_ops,
 +#ifdef CONFIG_SQUASHFS_LZMA
 +	&squashfs_lzma_comp_ops,
++#else
+ 	&squashfs_lzma_unsupported_comp_ops,
++#endif
+ #ifdef CONFIG_SQUASHFS_LZO
+ 	&squashfs_lzo_comp_ops,
  #else
--	&squashfs_lzo_unsupported_comp_ops,
-+	&squashfs_lzma_unsupported_comp_ops,
- #endif
-+	&squashfs_lzo_unsupported_comp_ops,
- 	&squashfs_unknown_comp_ops
- };
- 
-diff -Nru linux-2.6.36.orig/fs/squashfs/Kconfig linux-2.6.36/fs/squashfs/Kconfig
---- linux-2.6.36.orig/fs/squashfs/Kconfig	2010-11-10 18:06:07.604046138 +0100
-+++ linux-2.6.36/fs/squashfs/Kconfig	2010-11-10 18:31:22.467902589 +0100
-@@ -5,13 +5,13 @@
- 	help
- 	  Saying Y here includes support for SquashFS 4.0 (a Compressed
- 	  Read-Only File System).  Squashfs is a highly compressed read-only
--	  filesystem for Linux.  It uses zlib/lzo compression to compress both
-+	  filesystem for Linux.  It uses zlib compression to compress both
- 	  files, inodes and directories.  Inodes in the system are very small
- 	  and all blocks are packed to minimise data overhead. Block sizes
- 	  greater than 4K are supported up to a maximum of 1 Mbytes (default
- 	  block size 128K).  SquashFS 4.0 supports 64 bit filesystems and files
- 	  (larger than 4GB), full uid/gid information, hard links and
--	  timestamps.
-+	  timestamps.  
- 
- 	  Squashfs is intended for general read-only filesystem use, for
- 	  archival use (i.e. in cases where a .tar.gz file may be used), and in
-@@ -26,7 +26,7 @@
+diff -Nru a/fs/squashfs/Kconfig b/fs/squashfs/Kconfig
+--- a/fs/squashfs/Kconfig	2010-05-16 23:17:36.000000000 +0200
++++ b/fs/squashfs/Kconfig	2010-05-17 15:13:49.807545765 +0200
+@@ -26,6 +26,12 @@
  
  	  If unsure, say N.
  
--config SQUASHFS_XATTR
-+config SQUASHFS_XATTRS
- 	bool "Squashfs XATTR support"
- 	depends on SQUASHFS
- 	default n
-@@ -37,24 +37,15 @@
- 
- 	  If unsure, say N.
- 
--config SQUASHFS_LZO
--	bool "Include support for LZO compressed file systems"
 +config SQUASHFS_LZMA
 +	bool "Include support for LZMA compressed file systems"
- 	depends on SQUASHFS
--	default n
--	select LZO_DECOMPRESS
--	help
--	  Saying Y here includes support for reading Squashfs file systems
--	  compressed with LZO compresssion.  LZO compression is mainly
--	  aimed at embedded systems with slower CPUs where the overheads
--	  of zlib are too high.
--
--	  LZO is not the standard compression used in Squashfs and so most
--	  file systems will be readable without selecting this option.
--
--	  If unsure, say N.
++	depends on SQUASHFS
 +	select DECOMPRESS_LZMA
 +	select DECOMPRESS_LZMA_NEEDED
- 
- config SQUASHFS_EMBEDDED
--	bool "Additional option for memory-constrained systems"
 +
-+	bool "Additional option for memory-constrained systems" 
- 	depends on SQUASHFS
- 	default n
- 	help
-diff -Nru linux-2.6.36.orig/fs/squashfs/lzma_wrapper.c linux-2.6.36/fs/squashfs/lzma_wrapper.c
---- linux-2.6.36.orig/fs/squashfs/lzma_wrapper.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.36/fs/squashfs/lzma_wrapper.c	2010-11-10 18:31:18.741955268 +0100
+ config SQUASHFS_EMBEDDED
+ 
+ 	bool "Additional option for memory-constrained systems" 
+diff -Nru a/fs/squashfs/lzma_wrapper.c b/fs/squashfs/lzma_wrapper.c
+--- a/fs/squashfs/lzma_wrapper.c	1970-01-01 01:00:00.000000000 +0100
++++ b/fs/squashfs/lzma_wrapper.c	2010-05-17 15:15:12.637552661 +0200
 @@ -0,0 +1,152 @@
 +/*
 + * Squashfs - a compressed read only filesystem for Linux
@@ -117,11 +57,11 @@ diff -Nru linux-2.6.36.orig/fs/squashfs/lzma_wrapper.c linux-2.6.36/fs/squashfs/
 + */
 +
 +#include <asm/unaligned.h>
++#include <linux/slab.h>
 +#include <linux/buffer_head.h>
 +#include <linux/mutex.h>
 +#include <linux/vmalloc.h>
 +#include <linux/decompress/unlzma.h>
-+#include <linux/slab.h>
 +
 +#include "squashfs_fs.h"
 +#include "squashfs_fs_sb.h"
@@ -146,7 +86,7 @@ diff -Nru linux-2.6.36.orig/fs/squashfs/lzma_wrapper.c linux-2.6.36/fs/squashfs/
 +	lzma_error = 1;
 +}
 +
-+	
++
 +static void *lzma_init(struct squashfs_sb_info *msblk)
 +{
 +	struct squashfs_lzma *stream = kzalloc(sizeof(*stream), GFP_KERNEL);
@@ -245,184 +185,31 @@ diff -Nru linux-2.6.36.orig/fs/squashfs/lzma_wrapper.c linux-2.6.36/fs/squashfs/
 +	.supported = 1
 +};
 +
-diff -Nru linux-2.6.36.orig/fs/squashfs/lzo_wrapper.c linux-2.6.36/fs/squashfs/lzo_wrapper.c
---- linux-2.6.36.orig/fs/squashfs/lzo_wrapper.c	2010-11-10 18:06:07.604046138 +0100
-+++ linux-2.6.36/fs/squashfs/lzo_wrapper.c	1970-01-01 01:00:00.000000000 +0100
-@@ -1,136 +0,0 @@
--/*
-- * Squashfs - a compressed read only filesystem for Linux
-- *
-- * Copyright (c) 2010 LG Electronics
-- * Chan Jeong <chan.jeong@lge.com>
-- *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License
-- * as published by the Free Software Foundation; either version 2,
-- * or (at your option) any later version.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License
-- * along with this program; if not, write to the Free Software
-- * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-- *
-- * lzo_wrapper.c
-- */
--
--#include <linux/mutex.h>
--#include <linux/buffer_head.h>
--#include <linux/slab.h>
--#include <linux/vmalloc.h>
--#include <linux/lzo.h>
--
--#include "squashfs_fs.h"
--#include "squashfs_fs_sb.h"
--#include "squashfs_fs_i.h"
--#include "squashfs.h"
--#include "decompressor.h"
--
--struct squashfs_lzo {
--	void	*input;
--	void	*output;
--};
--
--static void *lzo_init(struct squashfs_sb_info *msblk)
--{
--	int block_size = max_t(int, msblk->block_size, SQUASHFS_METADATA_SIZE);
--
--	struct squashfs_lzo *stream = kzalloc(sizeof(*stream), GFP_KERNEL);
--	if (stream == NULL)
--		goto failed;
--	stream->input = vmalloc(block_size);
--	if (stream->input == NULL)
--		goto failed;
--	stream->output = vmalloc(block_size);
--	if (stream->output == NULL)
--		goto failed2;
--
--	return stream;
--
--failed2:
--	vfree(stream->input);
--failed:
--	ERROR("Failed to allocate lzo workspace\n");
--	kfree(stream);
--	return NULL;
--}
--
--
--static void lzo_free(void *strm)
--{
--	struct squashfs_lzo *stream = strm;
--
--	if (stream) {
--		vfree(stream->input);
--		vfree(stream->output);
--	}
--	kfree(stream);
--}
--
--
--static int lzo_uncompress(struct squashfs_sb_info *msblk, void **buffer,
--	struct buffer_head **bh, int b, int offset, int length, int srclength,
--	int pages)
--{
--	struct squashfs_lzo *stream = msblk->stream;
--	void *buff = stream->input;
--	int avail, i, bytes = length, res;
--	size_t out_len = srclength;
--
--	mutex_lock(&msblk->read_data_mutex);
--
--	for (i = 0; i < b; i++) {
--		wait_on_buffer(bh[i]);
--		if (!buffer_uptodate(bh[i]))
--			goto block_release;
--
--		avail = min(bytes, msblk->devblksize - offset);
--		memcpy(buff, bh[i]->b_data + offset, avail);
--		buff += avail;
--		bytes -= avail;
--		offset = 0;
--		put_bh(bh[i]);
--	}
--
--	res = lzo1x_decompress_safe(stream->input, (size_t)length,
--					stream->output, &out_len);
--	if (res != LZO_E_OK)
--		goto failed;
--
--	res = bytes = (int)out_len;
--	for (i = 0, buff = stream->output; bytes && i < pages; i++) {
--		avail = min_t(int, bytes, PAGE_CACHE_SIZE);
--		memcpy(buffer[i], buff, avail);
--		buff += avail;
--		bytes -= avail;
--	}
--
--	mutex_unlock(&msblk->read_data_mutex);
--	return res;
--
--block_release:
--	for (; i < b; i++)
--		put_bh(bh[i]);
--
--failed:
--	mutex_unlock(&msblk->read_data_mutex);
--
--	ERROR("lzo decompression failed, data probably corrupt\n");
--	return -EIO;
--}
--
--const struct squashfs_decompressor squashfs_lzo_comp_ops = {
--	.init = lzo_init,
--	.free = lzo_free,
--	.decompress = lzo_uncompress,
--	.id = LZO_COMPRESSION,
--	.name = "lzo",
--	.supported = 1
--};
-diff -Nru linux-2.6.36.orig/fs/squashfs/Makefile linux-2.6.36/fs/squashfs/Makefile
---- linux-2.6.36.orig/fs/squashfs/Makefile	2010-11-10 18:06:07.603046157 +0100
-+++ linux-2.6.36/fs/squashfs/Makefile	2010-11-10 18:31:18.736955339 +0100
-@@ -5,5 +5,5 @@
- obj-$(CONFIG_SQUASHFS) += squashfs.o
+diff -Nru a/fs/squashfs/Makefile b/fs/squashfs/Makefile
+--- a/fs/squashfs/Makefile	2010-05-16 23:17:36.000000000 +0200
++++ b/fs/squashfs/Makefile	2010-05-17 14:57:45.270554026 +0200
+@@ -6,4 +6,5 @@
  squashfs-y += block.o cache.o dir.o export.o file.o fragment.o id.o inode.o
  squashfs-y += namei.o super.o symlink.o zlib_wrapper.o decompressor.o
--squashfs-$(CONFIG_SQUASHFS_XATTR) += xattr.o xattr_id.o
--squashfs-$(CONFIG_SQUASHFS_LZO) += lzo_wrapper.o
+ squashfs-$(CONFIG_SQUASHFS_XATTR) += xattr.o xattr_id.o
 +squashfs-$(CONFIG_SQUASHFS_LZMA) += lzma_wrapper.o
-+
-diff -Nru linux-2.6.36.orig/fs/squashfs/squashfs.h linux-2.6.36/fs/squashfs/squashfs.h
---- linux-2.6.36.orig/fs/squashfs/squashfs.h	2010-11-10 18:06:07.603046157 +0100
-+++ linux-2.6.36/fs/squashfs/squashfs.h	2010-11-10 18:31:18.742955254 +0100
-@@ -105,5 +105,5 @@
+ squashfs-$(CONFIG_SQUASHFS_LZO) += lzo_wrapper.o
+diff -Nru a/fs/squashfs/squashfs.h b/fs/squashfs/squashfs.h
+--- a/fs/squashfs/squashfs.h	2010-05-16 23:17:36.000000000 +0200
++++ b/fs/squashfs/squashfs.h	2010-05-17 14:57:45.310795600 +0200
+@@ -105,5 +105,8 @@
  /* zlib_wrapper.c */
  extern const struct squashfs_decompressor squashfs_zlib_comp_ops;
  
--/* lzo_wrapper.c */
--extern const struct squashfs_decompressor squashfs_lzo_comp_ops;
 +/* lzma wrapper.c */
 +extern const struct squashfs_decompressor squashfs_lzma_comp_ops;
-diff -Nru linux-2.6.36.orig/fs/squashfs/xattr.h linux-2.6.36/fs/squashfs/xattr.h
---- linux-2.6.36.orig/fs/squashfs/xattr.h	2010-11-10 18:06:07.603046157 +0100
-+++ linux-2.6.36/fs/squashfs/xattr.h	2010-11-10 18:31:15.721997889 +0100
-@@ -21,7 +21,7 @@
-  * xattr.h
-  */
- 
--#ifdef CONFIG_SQUASHFS_XATTR
-+#ifdef CONFIG_SQUASHFS_XATTRS
- extern __le64 *squashfs_read_xattr_id_table(struct super_block *, u64,
- 		u64 *, int *);
- extern int squashfs_xattr_lookup(struct super_block *, unsigned int, int *,
-diff -Nru linux-2.6.36.orig/include/linux/decompress/bunzip2_mm.h linux-2.6.36/include/linux/decompress/bunzip2_mm.h
---- linux-2.6.36.orig/include/linux/decompress/bunzip2_mm.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.36/include/linux/decompress/bunzip2_mm.h	2010-11-10 18:31:22.467902589 +0100
-@@ -0,0 +1,12 @@
++
+ /* lzo_wrapper.c */
+ extern const struct squashfs_decompressor squashfs_lzo_comp_ops;
+diff -Nru a/include/linux/decompress/bunzip2_mm.h b/include/linux/decompress/bunzip2_mm.h
+--- a/include/linux/decompress/bunzip2_mm.h	1970-01-01 01:00:00.000000000 +0100
++++ b/include/linux/decompress/bunzip2_mm.h	2010-05-17 15:14:15.255545839 +0200
+@@ -0,0 +1,13 @@
 +#ifndef BUNZIP2_MM_H
 +#define BUNZIP2_MM_H
 +
@@ -432,13 +219,14 @@ diff -Nru linux-2.6.36.orig/include/linux/decompress/bunzip2_mm.h linux-2.6.36/i
 +#else
 +/* Compile for initramfs/initrd code only */
 +#define INIT __init
++static void(*error)(char *m);
 +#endif
 +
 +#endif
-diff -Nru linux-2.6.36.orig/include/linux/decompress/inflate_mm.h linux-2.6.36/include/linux/decompress/inflate_mm.h
---- linux-2.6.36.orig/include/linux/decompress/inflate_mm.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.36/include/linux/decompress/inflate_mm.h	2010-11-10 18:31:22.468902575 +0100
-@@ -0,0 +1,12 @@
+diff -Nru a/include/linux/decompress/inflate_mm.h b/include/linux/decompress/inflate_mm.h
+--- a/include/linux/decompress/inflate_mm.h	1970-01-01 01:00:00.000000000 +0100
++++ b/include/linux/decompress/inflate_mm.h	2010-05-17 15:14:15.255545839 +0200
+@@ -0,0 +1,13 @@
 +#ifndef INFLATE_MM_H
 +#define INFLATE_MM_H
 +
@@ -448,12 +236,13 @@ diff -Nru linux-2.6.36.orig/include/linux/decompress/inflate_mm.h linux-2.6.36/i
 +#else
 +/* Compile for initramfs/initrd code only */
 +#define INIT __init
++static void(*error)(char *m);
 +#endif
 +
 +#endif
-diff -Nru linux-2.6.36.orig/include/linux/decompress/mm.h linux-2.6.36/include/linux/decompress/mm.h
---- linux-2.6.36.orig/include/linux/decompress/mm.h	2010-11-10 18:05:56.997245575 +0100
-+++ linux-2.6.36/include/linux/decompress/mm.h	2010-11-10 18:31:22.472902519 +0100
+diff -Nru a/include/linux/decompress/mm.h b/include/linux/decompress/mm.h
+--- a/include/linux/decompress/mm.h	2010-05-16 23:17:36.000000000 +0200
++++ b/include/linux/decompress/mm.h	2010-05-17 15:14:15.259546209 +0200
 @@ -63,8 +63,6 @@
  
  #define set_error_fn(x)
@@ -463,17 +252,20 @@ diff -Nru linux-2.6.36.orig/include/linux/decompress/mm.h linux-2.6.36/include/l
  #else /* STATIC */
  
  /* Code active when compiled standalone for use when loading ramdisk: */
-@@ -87,7 +85,6 @@
- static void(*error)(char *m);
+@@ -84,10 +82,8 @@
+ #define large_malloc(a) vmalloc(a)
+ #define large_free(a) vfree(a)
+ 
+-static void(*error)(char *m);
  #define set_error_fn(x) error = x;
  
 -#define INIT __init
  #define STATIC
  
  #include <linux/init.h>
-diff -Nru linux-2.6.36.orig/include/linux/decompress/unlzma_mm.h linux-2.6.36/include/linux/decompress/unlzma_mm.h
---- linux-2.6.36.orig/include/linux/decompress/unlzma_mm.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.36/include/linux/decompress/unlzma_mm.h	2010-11-10 18:31:22.473902505 +0100
+diff -Nru a/include/linux/decompress/unlzma_mm.h b/include/linux/decompress/unlzma_mm.h
+--- a/include/linux/decompress/unlzma_mm.h	1970-01-01 01:00:00.000000000 +0100
++++ b/include/linux/decompress/unlzma_mm.h	2010-05-17 15:13:10.802553245 +0200
 @@ -0,0 +1,20 @@
 +#ifndef UNLZMA_MM_H
 +#define UNLZMA_MM_H
@@ -495,9 +287,26 @@ diff -Nru linux-2.6.36.orig/include/linux/decompress/unlzma_mm.h linux-2.6.36/in
 +#endif
 +
 +#endif
-diff -Nru linux-2.6.36.orig/lib/decompress_bunzip2.c linux-2.6.36/lib/decompress_bunzip2.c
---- linux-2.6.36.orig/lib/decompress_bunzip2.c	2010-11-10 18:05:56.923246964 +0100
-+++ linux-2.6.36/lib/decompress_bunzip2.c	2010-11-10 18:31:22.479902419 +0100
+diff -Nru a/include/linux/decompress/unlzo_mm.h b/include/linux/decompress/unlzo_mm.h
+--- a/include/linux/decompress/unlzo_mm.h	1970-01-01 01:00:00.000000000 +0100
++++ b/include/linux/decompress/unlzo_mm.h	2010-05-17 15:14:15.259546209 +0200
+@@ -0,0 +1,13 @@
++#ifndef UNLZO_MM_H
++#define UNLZO_MM_H
++
++#ifdef STATIC
++/* Code active when included from pre-boot environment: */
++#define INIT
++#else
++/* Compile for initramfs/initrd code only */
++#define INIT __init
++static void(*error)(char *m);
++#endif
++
++#endif
+diff -Nru a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
+--- a/lib/decompress_bunzip2.c	2010-05-16 23:17:36.000000000 +0200
++++ b/lib/decompress_bunzip2.c	2010-05-17 15:13:10.812574144 +0200
 @@ -52,6 +52,7 @@
  #include <linux/slab.h>
  #endif /* STATIC */
@@ -506,9 +315,9 @@ diff -Nru linux-2.6.36.orig/lib/decompress_bunzip2.c linux-2.6.36/lib/decompress
  #include <linux/decompress/mm.h>
  
  #ifndef INT_MAX
-diff -Nru linux-2.6.36.orig/lib/decompress_inflate.c linux-2.6.36/lib/decompress_inflate.c
---- linux-2.6.36.orig/lib/decompress_inflate.c	2010-11-10 18:05:56.923246964 +0100
-+++ linux-2.6.36/lib/decompress_inflate.c	2010-11-10 18:31:22.480902405 +0100
+diff -Nru a/lib/decompress_inflate.c b/lib/decompress_inflate.c
+--- a/lib/decompress_inflate.c	2010-05-16 23:17:36.000000000 +0200
++++ b/lib/decompress_inflate.c	2010-05-17 15:13:10.815573687 +0200
 @@ -23,6 +23,7 @@
  
  #endif /* STATIC */
@@ -517,9 +326,9 @@ diff -Nru linux-2.6.36.orig/lib/decompress_inflate.c linux-2.6.36/lib/decompress
  #include <linux/decompress/mm.h>
  
  #define GZIP_IOBUF_SIZE (16*1024)
-diff -Nru linux-2.6.36.orig/lib/decompress_unlzma.c linux-2.6.36/lib/decompress_unlzma.c
---- linux-2.6.36.orig/lib/decompress_unlzma.c	2010-11-10 18:05:56.924246945 +0100
-+++ linux-2.6.36/lib/decompress_unlzma.c	2010-11-10 18:31:22.481902391 +0100
+diff -Nru a/lib/decompress_unlzma.c b/lib/decompress_unlzma.c
+--- a/lib/decompress_unlzma.c	2010-05-16 23:17:36.000000000 +0200
++++ b/lib/decompress_unlzma.c	2010-05-17 15:14:15.260574202 +0200
 @@ -36,6 +36,7 @@
  #include <linux/slab.h>
  #endif /* STATIC */
@@ -528,7 +337,248 @@ diff -Nru linux-2.6.36.orig/lib/decompress_unlzma.c linux-2.6.36/lib/decompress_
  #include <linux/decompress/mm.h>
  
  #define	MIN(a, b) (((a) < (b)) ? (a) : (b))
-@@ -531,7 +532,7 @@
+@@ -88,7 +89,7 @@
+ }
+ 
+ /* Called twice: once at startup and once in rc_normalize() */
+-static void INIT rc_read(struct rc *rc)
++static void INIT rc_read(struct rc *rc, void(*error)(char *x))
+ {
+ 	rc->buffer_size = rc->fill((char *)rc->buffer, LZMA_IOBUF_SIZE);
+ 	if (rc->buffer_size <= 0)
+@@ -115,13 +116,13 @@
+ 	rc->range = 0xFFFFFFFF;
+ }
+ 
+-static inline void INIT rc_init_code(struct rc *rc)
++static inline void INIT rc_init_code(struct rc *rc, void(*error)(char *x))
+ {
+ 	int i;
+ 
+ 	for (i = 0; i < 5; i++) {
+ 		if (rc->ptr >= rc->buffer_end)
+-			rc_read(rc);
++			rc_read(rc, error);
+ 		rc->code = (rc->code << 8) | *rc->ptr++;
+ 	}
+ }
+@@ -134,32 +135,33 @@
+ }
+ 
+ /* Called twice, but one callsite is in inline'd rc_is_bit_0_helper() */
+-static void INIT rc_do_normalize(struct rc *rc)
++static void INIT rc_do_normalize(struct rc *rc, void(*error)(char *x))
+ {
+ 	if (rc->ptr >= rc->buffer_end)
+-		rc_read(rc);
++		rc_read(rc, error);
+ 	rc->range <<= 8;
+ 	rc->code = (rc->code << 8) | *rc->ptr++;
+ }
+-static inline void INIT rc_normalize(struct rc *rc)
++static inline void INIT rc_normalize(struct rc *rc, void(*error)(char *x))
+ {
+ 	if (rc->range < (1 << RC_TOP_BITS))
+-		rc_do_normalize(rc);
++		rc_do_normalize(rc, error);
+ }
+ 
+ /* Called 9 times */
+ /* Why rc_is_bit_0_helper exists?
+  *Because we want to always expose (rc->code < rc->bound) to optimizer
+  */
+-static inline uint32_t INIT rc_is_bit_0_helper(struct rc *rc, uint16_t *p)
++static inline uint32_t INIT rc_is_bit_0_helper(struct rc *rc, uint16_t *p,
++						void (*error)(char *x))
+ {
+-	rc_normalize(rc);
++	rc_normalize(rc, error);
+ 	rc->bound = *p * (rc->range >> RC_MODEL_TOTAL_BITS);
+ 	return rc->bound;
+ }
+-static inline int INIT rc_is_bit_0(struct rc *rc, uint16_t *p)
++static inline int INIT rc_is_bit_0(struct rc *rc, uint16_t *p, void(*error)(char *x))
+ {
+-	uint32_t t = rc_is_bit_0_helper(rc, p);
++	uint32_t t = rc_is_bit_0_helper(rc, p, error);
+ 	return rc->code < t;
+ }
+ 
+@@ -177,9 +179,9 @@
+ }
+ 
+ /* Called 4 times in unlzma loop */
+-static int INIT rc_get_bit(struct rc *rc, uint16_t *p, int *symbol)
++static int INIT rc_get_bit(struct rc *rc, uint16_t *p, int *symbol, void(*error)(char *x))
+ {
+-	if (rc_is_bit_0(rc, p)) {
++	if (rc_is_bit_0(rc, p, error)) {
+ 		rc_update_bit_0(rc, p);
+ 		*symbol *= 2;
+ 		return 0;
+@@ -191,9 +193,9 @@
+ }
+ 
+ /* Called once */
+-static inline int INIT rc_direct_bit(struct rc *rc)
++static inline int INIT rc_direct_bit(struct rc *rc , void(*error)(char *x))
+ {
+-	rc_normalize(rc);
++	rc_normalize(rc, error);
+ 	rc->range >>= 1;
+ 	if (rc->code >= rc->range) {
+ 		rc->code -= rc->range;
+@@ -204,13 +206,14 @@
+ 
+ /* Called twice */
+ static inline void INIT
+-rc_bit_tree_decode(struct rc *rc, uint16_t *p, int num_levels, int *symbol)
++rc_bit_tree_decode(struct rc *rc, uint16_t *p, int num_levels, int *symbol,
++							void(*error)(char *x))
+ {
+ 	int i = num_levels;
+ 
+ 	*symbol = 1;
+ 	while (i--)
+-		rc_get_bit(rc, p + *symbol, symbol);
++		rc_get_bit(rc, p + *symbol, symbol, error);
+ 	*symbol -= 1 << num_levels;
+ }
+ 
+@@ -347,7 +350,8 @@
+ static inline void INIT process_bit0(struct writer *wr, struct rc *rc,
+ 				     struct cstate *cst, uint16_t *p,
+ 				     int pos_state, uint16_t *prob,
+-				     int lc, uint32_t literal_pos_mask) {
++				     int lc, uint32_t literal_pos_mask,
++				     void(*error)(char *x)) {
+ 	int mi = 1;
+ 	rc_update_bit_0(rc, prob);
+ 	prob = (p + LZMA_LITERAL +
+@@ -365,7 +369,7 @@
+ 			match_byte <<= 1;
+ 			bit = match_byte & 0x100;
+ 			prob_lit = prob + 0x100 + bit + mi;
+-			if (rc_get_bit(rc, prob_lit, &mi)) {
++			if (rc_get_bit(rc, prob_lit, &mi, error)) {
+ 				if (!bit)
+ 					break;
+ 			} else {
+@@ -376,7 +380,7 @@
+ 	}
+ 	while (mi < 0x100) {
+ 		uint16_t *prob_lit = prob + mi;
+-		rc_get_bit(rc, prob_lit, &mi);
++		rc_get_bit(rc, prob_lit, &mi, error);
+ 	}
+ 	write_byte(wr, mi);
+ 	if (cst->state < 4)
+@@ -389,7 +393,8 @@
+ 
+ static inline void INIT process_bit1(struct writer *wr, struct rc *rc,
+ 					    struct cstate *cst, uint16_t *p,
+-					    int pos_state, uint16_t *prob) {
++					    int pos_state, uint16_t *prob,
++					    void(*error)(char *x)) {
+   int offset;
+ 	uint16_t *prob_len;
+ 	int num_bits;
+@@ -397,7 +402,7 @@
+ 
+ 	rc_update_bit_1(rc, prob);
+ 	prob = p + LZMA_IS_REP + cst->state;
+-	if (rc_is_bit_0(rc, prob)) {
++	if (rc_is_bit_0(rc, prob, error)) {
+ 		rc_update_bit_0(rc, prob);
+ 		cst->rep3 = cst->rep2;
+ 		cst->rep2 = cst->rep1;
+@@ -407,13 +412,13 @@
+ 	} else {
+ 		rc_update_bit_1(rc, prob);
+ 		prob = p + LZMA_IS_REP_G0 + cst->state;
+-		if (rc_is_bit_0(rc, prob)) {
++		if (rc_is_bit_0(rc, prob, error)) {
+ 			rc_update_bit_0(rc, prob);
+ 			prob = (p + LZMA_IS_REP_0_LONG
+ 				+ (cst->state <<
+ 				   LZMA_NUM_POS_BITS_MAX) +
+ 				pos_state);
+-			if (rc_is_bit_0(rc, prob)) {
++			if (rc_is_bit_0(rc, prob, error)) {
+ 				rc_update_bit_0(rc, prob);
+ 
+ 				cst->state = cst->state < LZMA_NUM_LIT_STATES ?
+@@ -428,13 +433,13 @@
+ 
+ 			rc_update_bit_1(rc, prob);
+ 			prob = p + LZMA_IS_REP_G1 + cst->state;
+-			if (rc_is_bit_0(rc, prob)) {
++			if (rc_is_bit_0(rc, prob, error)) {
+ 				rc_update_bit_0(rc, prob);
+ 				distance = cst->rep1;
+ 			} else {
+ 				rc_update_bit_1(rc, prob);
+ 				prob = p + LZMA_IS_REP_G2 + cst->state;
+-				if (rc_is_bit_0(rc, prob)) {
++				if (rc_is_bit_0(rc, prob, error)) {
+ 					rc_update_bit_0(rc, prob);
+ 					distance = cst->rep2;
+ 				} else {
+@@ -452,7 +457,7 @@
+ 	}
+ 
+ 	prob_len = prob + LZMA_LEN_CHOICE;
+-	if (rc_is_bit_0(rc, prob_len)) {
++	if (rc_is_bit_0(rc, prob_len, error)) {
+ 		rc_update_bit_0(rc, prob_len);
+ 		prob_len = (prob + LZMA_LEN_LOW
+ 			    + (pos_state <<
+@@ -462,7 +467,7 @@
+ 	} else {
+ 		rc_update_bit_1(rc, prob_len);
+ 		prob_len = prob + LZMA_LEN_CHOICE_2;
+-		if (rc_is_bit_0(rc, prob_len)) {
++		if (rc_is_bit_0(rc, prob_len, error)) {
+ 			rc_update_bit_0(rc, prob_len);
+ 			prob_len = (prob + LZMA_LEN_MID
+ 				    + (pos_state <<
+@@ -478,7 +483,7 @@
+ 		}
+ 	}
+ 
+-	rc_bit_tree_decode(rc, prob_len, num_bits, &len);
++	rc_bit_tree_decode(rc, prob_len, num_bits, &len, error);
+ 	len += offset;
+ 
+ 	if (cst->state < 4) {
+@@ -493,7 +498,7 @@
+ 			 << LZMA_NUM_POS_SLOT_BITS);
+ 		rc_bit_tree_decode(rc, prob,
+ 				   LZMA_NUM_POS_SLOT_BITS,
+-				   &pos_slot);
++				   &pos_slot, error);
+ 		if (pos_slot >= LZMA_START_POS_MODEL_INDEX) {
+ 			int i, mi;
+ 			num_bits = (pos_slot >> 1) - 1;
+@@ -506,7 +511,7 @@
+ 				num_bits -= LZMA_NUM_ALIGN_BITS;
+ 				while (num_bits--)
+ 					cst->rep0 = (cst->rep0 << 1) |
+-						rc_direct_bit(rc);
++						rc_direct_bit(rc, error);
+ 				prob = p + LZMA_ALIGN;
+ 				cst->rep0 <<= LZMA_NUM_ALIGN_BITS;
+ 				num_bits = LZMA_NUM_ALIGN_BITS;
+@@ -514,7 +519,7 @@
+ 			i = 1;
+ 			mi = 1;
+ 			while (num_bits--) {
+-				if (rc_get_bit(rc, prob + mi, &mi))
++				if (rc_get_bit(rc, prob + mi, &mi, error))
+ 					cst->rep0 |= i;
+ 				i <<= 1;
+ 			}
+@@ -531,12 +536,12 @@
  
  
  
@@ -537,17 +587,77 @@ diff -Nru linux-2.6.36.orig/lib/decompress_unlzma.c linux-2.6.36/lib/decompress_
  			      int(*fill)(void*, unsigned int),
  			      int(*flush)(void*, unsigned int),
  			      unsigned char *output,
-@@ -664,4 +665,6 @@
+ 			      int *posp,
+-			      void(*error_fn)(char *x)
++			      void(*error)(char *x)
+ 	)
  {
- 	return unlzma(buf, in_len - 4, fill, flush, output, posp, error_fn);
+ 	struct lzma_header header;
+@@ -552,8 +557,6 @@
+ 	unsigned char *inbuf;
+ 	int ret = -1;
+ 
+-	set_error_fn(error_fn);
+-
+ 	if (buf)
+ 		inbuf = buf;
+ 	else
+@@ -576,7 +579,7 @@
+ 
+ 	for (i = 0; i < sizeof(header); i++) {
+ 		if (rc.ptr >= rc.buffer_end)
+-			rc_read(&rc);
++			rc_read(&rc, error);
+ 		((unsigned char *)&header)[i] = *rc.ptr++;
+ 	}
+ 
+@@ -621,17 +624,17 @@
+ 	for (i = 0; i < num_probs; i++)
+ 		p[i] = (1 << RC_MODEL_TOTAL_BITS) >> 1;
+ 
+-	rc_init_code(&rc);
++	rc_init_code(&rc, error);
+ 
+ 	while (get_pos(&wr) < header.dst_size) {
+ 		int pos_state =	get_pos(&wr) & pos_state_mask;
+ 		uint16_t *prob = p + LZMA_IS_MATCH +
+ 			(cst.state << LZMA_NUM_POS_BITS_MAX) + pos_state;
+-		if (rc_is_bit_0(&rc, prob))
++		if (rc_is_bit_0(&rc, prob, error))
+ 			process_bit0(&wr, &rc, &cst, p, pos_state, prob,
+-				     lc, literal_pos_mask);
++				     lc, literal_pos_mask, error);
+ 		else {
+-			process_bit1(&wr, &rc, &cst, p, pos_state, prob);
++			process_bit1(&wr, &rc, &cst, p, pos_state, prob, error);
+ 			if (cst.rep0 == 0)
+ 				break;
+ 		}
+@@ -652,6 +655,9 @@
+ exit_0:
+ 	return ret;
  }
-+#elif defined(CONFIG_DECOMPRESS_LZMA_NEEDED)
++#if defined(CONFIG_DECOMPRESS_LZMA_NEEDED) && !defined(PREBOOT)
 +EXPORT_SYMBOL(unlzma);
- #endif
-diff -Nru linux-2.6.36.orig/lib/Kconfig linux-2.6.36/lib/Kconfig
---- linux-2.6.36.orig/lib/Kconfig	2010-11-10 18:05:56.925246926 +0100
-+++ linux-2.6.36/lib/Kconfig	2010-11-10 18:31:22.476902463 +0100
-@@ -124,6 +124,9 @@
++#endif
+ 
+ #ifdef PREBOOT
+ STATIC int INIT decompress(unsigned char *buf, int in_len,
+diff -Nru a/lib/decompress_unlzo.c b/lib/decompress_unlzo.c
+--- a/lib/decompress_unlzo.c	2010-05-16 23:17:36.000000000 +0200
++++ b/lib/decompress_unlzo.c	2010-05-17 15:13:10.820554001 +0200
+@@ -39,6 +39,7 @@
+ 
+ #include <linux/types.h>
+ #include <linux/lzo.h>
++#include <linux/decompress/unlzo_mm.h>
+ #include <linux/decompress/mm.h>
+ 
+ #include <linux/compiler.h>
+diff -Nru a/lib/Kconfig b/lib/Kconfig
+--- a/lib/Kconfig	2010-05-16 23:17:36.000000000 +0200
++++ b/lib/Kconfig	2010-05-17 15:13:10.809574529 +0200
+@@ -121,6 +121,9 @@
  	select LZO_DECOMPRESS
  	tristate
  
@@ -557,26 +667,15 @@ diff -Nru linux-2.6.36.orig/lib/Kconfig linux-2.6.36/lib/Kconfig
  #
  # Generic allocator support is selected if needed
  #
---- /dev/null
-+++ b/include/linux/decompress/unlzo_mm.h
-@@ -0,0 +1,10 @@
-+#ifndef UNLZO_MM_H
-+#define UNLZO_MM_H
-+
-+#ifdef STATIC
-+#define INIT
-+#else
-+#define INIT __init
-+#endif
-+
-+#endif
---- a/lib/decompress_unlzo.c
-+++ b/lib/decompress_unlzo.c
-@@ -39,6 +39,7 @@
+diff -Nru a/lib/Makefile b/lib/Makefile
+--- a/lib/Makefile	2010-05-16 23:17:36.000000000 +0200
++++ b/lib/Makefile	2010-05-17 15:14:36.312796051 +0200
+@@ -69,7 +69,7 @@
  
- #include <linux/types.h>
- #include <linux/lzo.h>
-+#include <linux/decompress/unlzo_mm.h>
- #include <linux/decompress/mm.h>
+ lib-$(CONFIG_DECOMPRESS_GZIP) += decompress_inflate.o
+ lib-$(CONFIG_DECOMPRESS_BZIP2) += decompress_bunzip2.o
+-lib-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
++obj-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
+ lib-$(CONFIG_DECOMPRESS_LZO) += decompress_unlzo.o
  
- #include <linux/compiler.h>
+ obj-$(CONFIG_TEXTSEARCH) += textsearch.o
