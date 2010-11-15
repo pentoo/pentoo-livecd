@@ -296,7 +296,7 @@ sys-apps/microcode-ctl
 sys-apps/microcode-data
 sys-apps/pciutils
 sys-apps/portage
-sys-apps/slocate
+sys-apps/mlocate
 sys-apps/sysvinit
 sys-apps/v86d
 sys-block/disktype
