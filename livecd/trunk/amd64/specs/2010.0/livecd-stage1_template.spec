@@ -2,15 +2,14 @@ subarch: amd64
 version_stamp: 2010.0
 target: livecd-stage1
 rel_type: default
-profile: default/linux/amd64/10.0
+profile: hardened/linux/amd64/10.0
 snapshot: 2010.0
 source_subpath: default/stage3-amd64-2010.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
-portage_overlay: /usr/portage/local/layman/enlightenment /usr/local/portage
+portage_overlay: /usr/local/portage /var/lib/layman/enlightenment
 # /usr/portage/local/layman/jokey
 cflags: -Os -mtune=prescott -pipe
 cxxflags: -Os -mtune=prescott -pipe
-
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -21,13 +20,14 @@ cxxflags: -Os -mtune=prescott -pipe
 # pkgcache_path:
 
 livecd/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-mmx sse sse2 mpi wps offensive dwm enlightenment
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu
+mmx sse sse2 mpi wps offensive dwm
+wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
 alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite truetype
-opengl dbus binary-drivers -hal acpi usb subversion
+dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
+opengl dbus binary-drivers -hal acpi usb subversion libkms
+-analyzer -bluetooth -cracking -database enlightenment -exploit -footprint -forging -fuzzers -mitm -proxies rce -scanner -voip -wireless
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
 # will be built with the USE flags configured above.  These packages must not
@@ -36,6 +36,6 @@ opengl dbus binary-drivers -hal acpi usb subversion
 # example:
 # livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
+sys-apps/paxctl
 sys-apps/v86d
 pentoo/pentoo
-sys-apps/zerosmagic
