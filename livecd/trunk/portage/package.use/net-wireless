@@ -2,3 +2,4 @@ net-wireless/acx pcmcia
 net-wireless/atmel-firmware pcmcia usb
 net-wireless/prism54 pcmcia
 net-wireless/wpa_supplicant readline
+net-wireless/grimwepa -extra
