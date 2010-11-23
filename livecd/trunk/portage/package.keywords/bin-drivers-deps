@@ -2,7 +2,8 @@
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
 x11-drivers/ati-drivers
-<x11-drivers/nvidia-drivers-190
+x11-drivers/nvidia-drivers
+media-video/nvidia-settings
 x11-drivers/xf86-input-evdev
 x11-drivers/xf86-input-keyboard
 x11-drivers/xf86-input-mouse
@@ -35,6 +36,5 @@ x11-drivers/xf86-video-tdfx
 x11-drivers/xf86-video-trident
 x11-drivers/xf86-video-vesa
 x11-drivers/xf86-video-virtualbox
-x11-drivers/xf86-video-vmware
 x11-drivers/xf86-video-voodoo
 =x11-libs/libdrm-2.4.11

@@ -1,9 +1,7 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-~dev-libs/nss-3.12.3
-~dev-libs/nss-3.12.4
-=dev-libs/libxml2-2.7.6
-=dev-libs/yajl-1.0.11
-dev-libs/distorm
-dev-libs/distorm64
+=dev-python/pysnmp-3.4.4
+dev-python/python-cluster
+~dev-python/pygraphviz-1.0
+dev-python/nltk

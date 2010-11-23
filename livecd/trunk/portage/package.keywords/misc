@@ -1,7 +1,6 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-#dev-libs/nss
 #sys-fs/fuse
 #sys-kernel/genkernel
 #www-client/mozilla-firefox <- we don't install this, so don't unmask it
@@ -20,8 +19,6 @@ dev-db/sqlbf
 dev-db/sqlinject
 dev-dotnet/wxnet
 =dev-lang/yasm-0.8.0 ~amd64
-dev-libs/distorm
-dev-libs/distorm64
 dev-python/Impacket
 dev-python/cxoracle
 dev-python/fpconst
@@ -37,8 +34,6 @@ dev-util/premake
 =media-sound/alsa-utils-1.0.19*
 =media-sound/alsa-headers-1.0.19*
 sys-block/gparted
-sys-devel/crossdev
-#=sys-kernel/linux-headers-2.6.28
 x11-plugins/firecat
 sys-apps/pcmciautils
 dev-util/edb

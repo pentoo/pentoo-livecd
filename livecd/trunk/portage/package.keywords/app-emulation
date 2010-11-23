@@ -3,12 +3,10 @@
 ##Warning!!!########################################################################################################
 x11-drivers/xf86-input-virtualbox
 x11-drivers/xf86-video-virtualbox
-=app-emulation/kqemu-1.4.0_pre1-r1
-~app-emulation/libvirt-0.8.3
-=app-emulation/virt-manager-0.8.3
+app-emulation/libvirt
+app-emulation/virt-manager
 =gnome-extra/polkit-gnome-0.94
-=app-emulation/virtinst-0.500.2
-=app-emulation/qemu-0.12.5-r1
-~dev-libs/libxml2-2.7.6
+app-emulation/virtinst
+app-emulation/qemu-kvm
 app-emulation/open-vm-tools
 app-emulation/open-vm-tools-kmod

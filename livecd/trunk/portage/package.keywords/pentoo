@@ -1,6 +1,12 @@
 pentoo/pentoo **
+pentoo/pentoo-cracking **
+pentoo/pentoo-exploit **
 pentoo/pentoo-forensics **
 pentoo/pentoo-rce **
 pentoo/pentoo-wireless **
 pentoo/pentoo-etc-portage
 ~sys-devel/gcc-4.4.3
+app-crypt/pyrit
+app-crypt/cpyrit_calpp
+app-crypt/cpyrit_opencl
+app-crypt/cpyrit_cuda

@@ -1,9 +1,7 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-~dev-libs/nss-3.12.3
-~dev-libs/nss-3.12.4
-=dev-libs/libxml2-2.7.6
-=dev-libs/yajl-1.0.11
-dev-libs/distorm
-dev-libs/distorm64
+~dev-ruby/mini_exiftool-1.0.1
+~dev-ruby/mime-types-1.16
+~dev-ruby/spider-0.4.4
+~dev-ruby/httpconfig-1.0.2
