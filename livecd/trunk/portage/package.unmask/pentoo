@@ -5,5 +5,5 @@ sys-apps/hwsetup
 =dev-util/nvidia-cuda-sdk-3.0-r2
 =dev-util/nvidia-cuda-toolkit-3.0
 ~x11-drivers/ati-drivers-10.9
-=x11-drivers/nvidia-drivers-195.36.31
-=media-video/nvidia-settings-195.36.24
+=x11-drivers/nvidia-drivers-256.53-r1
+media-video/nvidia-settings
