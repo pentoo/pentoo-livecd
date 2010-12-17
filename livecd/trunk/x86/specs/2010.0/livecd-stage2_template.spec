@@ -1,12 +1,12 @@
 subarch: i686
-version_stamp: 2009.0
+version_stamp: 2010.0
 target: livecd-stage2
 rel_type: default
-profile: default/linux/x86/10.0
-snapshot: 2009.0
-source_subpath: default/livecd-stage1-i686-2009.0
+profile: hardened/linux/x86
+snapshot: 2010.0
+source_subpath: default/livecd-stage1-i686-2010.0
 portage_confdir: /var/svn/pentoo/livecd/trunk/portage
-portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
+portage_overlay: /usr/local/portage /var/lib/layman/enlightenment
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -25,9 +25,9 @@ portage_overlay: /usr/local/portage /usr/portage/local/layman/enlightenment
 #kerncache_path:
 
 livecd/fstype: squashfs
-livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery
-livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-i686-2009.0.iso
+livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery -processors 5
+livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
+livecd/iso: /tmp/pentoo-i686-2010.0.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -39,7 +39,7 @@ livecd/iso: /tmp/pentoo-i686-2009.0.iso
 # into the chroot by catalyst automatically.
 # example:
 # livecd/fsscript:
-livecd/fsscript: /var/svn/pentoo/livecd/trunk/x86/scripts/2009.0/fsscript.sh
+livecd/fsscript: /var/svn/pentoo/livecd/trunk/scripts/2010.0/fsscript.sh
 
 # The splash type determines the automatic arguments for the bootloader on
 # supported architectures.  The possible options are gensplash and bootsplash.
@@ -190,7 +190,7 @@ livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2009.0
+livecd/volid: 2010.0
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
@@ -206,13 +206,13 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: =pentoo-sources-2.6.31*
+boot/kernel/pentoo/sources: ~pentoo-sources-2.6.35
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config:  /var/svn/pentoo/livecd/trunk/x86/kernel/config-2.6.31
+boot/kernel/pentoo/config:  /var/svn/pentoo/livecd/trunk/x86/kernel/config-2.6.35
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -229,13 +229,16 @@ boot/kernel/pentoo/gk_kernargs:
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
 boot/kernel/pentoo/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-mmx sse sse2 mpi wps offensive
-wifi injection lzma speed gnuplot pyx bluetooth test-programs fwcutter qemu kqemu
+mmx sse sse2 mpi wps offensive dwm -64bit -doc -examples
+wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg
+png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite truetype
-opengl dbus binary-drivers -hal acpi usb subversion
+dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
+opengl dbus binary-drivers hal acpi usb subversion libkms
+cracking enlightenment exploit rce
+analyzer bluetooth database -footprint -forging -fuzzers mitm proxies scanner -voip -wireless
+-stage2
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -251,10 +254,7 @@ opengl dbus binary-drivers -hal acpi usb subversion
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-x11-misc/mkxf86config
-=app-admin/genmenu-9999
 app-emulation/open-vm-tools
-app-emulation/qemu
 sys-apps/pcmciautils
 net-misc/iodine
 net-wireless/atmel-firmware
@@ -262,16 +262,13 @@ net-wireless/bcm43xx-fwcutter
 net-wireless/compat-wireless
 net-wireless/ipw2100-firmware
 net-wireless/ipw2200-firmware
-#=net-wireless/iwl3945-ucode-15.28.1.8
+#net-wireless/iwl3945-ucode
 #net-wireless/iwl4965-ucode
 #net-wireless/iwl5000-ucode
 #net-wireless/ralink-firmware
-#net-wireless/iwlwifi
-net-wireless/madwifi-hal
+#net-wireless/madwifi-hal
 net-wireless/orinoco-fwutils
 #net-wireless/prism54-firmware
-#net-wireless/rt2x00
-#net-wireless/rtl8180
 net-wireless/wpa_supplicant
 net-wireless/zd1201-firmware
 net-wireless/zd1211-firmware
@@ -282,9 +279,10 @@ x11-drivers/ati-drivers
 x11-drivers/nvidia-drivers
 x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-virtualbox
-=app-crypt/pyrit-0.2.4*
-app-crypt/cuda-multiforcer
-app-crypt/cuda-rarcrypt
+pentoo/pentoo-cracking
+=app-crypt/pyrit-9999
+#app-crypt/cuda-multiforcer
+#app-crypt/cuda-rarcrypt
 
 # This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
 # entry used for booting a ibm powerpc machine.
@@ -305,7 +303,7 @@ app-crypt/cuda-rarcrypt
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: sys-apps/zerosmagic dev-java/ant-core dev-java/sun-jdk dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant net-libs/xulrunner dev-texlive/texlive-latex dev-texlive/texlive-basic dev-texlive/texlive-latexrecommended app-text/texlive-core gentoo-sources
+livecd/unmerge: sys-apps/zerosmagic dev-java/ant-core dev-java/sun-jdk dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant dev-texlive/texlive-latex dev-texlive/texlive-basic dev-texlive/texlive-latexrecommended app-text/texlive-core gentoo-sources dev-java/icedtea6-bin
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
