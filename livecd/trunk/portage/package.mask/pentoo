@@ -19,10 +19,10 @@ net-wireless/madwifi-old-tools
 #Prevent downgrades
 <sys-apps/baselayout-2.0.0
 
-#finally fixed the led bug in rtl8187 and the deauth bug, mask affected versions
-<net-wireless/compat-wireless-2.6.32_rc6
-
 #intel video driver has known issues below this version
 <x11-drivers/xf86-video-intel-2.9.0
 
 <sys-kernel/linux-firmware-99999999
+=net-dialup/lrzsz-0.12.20-r3
+
+>net-wireless/compat-wireless-2.6.37_rc0
