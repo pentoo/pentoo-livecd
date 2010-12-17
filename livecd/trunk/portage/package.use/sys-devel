@@ -1,1 +1,2 @@
 sys-devel/gcc gtk
+sys-devel/gettext -git
