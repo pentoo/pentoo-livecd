@@ -1,7 +1,13 @@
 pentoo/pentoo **
+pentoo/pentoo-analyzer **
+pentoo/pentoo-bluetooth **
 pentoo/pentoo-cracking **
+pentoo/pentoo-database **
 pentoo/pentoo-exploit **
 pentoo/pentoo-forensics **
+pentoo/pentoo-proxies **
+pentoo/pentoo-mitm **
+pentoo/pentoo-scanner **
 pentoo/pentoo-rce **
 pentoo/pentoo-wireless **
 pentoo/pentoo-etc-portage
