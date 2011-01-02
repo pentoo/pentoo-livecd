@@ -4,3 +4,4 @@ net-analyzer/mosref doc sources
 net-analyzer/net-snmp minimal
 net-analyzer/snort dynamicplugin zlib
 net-analyzer/wireshark gcrypt gnutls kerberos threads
+net-analyzer/ucsniff -vlc

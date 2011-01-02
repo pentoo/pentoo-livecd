@@ -43,6 +43,7 @@ app-crypt/mdcrack
 app-crypt/mhash
 app-crypt/nasty
 app-crypt/nistp224
+app-crypt/oclhashcat-bin
 app-crypt/onak
 app-crypt/openssl-blacklist
 app-crypt/openssl-tpm-engine

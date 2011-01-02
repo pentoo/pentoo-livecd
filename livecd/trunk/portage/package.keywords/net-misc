@@ -118,6 +118,7 @@ net-misc/httptunnel
 net-misc/httptype
 net-misc/htun
 net-misc/hylafax
+net-misc/iaxclient
 net-misc/iaxmodem
 net-misc/icaclient
 net-misc/icecast
@@ -321,6 +322,7 @@ net-misc/vncrec
 net-misc/vncsnapshot
 net-misc/vpnc
 net-misc/vtun
+net-misc/warvox
 net-misc/wakeonlan
 net-misc/wget
 net-misc/whatmask

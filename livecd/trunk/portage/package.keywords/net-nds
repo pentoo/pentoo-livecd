@@ -1,9 +1,4 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-net-libs/libnids
-net-libs/netwib
-=net-libs/neon-0.29.5
-net-libs/daq
-net-libs/libwhisker
-net-libs/libvidcap
+=net-nds/lat-1.2.2 ~amd64

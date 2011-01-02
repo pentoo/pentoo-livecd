@@ -5,9 +5,7 @@
 =net-analyzer/nessus-2.3.1
 net-wireless/madwifi-ng-tools
 net-wireless/madwifi-old-tools
-
-# Weird hardened bud that breaks sandbox 2.x
-=sys-apps/sandbox-2.3-r1
+>net-wireless/gnome-bluetooth-2.30.0
 
 # We don't want python-3 for now
 >=dev-lang/python-3.0
@@ -25,4 +23,6 @@ net-wireless/madwifi-old-tools
 <sys-kernel/linux-firmware-99999999
 =net-dialup/lrzsz-0.12.20-r3
 
->net-wireless/compat-wireless-2.6.37_rc0
+#>net-wireless/compat-wireless-2.6.37_rc0
+>net-wireless/wireless-regdb-20091125
+#>=sys-kernel/pentoo-sources-2.6.36

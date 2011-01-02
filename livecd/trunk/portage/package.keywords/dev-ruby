@@ -5,3 +5,4 @@
 ~dev-ruby/mime-types-1.16
 ~dev-ruby/spider-0.4.4
 ~dev-ruby/httpconfig-1.0.2
+dev-ruby/bundler

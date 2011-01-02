@@ -84,6 +84,7 @@ net-analyzer/httping
 net-analyzer/httprint
 net-analyzer/hunt
 net-analyzer/hydra
+net-analyzer/hyenae
 net-analyzer/hyperic-hq-agent
 net-analyzer/ibmonitor
 net-analyzer/ifmetric
