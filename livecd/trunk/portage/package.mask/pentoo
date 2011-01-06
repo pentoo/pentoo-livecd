@@ -11,8 +11,6 @@ net-wireless/madwifi-old-tools
 >=dev-lang/python-3.0
 >=lxml/lxml-2.2.7
 
-# Upper doesn't support mpi
->app-crypt/johntheripper-1.7.3.1-r1
 >=app-crypt/gnupg-2.0
 #Prevent downgrades
 <sys-apps/baselayout-2.0.0
