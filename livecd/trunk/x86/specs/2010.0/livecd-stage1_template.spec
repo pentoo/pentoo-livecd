@@ -41,5 +41,4 @@ scanner rce -footprint -forging -fuzzers -voip -wireless
 livecd/packages:
 ~sys-kernel/pentoo-sources-2.6.35
 sys-apps/paxctl
-sys-apps/v86d
 pentoo/pentoo
