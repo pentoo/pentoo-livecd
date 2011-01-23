@@ -1,0 +1,12 @@
+diff -Nru b/arch/x86/boot/compressed/mkpiggy.c a/arch/x86/boot/compressed/mkpiggy.c
+--- b/arch/x86/boot/compressed/mkpiggy.c	2011-01-20 17:21:10.490460490 +0100
++++ a/arch/x86/boot/compressed/mkpiggy.c	2011-01-20 17:16:56.123804579 +0100
+@@ -74,7 +74,7 @@
+ 
+ 	offs = (olen > ilen) ? olen - ilen : 0;
+ 	offs += olen >> 12;	/* Add 8 bytes for each 32K block */
+-	offs += 64*1024;	/* Add 64K bytes slack */
++	offs += 64*1024 + 128;  /* Add 64K + 128 bytes slack */
+ 	offs = (offs+4095) & ~4095; /* Round to a 4K boundary */
+ 
+ 	printf(".section \".rodata..compressed\",\"a\",@progbits\n");
