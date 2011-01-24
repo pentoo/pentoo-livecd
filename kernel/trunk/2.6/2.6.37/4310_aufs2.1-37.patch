@@ -1,6 +1,6 @@
 diff -Nru linux-2.6.37-bak/Documentation/ABI/testing/debugfs-aufs linux-2.6.37/Documentation/ABI/testing/debugfs-aufs
 --- linux-2.6.37-bak/Documentation/ABI/testing/debugfs-aufs	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/Documentation/ABI/testing/debugfs-aufs	2011-01-21 12:08:34.979453412 +0100
++++ linux-2.6.37/Documentation/ABI/testing/debugfs-aufs	2011-01-24 07:58:57.688935156 +0100
 @@ -0,0 +1,37 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -41,7 +41,7 @@ diff -Nru linux-2.6.37-bak/Documentation/ABI/testing/debugfs-aufs linux-2.6.37/D
 +		will be empty. About XINO files, see the aufs manual.
 diff -Nru linux-2.6.37-bak/Documentation/ABI/testing/sysfs-aufs linux-2.6.37/Documentation/ABI/testing/sysfs-aufs
 --- linux-2.6.37-bak/Documentation/ABI/testing/sysfs-aufs	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/Documentation/ABI/testing/sysfs-aufs	2011-01-21 12:08:34.983453342 +0100
++++ linux-2.6.37/Documentation/ABI/testing/sysfs-aufs	2011-01-24 07:58:57.709934813 +0100
 @@ -0,0 +1,24 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -69,7 +69,7 @@ diff -Nru linux-2.6.37-bak/Documentation/ABI/testing/sysfs-aufs linux-2.6.37/Doc
 +		will be empty. About XINO files, see the aufs manual.
 diff -Nru linux-2.6.37-bak/fs/aufs/aufs.h linux-2.6.37/fs/aufs/aufs.h
 --- linux-2.6.37-bak/fs/aufs/aufs.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/aufs.h	2011-01-21 12:08:39.808368528 +0100
++++ linux-2.6.37/fs/aufs/aufs.h	2011-01-24 07:59:00.452888634 +0100
 @@ -0,0 +1,61 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -134,7 +134,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/aufs.h linux-2.6.37/fs/aufs/aufs.h
 +#endif /* __AUFS_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/branch.c linux-2.6.37/fs/aufs/branch.c
 --- linux-2.6.37-bak/fs/aufs/branch.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/branch.c	2011-01-21 12:08:39.761369354 +0100
++++ linux-2.6.37/fs/aufs/branch.c	2011-01-24 07:59:00.424889104 +0100
 @@ -0,0 +1,1071 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -1209,7 +1209,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/branch.c linux-2.6.37/fs/aufs/branch.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/branch.h linux-2.6.37/fs/aufs/branch.h
 --- linux-2.6.37-bak/fs/aufs/branch.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/branch.h	2011-01-21 12:08:39.740369723 +0100
++++ linux-2.6.37/fs/aufs/branch.h	2011-01-24 07:59:00.348890384 +0100
 @@ -0,0 +1,229 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -1442,7 +1442,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/branch.h linux-2.6.37/fs/aufs/branch.h
 +#endif /* __AUFS_BRANCH_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/conf.mk linux-2.6.37/fs/aufs/conf.mk
 --- linux-2.6.37-bak/fs/aufs/conf.mk	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/conf.mk	2011-01-21 12:08:39.770369195 +0100
++++ linux-2.6.37/fs/aufs/conf.mk	2011-01-24 07:59:00.433888953 +0100
 @@ -0,0 +1,37 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -1483,7 +1483,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/conf.mk linux-2.6.37/fs/aufs/conf.mk
 +-include ${srctree}/${src}/conf_priv.mk
 diff -Nru linux-2.6.37-bak/fs/aufs/cpup.c linux-2.6.37/fs/aufs/cpup.c
 --- linux-2.6.37-bak/fs/aufs/cpup.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/cpup.c	2011-01-21 12:08:39.830368141 +0100
++++ linux-2.6.37/fs/aufs/cpup.c	2011-01-24 07:59:00.463888447 +0100
 @@ -0,0 +1,1063 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -2550,7 +2550,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/cpup.c linux-2.6.37/fs/aufs/cpup.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/cpup.h linux-2.6.37/fs/aufs/cpup.h
 --- linux-2.6.37-bak/fs/aufs/cpup.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/cpup.h	2011-01-21 12:08:39.731369880 +0100
++++ linux-2.6.37/fs/aufs/cpup.h	2011-01-24 07:59:00.343890467 +0100
 @@ -0,0 +1,83 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -2637,7 +2637,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/cpup.h linux-2.6.37/fs/aufs/cpup.h
 +#endif /* __AUFS_CPUP_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/dbgaufs.c linux-2.6.37/fs/aufs/dbgaufs.c
 --- linux-2.6.37-bak/fs/aufs/dbgaufs.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dbgaufs.c	2011-01-21 12:08:39.808368528 +0100
++++ linux-2.6.37/fs/aufs/dbgaufs.c	2011-01-24 07:59:00.452888634 +0100
 @@ -0,0 +1,334 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -2975,7 +2975,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dbgaufs.c linux-2.6.37/fs/aufs/dbgaufs.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/dbgaufs.h linux-2.6.37/fs/aufs/dbgaufs.h
 --- linux-2.6.37-bak/fs/aufs/dbgaufs.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dbgaufs.h	2011-01-21 12:08:39.764369300 +0100
++++ linux-2.6.37/fs/aufs/dbgaufs.h	2011-01-24 07:59:00.427889053 +0100
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -3031,7 +3031,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dbgaufs.h linux-2.6.37/fs/aufs/dbgaufs.h
 +#endif /* __DBGAUFS_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/dcsub.c linux-2.6.37/fs/aufs/dcsub.c
 --- linux-2.6.37-bak/fs/aufs/dcsub.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dcsub.c	2011-01-21 12:08:39.737369774 +0100
++++ linux-2.6.37/fs/aufs/dcsub.c	2011-01-24 07:59:00.346890416 +0100
 @@ -0,0 +1,210 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -3245,7 +3245,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dcsub.c linux-2.6.37/fs/aufs/dcsub.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/dcsub.h linux-2.6.37/fs/aufs/dcsub.h
 --- linux-2.6.37-bak/fs/aufs/dcsub.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dcsub.h	2011-01-21 12:08:39.819368333 +0100
++++ linux-2.6.37/fs/aufs/dcsub.h	2011-01-24 07:59:00.462888464 +0100
 @@ -0,0 +1,100 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -3349,7 +3349,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dcsub.h linux-2.6.37/fs/aufs/dcsub.h
 +#endif /* __AUFS_DCSUB_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/debug.c linux-2.6.37/fs/aufs/debug.c
 --- linux-2.6.37-bak/fs/aufs/debug.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/debug.c	2011-01-21 12:08:39.781369002 +0100
++++ linux-2.6.37/fs/aufs/debug.c	2011-01-24 07:59:00.444888767 +0100
 @@ -0,0 +1,468 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -3821,7 +3821,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/debug.c linux-2.6.37/fs/aufs/debug.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/debug.h linux-2.6.37/fs/aufs/debug.h
 --- linux-2.6.37-bak/fs/aufs/debug.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/debug.h	2011-01-21 12:08:39.856367683 +0100
++++ linux-2.6.37/fs/aufs/debug.h	2011-01-24 07:59:00.484888094 +0100
 @@ -0,0 +1,245 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -4070,7 +4070,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/debug.h linux-2.6.37/fs/aufs/debug.h
 +#endif /* __AUFS_DEBUG_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/dentry.c linux-2.6.37/fs/aufs/dentry.c
 --- linux-2.6.37-bak/fs/aufs/dentry.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dentry.c	2011-01-21 12:08:39.867367490 +0100
++++ linux-2.6.37/fs/aufs/dentry.c	2011-01-24 07:59:00.495887909 +0100
 @@ -0,0 +1,1131 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -5205,7 +5205,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dentry.c linux-2.6.37/fs/aufs/dentry.c
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/dentry.h linux-2.6.37/fs/aufs/dentry.h
 --- linux-2.6.37-bak/fs/aufs/dentry.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dentry.h	2011-01-21 12:08:39.858367649 +0100
++++ linux-2.6.37/fs/aufs/dentry.h	2011-01-24 07:59:00.486888062 +0100
 @@ -0,0 +1,237 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -5446,7 +5446,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dentry.h linux-2.6.37/fs/aufs/dentry.h
 +#endif /* __AUFS_DENTRY_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/dinfo.c linux-2.6.37/fs/aufs/dinfo.c
 --- linux-2.6.37-bak/fs/aufs/dinfo.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dinfo.c	2011-01-21 12:08:39.863367559 +0100
++++ linux-2.6.37/fs/aufs/dinfo.c	2011-01-24 07:59:00.491887977 +0100
 @@ -0,0 +1,494 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -5944,7 +5944,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dinfo.c linux-2.6.37/fs/aufs/dinfo.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/dir.c linux-2.6.37/fs/aufs/dir.c
 --- linux-2.6.37-bak/fs/aufs/dir.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dir.c	2011-01-21 12:08:39.849367806 +0100
++++ linux-2.6.37/fs/aufs/dir.c	2011-01-24 07:59:00.477888212 +0100
 @@ -0,0 +1,649 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -6597,7 +6597,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dir.c linux-2.6.37/fs/aufs/dir.c
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/dir.h linux-2.6.37/fs/aufs/dir.h
 --- linux-2.6.37-bak/fs/aufs/dir.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dir.h	2011-01-21 12:08:39.861367595 +0100
++++ linux-2.6.37/fs/aufs/dir.h	2011-01-24 07:59:00.489888011 +0100
 @@ -0,0 +1,138 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -6739,7 +6739,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dir.h linux-2.6.37/fs/aufs/dir.h
 +#endif /* __AUFS_DIR_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/dynop.c linux-2.6.37/fs/aufs/dynop.c
 --- linux-2.6.37-bak/fs/aufs/dynop.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dynop.c	2011-01-21 12:08:39.759369388 +0100
++++ linux-2.6.37/fs/aufs/dynop.c	2011-01-24 07:59:00.422889138 +0100
 @@ -0,0 +1,426 @@
 +/*
 + * Copyright (C) 2010-2011 Junjiro R. Okajima
@@ -7169,7 +7169,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dynop.c linux-2.6.37/fs/aufs/dynop.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/dynop.h linux-2.6.37/fs/aufs/dynop.h
 --- linux-2.6.37-bak/fs/aufs/dynop.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/dynop.h	2011-01-21 12:08:39.842367929 +0100
++++ linux-2.6.37/fs/aufs/dynop.h	2011-01-24 07:59:00.470888331 +0100
 @@ -0,0 +1,89 @@
 +/*
 + * Copyright (C) 2010-2011 Junjiro R. Okajima
@@ -7262,7 +7262,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/dynop.h linux-2.6.37/fs/aufs/dynop.h
 +#endif /* __AUFS_DYNOP_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/export.c linux-2.6.37/fs/aufs/export.c
 --- linux-2.6.37-bak/fs/aufs/export.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/export.c	2011-01-21 12:08:39.864367541 +0100
++++ linux-2.6.37/fs/aufs/export.c	2011-01-24 07:59:00.492887960 +0100
 @@ -0,0 +1,798 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -8064,7 +8064,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/export.c linux-2.6.37/fs/aufs/export.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/file.c linux-2.6.37/fs/aufs/file.c
 --- linux-2.6.37-bak/fs/aufs/file.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/file.c	2011-01-21 12:08:39.850367789 +0100
++++ linux-2.6.37/fs/aufs/file.c	2011-01-24 07:59:00.478888195 +0100
 @@ -0,0 +1,676 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -8744,7 +8744,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/file.c linux-2.6.37/fs/aufs/file.c
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/file.h linux-2.6.37/fs/aufs/file.h
 --- linux-2.6.37-bak/fs/aufs/file.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/file.h	2011-01-21 12:08:39.760369371 +0100
++++ linux-2.6.37/fs/aufs/file.h	2011-01-24 07:59:00.423889121 +0100
 @@ -0,0 +1,238 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -8986,7 +8986,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/file.h linux-2.6.37/fs/aufs/file.h
 +#endif /* __AUFS_FILE_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/finfo.c linux-2.6.37/fs/aufs/finfo.c
 --- linux-2.6.37-bak/fs/aufs/finfo.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/finfo.c	2011-01-21 12:08:39.755369459 +0100
++++ linux-2.6.37/fs/aufs/finfo.c	2011-01-24 07:59:00.412889305 +0100
 @@ -0,0 +1,174 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -9164,7 +9164,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/finfo.c linux-2.6.37/fs/aufs/finfo.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/f_op.c linux-2.6.37/fs/aufs/f_op.c
 --- linux-2.6.37-bak/fs/aufs/f_op.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/f_op.c	2011-01-21 12:08:39.761369354 +0100
++++ linux-2.6.37/fs/aufs/f_op.c	2011-01-24 07:59:00.424889104 +0100
 @@ -0,0 +1,907 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -10075,7 +10075,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/f_op.c linux-2.6.37/fs/aufs/f_op.c
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/f_op_sp.c linux-2.6.37/fs/aufs/f_op_sp.c
 --- linux-2.6.37-bak/fs/aufs/f_op_sp.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/f_op_sp.c	2011-01-21 12:08:39.858367649 +0100
++++ linux-2.6.37/fs/aufs/f_op_sp.c	2011-01-24 07:59:00.486888062 +0100
 @@ -0,0 +1,299 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -10378,7 +10378,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/f_op_sp.c linux-2.6.37/fs/aufs/f_op_sp.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/fstype.h linux-2.6.37/fs/aufs/fstype.h
 --- linux-2.6.37-bak/fs/aufs/fstype.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/fstype.h	2011-01-21 12:08:39.864367541 +0100
++++ linux-2.6.37/fs/aufs/fstype.h	2011-01-24 07:59:00.492887960 +0100
 @@ -0,0 +1,497 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -10879,7 +10879,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/fstype.h linux-2.6.37/fs/aufs/fstype.h
 +#endif /* __AUFS_FSTYPE_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/hfsnotify.c linux-2.6.37/fs/aufs/hfsnotify.c
 --- linux-2.6.37-bak/fs/aufs/hfsnotify.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/hfsnotify.c	2011-01-21 12:08:39.848367823 +0100
++++ linux-2.6.37/fs/aufs/hfsnotify.c	2011-01-24 07:59:00.476888229 +0100
 @@ -0,0 +1,247 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -11130,7 +11130,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/hfsnotify.c linux-2.6.37/fs/aufs/hfsnotify.c
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/hfsplus.c linux-2.6.37/fs/aufs/hfsplus.c
 --- linux-2.6.37-bak/fs/aufs/hfsplus.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/hfsplus.c	2011-01-21 12:08:39.774369125 +0100
++++ linux-2.6.37/fs/aufs/hfsplus.c	2011-01-24 07:59:00.438888869 +0100
 @@ -0,0 +1,58 @@
 +/*
 + * Copyright (C) 2010-2011 Junjiro R. Okajima
@@ -11192,7 +11192,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/hfsplus.c linux-2.6.37/fs/aufs/hfsplus.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/hnotify.c linux-2.6.37/fs/aufs/hnotify.c
 --- linux-2.6.37-bak/fs/aufs/hnotify.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/hnotify.c	2011-01-21 12:08:39.831368123 +0100
++++ linux-2.6.37/fs/aufs/hnotify.c	2011-01-24 07:59:00.464888430 +0100
 @@ -0,0 +1,694 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -11890,7 +11890,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/hnotify.c linux-2.6.37/fs/aufs/hnotify.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/iinfo.c linux-2.6.37/fs/aufs/iinfo.c
 --- linux-2.6.37-bak/fs/aufs/iinfo.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/iinfo.c	2011-01-21 12:08:39.777369072 +0100
++++ linux-2.6.37/fs/aufs/iinfo.c	2011-01-24 07:59:00.441888818 +0100
 @@ -0,0 +1,263 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -12157,7 +12157,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/iinfo.c linux-2.6.37/fs/aufs/iinfo.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/inode.c linux-2.6.37/fs/aufs/inode.c
 --- linux-2.6.37-bak/fs/aufs/inode.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/inode.c	2011-01-21 12:08:39.849367806 +0100
++++ linux-2.6.37/fs/aufs/inode.c	2011-01-24 07:59:00.477888212 +0100
 @@ -0,0 +1,471 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -12632,7 +12632,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/inode.c linux-2.6.37/fs/aufs/inode.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/inode.h linux-2.6.37/fs/aufs/inode.h
 --- linux-2.6.37-bak/fs/aufs/inode.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/inode.h	2011-01-21 12:08:39.739369740 +0100
++++ linux-2.6.37/fs/aufs/inode.h	2011-01-24 07:59:00.347890400 +0100
 @@ -0,0 +1,546 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -13182,7 +13182,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/inode.h linux-2.6.37/fs/aufs/inode.h
 +#endif /* __AUFS_INODE_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/ioctl.c linux-2.6.37/fs/aufs/ioctl.c
 --- linux-2.6.37-bak/fs/aufs/ioctl.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/ioctl.c	2011-01-21 12:08:39.767369248 +0100
++++ linux-2.6.37/fs/aufs/ioctl.c	2011-01-24 07:59:00.430889002 +0100
 @@ -0,0 +1,150 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -13336,7 +13336,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/ioctl.c linux-2.6.37/fs/aufs/ioctl.c
 +#endif
 diff -Nru linux-2.6.37-bak/fs/aufs/i_op_add.c linux-2.6.37/fs/aufs/i_op_add.c
 --- linux-2.6.37-bak/fs/aufs/i_op_add.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/i_op_add.c	2011-01-21 12:08:39.832368105 +0100
++++ linux-2.6.37/fs/aufs/i_op_add.c	2011-01-24 07:59:00.465888413 +0100
 @@ -0,0 +1,702 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -14042,7 +14042,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/i_op_add.c linux-2.6.37/fs/aufs/i_op_add.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/i_op.c linux-2.6.37/fs/aufs/i_op.c
 --- linux-2.6.37-bak/fs/aufs/i_op.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/i_op.c	2011-01-21 12:08:39.782368985 +0100
++++ linux-2.6.37/fs/aufs/i_op.c	2011-01-24 07:59:00.445888750 +0100
 @@ -0,0 +1,971 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -15017,7 +15017,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/i_op.c linux-2.6.37/fs/aufs/i_op.c
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/i_op_del.c linux-2.6.37/fs/aufs/i_op_del.c
 --- linux-2.6.37-bak/fs/aufs/i_op_del.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/i_op_del.c	2011-01-21 12:08:39.857367666 +0100
++++ linux-2.6.37/fs/aufs/i_op_del.c	2011-01-24 07:59:00.485888078 +0100
 @@ -0,0 +1,481 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -15502,7 +15502,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/i_op_del.c linux-2.6.37/fs/aufs/i_op_del.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/i_op_ren.c linux-2.6.37/fs/aufs/i_op_ren.c
 --- linux-2.6.37-bak/fs/aufs/i_op_ren.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/i_op_ren.c	2011-01-21 12:08:39.744369651 +0100
++++ linux-2.6.37/fs/aufs/i_op_ren.c	2011-01-24 07:59:00.389889694 +0100
 @@ -0,0 +1,1017 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -16523,7 +16523,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/i_op_ren.c linux-2.6.37/fs/aufs/i_op_ren.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/Kconfig linux-2.6.37/fs/aufs/Kconfig
 --- linux-2.6.37-bak/fs/aufs/Kconfig	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/Kconfig	2011-01-21 12:08:39.862367577 +0100
++++ linux-2.6.37/fs/aufs/Kconfig	2011-01-24 07:59:00.490887994 +0100
 @@ -0,0 +1,180 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -16707,7 +16707,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/Kconfig linux-2.6.37/fs/aufs/Kconfig
 +endif
 diff -Nru linux-2.6.37-bak/fs/aufs/loop.c linux-2.6.37/fs/aufs/loop.c
 --- linux-2.6.37-bak/fs/aufs/loop.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/loop.c	2011-01-21 12:08:39.781369002 +0100
++++ linux-2.6.37/fs/aufs/loop.c	2011-01-24 07:59:00.444888767 +0100
 @@ -0,0 +1,63 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -16774,7 +16774,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/loop.c linux-2.6.37/fs/aufs/loop.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/loop.h linux-2.6.37/fs/aufs/loop.h
 --- linux-2.6.37-bak/fs/aufs/loop.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/loop.h	2011-01-21 12:08:39.785368931 +0100
++++ linux-2.6.37/fs/aufs/loop.h	2011-01-24 07:59:00.448888699 +0100
 @@ -0,0 +1,42 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -16820,7 +16820,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/loop.h linux-2.6.37/fs/aufs/loop.h
 +#endif /* __AUFS_LOOP_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/magic.mk linux-2.6.37/fs/aufs/magic.mk
 --- linux-2.6.37-bak/fs/aufs/magic.mk	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/magic.mk	2011-01-21 12:08:39.752369511 +0100
++++ linux-2.6.37/fs/aufs/magic.mk	2011-01-24 07:59:00.403889458 +0100
 @@ -0,0 +1,54 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -16878,7 +16878,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/magic.mk linux-2.6.37/fs/aufs/magic.mk
 +endif
 diff -Nru linux-2.6.37-bak/fs/aufs/Makefile linux-2.6.37/fs/aufs/Makefile
 --- linux-2.6.37-bak/fs/aufs/Makefile	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/Makefile	2011-01-21 12:08:39.777369072 +0100
++++ linux-2.6.37/fs/aufs/Makefile	2011-01-24 07:59:00.441888818 +0100
 @@ -0,0 +1,38 @@
 +
 +include ${src}/magic.mk
@@ -16920,7 +16920,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/Makefile linux-2.6.37/fs/aufs/Makefile
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
 diff -Nru linux-2.6.37-bak/fs/aufs/module.c linux-2.6.37/fs/aufs/module.c
 --- linux-2.6.37-bak/fs/aufs/module.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/module.c	2011-01-21 12:08:39.862367577 +0100
++++ linux-2.6.37/fs/aufs/module.c	2011-01-24 07:59:00.490887994 +0100
 @@ -0,0 +1,182 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -17106,7 +17106,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/module.c linux-2.6.37/fs/aufs/module.c
 +module_exit(aufs_exit);
 diff -Nru linux-2.6.37-bak/fs/aufs/module.h linux-2.6.37/fs/aufs/module.h
 --- linux-2.6.37-bak/fs/aufs/module.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/module.h	2011-01-21 12:08:39.816368387 +0100
++++ linux-2.6.37/fs/aufs/module.h	2011-01-24 07:59:00.459888515 +0100
 @@ -0,0 +1,91 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -17201,7 +17201,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/module.h linux-2.6.37/fs/aufs/module.h
 +#endif /* __AUFS_MODULE_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/mtx.h linux-2.6.37/fs/aufs/mtx.h
 --- linux-2.6.37-bak/fs/aufs/mtx.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/mtx.h	2011-01-21 12:08:39.856367683 +0100
++++ linux-2.6.37/fs/aufs/mtx.h	2011-01-24 07:59:00.484888094 +0100
 @@ -0,0 +1,48 @@
 +/*
 + * Copyright (C) 2010-2011 Junjiro R. Okajima
@@ -17253,7 +17253,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/mtx.h linux-2.6.37/fs/aufs/mtx.h
 +#endif /* __AUFS_MTX_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/opts.c linux-2.6.37/fs/aufs/opts.c
 --- linux-2.6.37-bak/fs/aufs/opts.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/opts.c	2011-01-21 12:08:39.865367524 +0100
++++ linux-2.6.37/fs/aufs/opts.c	2011-01-24 07:59:00.493887943 +0100
 @@ -0,0 +1,1595 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -18852,7 +18852,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/opts.c linux-2.6.37/fs/aufs/opts.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/opts.h linux-2.6.37/fs/aufs/opts.h
 --- linux-2.6.37-bak/fs/aufs/opts.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/opts.h	2011-01-21 12:08:39.739369740 +0100
++++ linux-2.6.37/fs/aufs/opts.h	2011-01-24 07:59:00.347890400 +0100
 @@ -0,0 +1,210 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -19066,7 +19066,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/opts.h linux-2.6.37/fs/aufs/opts.h
 +#endif /* __AUFS_OPTS_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/plink.c linux-2.6.37/fs/aufs/plink.c
 --- linux-2.6.37-bak/fs/aufs/plink.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/plink.c	2011-01-21 12:08:39.839367982 +0100
++++ linux-2.6.37/fs/aufs/plink.c	2011-01-24 07:59:00.466888397 +0100
 @@ -0,0 +1,515 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -19585,7 +19585,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/plink.c linux-2.6.37/fs/aufs/plink.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/poll.c linux-2.6.37/fs/aufs/poll.c
 --- linux-2.6.37-bak/fs/aufs/poll.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/poll.c	2011-01-21 12:08:39.751369528 +0100
++++ linux-2.6.37/fs/aufs/poll.c	2011-01-24 07:59:00.400889508 +0100
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -19645,7 +19645,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/poll.c linux-2.6.37/fs/aufs/poll.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/procfs.c linux-2.6.37/fs/aufs/procfs.c
 --- linux-2.6.37-bak/fs/aufs/procfs.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/procfs.c	2011-01-21 12:08:39.845367877 +0100
++++ linux-2.6.37/fs/aufs/procfs.c	2011-01-24 07:59:00.473888280 +0100
 @@ -0,0 +1,169 @@
 +/*
 + * Copyright (C) 2010-2011 Junjiro R. Okajima
@@ -19818,7 +19818,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/procfs.c linux-2.6.37/fs/aufs/procfs.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/rdu.c linux-2.6.37/fs/aufs/rdu.c
 --- linux-2.6.37-bak/fs/aufs/rdu.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/rdu.c	2011-01-21 12:08:39.756369441 +0100
++++ linux-2.6.37/fs/aufs/rdu.c	2011-01-24 07:59:00.417889223 +0100
 @@ -0,0 +1,383 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -20205,7 +20205,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/rdu.c linux-2.6.37/fs/aufs/rdu.c
 +#endif
 diff -Nru linux-2.6.37-bak/fs/aufs/rwsem.h linux-2.6.37/fs/aufs/rwsem.h
 --- linux-2.6.37-bak/fs/aufs/rwsem.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/rwsem.h	2011-01-21 12:08:39.756369441 +0100
++++ linux-2.6.37/fs/aufs/rwsem.h	2011-01-24 07:59:00.418889206 +0100
 @@ -0,0 +1,189 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -20398,7 +20398,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/rwsem.h linux-2.6.37/fs/aufs/rwsem.h
 +#endif /* __AUFS_RWSEM_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/sbinfo.c linux-2.6.37/fs/aufs/sbinfo.c
 --- linux-2.6.37-bak/fs/aufs/sbinfo.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/sbinfo.c	2011-01-21 12:08:39.771369177 +0100
++++ linux-2.6.37/fs/aufs/sbinfo.c	2011-01-24 07:59:00.434888937 +0100
 @@ -0,0 +1,344 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -20746,7 +20746,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/sbinfo.c linux-2.6.37/fs/aufs/sbinfo.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/spl.h linux-2.6.37/fs/aufs/spl.h
 --- linux-2.6.37-bak/fs/aufs/spl.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/spl.h	2011-01-21 12:08:39.734369828 +0100
++++ linux-2.6.37/fs/aufs/spl.h	2011-01-24 07:59:00.346890416 +0100
 @@ -0,0 +1,66 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -20816,7 +20816,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/spl.h linux-2.6.37/fs/aufs/spl.h
 +#endif /* __AUFS_SPL_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/super.c linux-2.6.37/fs/aufs/super.c
 --- linux-2.6.37-bak/fs/aufs/super.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/super.c	2011-01-21 12:08:39.747369600 +0100
++++ linux-2.6.37/fs/aufs/super.c	2011-01-24 07:59:00.397889558 +0100
 @@ -0,0 +1,916 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -21736,7 +21736,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/super.c linux-2.6.37/fs/aufs/super.c
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/super.h linux-2.6.37/fs/aufs/super.h
 --- linux-2.6.37-bak/fs/aufs/super.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/super.h	2011-01-21 12:08:39.785368931 +0100
++++ linux-2.6.37/fs/aufs/super.h	2011-01-24 07:59:00.448888699 +0100
 @@ -0,0 +1,527 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -22267,7 +22267,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/super.h linux-2.6.37/fs/aufs/super.h
 +#endif /* __AUFS_SUPER_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/sysaufs.c linux-2.6.37/fs/aufs/sysaufs.c
 --- linux-2.6.37-bak/fs/aufs/sysaufs.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/sysaufs.c	2011-01-21 12:08:39.759369388 +0100
++++ linux-2.6.37/fs/aufs/sysaufs.c	2011-01-24 07:59:00.421889155 +0100
 @@ -0,0 +1,107 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -22378,7 +22378,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/sysaufs.c linux-2.6.37/fs/aufs/sysaufs.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/sysaufs.h linux-2.6.37/fs/aufs/sysaufs.h
 --- linux-2.6.37-bak/fs/aufs/sysaufs.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/sysaufs.h	2011-01-21 12:08:39.743369669 +0100
++++ linux-2.6.37/fs/aufs/sysaufs.h	2011-01-24 07:59:00.376889912 +0100
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -22487,7 +22487,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/sysaufs.h linux-2.6.37/fs/aufs/sysaufs.h
 +#endif /* __SYSAUFS_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/sysfs.c linux-2.6.37/fs/aufs/sysfs.c
 --- linux-2.6.37-bak/fs/aufs/sysfs.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/sysfs.c	2011-01-21 12:08:39.866367507 +0100
++++ linux-2.6.37/fs/aufs/sysfs.c	2011-01-24 07:59:00.494887926 +0100
 @@ -0,0 +1,250 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -22741,7 +22741,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/sysfs.c linux-2.6.37/fs/aufs/sysfs.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/sysrq.c linux-2.6.37/fs/aufs/sysrq.c
 --- linux-2.6.37-bak/fs/aufs/sysrq.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/sysrq.c	2011-01-21 12:08:39.848367823 +0100
++++ linux-2.6.37/fs/aufs/sysrq.c	2011-01-24 07:59:00.476888229 +0100
 @@ -0,0 +1,148 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -22893,7 +22893,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/sysrq.c linux-2.6.37/fs/aufs/sysrq.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/vdir.c linux-2.6.37/fs/aufs/vdir.c
 --- linux-2.6.37-bak/fs/aufs/vdir.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/vdir.c	2011-01-21 12:08:39.745369634 +0100
++++ linux-2.6.37/fs/aufs/vdir.c	2011-01-24 07:59:00.394889609 +0100
 @@ -0,0 +1,886 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -23783,7 +23783,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/vdir.c linux-2.6.37/fs/aufs/vdir.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/vfsub.c linux-2.6.37/fs/aufs/vfsub.c
 --- linux-2.6.37-bak/fs/aufs/vfsub.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/vfsub.c	2011-01-21 12:08:39.867367490 +0100
++++ linux-2.6.37/fs/aufs/vfsub.c	2011-01-24 07:59:00.496887892 +0100
 @@ -0,0 +1,790 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -24577,7 +24577,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/vfsub.c linux-2.6.37/fs/aufs/vfsub.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/vfsub.h linux-2.6.37/fs/aufs/vfsub.h
 --- linux-2.6.37-bak/fs/aufs/vfsub.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/vfsub.h	2011-01-21 12:08:39.863367559 +0100
++++ linux-2.6.37/fs/aufs/vfsub.h	2011-01-24 07:59:00.491887977 +0100
 @@ -0,0 +1,226 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -24807,7 +24807,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/vfsub.h linux-2.6.37/fs/aufs/vfsub.h
 +#endif /* __AUFS_VFSUB_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/wbr_policy.c linux-2.6.37/fs/aufs/wbr_policy.c
 --- linux-2.6.37-bak/fs/aufs/wbr_policy.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/wbr_policy.c	2011-01-21 12:08:39.830368140 +0100
++++ linux-2.6.37/fs/aufs/wbr_policy.c	2011-01-24 07:59:00.463888447 +0100
 @@ -0,0 +1,700 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -25511,7 +25511,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/wbr_policy.c linux-2.6.37/fs/aufs/wbr_policy.
 +};
 diff -Nru linux-2.6.37-bak/fs/aufs/whout.c linux-2.6.37/fs/aufs/whout.c
 --- linux-2.6.37-bak/fs/aufs/whout.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/whout.c	2011-01-21 12:08:39.805368578 +0100
++++ linux-2.6.37/fs/aufs/whout.c	2011-01-24 07:59:00.449888682 +0100
 @@ -0,0 +1,1062 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -26577,7 +26577,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/whout.c linux-2.6.37/fs/aufs/whout.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/whout.h linux-2.6.37/fs/aufs/whout.h
 --- linux-2.6.37-bak/fs/aufs/whout.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/whout.h	2011-01-21 12:08:39.853367736 +0100
++++ linux-2.6.37/fs/aufs/whout.h	2011-01-24 07:59:00.481888144 +0100
 @@ -0,0 +1,89 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -26670,7 +26670,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/whout.h linux-2.6.37/fs/aufs/whout.h
 +#endif /* __AUFS_WHOUT_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/wkq.c linux-2.6.37/fs/aufs/wkq.c
 --- linux-2.6.37-bak/fs/aufs/wkq.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/wkq.c	2011-01-21 12:08:39.837368018 +0100
++++ linux-2.6.37/fs/aufs/wkq.c	2011-01-24 07:59:00.465888413 +0100
 @@ -0,0 +1,236 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -26910,7 +26910,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/wkq.c linux-2.6.37/fs/aufs/wkq.c
 +}
 diff -Nru linux-2.6.37-bak/fs/aufs/wkq.h linux-2.6.37/fs/aufs/wkq.h
 --- linux-2.6.37-bak/fs/aufs/wkq.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/wkq.h	2011-01-21 12:08:39.812368456 +0100
++++ linux-2.6.37/fs/aufs/wkq.h	2011-01-24 07:59:00.455888583 +0100
 @@ -0,0 +1,90 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -27004,7 +27004,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/wkq.h linux-2.6.37/fs/aufs/wkq.h
 +#endif /* __AUFS_WKQ_H__ */
 diff -Nru linux-2.6.37-bak/fs/aufs/xino.c linux-2.6.37/fs/aufs/xino.c
 --- linux-2.6.37-bak/fs/aufs/xino.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/fs/aufs/xino.c	2011-01-21 12:08:39.813368438 +0100
++++ linux-2.6.37/fs/aufs/xino.c	2011-01-24 07:59:00.455888583 +0100
 @@ -0,0 +1,1265 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -28273,7 +28273,7 @@ diff -Nru linux-2.6.37-bak/fs/aufs/xino.c linux-2.6.37/fs/aufs/xino.c
 +}
 diff -Nru linux-2.6.37-bak/fs/file_table.c linux-2.6.37/fs/file_table.c
 --- linux-2.6.37-bak/fs/file_table.c	2011-01-20 17:13:18.011411458 +0100
-+++ linux-2.6.37/fs/file_table.c	2011-01-21 12:08:13.463831617 +0100
++++ linux-2.6.37/fs/file_table.c	2011-01-24 07:58:37.445276361 +0100
 @@ -393,6 +393,8 @@
  	}
  }
@@ -28285,7 +28285,7 @@ diff -Nru linux-2.6.37-bak/fs/file_table.c linux-2.6.37/fs/file_table.c
  /*
 diff -Nru linux-2.6.37-bak/fs/inode.c linux-2.6.37/fs/inode.c
 --- linux-2.6.37-bak/fs/inode.c	2011-01-20 17:13:18.262406143 +0100
-+++ linux-2.6.37/fs/inode.c	2011-01-21 12:08:13.463831617 +0100
++++ linux-2.6.37/fs/inode.c	2011-01-24 07:58:37.445276361 +0100
 @@ -82,6 +82,7 @@
   * the i_state of an inode while it is in use..
   */
@@ -28296,7 +28296,7 @@ diff -Nru linux-2.6.37-bak/fs/inode.c linux-2.6.37/fs/inode.c
   * iprune_sem provides exclusion between the kswapd or try_to_free_pages
 diff -Nru linux-2.6.37-bak/fs/Kconfig linux-2.6.37/fs/Kconfig
 --- linux-2.6.37-bak/fs/Kconfig	2011-01-20 17:13:18.350404280 +0100
-+++ linux-2.6.37/fs/Kconfig	2011-01-21 12:08:05.872965046 +0100
++++ linux-2.6.37/fs/Kconfig	2011-01-24 07:58:29.342413124 +0100
 @@ -191,6 +191,7 @@
  source "fs/sysv/Kconfig"
  source "fs/ufs/Kconfig"
@@ -28307,7 +28307,7 @@ diff -Nru linux-2.6.37-bak/fs/Kconfig linux-2.6.37/fs/Kconfig
  
 diff -Nru linux-2.6.37-bak/fs/Makefile linux-2.6.37/fs/Makefile
 --- linux-2.6.37-bak/fs/Makefile	2011-01-20 17:13:18.040410844 +0100
-+++ linux-2.6.37/fs/Makefile	2011-01-21 12:08:05.872965046 +0100
++++ linux-2.6.37/fs/Makefile	2011-01-24 07:58:29.343413108 +0100
 @@ -121,3 +121,4 @@
  obj-$(CONFIG_GFS2_FS)           += gfs2/
  obj-$(CONFIG_EXOFS_FS)          += exofs/
@@ -28315,7 +28315,7 @@ diff -Nru linux-2.6.37-bak/fs/Makefile linux-2.6.37/fs/Makefile
 +obj-$(CONFIG_AUFS_FS)           += aufs/
 diff -Nru linux-2.6.37-bak/fs/namei.c linux-2.6.37/fs/namei.c
 --- linux-2.6.37-bak/fs/namei.c	2011-01-20 17:13:18.250406398 +0100
-+++ linux-2.6.37/fs/namei.c	2011-01-21 12:08:13.496831037 +0100
++++ linux-2.6.37/fs/namei.c	2011-01-24 07:58:37.453276227 +0100
 @@ -347,6 +347,7 @@
  
  	return 0;
@@ -28350,7 +28350,7 @@ diff -Nru linux-2.6.37-bak/fs/namei.c linux-2.6.37/fs/namei.c
   * lookup_one_len - filesystem helper to lookup single pathname component
 diff -Nru linux-2.6.37-bak/fs/namespace.c linux-2.6.37/fs/namespace.c
 --- linux-2.6.37-bak/fs/namespace.c	2011-01-20 17:13:18.040410844 +0100
-+++ linux-2.6.37/fs/namespace.c	2011-01-21 12:08:13.498831001 +0100
++++ linux-2.6.37/fs/namespace.c	2011-01-24 07:58:37.457276159 +0100
 @@ -1321,6 +1321,7 @@
  	}
  	return 0;
@@ -28361,7 +28361,7 @@ diff -Nru linux-2.6.37-bak/fs/namespace.c linux-2.6.37/fs/namespace.c
  {
 diff -Nru linux-2.6.37-bak/fs/notify/group.c linux-2.6.37/fs/notify/group.c
 --- linux-2.6.37-bak/fs/notify/group.c	2011-01-20 17:13:18.251406377 +0100
-+++ linux-2.6.37/fs/notify/group.c	2011-01-21 12:08:13.502830931 +0100
++++ linux-2.6.37/fs/notify/group.c	2011-01-24 07:58:37.460276110 +0100
 @@ -22,6 +22,7 @@
  #include <linux/srcu.h>
  #include <linux/rculist.h>
@@ -28385,7 +28385,7 @@ diff -Nru linux-2.6.37-bak/fs/notify/group.c linux-2.6.37/fs/notify/group.c
 +EXPORT_SYMBOL(fsnotify_alloc_group);
 diff -Nru linux-2.6.37-bak/fs/notify/mark.c linux-2.6.37/fs/notify/mark.c
 --- linux-2.6.37-bak/fs/notify/mark.c	2011-01-20 17:13:18.251406377 +0100
-+++ linux-2.6.37/fs/notify/mark.c	2011-01-21 12:08:13.503830914 +0100
++++ linux-2.6.37/fs/notify/mark.c	2011-01-24 07:58:37.465276025 +0100
 @@ -113,6 +113,7 @@
  	if (atomic_dec_and_test(&mark->refcnt))
  		mark->free_mark(mark);
@@ -28420,7 +28420,7 @@ diff -Nru linux-2.6.37-bak/fs/notify/mark.c linux-2.6.37/fs/notify/mark.c
  {
 diff -Nru linux-2.6.37-bak/fs/open.c linux-2.6.37/fs/open.c
 --- linux-2.6.37-bak/fs/open.c	2011-01-20 17:13:17.895413914 +0100
-+++ linux-2.6.37/fs/open.c	2011-01-21 12:08:13.506830861 +0100
++++ linux-2.6.37/fs/open.c	2011-01-24 07:58:37.468275974 +0100
 @@ -60,6 +60,7 @@
  	mutex_unlock(&dentry->d_inode->i_mutex);
  	return ret;
@@ -28431,7 +28431,7 @@ diff -Nru linux-2.6.37-bak/fs/open.c linux-2.6.37/fs/open.c
  {
 diff -Nru linux-2.6.37-bak/fs/splice.c linux-2.6.37/fs/splice.c
 --- linux-2.6.37-bak/fs/splice.c	2011-01-20 17:13:18.250406398 +0100
-+++ linux-2.6.37/fs/splice.c	2011-01-21 12:08:13.509830807 +0100
++++ linux-2.6.37/fs/splice.c	2011-01-24 07:58:37.472275906 +0100
 @@ -1092,8 +1092,8 @@
  /*
   * Attempt to initiate a splice from pipe to file.
@@ -28471,7 +28471,7 @@ diff -Nru linux-2.6.37-bak/fs/splice.c linux-2.6.37/fs/splice.c
   * splice_direct_to_actor - splices data directly between two non-pipes
 diff -Nru linux-2.6.37-bak/include/linux/aufs_type.h linux-2.6.37/include/linux/aufs_type.h
 --- linux-2.6.37-bak/include/linux/aufs_type.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.37/include/linux/aufs_type.h	2011-01-21 12:08:50.602178784 +0100
++++ linux-2.6.37/include/linux/aufs_type.h	2011-01-24 07:59:19.165573917 +0100
 @@ -0,0 +1,197 @@
 +/*
 + * Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -28672,402 +28672,18 @@ diff -Nru linux-2.6.37-bak/include/linux/aufs_type.h linux-2.6.37/include/linux/
 +#endif /* __AUFS_TYPE_H__ */
 diff -Nru linux-2.6.37-bak/include/linux/Kbuild linux-2.6.37/include/linux/Kbuild
 --- linux-2.6.37-bak/include/linux/Kbuild	2011-01-20 17:13:03.498718825 +0100
-+++ linux-2.6.37/include/linux/Kbuild	2011-01-21 12:08:50.603178766 +0100
-@@ -1,390 +1 @@
--header-y += byteorder/
--header-y += can/
--header-y += dvb/
--header-y += hdlc/
--header-y += isdn/
--header-y += nfsd/
--header-y += raid/
--header-y += spi/
--header-y += sunrpc/
--header-y += tc_act/
--header-y += tc_ematch/
--header-y += netfilter/
--header-y += netfilter_arp/
--header-y += netfilter_bridge/
--header-y += netfilter_ipv4/
--header-y += netfilter_ipv6/
--header-y += usb/
--header-y += wimax/
--
--objhdr-y += version.h
--
--ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/include/asm/a.out.h \
--		  $(srctree)/include/asm-$(SRCARCH)/a.out.h),)
--header-y += a.out.h
--endif
--ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/include/asm/kvm.h \
--		  $(srctree)/include/asm-$(SRCARCH)/kvm.h),)
--header-y += kvm.h
--endif
--ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/include/asm/kvm_para.h \
--		  $(srctree)/include/asm-$(SRCARCH)/kvm_para.h),)
--header-y += kvm_para.h
--endif
--
--header-y += acct.h
--header-y += adb.h
--header-y += adfs_fs.h
--header-y += affs_hardblocks.h
--header-y += agpgart.h
--header-y += aio_abi.h
--header-y += apm_bios.h
--header-y += arcfb.h
--header-y += atalk.h
--header-y += atm.h
--header-y += atm_eni.h
--header-y += atm_he.h
--header-y += atm_idt77105.h
--header-y += atm_nicstar.h
--header-y += atm_tcp.h
--header-y += atm_zatm.h
--header-y += atmapi.h
--header-y += atmarp.h
--header-y += atmbr2684.h
--header-y += atmclip.h
--header-y += atmdev.h
--header-y += atmioc.h
--header-y += atmlec.h
--header-y += atmmpc.h
--header-y += atmppp.h
--header-y += atmsap.h
--header-y += atmsvc.h
--header-y += audit.h
--header-y += auto_fs.h
--header-y += auto_fs4.h
--header-y += auxvec.h
--header-y += ax25.h
--header-y += b1lli.h
--header-y += baycom.h
--header-y += bfs_fs.h
--header-y += binfmts.h
--header-y += blk_types.h
--header-y += blkpg.h
--header-y += blktrace_api.h
--header-y += bpqether.h
--header-y += bsg.h
--header-y += can.h
--header-y += capability.h
--header-y += capi.h
--header-y += cciss_defs.h
--header-y += cciss_ioctl.h
--header-y += cdk.h
--header-y += cdrom.h
--header-y += cgroupstats.h
--header-y += chio.h
--header-y += cm4000_cs.h
--header-y += cn_proc.h
--header-y += coda.h
--header-y += coda_psdev.h
--header-y += coff.h
--header-y += comstats.h
--header-y += connector.h
--header-y += const.h
--header-y += cramfs_fs.h
--header-y += cuda.h
--header-y += cyclades.h
--header-y += cycx_cfm.h
--header-y += dcbnl.h
--header-y += dccp.h
--header-y += dlm.h
--header-y += dlm_device.h
--header-y += dlm_netlink.h
--header-y += dlm_plock.h
--header-y += dlmconstants.h
--header-y += dm-ioctl.h
--header-y += dm-log-userspace.h
--header-y += dn.h
--header-y += dqblk_xfs.h
--header-y += edd.h
--header-y += efs_fs_sb.h
--header-y += elf-em.h
--header-y += elf-fdpic.h
--header-y += elf.h
--header-y += elfcore.h
--header-y += errno.h
--header-y += errqueue.h
--header-y += ethtool.h
--header-y += eventpoll.h
--header-y += ext2_fs.h
--header-y += fadvise.h
--header-y += falloc.h
--header-y += fanotify.h
--header-y += fb.h
--header-y += fcntl.h
--header-y += fd.h
--header-y += fdreg.h
--header-y += fib_rules.h
--header-y += fiemap.h
--header-y += filter.h
--header-y += firewire-cdev.h
--header-y += firewire-constants.h
--header-y += flat.h
--header-y += fs.h
--header-y += fuse.h
--header-y += futex.h
--header-y += gameport.h
--header-y += gen_stats.h
--header-y += generic_serial.h
--header-y += genetlink.h
--header-y += gfs2_ondisk.h
--header-y += gigaset_dev.h
--header-y += hdlc.h
--header-y += hdlcdrv.h
--header-y += hdreg.h
--header-y += hid.h
--header-y += hiddev.h
--header-y += hidraw.h
--header-y += hpet.h
--header-y += hysdn_if.h
--header-y += i2c-dev.h
--header-y += i2c.h
--header-y += i2o-dev.h
--header-y += i8k.h
--header-y += icmp.h
--header-y += icmpv6.h
--header-y += if.h
--header-y += if_addr.h
--header-y += if_addrlabel.h
--header-y += if_arcnet.h
--header-y += if_arp.h
--header-y += if_bonding.h
--header-y += if_bridge.h
--header-y += if_cablemodem.h
--header-y += if_ec.h
--header-y += if_eql.h
--header-y += if_ether.h
--header-y += if_fc.h
--header-y += if_fddi.h
--header-y += if_frad.h
--header-y += if_hippi.h
--header-y += if_infiniband.h
--header-y += if_link.h
--header-y += if_ltalk.h
--header-y += if_packet.h
--header-y += if_phonet.h
--header-y += if_plip.h
--header-y += if_ppp.h
--header-y += if_pppol2tp.h
--header-y += if_pppox.h
--header-y += if_slip.h
--header-y += if_strip.h
--header-y += if_tr.h
--header-y += if_tun.h
--header-y += if_tunnel.h
--header-y += if_vlan.h
--header-y += if_x25.h
--header-y += igmp.h
--header-y += in.h
--header-y += in6.h
--header-y += in_route.h
--header-y += inet_diag.h
--header-y += inotify.h
--header-y += input.h
--header-y += ioctl.h
--header-y += ip.h
--header-y += ip6_tunnel.h
--header-y += ip_vs.h
--header-y += ipc.h
--header-y += ipmi.h
--header-y += ipmi_msgdefs.h
--header-y += ipsec.h
--header-y += ipv6.h
--header-y += ipv6_route.h
--header-y += ipx.h
--header-y += irda.h
--header-y += irqnr.h
--header-y += isdn.h
--header-y += isdn_divertif.h
--header-y += isdn_ppp.h
--header-y += isdnif.h
--header-y += iso_fs.h
--header-y += ivtv.h
--header-y += ivtvfb.h
--header-y += ixjuser.h
--header-y += jffs2.h
--header-y += joystick.h
--header-y += kd.h
--header-y += kdev_t.h
--header-y += kernel.h
--header-y += kernelcapi.h
--header-y += keyboard.h
--header-y += keyctl.h
--header-y += l2tp.h
--header-y += limits.h
--header-y += llc.h
--header-y += loop.h
--header-y += lp.h
--header-y += magic.h
--header-y += major.h
--header-y += map_to_7segment.h
--header-y += matroxfb.h
--header-y += mempolicy.h
--header-y += meye.h
--header-y += mii.h
--header-y += minix_fs.h
--header-y += mman.h
--header-y += mmtimer.h
--header-y += mqueue.h
--header-y += mroute.h
--header-y += mroute6.h
--header-y += msdos_fs.h
--header-y += msg.h
--header-y += mtio.h
--header-y += n_r3964.h
--header-y += nbd.h
--header-y += ncp.h
--header-y += ncp_fs.h
--header-y += ncp_mount.h
--header-y += ncp_no.h
--header-y += neighbour.h
--header-y += net.h
--header-y += net_dropmon.h
--header-y += net_tstamp.h
--header-y += netdevice.h
--header-y += netfilter.h
--header-y += netfilter_arp.h
--header-y += netfilter_bridge.h
--header-y += netfilter_decnet.h
--header-y += netfilter_ipv4.h
--header-y += netfilter_ipv6.h
--header-y += netlink.h
--header-y += netrom.h
--header-y += nfs.h
--header-y += nfs2.h
--header-y += nfs3.h
--header-y += nfs4.h
--header-y += nfs4_mount.h
--header-y += nfs_fs.h
--header-y += nfs_idmap.h
--header-y += nfs_mount.h
--header-y += nfsacl.h
--header-y += nl80211.h
--header-y += nubus.h
--header-y += nvram.h
--header-y += omapfb.h
--header-y += oom.h
--header-y += param.h
--header-y += parport.h
--header-y += patchkey.h
--header-y += pci.h
--header-y += pci_regs.h
--header-y += perf_event.h
--header-y += personality.h
--header-y += pfkeyv2.h
--header-y += pg.h
--header-y += phantom.h
--header-y += phonet.h
--header-y += pkt_cls.h
--header-y += pkt_sched.h
--header-y += pktcdvd.h
--header-y += pmu.h
--header-y += poll.h
--header-y += posix_types.h
--header-y += ppdev.h
--header-y += ppp-comp.h
--header-y += ppp_defs.h
--header-y += pps.h
--header-y += prctl.h
--header-y += ptrace.h
--header-y += qnx4_fs.h
--header-y += qnxtypes.h
--header-y += quota.h
--header-y += radeonfb.h
--header-y += random.h
--header-y += raw.h
--header-y += rds.h
--header-y += reboot.h
--header-y += reiserfs_fs.h
--header-y += reiserfs_xattr.h
--header-y += resource.h
--header-y += rfkill.h
--header-y += romfs_fs.h
--header-y += rose.h
--header-y += route.h
--header-y += rtc.h
--header-y += rtnetlink.h
--header-y += scc.h
--header-y += sched.h
--header-y += screen_info.h
--header-y += sdla.h
--header-y += securebits.h
--header-y += selinux_netlink.h
--header-y += sem.h
--header-y += serial.h
--header-y += serial_core.h
--header-y += serial_reg.h
--header-y += serio.h
--header-y += shm.h
--header-y += signal.h
--header-y += signalfd.h
--header-y += snmp.h
--header-y += socket.h
--header-y += sockios.h
--header-y += som.h
--header-y += sonet.h
--header-y += sonypi.h
--header-y += sound.h
--header-y += soundcard.h
--header-y += stat.h
--header-y += stddef.h
--header-y += string.h
--header-y += suspend_ioctls.h
--header-y += swab.h
--header-y += synclink.h
--header-y += sysctl.h
--header-y += taskstats.h
--header-y += tcp.h
--header-y += telephony.h
--header-y += termios.h
--header-y += time.h
--header-y += times.h
--header-y += timex.h
--header-y += tiocl.h
--header-y += tipc.h
--header-y += tipc_config.h
--header-y += toshiba.h
--header-y += tty.h
--header-y += types.h
--header-y += udf_fs_i.h
--header-y += udp.h
--header-y += uinput.h
--header-y += uio.h
--header-y += ultrasound.h
--header-y += un.h
--header-y += unistd.h
--header-y += usbdevice_fs.h
--header-y += utime.h
--header-y += utsname.h
--header-y += veth.h
--header-y += vhost.h
--header-y += videodev.h
--header-y += videodev2.h
--header-y += virtio_9p.h
--header-y += virtio_balloon.h
--header-y += virtio_blk.h
--header-y += virtio_config.h
--header-y += virtio_console.h
--header-y += virtio_ids.h
--header-y += virtio_net.h
--header-y += virtio_pci.h
--header-y += virtio_ring.h
--header-y += virtio_rng.h
--header-y += vt.h
--header-y += wait.h
--header-y += wanrouter.h
--header-y += watchdog.h
--header-y += wimax.h
--header-y += wireless.h
--header-y += x25.h
--header-y += xattr.h
--header-y += xfrm.h
-+header-y = aufs_type.h
++++ linux-2.6.37/include/linux/Kbuild	2011-01-24 07:58:29.350412991 +0100
+@@ -60,6 +60,7 @@
+ header-y += atmsap.h
+ header-y += atmsvc.h
+ header-y += audit.h
++header-y += aufs_type.h
+ header-y += auto_fs.h
+ header-y += auto_fs4.h
+ header-y += auxvec.h
 diff -Nru linux-2.6.37-bak/include/linux/namei.h linux-2.6.37/include/linux/namei.h
 --- linux-2.6.37-bak/include/linux/namei.h	2011-01-20 17:13:03.479719226 +0100
-+++ linux-2.6.37/include/linux/namei.h	2011-01-21 12:08:08.470919381 +0100
++++ linux-2.6.37/include/linux/namei.h	2011-01-24 07:58:32.454360588 +0100
 @@ -73,6 +73,9 @@
  extern struct file *lookup_instantiate_filp(struct nameidata *nd, struct dentry *dentry,
  		int (*open)(struct inode *, struct file *));
@@ -29080,7 +28696,7 @@ diff -Nru linux-2.6.37-bak/include/linux/namei.h linux-2.6.37/include/linux/name
  extern int follow_down(struct path *);
 diff -Nru linux-2.6.37-bak/include/linux/splice.h linux-2.6.37/include/linux/splice.h
 --- linux-2.6.37-bak/include/linux/splice.h	2011-01-20 17:13:03.473719354 +0100
-+++ linux-2.6.37/include/linux/splice.h	2011-01-21 12:08:08.471919363 +0100
++++ linux-2.6.37/include/linux/splice.h	2011-01-24 07:58:32.469360335 +0100
 @@ -89,4 +89,10 @@
  extern void splice_shrink_spd(struct pipe_inode_info *,
  				struct splice_pipe_desc *);
@@ -29094,7 +28710,7 @@ diff -Nru linux-2.6.37-bak/include/linux/splice.h linux-2.6.37/include/linux/spl
  #endif
 diff -Nru linux-2.6.37-bak/security/commoncap.c linux-2.6.37/security/commoncap.c
 --- linux-2.6.37-bak/security/commoncap.c	2011-01-20 17:13:18.413402947 +0100
-+++ linux-2.6.37/security/commoncap.c	2011-01-21 12:08:13.510830790 +0100
++++ linux-2.6.37/security/commoncap.c	2011-01-24 07:58:37.473275889 +0100
 @@ -929,3 +929,4 @@
  	}
  	return ret;
@@ -29102,7 +28718,7 @@ diff -Nru linux-2.6.37-bak/security/commoncap.c linux-2.6.37/security/commoncap.
 +EXPORT_SYMBOL(cap_file_mmap);
 diff -Nru linux-2.6.37-bak/security/device_cgroup.c linux-2.6.37/security/device_cgroup.c
 --- linux-2.6.37-bak/security/device_cgroup.c	2011-01-20 17:13:18.435402481 +0100
-+++ linux-2.6.37/security/device_cgroup.c	2011-01-21 12:08:13.532830405 +0100
++++ linux-2.6.37/security/device_cgroup.c	2011-01-24 07:58:37.474275873 +0100
 @@ -515,6 +515,7 @@
  
  	return -EPERM;
@@ -29113,7 +28729,7 @@ diff -Nru linux-2.6.37-bak/security/device_cgroup.c linux-2.6.37/security/device
  {
 diff -Nru linux-2.6.37-bak/security/security.c linux-2.6.37/security/security.c
 --- linux-2.6.37-bak/security/security.c	2011-01-20 17:13:18.435402481 +0100
-+++ linux-2.6.37/security/security.c	2011-01-21 12:08:13.534830369 +0100
++++ linux-2.6.37/security/security.c	2011-01-24 07:58:37.477275823 +0100
 @@ -360,6 +360,7 @@
  		return 0;
  	return security_ops->path_mkdir(dir, dentry, mode);
