@@ -1,1 +1,1 @@
-x11-libs/cairo svg
+x11-libs/cairo svg -qt4
