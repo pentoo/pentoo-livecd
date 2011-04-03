@@ -19,6 +19,7 @@ dev-db/sqlbf
 dev-db/sqlinject
 dev-dotnet/wxnet
 =dev-lang/yasm-0.8.0 ~amd64
+app-portage/smart-live-rebuild
 dev-python/Impacket
 dev-python/cxoracle
 dev-python/fpconst
