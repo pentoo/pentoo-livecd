@@ -11,7 +11,11 @@ net-wireless/madwifi-old-tools
 >=dev-lang/python-3.0
 >=lxml/lxml-2.2.7
 
->=app-crypt/gnupg-2.0
+#We have this slotted to no real need to mask it as that means many newer things can't work -ZC
+#Also of note I no longer have gnupg-1 on my system and my FDE still works with:
+#[ebuild   R   ] app-crypt/gnupg-2.0.17  USE="adns bzip2 caps ldap static -doc -nls -openct -pcsc-lite (-selinux) -smartcard" 0 kB
+#>=app-crypt/gnupg-2.0
+
 #Prevent downgrades
 <sys-apps/baselayout-2.0.0
 
