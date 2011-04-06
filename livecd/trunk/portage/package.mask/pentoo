@@ -19,8 +19,5 @@ net-wireless/madwifi-old-tools
 <x11-drivers/xf86-video-intel-2.9.0
 
 <sys-kernel/linux-firmware-99999999
-=net-dialup/lrzsz-0.12.20-r3
+#=net-dialup/lrzsz-0.12.20-r3
 
-#>net-wireless/compat-wireless-2.6.37_rc0
->net-wireless/wireless-regdb-20091125
-#>=sys-kernel/pentoo-sources-2.6.36
