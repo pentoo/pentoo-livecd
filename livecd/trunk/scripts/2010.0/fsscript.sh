@@ -57,15 +57,15 @@ rm /usr/lib/libGLcore.so
 [ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
 
 # Set default java vm
-eselect java-vm set system sun-jre-bin-1.6
+eselect java-vm set system sun-jdk-1.6
 if [ -e /usr/lib64 ] ; then
-	eselect java-nsplugin set 64bit sun-jre-bin-1.6
+	eselect java-nsplugin set 64bit sun-jdk-1.6
 else
-	eselect java-nsplugin set sun-jre-bin-1.6
+	eselect java-nsplugin set sun-jdk-1.6
 fi
 
-# Configure mysql
-emerge --config mysql
+# Fix the name of firefox so the user know it:
+sed -e 's/Namoroka/Firefox/' -i /usr/share/applications/mozilla-firefox-3.6.desktop
 
 # Add e17 repo
 rm -rf /usr/local/portage
@@ -81,15 +81,16 @@ updatedb
 
 # Fix /etc/make.conf
 echo 'USE="X -livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-mmx sse sse2 mpi wps offensive dwm -32bit
+mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
-cracking enlightenment exploit rce
--analyzer -bluetooth -database -footprint -forging -fuzzers -mitm -proxies -scanner -voip -wireless"' >> /etc/make.conf
+analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxies
+scanner rce footprint forging fuzzers voip wireless pentoo
+-stage2"' >> /etc/make.conf
 echo 'INPUT_DEVICES="keyboard mouse"
 VIDEO_CARDS="fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 MAKEOPTS="-j2"
@@ -97,13 +98,14 @@ MAKEOPTS="-j2"
 #SYNC="rsync://rsync.europe.gentoo.org/gentoo-portage"' >> /etc/make.conf
 #echo 'PORTDIR_OVERLAY="/usr/local/portage"' >> /etc/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/make.conf
+mkdir /usr/local/portage
 
 rm -rf /etc/portage
 ACCEPT_KEYWORDS="**" emerge pentoo/pentoo-etc-portage
 emerge pentoo-installer
 
 # This makes sure we have the latest and greatest genmenu!
-#emerge app-admin/genmenu
+emerge app-admin/genmenu
 
 # Runs the incredible menu generator! Twice !
 genmenu.py -v -t urxvt
@@ -132,11 +134,11 @@ sed -e '/ESD_OPTIONS/ s/ -public//' -i /etc/conf.d/esound
 # Fix the kernel dir & config
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	rm /usr/src/linux
-	ln -s /usr/src/linux-$krnl /usr/src/linux
+	ln -s linux-$krnl /usr/src/linux
 	cp /var/tmp/pentoo.config /usr/src/linux/.config
 	rm /lib/modules/$krnl-grsec/source /lib/modules/$krnl-grsec/build
-	ln -s /usr/src/linux-$krnl /lib/modules/$krnl-grsec/build
-	ln -s /usr/src/linux-$krnl /lib/modules/$krnl-grsec/source
+	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl-grsec/build
+	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl-grsec/source
 	cd /usr/src/linux
 	make prepare && make modules_prepare
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
@@ -146,6 +148,8 @@ done
 # fixes pax for binary drviers GPGPU
 paxctl -m /usr/bin/X
 paxctl -m /usr/bin/python2.6
+# fixes pax for metasploit/java attacks
+paxctl -m /usr/bin/ruby
 
 # Setup fonts
 cd /usr/share/fonts
@@ -172,6 +176,9 @@ ntop --set-admin-password=pentoo
 
 # compile mingw32
 #crossdev --portage -bk i686-mingw32
+
+# Configure mysql
+emerge --config mysql
 
 # Adds sploit collection
 cd /opt/
