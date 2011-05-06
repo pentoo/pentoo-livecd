@@ -19,8 +19,7 @@ x11-drivers/xf86-video-fbdev
 x11-drivers/xf86-video-glint
 x11-drivers/xf86-video-i128
 x11-drivers/xf86-video-i740
-=x11-drivers/xf86-video-intel-2.7.1
-x11-drivers/xf86-video-mach64
+#x11-drivers/xf86-video-mach64
 x11-drivers/xf86-video-mga
 x11-drivers/xf86-video-neomagic
 x11-drivers/xf86-video-nv

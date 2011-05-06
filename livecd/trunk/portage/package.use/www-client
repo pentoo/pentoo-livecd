@@ -1,1 +1,2 @@
 www-client/links -X -directfb -fbcon gpm -javascript -jpeg -png
+#www-client/chromium -gecko-mediaplayer

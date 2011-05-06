@@ -25,3 +25,5 @@ net-wireless/madwifi-old-tools
 <sys-kernel/linux-firmware-99999999
 #=net-dialup/lrzsz-0.12.20-r3
 
+#Only the latest and greatest
+<net-analyzer/metasploit-9999

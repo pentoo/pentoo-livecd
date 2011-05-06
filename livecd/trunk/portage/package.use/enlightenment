@@ -1,10 +1,10 @@
 # Don't split this one!!!
 app-benchmarks/expedite X opengl -sdl
 dev-libs/eet ssl threads
-x11-libs/e_dbus hal libnotify connman
-x11-libs/ecore glib threads xim curl ssl inotify evas opengl X xscreensaver -sdl
-x11-libs/evas X cserve eet fontconfig gif jpeg mmx opengl png pnm safety-checks sse svg threads tiff xpm -static-modules -sdl
-x11-wm/enlightenment alsa opengl pam connman exchange pm-utils xscreensaver -illume
+dev-libs/e_dbus hal libnotify connman
+dev-libs/ecore glib threads xim curl ssl inotify evas opengl X xscreensaver -sdl
+media-libs/evas X cserve eet fontconfig gif jpeg mmx opengl png pnm safety-checks sse svg threads tiff xpm -static-modules -sdl
+x11-wm/enlightenment alsa opengl pam connman exchange pm-utils xscreensaver -illume hal
 media-libs/emotion gstreamer static-modules
 media-libs/ethumb dbus emotion epdf
 media-libs/elementary X dbus opengl weather xdg -sdl
