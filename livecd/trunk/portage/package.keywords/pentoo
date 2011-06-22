@@ -16,7 +16,3 @@ pentoo/pentoo-voip **
 pentoo/pentoo-wireless **
 pentoo/pentoo-etc-portage
 ~sys-devel/gcc-4.4.3
-app-crypt/pyrit
-app-crypt/cpyrit_calpp
-app-crypt/cpyrit_opencl
-app-crypt/cpyrit_cuda
