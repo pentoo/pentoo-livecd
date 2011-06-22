@@ -9,3 +9,9 @@ app-forensics/rdd
 app-forensics/sleuthkit
 =app-forensics/afflib-3.3.4
 =app-forensics/libewf-20100226
+app-forensics/volatility
+app-forensics/vol-plugins-crypto
+app-forensics/vol-plugins-malware
+app-forensics/vol-plugins-moyix
+app-forensics/vol-plugins-reg
+

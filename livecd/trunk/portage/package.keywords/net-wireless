@@ -17,7 +17,7 @@ net-wireless/b43-openfwwf
 net-wireless/b43-tools
 net-wireless/bcm43xx-fwcutter
 net-wireless/blueproxy
-net-wireless/bluez
+<net-wireless/bluez-4.94
 net-wireless/bluez-bluefw
 net-wireless/bluez-firmware
 net-wireless/bluez-gnome
@@ -50,6 +50,7 @@ net-wireless/iwl4965-ucode
 net-wireless/iwl5000-ucode
 net-wireless/gerix
 net-wireless/kdebluetooth
+net-wireless/kismet-ubertooth
 net-wireless/kwlaninfo
 net-wireless/libbtctl
 net-wireless/linux-wlan-ng
@@ -105,4 +106,5 @@ net-wireless/prism54
 net-wireless/rt2570
 net-wireless/rtl8180
 net-wireless/ska
+net-wireless/ubertooth
 net-wireless/wifitap
