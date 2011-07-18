@@ -11,6 +11,7 @@ app-forensics/cmospwd
 app-text/cewl
 app-misc/emelfm2
 app-portage/maintainer-helper
+>=app-portage/gentoopm-0.1.2
 dev-db/absinthe
 dev-db/mssqlscan
 dev-db/oat
