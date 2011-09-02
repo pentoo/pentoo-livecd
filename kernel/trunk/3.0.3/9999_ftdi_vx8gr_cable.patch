@@ -1,0 +1,22 @@
+diff -Nru a/drivers/usb/serial/ftdi_sio.c b/drivers/usb/serial/ftdi_sio.c
+--- a/drivers/usb/serial/ftdi_sio.c	2010-12-29 16:33:47.652934156 +0100
++++ b/drivers/usb/serial/ftdi_sio.c	2010-12-29 16:46:00.296556648 +0100
+@@ -697,6 +697,7 @@
+ 		.driver_info = (kernel_ulong_t)&ftdi_NDI_device_quirk },
+ 	{ USB_DEVICE(TELLDUS_VID, TELLDUS_TELLSTICK_PID) },
+ 	{ USB_DEVICE(RTSYSTEMS_VID, RTSYSTEMS_SERIAL_VX7_PID) },
++	{ USB_DEVICE(RTSYSTEMS_VID, RTSYSTEMS_SERIAL_VX8GR_PID) },
+ 	{ USB_DEVICE(RTSYSTEMS_VID, RTSYSTEMS_CT29B_PID) },
+ 	{ USB_DEVICE(FTDI_VID, FTDI_MAXSTREAM_PID) },
+ 	{ USB_DEVICE(FTDI_VID, FTDI_PHI_FISCO_PID) },
+diff -Nru a/drivers/usb/serial/ftdi_sio_ids.h b/drivers/usb/serial/ftdi_sio_ids.h
+--- a/drivers/usb/serial/ftdi_sio_ids.h	2010-12-29 16:33:47.652934156 +0100
++++ b/drivers/usb/serial/ftdi_sio_ids.h	2010-12-29 16:46:58.786542838 +0100
+@@ -724,6 +724,7 @@
+  */
+ #define RTSYSTEMS_VID			0x2100	/* Vendor ID */
+ #define RTSYSTEMS_SERIAL_VX7_PID	0x9e52	/* Serial converter for VX-7 Radios using FT232RL */
++#define RTSYSTEMS_SERIAL_VX8GR_PID	0x9e5b  /* Serial converter for VX-8GR Radio*/
+ #define RTSYSTEMS_CT29B_PID		0x9e54	/* CT29B Radio Cable */
+ 
+ /*
