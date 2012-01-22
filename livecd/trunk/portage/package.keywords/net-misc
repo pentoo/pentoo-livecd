@@ -69,6 +69,7 @@ net-misc/clipgrab
 net-misc/clockspeed
 net-misc/clockspeed-conf
 net-misc/connect
+=net-misc/connman-0.78
 net-misc/corkscrew
 net-misc/curl
 net-misc/d4x
