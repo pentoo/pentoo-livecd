@@ -4,3 +4,4 @@ dev-libs/libgpg-error static-libs
 dev-libs/libksba static-libs
 dev-libs/libxml2 icu
 dev-libs/popt static-libs
+dev-libs/libxml2 python
