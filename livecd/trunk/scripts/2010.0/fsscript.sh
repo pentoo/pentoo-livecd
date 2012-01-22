@@ -91,7 +91,7 @@ opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxies
 scanner rce footprint forging fuzzers voip wireless pentoo
 -stage2"' >> /etc/make.conf
-echo 'INPUT_DEVICES="keyboard mouse"
+echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 MAKEOPTS="-j2"
 #GENTOO_MIRRORS="ftp://mirror.switch.ch/mirror/gentoo"
