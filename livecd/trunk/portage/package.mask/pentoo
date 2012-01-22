@@ -1,3 +1,6 @@
+#this breaks on update so let's not use the old version
+<=x11-libs/vte-0.28.2-r201
+
 =net-analyzer/nessus-libraries-2.3.1
 =net-analyzer/libnasl-2.3.1
 =net-analyzer/nessus-core-2.3.1
