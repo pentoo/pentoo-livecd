@@ -98,6 +98,7 @@ MAKEOPTS="-j2"
 #SYNC="rsync://rsync.europe.gentoo.org/gentoo-portage"' >> /etc/make.conf
 #echo 'PORTDIR_OVERLAY="/usr/local/portage"' >> /etc/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/make.conf
+echo 'ACCEPT_LICENSE="*"' >> /etc/make.conf
 mkdir /usr/local/portage
 
 rm -rf /etc/portage
