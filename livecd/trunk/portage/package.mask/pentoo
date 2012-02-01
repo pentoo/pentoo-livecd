@@ -8,7 +8,7 @@
 =net-analyzer/nessus-2.3.1
 net-wireless/madwifi-ng-tools
 net-wireless/madwifi-old-tools
->net-wireless/gnome-bluetooth-2.30.0
+>net-wireless/gnome-bluetooth-3
 
 # We don't want python-3 for now
 >=dev-lang/python-3.0
