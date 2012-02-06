@@ -1,0 +1,15 @@
+find correct branch from http://aufs.git.sourceforge.net/git/gitweb.cgi?p=aufs/aufs3-standalone.git;a=summary
+
+git clone git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git
+git checkout origin/aufs3.x (where x is the desired branch)
+
+NOTE: I have no idea how to update in this state, I rm -rf the whole thing and start over each time
+
+- apply ./aufs3-kbuild.patch
+- apply ./aufs3-base.patch
+- apply ./aufs3-proc_map.patch DRY RUN FIRST!! if it fails, just drop it
+- apply ./aufs3-standalone.patch
+- copy ./{Documentation,fs,include/linux/aufs_type.h} files to your
+  kernel source tree. Never copy ./include/linux/Kbuild.
+
+steal latest pax patch from gentoo's aufs ebuild, set for USE=pax_kernel
