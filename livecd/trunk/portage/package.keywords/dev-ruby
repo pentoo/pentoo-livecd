@@ -7,3 +7,4 @@
 ~dev-ruby/httpconfig-1.0.2
 dev-ruby/bundler
 dev-ruby/rjb
+dev-ruby/msgpack
