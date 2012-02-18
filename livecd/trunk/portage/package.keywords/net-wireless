@@ -17,7 +17,7 @@ net-wireless/b43-openfwwf
 net-wireless/b43-tools
 net-wireless/bcm43xx-fwcutter
 net-wireless/blueproxy
-<net-wireless/bluez-4.94
+=net-wireless/bluez-4.98-r2
 net-wireless/bluez-bluefw
 net-wireless/bluez-firmware
 net-wireless/bluez-gnome
