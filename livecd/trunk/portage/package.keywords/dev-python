@@ -11,3 +11,4 @@ dev-python/nltk
 dev-python/python-cluster
 dev-python/pyusb
 =dev-python/shiboken-1.0.3
+=dev-python/pybloomfiltermmap-0.2.0
