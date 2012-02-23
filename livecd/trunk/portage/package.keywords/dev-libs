@@ -7,3 +7,5 @@
 =dev-libs/yajl-1.0.11
 dev-libs/distorm
 dev-libs/distorm64
+~dev-libs/atk-2.0.1
+
