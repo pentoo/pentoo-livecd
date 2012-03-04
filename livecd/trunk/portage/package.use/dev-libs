@@ -5,3 +5,4 @@ dev-libs/libksba static-libs
 dev-libs/libxml2 icu
 dev-libs/popt static-libs
 dev-libs/libxml2 python
+dev-libs/pth static-libs
