@@ -1,2 +1,3 @@
 sys-libs/libkudzu -minimal livecd python
 sys-libs/ncurses unicode
+sys-libs/zlib static-libs
