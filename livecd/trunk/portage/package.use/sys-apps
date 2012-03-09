@@ -1,2 +1,3 @@
 sys-apps/hal X crypt acpi -dell disk-partition laptop
 sys-apps/pmount -crypt
+sys-apps/util-linux static-libs
