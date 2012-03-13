@@ -1,4 +1,5 @@
-~dev-util/nvidia-cuda-toolkit-3.0
+~dev-util/nvidia-cuda-toolkit-4.1
+~dev-util/nvidia-cuda-sdk-4.1
 dev-util/calpp
 dev-util/dissy
 dev-util/metasm
