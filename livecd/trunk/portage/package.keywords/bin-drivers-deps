@@ -4,9 +4,7 @@
 x11-drivers/ati-drivers
 x11-drivers/nvidia-drivers
 media-video/nvidia-settings
-x11-drivers/xf86-input-evdev
-x11-drivers/xf86-input-keyboard
-x11-drivers/xf86-input-mouse
+<x11-drivers/xf86-input-evdev-2.7.0
 =x11-drivers/xf86-input-synaptics-0.15.2-r2
 x11-drivers/xf86-input-virtualbox
 x11-drivers/xf86-input-vmmouse
