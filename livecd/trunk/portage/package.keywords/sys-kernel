@@ -3,3 +3,4 @@
 ##Warning!!!########################################################################################################
 =sys-kernel/linux-firmware-99999999 **
 sys-kernel/linux-headers
+=sys-kernel/genkernel-9999.2540 **
