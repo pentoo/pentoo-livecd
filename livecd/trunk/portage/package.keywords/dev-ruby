@@ -4,7 +4,7 @@
 ~dev-ruby/mini_exiftool-1.0.1
 ~dev-ruby/mime-types-1.16
 ~dev-ruby/spider-0.4.4
-~dev-ruby/httpconfig-1.0.2
+~dev-ruby/http_configuration-1.0.2
 dev-ruby/bundler
 dev-ruby/rjb
 dev-ruby/msgpack
