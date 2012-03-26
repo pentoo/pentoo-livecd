@@ -1,2 +1,2 @@
-sys-devel/gcc gtk
+sys-devel/gcc gtk gcj
 sys-devel/gettext -git
