@@ -39,7 +39,7 @@ sys-block/gparted
 x11-plugins/firecat
 sys-apps/pcmciautils
 dev-util/edb
-dev-util/radare
+dev-util/radare2
 dev-util/kbuild
 dev-util/ati-stream-sdk-bin
 net-ftp/gproftpd
