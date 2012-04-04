@@ -12,7 +12,6 @@ sys-apps/hwsetup
 sys-apps/microcode-data
 sys-apps/microcode-ctl
 sys-apps/parted 
-sys-apps/pciutils
 sys-apps/pkgcore
 =sys-apps/module-init-tools-3.11
 =sys-apps/vgabios-0.6c
