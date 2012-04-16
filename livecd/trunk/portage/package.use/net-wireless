@@ -1,6 +1,7 @@
 net-wireless/acx pcmcia
 net-wireless/atmel-firmware pcmcia usb
 net-wireless/compat-wireless b43 b44 bluetooth injection
+net-wireless/compat-wireless-builder b43 b44 bluetooth injection
 net-wireless/prism54 pcmcia
 net-wireless/wpa_supplicant readline
 net-wireless/grimwepa -extra
