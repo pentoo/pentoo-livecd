@@ -1,3 +1,2 @@
 net-misc/openvpn -static
 net-misc/openssh -ldap
-net-misc/networkmanager -nss
