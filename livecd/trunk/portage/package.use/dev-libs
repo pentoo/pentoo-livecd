@@ -1,1 +1,4 @@
 dev-libs/libxml2 icu python
+dev-libs/libgcrypt static-libs
+dev-libs/libgpg-error static-libs
+
