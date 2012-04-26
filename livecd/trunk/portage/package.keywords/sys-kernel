@@ -1,6 +1,6 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-#=sys-kernel/linux-firmware-99999999 **
-=sys-kernel/linux-headers-3.3
+=sys-kernel/linux-firmware-99999999 **
+~sys-kernel/linux-headers-3.3
 =sys-kernel/genkernel-9999.2540 **

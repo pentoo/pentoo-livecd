@@ -1,4 +1,5 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-=sys-devel/crossdev-20120305
+~sys-devel/crossdev-20120305
+~sys-devel/libtool-2.4
