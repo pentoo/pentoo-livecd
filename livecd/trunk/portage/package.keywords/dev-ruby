@@ -16,3 +16,8 @@
 ~dev-ruby/memcache-client-1.8.5
 ~dev-ruby/tzinfo-0.3.33
 
+#required by metasploit-9999
+=dev-ruby/activerecord-3.2.3 **
+=dev-ruby/pg-0.13.2
+=dev-ruby/json-1.6.6
+=dev-ruby/nokogiri-1.5.2
