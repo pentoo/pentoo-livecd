@@ -1,7 +1,6 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-sys-kernel/linux-firmware
 net-wireless/acx
 net-wireless/acx-firmware
 net-wireless/adm8211
@@ -29,6 +28,8 @@ net-wireless/broadcom-firmware-downloader
 net-wireless/broadcom-firmware-installer
 net-wireless/bss
 net-wireless/chillispot
+~net-wireless/crda-1.1.1
+net-wireless/compat-wireless
 net-wireless/fsam7400
 net-wireless/fwlanusb
 net-wireless/gnome-bluetooth
