@@ -303,7 +303,7 @@ net-misc/wakeonlan
 =net-misc/whois-5.0.15
 net-misc/whoischk
 net-misc/wlan2eth
-#net-misc/wicd
+~net-misc/wicd-1.7.2.3
 net-misc/wol
 net-misc/wput
 net-misc/wso2-wsf-c

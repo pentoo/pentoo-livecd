@@ -1,14 +1,15 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-=dev-python/apiextractor-0.10.3
-=dev-python/generatorrunner-0.6.10
+~dev-python/apiextractor-0.10.3
+~dev-python/generatorrunner-0.6.10
 dev-python/nltk
 ~dev-python/pygraphviz-1.0
-=dev-python/pyside-1.0.3
-=dev-python/pysnmp-3.4.4
-=dev-python/pysvn-1.7.4
+~dev-python/pyside-1.0.3
+~dev-python/pysnmp-3.4.4
+~dev-python/pysvn-1.7.4
 dev-python/python-cluster
 dev-python/pyusb
-=dev-python/shiboken-1.0.3
-=dev-python/pybloomfiltermmap-0.2.0
+~dev-python/shiboken-1.0.3
+~dev-python/pybloomfiltermmap-0.2.0
+~dev-python/pycrypto-2.5
