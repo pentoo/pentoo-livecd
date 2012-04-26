@@ -1,12 +1,6 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-x11-drivers/xf86-input-virtualbox
-x11-drivers/xf86-video-virtualbox
-app-emulation/libvirt
-app-emulation/virt-manager
-=gnome-extra/polkit-gnome-0.94
-app-emulation/virtinst
-app-emulation/qemu-kvm
-app-emulation/open-vm-tools
-app-emulation/open-vm-tools-kmod
+
+=app-emulation/open-vm-tools-2012.03.13.651368*
+=app-emulation/open-vm-tools-kmod-2012.03.13.651368*
