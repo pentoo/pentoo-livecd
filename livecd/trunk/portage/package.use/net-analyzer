@@ -1,3 +1,4 @@
 net-analyzer/net-snmp minimal
 net-analyzer/snort dynamicplugin zlib
 net-analyzer/wireshark btbb gcrypt gnutls kerberos threads adns ares geoip portaudio smi
+net-analyzer/ucsniff ffmpeg plugins
