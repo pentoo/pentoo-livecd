@@ -1,10 +1,8 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-#sys-fs/fuse
-#sys-kernel/genkernel
-#www-client/mozilla-firefox <- we don't install this, so don't unmask it
-www-client/firefox-bin
+
+=www-client/firefox-bin-12.0
 app-admin/genmenu -* **
 app-antivirus/malheur
 app-forensics/cmospwd
@@ -21,23 +19,8 @@ dev-db/sqlinject
 dev-dotnet/wxnet
 =dev-lang/yasm-0.8.0 ~amd64
 app-portage/smart-live-rebuild
-dev-python/Impacket
-dev-python/cxoracle
-dev-python/fpconst
-dev-python/pyPdf
-dev-python/pycrypto
-dev-python/pygoogle
-dev-python/python-ptrace
-dev-python/snakeoil
-dev-python/utidylib
-dev-ruby/wxruby
-dev-util/premake
-=media-libs/alsa-lib-1.0.19*
-=media-sound/alsa-utils-1.0.19*
-=media-sound/alsa-headers-1.0.19*
-sys-block/gparted
+=sys-block/gparted-0.12.0
 x11-plugins/firecat
-sys-apps/pcmciautils
 dev-util/edb
 dev-util/radare2
 dev-util/kbuild
@@ -48,8 +31,6 @@ dev-python/urwid
 net-wireless/orinoco-fwutils **
 net-firewall/firehol
 sys-kernel/pentoo-sources
-=sys-cluster/openmpi-1.3.3
-=sys-devel/dev86-0.16.17-r6 ~amd64
 net-fs/winexe
 www-apps/beef
 app-portage/smart-live-rebuild

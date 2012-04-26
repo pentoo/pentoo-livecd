@@ -44,7 +44,6 @@ net-misc/clipgrab
 net-misc/clockspeed
 net-misc/clockspeed-conf
 net-misc/connect
-=net-misc/connman-0.78
 net-misc/corkscrew
 =net-misc/curl-7.25.0-r1
 net-misc/d4x
@@ -226,7 +225,7 @@ net-misc/rdesktop
 net-misc/rdist
 net-misc/redir
 net-misc/rinetd
-net-misc/rsync
+=net-misc/rsync-3.0.9-r2
 net-misc/rwbs
 net-misc/s3cmd
 net-misc/sambasentinel
