@@ -4,7 +4,7 @@
 ~dev-python/apiextractor-0.10.3
 ~dev-python/generatorrunner-0.6.10
 dev-python/nltk
-~dev-python/pygraphviz-1.0
+~dev-python/pygraphviz-1.1
 ~dev-python/pyside-1.0.3
 ~dev-python/pysnmp-3.4.4
 ~dev-python/pysvn-1.7.4
@@ -13,3 +13,4 @@ dev-python/pyusb
 ~dev-python/shiboken-1.0.3
 ~dev-python/pybloomfiltermmap-0.2.0
 ~dev-python/pycrypto-2.5
+~dev-python/Impacket-0.9.6.0
