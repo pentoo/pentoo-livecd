@@ -8,3 +8,4 @@ net-libs/libwhisker
 net-libs/libvidcap
 net-libs/netwib
 =net-libs/neon-0.29.5
+=net-libs/libbtbb **
