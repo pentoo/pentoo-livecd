@@ -4,3 +4,4 @@
 dev-db/minimysqlator
 dev-db/mssqlscan
 dev-db/sqlmap
+dev-db/sqlninja
