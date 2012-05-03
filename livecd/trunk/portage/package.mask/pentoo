@@ -1,3 +1,6 @@
+#doesn't build, makes me sad
+=net-libs/libnet-1.0.2a-r3
+
 #this breaks on update so let's not use the old version
 <=x11-libs/vte-0.28.2-r201
 

@@ -9,3 +9,4 @@ net-libs/libvidcap
 net-libs/netwib
 =net-libs/neon-0.29.5
 =net-libs/libbtbb-9999 **
+=net-libs/libnet-1.0.2a-r4
