@@ -1,4 +1,4 @@
 #!/bin/sh
-catalyst -f stage1.spec || exit
-catalyst -f stage2.spec || exit
+#catalyst -f stage1.spec || exit
+#catalyst -f stage2.spec || exit
 catalyst -f stage3.spec || exit

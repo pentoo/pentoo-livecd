@@ -4,9 +4,9 @@ target: livecd-stage2
 rel_type: default
 profile: default/linux/amd64/10.0
 snapshot: 20120430
-source_subpath: default/livecd-stage1-amd64-2011.0
-portage_confdir: /var/svn/pentoo/livecd/trunk/portage
-portage_overlay: /usr/local/portage /var/lib/layman/enlightenment
+source_subpath: default/livecd-stage1-amd64-2012.0
+portage_confdir: /usr/src/pentoo/livecd/trunk/portage
+portage_overlay: /usr/src/pentoo/portage/trunk
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -284,20 +284,6 @@ pentoo/pentoo-cracking
 =app-crypt/pyrit-9999
 app-crypt/cuda-multiforcer
 #app-crypt/cuda-rarcrypt
-
-# This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
-# entry used for booting a ibm powerpc machine.
-# example:
-# boot/kernel/gentoo/machine_type: ibm
-# boot/kernel/gentoo/machine_type:
-
-# This is only supported on ppc64 currently.  This entry sets up the console=
-# boot parameters required for sending the output to the appropriate console.
-# example:
-# boot/kernel/gentoo/console: hvsi0 
-# boot/kernel/gentoo/console: hvc0
-# boot/kernel/gentoo/console: tty0 ttyS0
-# boot/kernel/gentoo/console:
 
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you
