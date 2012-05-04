@@ -14,7 +14,7 @@ portage_overlay: /usr/src/pentoo/portage/trunk
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-# pkgcache_path:
+pkgcache_path: /mnt/storage/tmp/packages
 
 # This allows the optional directory containing the output packages for kernel
 # builds.  Mainly used as a way for different spec files to access the same
@@ -22,12 +22,12 @@ portage_overlay: /usr/src/pentoo/portage/trunk
 # by catalyst based on the spec file.
 # example:
 # kerncache_path: /tmp/kernel
-#kerncache_path:
+kerncache_path: /mnt/storage/catalyst/kerncache
 
 livecd/fstype: squashfs
-livecd/fsops: -b 1048576 -comp lzma -sort sort_file.txt -no-recovery -processors 8
+livecd/fsops: -b 1048576 -comp xz -sort sort_file.txt -no-recovery -processors 4
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2011.0_inso.iso
+livecd/iso: /tmp/pentoo-x86_64-2012.0_alphazero.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -39,7 +39,7 @@ livecd/iso: /tmp/pentoo-x86_64-2011.0_inso.iso
 # into the chroot by catalyst automatically.
 # example:
 # livecd/fsscript:
-livecd/fsscript: /var/svn/pentoo/livecd/trunk/scripts/2010.0/fsscript.sh
+livecd/fsscript: /usr/src/pentoo/livecd/trunk/scripts/2010.0/fsscript.sh
 
 # The splash type determines the automatic arguments for the bootloader on
 # supported architectures.  The possible options are gensplash and bootsplash.
@@ -66,7 +66,7 @@ livecd/bootargs: aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --makeopts=-j8 --dmraid --gpg --luks --lvm
+livecd/gk_mainargs: --makeopts=-j4 --dmraid --gpg --luks --lvm
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
@@ -136,7 +136,7 @@ livecd/rcdel: spind|default keymaps|boot
 # be available if docache is enabled, as they are outside the loop.
 # example:
 # livecd/overlay: /tmp/overlay-minimal
-livecd/overlay: /var/svn/pentoo/livecd/trunk/isoroot
+livecd/overlay: /usr/src/pentoo/livecd/trunk/isoroot
 
 # This overlay is dropped onto the filesystem within the loop.  This can be used
 # for such things as updating configuration files or adding anything else you
@@ -145,7 +145,7 @@ livecd/overlay: /var/svn/pentoo/livecd/trunk/isoroot
 # it blank below.
 # example:
 # livecd/root_overlay:
-livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
+livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 
 # This is here to enable udev support in both catalyst and genkernel.  This
 # option requires genkernel >= 3.1.0, and is not needed with genkernel >=3.2.0,
@@ -190,7 +190,7 @@ livecd/root_overlay: /var/svn/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2011.0a
+livecd/volid: 2012.0az
 
 # This option is only used when creating a GameCD.  This specifies the file that
 # contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
@@ -206,13 +206,13 @@ gamecd/conf:
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: ~pentoo-sources-2.6.38
+boot/kernel/pentoo/sources: ~pentoo-sources-3.2.11
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /var/svn/pentoo/livecd/trunk/amd64/kernel/config-2.6.38
+boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/amd64/kernel/config-3.2.11
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -238,7 +238,7 @@ dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxie
 scanner rce footprint forging fuzzers voip wireless -openfile_log
--stage2
+stage2
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -254,36 +254,7 @@ scanner rce footprint forging fuzzers voip wireless -openfile_log
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-app-emulation/open-vm-tools
-sys-apps/pcmciautils
-net-misc/iodine
-net-wireless/atmel-firmware
-net-wireless/bcm43xx-fwcutter
-net-wireless/compat-wireless
-net-wireless/ipw2100-firmware
-net-wireless/ipw2200-firmware
-#net-wireless/iwl3945-ucode
-#net-wireless/iwl4965-ucode
-#net-wireless/iwl5000-ucode
-#net-wireless/ralink-firmware
-#net-wireless/madwifi-hal
-net-wireless/orinoco-fwutils
-#net-wireless/prism54-firmware
-net-wireless/wpa_supplicant
-net-wireless/zd1201-firmware
-net-wireless/zd1211-firmware
-sys-fs/fuse
-sys-fs/ntfs3g
-net-firewall/firehol
-x11-drivers/ati-drivers
-x11-drivers/nvidia-drivers
-x11-drivers/xf86-input-synaptics
-x11-drivers/xf86-video-virtualbox
-x11-apps/xinit
-pentoo/pentoo-cracking
-=app-crypt/pyrit-9999
-app-crypt/cuda-multiforcer
-#app-crypt/cuda-rarcrypt
+pentoo/pentoo
 
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you
