@@ -25,7 +25,7 @@ pkgcache_path: /mnt/storage/tmp/packages
 kerncache_path: /mnt/storage/catalyst/kerncache
 
 livecd/fstype: squashfs
-livecd/fsops: -b 1048576 -comp xz -sort sort_file.txt -no-recovery -processors 4
+livecd/fsops: -b 1048576 -comp xz -no-recovery -processors 4
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
 livecd/iso: /tmp/pentoo-x86_64-2012.0_alphazero.iso
 
@@ -39,7 +39,7 @@ livecd/iso: /tmp/pentoo-x86_64-2012.0_alphazero.iso
 # into the chroot by catalyst automatically.
 # example:
 # livecd/fsscript:
-livecd/fsscript: /usr/src/pentoo/livecd/trunk/scripts/2010.0/fsscript.sh
+livecd/fsscript: fsscript-livecd-stage2.sh
 
 # The splash type determines the automatic arguments for the bootloader on
 # supported architectures.  The possible options are gensplash and bootsplash.
