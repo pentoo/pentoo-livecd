@@ -18,8 +18,8 @@ cxxflags: -Os -mtune=generic -pipe
 # pkgcache_path: /tmp/packages
 pkgcache_path: /mnt/storage/tmp/packages
 
-livecd/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss video_cards_nouveau
-mmx sse sse2 mpi wps offensive dwm -32bit -doc -examples
+livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss video_cards_nouveau
+mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
@@ -27,7 +27,7 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless openfile_log pentoo
+scanner rce footprint forging fuzzers voip wireless pentoo
 -stage2
 
 # This is the set of packages that we will merge into the CD's filesystem.  They

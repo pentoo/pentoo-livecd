@@ -228,8 +228,8 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-mmx sse sse2 mpi wps offensive dwm -32bit -doc -examples
+boot/kernel/pentoo/use: X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
@@ -237,8 +237,7 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxie
-scanner rce footprint forging fuzzers voip wireless -openfile_log
-stage2
+scanner rce footprint forging fuzzers voip wireless stage2
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -254,7 +253,8 @@ stage2
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-pentoo/pentoo
+#pentoo/pentoo
+#I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening
 
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you

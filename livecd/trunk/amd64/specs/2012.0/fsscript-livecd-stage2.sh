@@ -84,7 +84,7 @@ eix-update
 updatedb
 
 # Fix /etc/make.conf
-echo 'USE="X -livecd -nls gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+echo 'USE="X -livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
@@ -94,9 +94,10 @@ dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxies
 scanner rce footprint forging fuzzers voip wireless pentoo
--stage2"' >> /etc/make.conf
+stage2"' >> /etc/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
-VIDEO_CARDS="fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
+VIDEO_CARDS="nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
+ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3"
 MAKEOPTS="-j2"' >> /etc/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/make.conf
 echo 'ACCEPT_LICENSE="*"' >> /etc/make.conf
@@ -104,8 +105,10 @@ echo 'ACCEPT_LICENSE="*"' >> /etc/make.conf
 mv /etc/portage/make.profile /tmp
 rm -rf /etc/portage/*
 mv /tmp/make.profile /etc/portage/
-ACCEPT_KEYWORDS="**" emerge -1 pentoo/pentoo-etc-portage
+ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
 emerge -1 pentoo-installer
+
+MAKEOPTS="-j4" USE="aufs bindist build livecd" emerge -qN -kb -D @world -vat
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu
@@ -122,8 +125,8 @@ cp -a /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu
 
 # Apply patches to root
 cd /
-patch bin/bashlogin patches/bashlogin.patch 
-patch etc/init.d/halt.sh patches/halt.patch 
+patch bin/bashlogin patches/bashlogin.patch
+patch etc/init.d/halt.sh patches/halt.patch
 patch sbin/livecd-functions.sh patches/livecd-functions.patch
 patch lib/rc/sh/init.sh patches/rc.patch
 patch etc/init.d/autoconfig patches/autoconfig.patch
