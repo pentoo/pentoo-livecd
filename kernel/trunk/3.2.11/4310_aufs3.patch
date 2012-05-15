@@ -1,6 +1,6 @@
-diff -Naur linux-3.2.11-hardened/Documentation/ABI/testing/debugfs-aufs linux-3.2.11-hardened-aufs/Documentation/ABI/testing/debugfs-aufs
---- linux-3.2.11-hardened/Documentation/ABI/testing/debugfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/ABI/testing/debugfs-aufs	2012-04-27 09:54:30.095111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/ABI/testing/debugfs-aufs linux-3.2.11-pentoo/Documentation/ABI/testing/debugfs-aufs
+--- linux-3.2.11-pentoo-orig/Documentation/ABI/testing/debugfs-aufs	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/ABI/testing/debugfs-aufs	2012-05-14 21:11:49.605169864 -0400
 @@ -0,0 +1,37 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -39,9 +39,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/ABI/testing/debugfs-aufs linux-3.
 +		be created.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur linux-3.2.11-hardened/Documentation/ABI/testing/sysfs-aufs linux-3.2.11-hardened-aufs/Documentation/ABI/testing/sysfs-aufs
---- linux-3.2.11-hardened/Documentation/ABI/testing/sysfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/ABI/testing/sysfs-aufs	2012-04-27 09:54:30.095111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/ABI/testing/sysfs-aufs linux-3.2.11-pentoo/Documentation/ABI/testing/sysfs-aufs
+--- linux-3.2.11-pentoo-orig/Documentation/ABI/testing/sysfs-aufs	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/ABI/testing/sysfs-aufs	2012-05-14 21:11:49.605169864 -0400
 @@ -0,0 +1,24 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -67,9 +67,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/ABI/testing/sysfs-aufs linux-3.2.
 +		even if it is the default path.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/README linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/README
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/README	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/README	2012-04-27 09:54:30.094111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/README linux-3.2.11-pentoo/Documentation/filesystems/aufs/README
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/README	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/README	2012-05-14 21:11:49.604169864 -0400
 @@ -0,0 +1,330 @@
 +
 +Aufs3 -- advanced multi layered unification filesystem version 3.x
@@ -401,9 +401,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/README linux-3.2
 +# Local variables: ;
 +# mode: text;
 +# End: ;
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/01intro.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/01intro.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/01intro.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/01intro.txt	2012-04-27 09:54:30.093111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/01intro.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/01intro.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/01intro.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/01intro.txt	2012-05-14 21:11:49.604169863 -0400
 @@ -0,0 +1,162 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -567,9 +567,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/01intro.t
 +Some people may think it is better to pass such work to user space
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/02struct.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/02struct.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/02struct.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/02struct.txt	2012-04-27 09:54:30.090111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/02struct.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/02struct.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/02struct.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/02struct.txt	2012-05-14 21:11:49.601169864 -0400
 @@ -0,0 +1,226 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -797,9 +797,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/02struct.
 +internally and makes change to the new file on the upper writable branch.
 +When the trigger systemcall does not update the timestamps of the parent
 +dir, aufs reverts it after copy-up.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/03lookup.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/03lookup.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/03lookup.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/03lookup.txt	2012-04-27 09:54:30.092111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/03lookup.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/03lookup.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/03lookup.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/03lookup.txt	2012-05-14 21:11:49.604169863 -0400
 @@ -0,0 +1,106 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -907,9 +907,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/03lookup.
 +   test, and skip therevalidatin in step 4. It is useful and improves
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/04branch.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/04branch.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/04branch.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/04branch.txt	2012-04-27 09:54:30.090111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/04branch.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/04branch.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/04branch.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/04branch.txt	2012-05-14 21:11:49.600169864 -0400
 @@ -0,0 +1,76 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -987,9 +987,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/04branch.
 +  - a file on the branch is mmap-ed.
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/05wbr_policy.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt	2012-04-27 09:54:30.090111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/05wbr_policy.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/05wbr_policy.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/05wbr_policy.txt	2012-05-14 21:11:49.601169864 -0400
 @@ -0,0 +1,65 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -1056,9 +1056,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/05wbr_pol
 +  where the source and the target exists and selects the higher
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/06mmap.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/06mmap.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/06mmap.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/06mmap.txt	2012-04-27 09:54:30.092111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/06mmap.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/06mmap.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/06mmap.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/06mmap.txt	2012-05-14 21:11:49.603169863 -0400
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -1107,9 +1107,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/06mmap.tx
 +generic_file_mmap() and handles struct vm_operations_struct. In this
 +approach, aufs met a hard problem and I could not solve it without
 +switching the approach.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/07export.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/07export.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/07export.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/07export.txt	2012-04-27 09:54:30.089111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/07export.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/07export.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/07export.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/07export.txt	2012-05-14 21:11:49.600169864 -0400
 @@ -0,0 +1,59 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -1170,9 +1170,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/07export.
 +  convert it into ESTALE for NFSD.
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/08shwh.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/08shwh.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/08shwh.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/08shwh.txt	2012-04-27 09:54:30.091111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/08shwh.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/08shwh.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/08shwh.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/08shwh.txt	2012-05-14 21:11:49.603169863 -0400
 @@ -0,0 +1,53 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -1227,9 +1227,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/08shwh.tx
 +
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/10dynop.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/10dynop.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/10dynop.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/10dynop.txt	2012-04-27 09:54:30.089111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/10dynop.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/10dynop.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/10dynop.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/10dynop.txt	2012-05-14 21:11:49.600169864 -0400
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2011 Junjiro R. Okajima
@@ -1278,9 +1278,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/10dynop.t
 +XIP mainly.
 +Currently this approach is applied to file_operations and
 +vm_operations_struct for regular files only.
-diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/99plan.txt linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/99plan.txt
---- linux-3.2.11-hardened/Documentation/filesystems/aufs/design/99plan.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/Documentation/filesystems/aufs/design/99plan.txt	2012-04-27 09:54:30.091111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/99plan.txt linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/99plan.txt
+--- linux-3.2.11-pentoo-orig/Documentation/filesystems/aufs/design/99plan.txt	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/Documentation/filesystems/aufs/design/99plan.txt	2012-05-14 21:11:49.603169863 -0400
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2005-2011 Junjiro R. Okajima
@@ -1378,246 +1378,9 @@ diff -Naur linux-3.2.11-hardened/Documentation/filesystems/aufs/design/99plan.tx
 +Opened File) is specified (by default), aufs returns the filedata from
 +/new.
 +Otherwise from /new.
-diff -Naur linux-3.2.11-hardened/aufs_type.h linux-3.2.11-hardened-aufs/aufs_type.h
---- linux-3.2.11-hardened/aufs_type.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/aufs_type.h	2012-04-27 09:54:30.135111089 -0400
-@@ -0,0 +1,233 @@
-+/*
-+ * Copyright (C) 2005-2012 Junjiro R. Okajima
-+ *
-+ * This program, aufs is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-+ */
-+
-+#ifndef __AUFS_TYPE_H__
-+#define __AUFS_TYPE_H__
-+
-+#define AUFS_NAME	"aufs"
-+
-+#ifdef __KERNEL__
-+/*
-+ * define it before including all other headers.
-+ * sched.h may use pr_* macros before defining "current", so define the
-+ * no-current version first, and re-define later.
-+ */
-+#define pr_fmt(fmt)	AUFS_NAME " %s:%d: " fmt, __func__, __LINE__
-+#include <linux/sched.h>
-+#undef pr_fmt
-+#define pr_fmt(fmt)	AUFS_NAME " %s:%d:%s[%d]: " fmt, \
-+		__func__, __LINE__, current->comm, current->pid
-+#else
-+#include <stdint.h>
-+#include <sys/types.h>
-+#endif /* __KERNEL__ */
-+
-+#include <linux/limits.h>
-+
-+#define AUFS_VERSION	"3.2-20120402"
-+
-+/* todo? move this to linux-2.6.19/include/magic.h */
-+#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
-+
-+/* ---------------------------------------------------------------------- */
-+
-+#ifdef CONFIG_AUFS_BRANCH_MAX_127
-+typedef int8_t aufs_bindex_t;
-+#define AUFS_BRANCH_MAX 127
-+#else
-+typedef int16_t aufs_bindex_t;
-+#ifdef CONFIG_AUFS_BRANCH_MAX_511
-+#define AUFS_BRANCH_MAX 511
-+#elif defined(CONFIG_AUFS_BRANCH_MAX_1023)
-+#define AUFS_BRANCH_MAX 1023
-+#elif defined(CONFIG_AUFS_BRANCH_MAX_32767)
-+#define AUFS_BRANCH_MAX 32767
-+#endif
-+#endif
-+
-+#ifdef __KERNEL__
-+#ifndef AUFS_BRANCH_MAX
-+#error unknown CONFIG_AUFS_BRANCH_MAX value
-+#endif
-+#endif /* __KERNEL__ */
-+
-+/* ---------------------------------------------------------------------- */
-+
-+#define AUFS_FSTYPE		AUFS_NAME
-+
-+#define AUFS_ROOT_INO		2
-+#define AUFS_FIRST_INO		11
-+
-+#define AUFS_WH_PFX		".wh."
-+#define AUFS_WH_PFX_LEN		((int)sizeof(AUFS_WH_PFX) - 1)
-+#define AUFS_WH_TMP_LEN		4
-+/* a limit for rmdir/rename a dir */
-+#define AUFS_MAX_NAMELEN	(NAME_MAX \
-+				- AUFS_WH_PFX_LEN * 2	/* doubly whiteouted */\
-+				- 1			/* dot */\
-+				- AUFS_WH_TMP_LEN)	/* hex */
-+#define AUFS_XINO_FNAME		"." AUFS_NAME ".xino"
-+#define AUFS_XINO_DEFPATH	"/tmp/" AUFS_XINO_FNAME
-+#define AUFS_XINO_TRUNC_INIT	64 /* blocks */
-+#define AUFS_XINO_TRUNC_STEP	4  /* blocks */
-+#define AUFS_DIRWH_DEF		3
-+#define AUFS_RDCACHE_DEF	10 /* seconds */
-+#define AUFS_RDCACHE_MAX	3600 /* seconds */
-+#define AUFS_RDBLK_DEF		512 /* bytes */
-+#define AUFS_RDHASH_DEF		32
-+#define AUFS_WKQ_NAME		AUFS_NAME "d"
-+#define AUFS_MFS_DEF_SEC	30 /* seconds */
-+#define AUFS_MFS_MAX_SEC	3600 /* seconds */
-+#define AUFS_PLINK_WARN		100 /* number of plinks */
-+
-+/* pseudo-link maintenace under /proc */
-+#define AUFS_PLINK_MAINT_NAME	"plink_maint"
-+#define AUFS_PLINK_MAINT_DIR	"fs/" AUFS_NAME
-+#define AUFS_PLINK_MAINT_PATH	AUFS_PLINK_MAINT_DIR "/" AUFS_PLINK_MAINT_NAME
-+
-+#define AUFS_DIROPQ_NAME	AUFS_WH_PFX ".opq" /* whiteouted doubly */
-+#define AUFS_WH_DIROPQ		AUFS_WH_PFX AUFS_DIROPQ_NAME
-+
-+#define AUFS_BASE_NAME		AUFS_WH_PFX AUFS_NAME
-+#define AUFS_PLINKDIR_NAME	AUFS_WH_PFX "plnk"
-+#define AUFS_ORPHDIR_NAME	AUFS_WH_PFX "orph"
-+
-+/* doubly whiteouted */
-+#define AUFS_WH_BASE		AUFS_WH_PFX AUFS_BASE_NAME
-+#define AUFS_WH_PLINKDIR	AUFS_WH_PFX AUFS_PLINKDIR_NAME
-+#define AUFS_WH_ORPHDIR		AUFS_WH_PFX AUFS_ORPHDIR_NAME
-+
-+/* branch permissions and attributes */
-+#define AUFS_BRPERM_RW		"rw"
-+#define AUFS_BRPERM_RO		"ro"
-+#define AUFS_BRPERM_RR		"rr"
-+#define AUFS_BRRATTR_WH		"wh"
-+#define AUFS_BRWATTR_NLWH	"nolwh"
-+
-+/* ---------------------------------------------------------------------- */
-+
-+/* ioctl */
-+enum {
-+	/* readdir in userspace */
-+	AuCtl_RDU,
-+	AuCtl_RDU_INO,
-+
-+	/* pathconf wrapper */
-+	AuCtl_WBR_FD,
-+
-+	/* busy inode */
-+	AuCtl_IBUSY
-+};
-+
-+/* borrowed from linux/include/linux/kernel.h */
-+#ifndef ALIGN
-+#define ALIGN(x, a)		__ALIGN_MASK(x, (typeof(x))(a)-1)
-+#define __ALIGN_MASK(x, mask)	(((x)+(mask))&~(mask))
-+#endif
-+
-+/* borrowed from linux/include/linux/compiler-gcc3.h */
-+#ifndef __aligned
-+#define __aligned(x)			__attribute__((aligned(x)))
-+#endif
-+
-+#ifdef __KERNEL__
-+#ifndef __packed
-+#define __packed			__attribute__((packed))
-+#endif
-+#endif
-+
-+struct au_rdu_cookie {
-+	uint64_t	h_pos;
-+	int16_t		bindex;
-+	uint8_t		flags;
-+	uint8_t		pad;
-+	uint32_t	generation;
-+} __aligned(8);
-+
-+struct au_rdu_ent {
-+	uint64_t	ino;
-+	int16_t		bindex;
-+	uint8_t		type;
-+	uint8_t		nlen;
-+	uint8_t		wh;
-+	char		name[0];
-+} __aligned(8);
-+
-+static inline int au_rdu_len(int nlen)
-+{
-+	/* include the terminating NULL */
-+	return ALIGN(sizeof(struct au_rdu_ent) + nlen + 1,
-+		     sizeof(uint64_t));
-+}
-+
-+union au_rdu_ent_ul {
-+	struct au_rdu_ent __user	*e;
-+	uint64_t			ul;
-+};
-+
-+enum {
-+	AufsCtlRduV_SZ,
-+	AufsCtlRduV_End
-+};
-+
-+struct aufs_rdu {
-+	/* input */
-+	union {
-+		uint64_t	sz;	/* AuCtl_RDU */
-+		uint64_t	nent;	/* AuCtl_RDU_INO */
-+	};
-+	union au_rdu_ent_ul	ent;
-+	uint16_t		verify[AufsCtlRduV_End];
-+
-+	/* input/output */
-+	uint32_t		blk;
-+
-+	/* output */
-+	union au_rdu_ent_ul	tail;
-+	/* number of entries which were added in a single call */
-+	uint64_t		rent;
-+	uint8_t			full;
-+	uint8_t			shwh;
-+
-+	struct au_rdu_cookie	cookie;
-+} __aligned(8);
-+
-+/* ---------------------------------------------------------------------- */
-+
-+struct aufs_wbr_fd {
-+	uint32_t	oflags;
-+	int16_t		brid;
-+} __aligned(8);
-+
-+/* ---------------------------------------------------------------------- */
-+
-+struct aufs_ibusy {
-+	uint64_t	ino, h_ino;
-+	int16_t		bindex;
-+} __aligned(8);
-+
-+/* ---------------------------------------------------------------------- */
-+
-+#define AuCtlType		'A'
-+#define AUFS_CTL_RDU		_IOWR(AuCtlType, AuCtl_RDU, struct aufs_rdu)
-+#define AUFS_CTL_RDU_INO	_IOWR(AuCtlType, AuCtl_RDU_INO, struct aufs_rdu)
-+#define AUFS_CTL_WBR_FD		_IOW(AuCtlType, AuCtl_WBR_FD, \
-+				     struct aufs_wbr_fd)
-+#define AUFS_CTL_IBUSY		_IOWR(AuCtlType, AuCtl_IBUSY, struct aufs_ibusy)
-+
-+#endif /* __AUFS_TYPE_H__ */
-diff -Naur linux-3.2.11-hardened/fs/Kconfig linux-3.2.11-hardened-aufs/fs/Kconfig
---- linux-3.2.11-hardened/fs/Kconfig	2012-04-26 22:49:59.772043393 -0400
-+++ linux-3.2.11-hardened-aufs/fs/Kconfig	2012-04-27 09:53:44.334109861 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/Kconfig linux-3.2.11-pentoo/fs/Kconfig
+--- linux-3.2.11-pentoo-orig/fs/Kconfig	2012-05-14 21:09:53.664166758 -0400
++++ linux-3.2.11-pentoo/fs/Kconfig	2012-05-14 21:10:33.732167832 -0400
 @@ -215,6 +215,7 @@
  source "fs/sysv/Kconfig"
  source "fs/ufs/Kconfig"
@@ -1626,17 +1389,17 @@ diff -Naur linux-3.2.11-hardened/fs/Kconfig linux-3.2.11-hardened-aufs/fs/Kconfi
  
  endif # MISC_FILESYSTEMS
  
-diff -Naur linux-3.2.11-hardened/fs/Makefile linux-3.2.11-hardened-aufs/fs/Makefile
---- linux-3.2.11-hardened/fs/Makefile	2012-01-04 18:55:44.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/Makefile	2012-04-27 09:53:44.335109862 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/Makefile linux-3.2.11-pentoo/fs/Makefile
+--- linux-3.2.11-pentoo-orig/fs/Makefile	2012-05-14 21:09:53.680166759 -0400
++++ linux-3.2.11-pentoo/fs/Makefile	2012-05-14 21:10:33.732167832 -0400
 @@ -123,3 +123,4 @@
  obj-y				+= exofs/ # Multiple modules
  obj-$(CONFIG_CEPH_FS)		+= ceph/
  obj-$(CONFIG_PSTORE)		+= pstore/
 +obj-$(CONFIG_AUFS_FS)           += aufs/
-diff -Naur linux-3.2.11-hardened/fs/aufs/Kconfig linux-3.2.11-hardened-aufs/fs/aufs/Kconfig
---- linux-3.2.11-hardened/fs/aufs/Kconfig	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/Kconfig	2012-04-27 09:54:30.101111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/Kconfig linux-3.2.11-pentoo/fs/aufs/Kconfig
+--- linux-3.2.11-pentoo-orig/fs/aufs/Kconfig	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/Kconfig	2012-05-14 21:11:49.611169864 -0400
 @@ -0,0 +1,203 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -1841,9 +1604,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/Kconfig linux-3.2.11-hardened-aufs/fs/a
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur linux-3.2.11-hardened/fs/aufs/Makefile linux-3.2.11-hardened-aufs/fs/aufs/Makefile
---- linux-3.2.11-hardened/fs/aufs/Makefile	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/Makefile	2012-04-27 09:54:30.118111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/Makefile linux-3.2.11-pentoo/fs/aufs/Makefile
+--- linux-3.2.11-pentoo-orig/fs/aufs/Makefile	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/Makefile	2012-05-14 21:11:49.628169865 -0400
 @@ -0,0 +1,42 @@
 +
 +include ${src}/magic.mk
@@ -1887,9 +1650,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/Makefile linux-3.2.11-hardened-aufs/fs/
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur linux-3.2.11-hardened/fs/aufs/aufs.h linux-3.2.11-hardened-aufs/fs/aufs/aufs.h
---- linux-3.2.11-hardened/fs/aufs/aufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/aufs.h	2012-04-27 09:54:30.099111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/aufs.h linux-3.2.11-pentoo/fs/aufs/aufs.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/aufs.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/aufs.h	2012-05-14 21:11:49.609169864 -0400
 @@ -0,0 +1,60 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -1951,9 +1714,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/aufs.h linux-3.2.11-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/branch.c linux-3.2.11-hardened-aufs/fs/aufs/branch.c
---- linux-3.2.11-hardened/fs/aufs/branch.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/branch.c	2012-04-27 09:54:30.100111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/branch.c linux-3.2.11-pentoo/fs/aufs/branch.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/branch.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/branch.c	2012-05-14 21:11:49.610169864 -0400
 @@ -0,0 +1,1169 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -3124,9 +2887,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/branch.c linux-3.2.11-hardened-aufs/fs/
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/branch.h linux-3.2.11-hardened-aufs/fs/aufs/branch.h
---- linux-3.2.11-hardened/fs/aufs/branch.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/branch.h	2012-04-27 09:54:30.121111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/branch.h linux-3.2.11-pentoo/fs/aufs/branch.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/branch.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/branch.h	2012-05-14 21:11:49.632169865 -0400
 @@ -0,0 +1,230 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -3358,9 +3121,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/branch.h linux-3.2.11-hardened-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/conf.mk linux-3.2.11-hardened-aufs/fs/aufs/conf.mk
---- linux-3.2.11-hardened/fs/aufs/conf.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/conf.mk	2012-04-27 09:54:30.134111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/conf.mk linux-3.2.11-pentoo/fs/aufs/conf.mk
+--- linux-3.2.11-pentoo-orig/fs/aufs/conf.mk	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/conf.mk	2012-05-14 21:11:49.645169864 -0400
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -3400,9 +3163,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/conf.mk linux-3.2.11-hardened-aufs/fs/a
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur linux-3.2.11-hardened/fs/aufs/cpup.c linux-3.2.11-hardened-aufs/fs/aufs/cpup.c
---- linux-3.2.11-hardened/fs/aufs/cpup.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/cpup.c	2012-04-27 09:54:30.105111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/cpup.c linux-3.2.11-pentoo/fs/aufs/cpup.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/cpup.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/cpup.c	2012-05-14 21:11:49.615169864 -0400
 @@ -0,0 +1,1079 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -4483,9 +4246,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/cpup.c linux-3.2.11-hardened-aufs/fs/au
 +	dput(parent);
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/cpup.h linux-3.2.11-hardened-aufs/fs/aufs/cpup.h
---- linux-3.2.11-hardened/fs/aufs/cpup.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/cpup.h	2012-04-27 09:54:30.128111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/cpup.h linux-3.2.11-pentoo/fs/aufs/cpup.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/cpup.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/cpup.h	2012-05-14 21:11:49.639169865 -0400
 @@ -0,0 +1,81 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -4568,9 +4331,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/cpup.h linux-3.2.11-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/dbgaufs.c linux-3.2.11-hardened-aufs/fs/aufs/dbgaufs.c
---- linux-3.2.11-hardened/fs/aufs/dbgaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dbgaufs.c	2012-04-27 09:54:30.115111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dbgaufs.c linux-3.2.11-pentoo/fs/aufs/dbgaufs.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/dbgaufs.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dbgaufs.c	2012-05-14 21:11:49.626169865 -0400
 @@ -0,0 +1,334 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -4906,9 +4669,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dbgaufs.c linux-3.2.11-hardened-aufs/fs
 +		err = 0;
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/dbgaufs.h linux-3.2.11-hardened-aufs/fs/aufs/dbgaufs.h
---- linux-3.2.11-hardened/fs/aufs/dbgaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dbgaufs.h	2012-04-27 09:54:30.121111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dbgaufs.h linux-3.2.11-pentoo/fs/aufs/dbgaufs.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/dbgaufs.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dbgaufs.h	2012-05-14 21:11:49.632169865 -0400
 @@ -0,0 +1,49 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -4959,9 +4722,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dbgaufs.h linux-3.2.11-hardened-aufs/fs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/dcsub.c linux-3.2.11-hardened-aufs/fs/aufs/dcsub.c
---- linux-3.2.11-hardened/fs/aufs/dcsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dcsub.c	2012-04-27 09:54:30.121111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dcsub.c linux-3.2.11-pentoo/fs/aufs/dcsub.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/dcsub.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dcsub.c	2012-05-14 21:11:49.631169865 -0400
 @@ -0,0 +1,243 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -5206,9 +4969,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dcsub.c linux-3.2.11-hardened-aufs/fs/a
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/dcsub.h linux-3.2.11-hardened-aufs/fs/aufs/dcsub.h
---- linux-3.2.11-hardened/fs/aufs/dcsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dcsub.h	2012-04-27 09:54:30.100111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dcsub.h linux-3.2.11-pentoo/fs/aufs/dcsub.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/dcsub.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dcsub.h	2012-05-14 21:11:49.611169864 -0400
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -5304,9 +5067,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dcsub.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/debug.c linux-3.2.11-hardened-aufs/fs/aufs/debug.c
---- linux-3.2.11-hardened/fs/aufs/debug.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/debug.c	2012-04-27 09:54:30.134111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/debug.c linux-3.2.11-pentoo/fs/aufs/debug.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/debug.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/debug.c	2012-05-14 21:11:49.645169865 -0400
 @@ -0,0 +1,489 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -5797,9 +5560,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/debug.c linux-3.2.11-hardened-aufs/fs/a
 +
 +	return 0;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/debug.h linux-3.2.11-hardened-aufs/fs/aufs/debug.h
---- linux-3.2.11-hardened/fs/aufs/debug.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/debug.h	2012-04-27 09:54:30.133111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/debug.h linux-3.2.11-pentoo/fs/aufs/debug.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/debug.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/debug.h	2012-05-14 21:11:49.645169864 -0400
 @@ -0,0 +1,243 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -6044,9 +5807,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/debug.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/dentry.c linux-3.2.11-hardened-aufs/fs/aufs/dentry.c
---- linux-3.2.11-hardened/fs/aufs/dentry.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dentry.c	2012-04-27 09:54:30.129111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dentry.c linux-3.2.11-pentoo/fs/aufs/dentry.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/dentry.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dentry.c	2012-05-14 21:11:49.640169865 -0400
 @@ -0,0 +1,1140 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -7188,9 +6951,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dentry.c linux-3.2.11-hardened-aufs/fs/
 +	.d_revalidate	= aufs_d_revalidate,
 +	.d_release	= aufs_d_release
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/dentry.h linux-3.2.11-hardened-aufs/fs/aufs/dentry.h
---- linux-3.2.11-hardened/fs/aufs/dentry.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dentry.h	2012-04-27 09:54:30.120111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dentry.h linux-3.2.11-pentoo/fs/aufs/dentry.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/dentry.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dentry.h	2012-05-14 21:11:49.631169865 -0400
 @@ -0,0 +1,237 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -7429,9 +7192,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dentry.h linux-3.2.11-hardened-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/dinfo.c linux-3.2.11-hardened-aufs/fs/aufs/dinfo.c
---- linux-3.2.11-hardened/fs/aufs/dinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dinfo.c	2012-04-27 09:54:30.103111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dinfo.c linux-3.2.11-pentoo/fs/aufs/dinfo.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/dinfo.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dinfo.c	2012-05-14 21:11:49.613169864 -0400
 @@ -0,0 +1,543 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -7976,9 +7739,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dinfo.c linux-3.2.11-hardened-aufs/fs/a
 +			return bindex;
 +	return -1;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/dir.c linux-3.2.11-hardened-aufs/fs/aufs/dir.c
---- linux-3.2.11-hardened/fs/aufs/dir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dir.c	2012-04-27 09:54:30.114111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dir.c linux-3.2.11-pentoo/fs/aufs/dir.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/dir.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dir.c	2012-05-14 21:11:49.624169865 -0400
 @@ -0,0 +1,634 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -8614,9 +8377,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dir.c linux-3.2.11-hardened-aufs/fs/auf
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/dir.h linux-3.2.11-hardened-aufs/fs/aufs/dir.h
---- linux-3.2.11-hardened/fs/aufs/dir.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dir.h	2012-04-27 09:54:30.122111088 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dir.h linux-3.2.11-pentoo/fs/aufs/dir.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/dir.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dir.h	2012-05-14 21:11:49.632169865 -0400
 @@ -0,0 +1,137 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -8755,9 +8518,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dir.h linux-3.2.11-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/dynop.c linux-3.2.11-hardened-aufs/fs/aufs/dynop.c
---- linux-3.2.11-hardened/fs/aufs/dynop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dynop.c	2012-04-27 09:54:30.106111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dynop.c linux-3.2.11-pentoo/fs/aufs/dynop.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/dynop.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dynop.c	2012-05-14 21:11:49.617169864 -0400
 @@ -0,0 +1,377 @@
 +/*
 + * Copyright (C) 2010-2012 Junjiro R. Okajima
@@ -9136,9 +8899,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dynop.c linux-3.2.11-hardened-aufs/fs/a
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!list_empty(&dynop[i].head));
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/dynop.h linux-3.2.11-hardened-aufs/fs/aufs/dynop.h
---- linux-3.2.11-hardened/fs/aufs/dynop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/dynop.h	2012-04-27 09:54:30.117111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/dynop.h linux-3.2.11-pentoo/fs/aufs/dynop.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/dynop.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/dynop.h	2012-05-14 21:11:49.627169865 -0400
 @@ -0,0 +1,76 @@
 +/*
 + * Copyright (C) 2010-2012 Junjiro R. Okajima
@@ -9216,9 +8979,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/dynop.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/export.c linux-3.2.11-hardened-aufs/fs/aufs/export.c
---- linux-3.2.11-hardened/fs/aufs/export.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/export.c	2012-04-27 09:54:30.128111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/export.c linux-3.2.11-pentoo/fs/aufs/export.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/export.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/export.c	2012-05-14 21:11:49.638169865 -0400
 @@ -0,0 +1,804 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -10024,9 +9787,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/export.c linux-3.2.11-hardened-aufs/fs/
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/f_op.c linux-3.2.11-hardened-aufs/fs/aufs/f_op.c
---- linux-3.2.11-hardened/fs/aufs/f_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/f_op.c	2012-04-27 09:54:30.113111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/f_op.c linux-3.2.11-pentoo/fs/aufs/f_op.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/f_op.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/f_op.c	2012-05-14 21:11:49.623169865 -0400
 @@ -0,0 +1,729 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -10757,9 +10520,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/f_op.c linux-3.2.11-hardened-aufs/fs/au
 +	.aio_splice_read  = aufs_aio_splice_read
 +#endif
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/f_op_sp.c linux-3.2.11-hardened-aufs/fs/aufs/f_op_sp.c
---- linux-3.2.11-hardened/fs/aufs/f_op_sp.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/f_op_sp.c	2012-04-27 09:54:30.116111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/f_op_sp.c linux-3.2.11-pentoo/fs/aufs/f_op_sp.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/f_op_sp.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/f_op_sp.c	2012-05-14 21:11:49.627169865 -0400
 @@ -0,0 +1,298 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -11059,9 +10822,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/f_op_sp.c linux-3.2.11-hardened-aufs/fs
 +
 +	return ret;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/file.c linux-3.2.11-hardened-aufs/fs/aufs/file.c
---- linux-3.2.11-hardened/fs/aufs/file.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/file.c	2012-04-27 09:54:30.120111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/file.c linux-3.2.11-pentoo/fs/aufs/file.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/file.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/file.c	2012-05-14 21:11:49.630169865 -0400
 @@ -0,0 +1,673 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -11736,9 +11499,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/file.c linux-3.2.11-hardened-aufs/fs/au
 +	.error_remove_page	= aufs_error_remove_page
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/file.h linux-3.2.11-hardened-aufs/fs/aufs/file.h
---- linux-3.2.11-hardened/fs/aufs/file.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/file.h	2012-04-27 09:54:30.110111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/file.h linux-3.2.11-pentoo/fs/aufs/file.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/file.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/file.h	2012-05-14 21:11:49.620169865 -0400
 @@ -0,0 +1,298 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -12038,9 +11801,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/file.h linux-3.2.11-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/finfo.c linux-3.2.11-hardened-aufs/fs/aufs/finfo.c
---- linux-3.2.11-hardened/fs/aufs/finfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/finfo.c	2012-04-27 09:54:30.125111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/finfo.c linux-3.2.11-pentoo/fs/aufs/finfo.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/finfo.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/finfo.c	2012-05-14 21:11:49.635169865 -0400
 @@ -0,0 +1,156 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -12198,9 +11961,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/finfo.c linux-3.2.11-hardened-aufs/fs/a
 +out:
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/fstype.h linux-3.2.11-hardened-aufs/fs/aufs/fstype.h
---- linux-3.2.11-hardened/fs/aufs/fstype.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/fstype.h	2012-04-27 09:54:30.114111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/fstype.h linux-3.2.11-pentoo/fs/aufs/fstype.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/fstype.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/fstype.h	2012-05-14 21:11:49.625169865 -0400
 @@ -0,0 +1,496 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -12698,9 +12461,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/fstype.h linux-3.2.11-hardened-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/hfsnotify.c linux-3.2.11-hardened-aufs/fs/aufs/hfsnotify.c
---- linux-3.2.11-hardened/fs/aufs/hfsnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/hfsnotify.c	2012-04-27 09:54:30.119111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/hfsnotify.c linux-3.2.11-pentoo/fs/aufs/hfsnotify.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/hfsnotify.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/hfsnotify.c	2012-05-14 21:11:49.629169865 -0400
 @@ -0,0 +1,260 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -12962,9 +12725,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/hfsnotify.c linux-3.2.11-hardened-aufs/
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/hfsplus.c linux-3.2.11-hardened-aufs/fs/aufs/hfsplus.c
---- linux-3.2.11-hardened/fs/aufs/hfsplus.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/hfsplus.c	2012-04-27 09:54:30.102111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/hfsplus.c linux-3.2.11-pentoo/fs/aufs/hfsplus.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/hfsplus.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/hfsplus.c	2012-05-14 21:11:49.613169864 -0400
 @@ -0,0 +1,57 @@
 +/*
 + * Copyright (C) 2010-2012 Junjiro R. Okajima
@@ -13023,9 +12786,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/hfsplus.c linux-3.2.11-hardened-aufs/fs
 +		au_sbr_put(dentry->d_sb, bindex);
 +	}
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/hnotify.c linux-3.2.11-hardened-aufs/fs/aufs/hnotify.c
---- linux-3.2.11-hardened/fs/aufs/hnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/hnotify.c	2012-04-27 09:54:30.111111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/hnotify.c linux-3.2.11-pentoo/fs/aufs/hnotify.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/hnotify.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/hnotify.c	2012-05-14 21:11:49.622169865 -0400
 @@ -0,0 +1,712 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -13739,9 +13502,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/hnotify.c linux-3.2.11-hardened-aufs/fs
 +	if (au_cachep[AuCache_HNOTIFY])
 +		au_hn_destroy_cache();
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/i_op.c linux-3.2.11-hardened-aufs/fs/aufs/i_op.c
---- linux-3.2.11-hardened/fs/aufs/i_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/i_op.c	2012-04-27 09:54:30.124111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/i_op.c linux-3.2.11-pentoo/fs/aufs/i_op.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/i_op.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/i_op.c	2012-05-14 21:11:49.635169865 -0400
 @@ -0,0 +1,992 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -14735,9 +14498,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/i_op.c linux-3.2.11-hardened-aufs/fs/au
 +	.getattr	= aufs_getattr,
 +	.truncate_range	= aufs_truncate_range
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/i_op_add.c linux-3.2.11-hardened-aufs/fs/aufs/i_op_add.c
---- linux-3.2.11-hardened/fs/aufs/i_op_add.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/i_op_add.c	2012-04-27 09:54:30.130111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/i_op_add.c linux-3.2.11-pentoo/fs/aufs/i_op_add.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/i_op_add.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/i_op_add.c	2012-05-14 21:11:49.641169865 -0400
 @@ -0,0 +1,711 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -15450,9 +15213,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/i_op_add.c linux-3.2.11-hardened-aufs/f
 +out:
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/i_op_del.c linux-3.2.11-hardened-aufs/fs/aufs/i_op_del.c
---- linux-3.2.11-hardened/fs/aufs/i_op_del.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/i_op_del.c	2012-04-27 09:54:30.101111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/i_op_del.c linux-3.2.11-pentoo/fs/aufs/i_op_del.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/i_op_del.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/i_op_del.c	2012-05-14 21:11:49.612169864 -0400
 @@ -0,0 +1,478 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -15932,9 +15695,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/i_op_del.c linux-3.2.11-hardened-aufs/f
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/i_op_ren.c linux-3.2.11-hardened-aufs/fs/aufs/i_op_ren.c
---- linux-3.2.11-hardened/fs/aufs/i_op_ren.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/i_op_ren.c	2012-04-27 09:54:30.103111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/i_op_ren.c linux-3.2.11-pentoo/fs/aufs/i_op_ren.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/i_op_ren.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/i_op_ren.c	2012-05-14 21:11:49.614169864 -0400
 @@ -0,0 +1,1026 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -16962,9 +16725,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/i_op_ren.c linux-3.2.11-hardened-aufs/f
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/iinfo.c linux-3.2.11-hardened-aufs/fs/aufs/iinfo.c
---- linux-3.2.11-hardened/fs/aufs/iinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/iinfo.c	2012-04-27 09:54:30.118111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/iinfo.c linux-3.2.11-pentoo/fs/aufs/iinfo.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/iinfo.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/iinfo.c	2012-05-14 21:11:49.628169865 -0400
 @@ -0,0 +1,264 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -17230,9 +16993,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/iinfo.c linux-3.2.11-hardened-aufs/fs/a
 +	iinfo->ii_hinode = NULL;
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/inode.c linux-3.2.11-hardened-aufs/fs/aufs/inode.c
---- linux-3.2.11-hardened/fs/aufs/inode.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/inode.c	2012-04-27 09:54:30.129111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/inode.c linux-3.2.11-pentoo/fs/aufs/inode.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/inode.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/inode.c	2012-05-14 21:11:49.639169865 -0400
 @@ -0,0 +1,471 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -17705,9 +17468,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/inode.c linux-3.2.11-hardened-aufs/fs/a
 +		mask |= MAY_READ; /* force permission check */
 +	return au_test_h_perm(h_inode, mask);
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/inode.h linux-3.2.11-hardened-aufs/fs/aufs/inode.h
---- linux-3.2.11-hardened/fs/aufs/inode.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/inode.h	2012-04-27 09:54:30.108111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/inode.h linux-3.2.11-pentoo/fs/aufs/inode.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/inode.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/inode.h	2012-05-14 21:11:49.619169864 -0400
 @@ -0,0 +1,559 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -18268,9 +18031,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/inode.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/ioctl.c linux-3.2.11-hardened-aufs/fs/aufs/ioctl.c
---- linux-3.2.11-hardened/fs/aufs/ioctl.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/ioctl.c	2012-04-27 09:54:30.117111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/ioctl.c linux-3.2.11-pentoo/fs/aufs/ioctl.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/ioctl.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/ioctl.c	2012-05-14 21:11:49.627169865 -0400
 @@ -0,0 +1,196 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -18468,9 +18231,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/ioctl.c linux-3.2.11-hardened-aufs/fs/a
 +}
 +#endif
 +#endif
-diff -Naur linux-3.2.11-hardened/fs/aufs/loop.c linux-3.2.11-hardened-aufs/fs/aufs/loop.c
---- linux-3.2.11-hardened/fs/aufs/loop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/loop.c	2012-04-27 09:54:30.132111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/loop.c linux-3.2.11-pentoo/fs/aufs/loop.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/loop.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/loop.c	2012-05-14 21:11:49.642169865 -0400
 @@ -0,0 +1,133 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -18605,9 +18368,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/loop.c linux-3.2.11-hardened-aufs/fs/au
 +{
 +	kfree(au_warn_loopback_array);
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/loop.h linux-3.2.11-hardened-aufs/fs/aufs/loop.h
---- linux-3.2.11-hardened/fs/aufs/loop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/loop.h	2012-04-27 09:54:30.096111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/loop.h linux-3.2.11-pentoo/fs/aufs/loop.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/loop.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/loop.h	2012-05-14 21:11:49.606169864 -0400
 @@ -0,0 +1,50 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -18659,9 +18422,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/loop.h linux-3.2.11-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/magic.mk linux-3.2.11-hardened-aufs/fs/aufs/magic.mk
---- linux-3.2.11-hardened/fs/aufs/magic.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/magic.mk	2012-04-27 09:54:30.097111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/magic.mk linux-3.2.11-pentoo/fs/aufs/magic.mk
+--- linux-3.2.11-pentoo-orig/fs/aufs/magic.mk	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/magic.mk	2012-05-14 21:11:49.607169864 -0400
 @@ -0,0 +1,54 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -18717,9 +18480,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/magic.mk linux-3.2.11-hardened-aufs/fs/
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur linux-3.2.11-hardened/fs/aufs/module.c linux-3.2.11-hardened-aufs/fs/aufs/module.c
---- linux-3.2.11-hardened/fs/aufs/module.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/module.c	2012-04-27 09:54:30.098111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/module.c linux-3.2.11-pentoo/fs/aufs/module.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/module.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/module.c	2012-05-14 21:11:49.609169864 -0400
 @@ -0,0 +1,196 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -18917,9 +18680,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/module.c linux-3.2.11-hardened-aufs/fs/
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur linux-3.2.11-hardened/fs/aufs/module.h linux-3.2.11-hardened-aufs/fs/aufs/module.h
---- linux-3.2.11-hardened/fs/aufs/module.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/module.h	2012-04-27 09:54:30.098111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/module.h linux-3.2.11-pentoo/fs/aufs/module.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/module.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/module.h	2012-05-14 21:11:49.609169864 -0400
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -19026,9 +18789,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/module.h linux-3.2.11-hardened-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/opts.c linux-3.2.11-hardened-aufs/fs/aufs/opts.c
---- linux-3.2.11-hardened/fs/aufs/opts.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/opts.c	2012-04-27 09:54:30.123111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/opts.c linux-3.2.11-pentoo/fs/aufs/opts.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/opts.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/opts.c	2012-05-14 21:11:49.634169865 -0400
 @@ -0,0 +1,1677 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -20707,9 +20470,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/opts.c linux-3.2.11-hardened-aufs/fs/au
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/opts.h linux-3.2.11-hardened-aufs/fs/aufs/opts.h
---- linux-3.2.11-hardened/fs/aufs/opts.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/opts.h	2012-04-27 09:54:30.111111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/opts.h linux-3.2.11-pentoo/fs/aufs/opts.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/opts.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/opts.h	2012-05-14 21:11:49.621169865 -0400
 @@ -0,0 +1,209 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -20920,9 +20683,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/opts.h linux-3.2.11-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/plink.c linux-3.2.11-hardened-aufs/fs/aufs/plink.c
---- linux-3.2.11-hardened/fs/aufs/plink.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/plink.c	2012-04-27 09:54:30.109111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/plink.c linux-3.2.11-pentoo/fs/aufs/plink.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/plink.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/plink.c	2012-05-14 21:11:49.619169864 -0400
 @@ -0,0 +1,515 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -21439,9 +21202,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/plink.c linux-3.2.11-hardened-aufs/fs/a
 +		iput(inode);
 +	}
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/poll.c linux-3.2.11-hardened-aufs/fs/aufs/poll.c
---- linux-3.2.11-hardened/fs/aufs/poll.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/poll.c	2012-04-27 09:54:30.117111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/poll.c linux-3.2.11-pentoo/fs/aufs/poll.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/poll.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/poll.c	2012-05-14 21:11:49.628169865 -0400
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -21499,9 +21262,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/poll.c linux-3.2.11-hardened-aufs/fs/au
 +	AuTraceErr((int)mask);
 +	return mask;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/procfs.c linux-3.2.11-hardened-aufs/fs/aufs/procfs.c
---- linux-3.2.11-hardened/fs/aufs/procfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/procfs.c	2012-04-27 09:54:30.132111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/procfs.c linux-3.2.11-pentoo/fs/aufs/procfs.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/procfs.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/procfs.c	2012-05-14 21:11:49.642169865 -0400
 @@ -0,0 +1,170 @@
 +/*
 + * Copyright (C) 2010-2012 Junjiro R. Okajima
@@ -21673,9 +21436,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/procfs.c linux-3.2.11-hardened-aufs/fs/
 +out:
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/rdu.c linux-3.2.11-hardened-aufs/fs/aufs/rdu.c
---- linux-3.2.11-hardened/fs/aufs/rdu.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/rdu.c	2012-04-27 09:54:30.127111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/rdu.c linux-3.2.11-pentoo/fs/aufs/rdu.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/rdu.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/rdu.c	2012-05-14 21:11:49.637169865 -0400
 @@ -0,0 +1,383 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -22060,9 +21823,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/rdu.c linux-3.2.11-hardened-aufs/fs/auf
 +	return err;
 +}
 +#endif
-diff -Naur linux-3.2.11-hardened/fs/aufs/rwsem.h linux-3.2.11-hardened-aufs/fs/aufs/rwsem.h
---- linux-3.2.11-hardened/fs/aufs/rwsem.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/rwsem.h	2012-04-27 09:54:30.131111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/rwsem.h linux-3.2.11-pentoo/fs/aufs/rwsem.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/rwsem.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/rwsem.h	2012-05-14 21:11:49.641169865 -0400
 @@ -0,0 +1,188 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -22252,9 +22015,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/rwsem.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/sbinfo.c linux-3.2.11-hardened-aufs/fs/aufs/sbinfo.c
---- linux-3.2.11-hardened/fs/aufs/sbinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/sbinfo.c	2012-04-27 09:54:30.106111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/sbinfo.c linux-3.2.11-pentoo/fs/aufs/sbinfo.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/sbinfo.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/sbinfo.c	2012-05-14 21:11:49.617169864 -0400
 @@ -0,0 +1,343 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -22599,9 +22362,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/sbinfo.c linux-3.2.11-hardened-aufs/fs/
 +	p = radix_tree_delete(&sbinfo->au_si_pid.tree, current->pid);
 +	spin_unlock(&sbinfo->au_si_pid.tree_lock);
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/spl.h linux-3.2.11-hardened-aufs/fs/aufs/spl.h
---- linux-3.2.11-hardened/fs/aufs/spl.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/spl.h	2012-04-27 09:54:30.125111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/spl.h linux-3.2.11-pentoo/fs/aufs/spl.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/spl.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/spl.h	2012-05-14 21:11:49.636169865 -0400
 @@ -0,0 +1,62 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -22665,9 +22428,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/spl.h linux-3.2.11-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/super.c linux-3.2.11-hardened-aufs/fs/aufs/super.c
---- linux-3.2.11-hardened/fs/aufs/super.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/super.c	2012-04-27 09:54:30.109111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/super.c linux-3.2.11-pentoo/fs/aufs/super.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/super.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/super.c	2012-05-14 21:11:49.620169865 -0400
 @@ -0,0 +1,968 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -23637,9 +23400,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/super.c linux-3.2.11-hardened-aufs/fs/a
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/super.h linux-3.2.11-hardened-aufs/fs/aufs/super.h
---- linux-3.2.11-hardened/fs/aufs/super.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/super.h	2012-04-27 09:54:30.116111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/super.h linux-3.2.11-pentoo/fs/aufs/super.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/super.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/super.h	2012-05-14 21:11:49.626169865 -0400
 @@ -0,0 +1,546 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -24187,9 +23950,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/super.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/sysaufs.c linux-3.2.11-hardened-aufs/fs/aufs/sysaufs.c
---- linux-3.2.11-hardened/fs/aufs/sysaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/sysaufs.c	2012-04-27 09:54:30.104111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/sysaufs.c linux-3.2.11-pentoo/fs/aufs/sysaufs.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/sysaufs.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/sysaufs.c	2012-05-14 21:11:49.614169864 -0400
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -24296,9 +24059,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/sysaufs.c linux-3.2.11-hardened-aufs/fs
 +out:
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/sysaufs.h linux-3.2.11-hardened-aufs/fs/aufs/sysaufs.h
---- linux-3.2.11-hardened/fs/aufs/sysaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/sysaufs.h	2012-04-27 09:54:30.123111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/sysaufs.h linux-3.2.11-pentoo/fs/aufs/sysaufs.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/sysaufs.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/sysaufs.h	2012-05-14 21:11:49.634169865 -0400
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -24404,9 +24167,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/sysaufs.h linux-3.2.11-hardened-aufs/fs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/sysfs.c linux-3.2.11-hardened-aufs/fs/aufs/sysfs.c
---- linux-3.2.11-hardened/fs/aufs/sysfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/sysfs.c	2012-04-27 09:54:30.125111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/sysfs.c linux-3.2.11-pentoo/fs/aufs/sysfs.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/sysfs.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/sysfs.c	2012-05-14 21:11:49.636169865 -0400
 @@ -0,0 +1,257 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -24665,9 +24428,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/sysfs.c linux-3.2.11-hardened-aufs/fs/a
 +				   br->br_name, err);
 +	}
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/sysrq.c linux-3.2.11-hardened-aufs/fs/aufs/sysrq.c
---- linux-3.2.11-hardened/fs/aufs/sysrq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/sysrq.c	2012-04-27 09:54:30.115111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/sysrq.c linux-3.2.11-pentoo/fs/aufs/sysrq.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/sysrq.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/sysrq.c	2012-05-14 21:11:49.625169865 -0400
 @@ -0,0 +1,148 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -24817,9 +24580,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/sysrq.c linux-3.2.11-hardened-aufs/fs/a
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/vdir.c linux-3.2.11-hardened-aufs/fs/aufs/vdir.c
---- linux-3.2.11-hardened/fs/aufs/vdir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/vdir.c	2012-04-27 09:54:30.126111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/vdir.c linux-3.2.11-pentoo/fs/aufs/vdir.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/vdir.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/vdir.c	2012-05-14 21:11:49.637169865 -0400
 @@ -0,0 +1,885 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -25706,9 +25469,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/vdir.c linux-3.2.11-hardened-aufs/fs/au
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/vfsub.c linux-3.2.11-hardened-aufs/fs/aufs/vfsub.c
---- linux-3.2.11-hardened/fs/aufs/vfsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/vfsub.c	2012-04-27 09:54:30.133111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/vfsub.c linux-3.2.11-pentoo/fs/aufs/vfsub.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/vfsub.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/vfsub.c	2012-05-14 21:11:49.643169865 -0400
 @@ -0,0 +1,835 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -26545,9 +26308,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/vfsub.c linux-3.2.11-hardened-aufs/fs/a
 +
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/vfsub.h linux-3.2.11-hardened-aufs/fs/aufs/vfsub.h
---- linux-3.2.11-hardened/fs/aufs/vfsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/vfsub.h	2012-04-27 09:54:30.102111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/vfsub.h linux-3.2.11-pentoo/fs/aufs/vfsub.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/vfsub.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/vfsub.h	2012-05-14 21:11:49.612169864 -0400
 @@ -0,0 +1,232 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -26781,9 +26544,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/vfsub.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/wbr_policy.c linux-3.2.11-hardened-aufs/fs/aufs/wbr_policy.c
---- linux-3.2.11-hardened/fs/aufs/wbr_policy.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/wbr_policy.c	2012-04-27 09:54:30.112111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/wbr_policy.c linux-3.2.11-pentoo/fs/aufs/wbr_policy.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/wbr_policy.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/wbr_policy.c	2012-05-14 21:11:49.622169865 -0400
 @@ -0,0 +1,700 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -27485,9 +27248,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/wbr_policy.c linux-3.2.11-hardened-aufs
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur linux-3.2.11-hardened/fs/aufs/whout.c linux-3.2.11-hardened-aufs/fs/aufs/whout.c
---- linux-3.2.11-hardened/fs/aufs/whout.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/whout.c	2012-04-27 09:54:30.098111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/whout.c linux-3.2.11-pentoo/fs/aufs/whout.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/whout.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/whout.c	2012-05-14 21:11:49.607169864 -0400
 @@ -0,0 +1,1049 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -28538,9 +28301,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/whout.c linux-3.2.11-hardened-aufs/fs/a
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/whout.h linux-3.2.11-hardened-aufs/fs/aufs/whout.h
---- linux-3.2.11-hardened/fs/aufs/whout.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/whout.h	2012-04-27 09:54:30.112111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/whout.h linux-3.2.11-pentoo/fs/aufs/whout.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/whout.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/whout.h	2012-05-14 21:11:49.623169865 -0400
 @@ -0,0 +1,88 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -28630,9 +28393,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/whout.h linux-3.2.11-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/wkq.c linux-3.2.11-hardened-aufs/fs/aufs/wkq.c
---- linux-3.2.11-hardened/fs/aufs/wkq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/wkq.c	2012-04-27 09:54:30.107111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/wkq.c linux-3.2.11-pentoo/fs/aufs/wkq.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/wkq.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/wkq.c	2012-05-14 21:11:49.619169863 -0400
 @@ -0,0 +1,214 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -28848,9 +28611,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/wkq.c linux-3.2.11-hardened-aufs/fs/auf
 +
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/aufs/wkq.h linux-3.2.11-hardened-aufs/fs/aufs/wkq.h
---- linux-3.2.11-hardened/fs/aufs/wkq.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/wkq.h	2012-04-27 09:54:30.131111089 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/wkq.h linux-3.2.11-pentoo/fs/aufs/wkq.h
+--- linux-3.2.11-pentoo-orig/fs/aufs/wkq.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/wkq.h	2012-05-14 21:11:49.641169865 -0400
 @@ -0,0 +1,92 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -28944,9 +28707,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/wkq.h linux-3.2.11-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur linux-3.2.11-hardened/fs/aufs/xino.c linux-3.2.11-hardened-aufs/fs/aufs/xino.c
---- linux-3.2.11-hardened/fs/aufs/xino.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/aufs/xino.c	2012-04-27 09:54:30.106111087 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/aufs/xino.c linux-3.2.11-pentoo/fs/aufs/xino.c
+--- linux-3.2.11-pentoo-orig/fs/aufs/xino.c	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/fs/aufs/xino.c	2012-05-14 21:11:49.616169864 -0400
 @@ -0,0 +1,1264 @@
 +/*
 + * Copyright (C) 2005-2012 Junjiro R. Okajima
@@ -30212,9 +29975,9 @@ diff -Naur linux-3.2.11-hardened/fs/aufs/xino.c linux-3.2.11-hardened-aufs/fs/au
 +out:
 +	return err;
 +}
-diff -Naur linux-3.2.11-hardened/fs/file_table.c linux-3.2.11-hardened-aufs/fs/file_table.c
---- linux-3.2.11-hardened/fs/file_table.c	2012-01-04 18:55:44.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/file_table.c	2012-04-27 09:54:01.036110308 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/file_table.c linux-3.2.11-pentoo/fs/file_table.c
+--- linux-3.2.11-pentoo-orig/fs/file_table.c	2012-05-14 21:09:53.707166759 -0400
++++ linux-3.2.11-pentoo/fs/file_table.c	2012-05-14 21:11:00.900168560 -0400
 @@ -443,6 +443,8 @@
  	}
  }
@@ -30224,9 +29987,9 @@ diff -Naur linux-3.2.11-hardened/fs/file_table.c linux-3.2.11-hardened-aufs/fs/f
  #ifdef CONFIG_SMP
  
  /*
-diff -Naur linux-3.2.11-hardened/fs/inode.c linux-3.2.11-hardened-aufs/fs/inode.c
---- linux-3.2.11-hardened/fs/inode.c	2012-04-26 22:50:02.421043464 -0400
-+++ linux-3.2.11-hardened-aufs/fs/inode.c	2012-04-27 09:54:01.039110311 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/inode.c linux-3.2.11-pentoo/fs/inode.c
+--- linux-3.2.11-pentoo-orig/fs/inode.c	2012-05-14 21:09:53.691166759 -0400
++++ linux-3.2.11-pentoo/fs/inode.c	2012-05-14 21:11:00.901168560 -0400
 @@ -65,6 +65,7 @@
  static __cacheline_aligned_in_smp DEFINE_SPINLOCK(inode_hash_lock);
  
@@ -30235,9 +29998,9 @@ diff -Naur linux-3.2.11-hardened/fs/inode.c linux-3.2.11-hardened-aufs/fs/inode.
  
  /*
   * Empty aops. Can be used for the cases where the user does not
-diff -Naur linux-3.2.11-hardened/fs/namei.c linux-3.2.11-hardened-aufs/fs/namei.c
---- linux-3.2.11-hardened/fs/namei.c	2012-04-26 22:50:02.425043464 -0400
-+++ linux-3.2.11-hardened-aufs/fs/namei.c	2012-04-27 09:54:01.042110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/namei.c linux-3.2.11-pentoo/fs/namei.c
+--- linux-3.2.11-pentoo-orig/fs/namei.c	2012-05-14 21:09:53.687166759 -0400
++++ linux-3.2.11-pentoo/fs/namei.c	2012-05-14 21:11:00.903168560 -0400
 @@ -1795,10 +1795,11 @@
   * needs parent already locked. Doesn't follow mounts.
   * SMP-safe.
@@ -30251,9 +30014,9 @@ diff -Naur linux-3.2.11-hardened/fs/namei.c linux-3.2.11-hardened-aufs/fs/namei.
  
  /**
   * lookup_one_len - filesystem helper to lookup single pathname component
-diff -Naur linux-3.2.11-hardened/fs/namespace.c linux-3.2.11-hardened-aufs/fs/namespace.c
---- linux-3.2.11-hardened/fs/namespace.c	2012-04-26 22:50:02.426043464 -0400
-+++ linux-3.2.11-hardened-aufs/fs/namespace.c	2012-04-27 09:54:01.046110309 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/namespace.c linux-3.2.11-pentoo/fs/namespace.c
+--- linux-3.2.11-pentoo-orig/fs/namespace.c	2012-05-14 21:09:53.681166759 -0400
++++ linux-3.2.11-pentoo/fs/namespace.c	2012-05-14 21:11:00.907168560 -0400
 @@ -1512,6 +1512,7 @@
  	}
  	return 0;
@@ -30262,9 +30025,9 @@ diff -Naur linux-3.2.11-hardened/fs/namespace.c linux-3.2.11-hardened-aufs/fs/na
  
  static void cleanup_group_ids(struct vfsmount *mnt, struct vfsmount *end)
  {
-diff -Naur linux-3.2.11-hardened/fs/notify/group.c linux-3.2.11-hardened-aufs/fs/notify/group.c
---- linux-3.2.11-hardened/fs/notify/group.c	2012-01-04 18:55:44.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/fs/notify/group.c	2012-04-27 09:54:01.047110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/notify/group.c linux-3.2.11-pentoo/fs/notify/group.c
+--- linux-3.2.11-pentoo-orig/fs/notify/group.c	2012-05-14 21:09:53.702166759 -0400
++++ linux-3.2.11-pentoo/fs/notify/group.c	2012-05-14 21:11:00.908168560 -0400
 @@ -22,6 +22,7 @@
  #include <linux/srcu.h>
  #include <linux/rculist.h>
@@ -30286,9 +30049,9 @@ diff -Naur linux-3.2.11-hardened/fs/notify/group.c linux-3.2.11-hardened-aufs/fs
  	return group;
  }
 +EXPORT_SYMBOL(fsnotify_alloc_group);
-diff -Naur linux-3.2.11-hardened/fs/notify/mark.c linux-3.2.11-hardened-aufs/fs/notify/mark.c
---- linux-3.2.11-hardened/fs/notify/mark.c	2012-04-26 22:49:59.975043398 -0400
-+++ linux-3.2.11-hardened-aufs/fs/notify/mark.c	2012-04-27 09:54:01.049110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/notify/mark.c linux-3.2.11-pentoo/fs/notify/mark.c
+--- linux-3.2.11-pentoo-orig/fs/notify/mark.c	2012-05-14 21:09:53.702166759 -0400
++++ linux-3.2.11-pentoo/fs/notify/mark.c	2012-05-14 21:11:00.909168560 -0400
 @@ -112,6 +112,7 @@
  	if (atomic_dec_and_test(&mark->refcnt))
  		mark->free_mark(mark);
@@ -30321,9 +30084,9 @@ diff -Naur linux-3.2.11-hardened/fs/notify/mark.c linux-3.2.11-hardened-aufs/fs/
  
  static int fsnotify_mark_destroy(void *ignored)
  {
-diff -Naur linux-3.2.11-hardened/fs/open.c linux-3.2.11-hardened-aufs/fs/open.c
---- linux-3.2.11-hardened/fs/open.c	2012-04-26 22:50:02.436043464 -0400
-+++ linux-3.2.11-hardened-aufs/fs/open.c	2012-04-27 09:54:01.050110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/open.c linux-3.2.11-pentoo/fs/open.c
+--- linux-3.2.11-pentoo-orig/fs/open.c	2012-05-14 21:09:53.675166759 -0400
++++ linux-3.2.11-pentoo/fs/open.c	2012-05-14 21:11:00.910168560 -0400
 @@ -60,6 +60,7 @@
  	mutex_unlock(&dentry->d_inode->i_mutex);
  	return ret;
@@ -30332,9 +30095,9 @@ diff -Naur linux-3.2.11-hardened/fs/open.c linux-3.2.11-hardened-aufs/fs/open.c
  
  static long do_sys_truncate(const char __user *pathname, loff_t length)
  {
-diff -Naur linux-3.2.11-hardened/fs/splice.c linux-3.2.11-hardened-aufs/fs/splice.c
---- linux-3.2.11-hardened/fs/splice.c	2012-04-26 22:50:02.447043464 -0400
-+++ linux-3.2.11-hardened-aufs/fs/splice.c	2012-04-27 09:54:01.051110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/fs/splice.c linux-3.2.11-pentoo/fs/splice.c
+--- linux-3.2.11-pentoo-orig/fs/splice.c	2012-05-14 21:09:53.668166760 -0400
++++ linux-3.2.11-pentoo/fs/splice.c	2012-05-14 21:11:00.911168560 -0400
 @@ -1085,8 +1085,8 @@
  /*
   * Attempt to initiate a splice from pipe to file.
@@ -30372,9 +30135,9 @@ diff -Naur linux-3.2.11-hardened/fs/splice.c linux-3.2.11-hardened-aufs/fs/splic
  
  /**
   * splice_direct_to_actor - splices data directly between two non-pipes
-diff -Naur linux-3.2.11-hardened/include/linux/Kbuild linux-3.2.11-hardened-aufs/include/linux/Kbuild
---- linux-3.2.11-hardened/include/linux/Kbuild	2012-01-04 18:55:44.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/include/linux/Kbuild	2012-04-27 09:53:44.336109863 -0400
+diff -Naur linux-3.2.11-pentoo-orig/include/linux/Kbuild linux-3.2.11-pentoo/include/linux/Kbuild
+--- linux-3.2.11-pentoo-orig/include/linux/Kbuild	2012-05-14 21:09:54.122166771 -0400
++++ linux-3.2.11-pentoo/include/linux/Kbuild	2012-05-14 21:10:33.733167832 -0400
 @@ -65,6 +65,7 @@
  header-y += atmsap.h
  header-y += atmsvc.h
@@ -30383,9 +30146,246 @@ diff -Naur linux-3.2.11-hardened/include/linux/Kbuild linux-3.2.11-hardened-aufs
  header-y += auto_fs.h
  header-y += auto_fs4.h
  header-y += auxvec.h
-diff -Naur linux-3.2.11-hardened/include/linux/namei.h linux-3.2.11-hardened-aufs/include/linux/namei.h
---- linux-3.2.11-hardened/include/linux/namei.h	2012-04-26 22:50:02.492043466 -0400
-+++ linux-3.2.11-hardened-aufs/include/linux/namei.h	2012-04-27 09:53:52.143110071 -0400
+diff -Naur linux-3.2.11-pentoo-orig/include/linux/aufs_type.h linux-3.2.11-pentoo/include/linux/aufs_type.h
+--- linux-3.2.11-pentoo-orig/include/linux/aufs_type.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.2.11-pentoo/include/linux/aufs_type.h	2012-05-14 21:13:03.899171853 -0400
+@@ -0,0 +1,233 @@
++/*
++ * Copyright (C) 2005-2012 Junjiro R. Okajima
++ *
++ * This program, aufs is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++ */
++
++#ifndef __AUFS_TYPE_H__
++#define __AUFS_TYPE_H__
++
++#define AUFS_NAME	"aufs"
++
++#ifdef __KERNEL__
++/*
++ * define it before including all other headers.
++ * sched.h may use pr_* macros before defining "current", so define the
++ * no-current version first, and re-define later.
++ */
++#define pr_fmt(fmt)	AUFS_NAME " %s:%d: " fmt, __func__, __LINE__
++#include <linux/sched.h>
++#undef pr_fmt
++#define pr_fmt(fmt)	AUFS_NAME " %s:%d:%s[%d]: " fmt, \
++		__func__, __LINE__, current->comm, current->pid
++#else
++#include <stdint.h>
++#include <sys/types.h>
++#endif /* __KERNEL__ */
++
++#include <linux/limits.h>
++
++#define AUFS_VERSION	"3.2-20120402"
++
++/* todo? move this to linux-2.6.19/include/magic.h */
++#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
++
++/* ---------------------------------------------------------------------- */
++
++#ifdef CONFIG_AUFS_BRANCH_MAX_127
++typedef int8_t aufs_bindex_t;
++#define AUFS_BRANCH_MAX 127
++#else
++typedef int16_t aufs_bindex_t;
++#ifdef CONFIG_AUFS_BRANCH_MAX_511
++#define AUFS_BRANCH_MAX 511
++#elif defined(CONFIG_AUFS_BRANCH_MAX_1023)
++#define AUFS_BRANCH_MAX 1023
++#elif defined(CONFIG_AUFS_BRANCH_MAX_32767)
++#define AUFS_BRANCH_MAX 32767
++#endif
++#endif
++
++#ifdef __KERNEL__
++#ifndef AUFS_BRANCH_MAX
++#error unknown CONFIG_AUFS_BRANCH_MAX value
++#endif
++#endif /* __KERNEL__ */
++
++/* ---------------------------------------------------------------------- */
++
++#define AUFS_FSTYPE		AUFS_NAME
++
++#define AUFS_ROOT_INO		2
++#define AUFS_FIRST_INO		11
++
++#define AUFS_WH_PFX		".wh."
++#define AUFS_WH_PFX_LEN		((int)sizeof(AUFS_WH_PFX) - 1)
++#define AUFS_WH_TMP_LEN		4
++/* a limit for rmdir/rename a dir */
++#define AUFS_MAX_NAMELEN	(NAME_MAX \
++				- AUFS_WH_PFX_LEN * 2	/* doubly whiteouted */\
++				- 1			/* dot */\
++				- AUFS_WH_TMP_LEN)	/* hex */
++#define AUFS_XINO_FNAME		"." AUFS_NAME ".xino"
++#define AUFS_XINO_DEFPATH	"/tmp/" AUFS_XINO_FNAME
++#define AUFS_XINO_TRUNC_INIT	64 /* blocks */
++#define AUFS_XINO_TRUNC_STEP	4  /* blocks */
++#define AUFS_DIRWH_DEF		3
++#define AUFS_RDCACHE_DEF	10 /* seconds */
++#define AUFS_RDCACHE_MAX	3600 /* seconds */
++#define AUFS_RDBLK_DEF		512 /* bytes */
++#define AUFS_RDHASH_DEF		32
++#define AUFS_WKQ_NAME		AUFS_NAME "d"
++#define AUFS_MFS_DEF_SEC	30 /* seconds */
++#define AUFS_MFS_MAX_SEC	3600 /* seconds */
++#define AUFS_PLINK_WARN		100 /* number of plinks */
++
++/* pseudo-link maintenace under /proc */
++#define AUFS_PLINK_MAINT_NAME	"plink_maint"
++#define AUFS_PLINK_MAINT_DIR	"fs/" AUFS_NAME
++#define AUFS_PLINK_MAINT_PATH	AUFS_PLINK_MAINT_DIR "/" AUFS_PLINK_MAINT_NAME
++
++#define AUFS_DIROPQ_NAME	AUFS_WH_PFX ".opq" /* whiteouted doubly */
++#define AUFS_WH_DIROPQ		AUFS_WH_PFX AUFS_DIROPQ_NAME
++
++#define AUFS_BASE_NAME		AUFS_WH_PFX AUFS_NAME
++#define AUFS_PLINKDIR_NAME	AUFS_WH_PFX "plnk"
++#define AUFS_ORPHDIR_NAME	AUFS_WH_PFX "orph"
++
++/* doubly whiteouted */
++#define AUFS_WH_BASE		AUFS_WH_PFX AUFS_BASE_NAME
++#define AUFS_WH_PLINKDIR	AUFS_WH_PFX AUFS_PLINKDIR_NAME
++#define AUFS_WH_ORPHDIR		AUFS_WH_PFX AUFS_ORPHDIR_NAME
++
++/* branch permissions and attributes */
++#define AUFS_BRPERM_RW		"rw"
++#define AUFS_BRPERM_RO		"ro"
++#define AUFS_BRPERM_RR		"rr"
++#define AUFS_BRRATTR_WH		"wh"
++#define AUFS_BRWATTR_NLWH	"nolwh"
++
++/* ---------------------------------------------------------------------- */
++
++/* ioctl */
++enum {
++	/* readdir in userspace */
++	AuCtl_RDU,
++	AuCtl_RDU_INO,
++
++	/* pathconf wrapper */
++	AuCtl_WBR_FD,
++
++	/* busy inode */
++	AuCtl_IBUSY
++};
++
++/* borrowed from linux/include/linux/kernel.h */
++#ifndef ALIGN
++#define ALIGN(x, a)		__ALIGN_MASK(x, (typeof(x))(a)-1)
++#define __ALIGN_MASK(x, mask)	(((x)+(mask))&~(mask))
++#endif
++
++/* borrowed from linux/include/linux/compiler-gcc3.h */
++#ifndef __aligned
++#define __aligned(x)			__attribute__((aligned(x)))
++#endif
++
++#ifdef __KERNEL__
++#ifndef __packed
++#define __packed			__attribute__((packed))
++#endif
++#endif
++
++struct au_rdu_cookie {
++	uint64_t	h_pos;
++	int16_t		bindex;
++	uint8_t		flags;
++	uint8_t		pad;
++	uint32_t	generation;
++} __aligned(8);
++
++struct au_rdu_ent {
++	uint64_t	ino;
++	int16_t		bindex;
++	uint8_t		type;
++	uint8_t		nlen;
++	uint8_t		wh;
++	char		name[0];
++} __aligned(8);
++
++static inline int au_rdu_len(int nlen)
++{
++	/* include the terminating NULL */
++	return ALIGN(sizeof(struct au_rdu_ent) + nlen + 1,
++		     sizeof(uint64_t));
++}
++
++union au_rdu_ent_ul {
++	struct au_rdu_ent __user	*e;
++	uint64_t			ul;
++};
++
++enum {
++	AufsCtlRduV_SZ,
++	AufsCtlRduV_End
++};
++
++struct aufs_rdu {
++	/* input */
++	union {
++		uint64_t	sz;	/* AuCtl_RDU */
++		uint64_t	nent;	/* AuCtl_RDU_INO */
++	};
++	union au_rdu_ent_ul	ent;
++	uint16_t		verify[AufsCtlRduV_End];
++
++	/* input/output */
++	uint32_t		blk;
++
++	/* output */
++	union au_rdu_ent_ul	tail;
++	/* number of entries which were added in a single call */
++	uint64_t		rent;
++	uint8_t			full;
++	uint8_t			shwh;
++
++	struct au_rdu_cookie	cookie;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++struct aufs_wbr_fd {
++	uint32_t	oflags;
++	int16_t		brid;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++struct aufs_ibusy {
++	uint64_t	ino, h_ino;
++	int16_t		bindex;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++#define AuCtlType		'A'
++#define AUFS_CTL_RDU		_IOWR(AuCtlType, AuCtl_RDU, struct aufs_rdu)
++#define AUFS_CTL_RDU_INO	_IOWR(AuCtlType, AuCtl_RDU_INO, struct aufs_rdu)
++#define AUFS_CTL_WBR_FD		_IOW(AuCtlType, AuCtl_WBR_FD, \
++				     struct aufs_wbr_fd)
++#define AUFS_CTL_IBUSY		_IOWR(AuCtlType, AuCtl_IBUSY, struct aufs_ibusy)
++
++#endif /* __AUFS_TYPE_H__ */
+diff -Naur linux-3.2.11-pentoo-orig/include/linux/namei.h linux-3.2.11-pentoo/include/linux/namei.h
+--- linux-3.2.11-pentoo-orig/include/linux/namei.h	2012-05-14 21:09:54.145166771 -0400
++++ linux-3.2.11-pentoo/include/linux/namei.h	2012-05-14 21:10:41.628168044 -0400
 @@ -85,6 +85,7 @@
  extern struct file *lookup_instantiate_filp(struct nameidata *nd, struct dentry *dentry,
  		int (*open)(struct inode *, struct file *));
@@ -30394,9 +30394,9 @@ diff -Naur linux-3.2.11-hardened/include/linux/namei.h linux-3.2.11-hardened-auf
  extern struct dentry *lookup_one_len(const char *, struct dentry *, int);
  
  extern int follow_down_one(struct path *);
-diff -Naur linux-3.2.11-hardened/include/linux/splice.h linux-3.2.11-hardened-aufs/include/linux/splice.h
---- linux-3.2.11-hardened/include/linux/splice.h	2012-01-04 18:55:44.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/include/linux/splice.h	2012-04-27 09:53:52.144110071 -0400
+diff -Naur linux-3.2.11-pentoo-orig/include/linux/splice.h linux-3.2.11-pentoo/include/linux/splice.h
+--- linux-3.2.11-pentoo-orig/include/linux/splice.h	2012-05-14 21:09:54.118166771 -0400
++++ linux-3.2.11-pentoo/include/linux/splice.h	2012-05-14 21:10:41.628168044 -0400
 @@ -91,4 +91,10 @@
  extern void spd_release_page(struct splice_pipe_desc *, unsigned int);
  
@@ -30408,17 +30408,17 @@ diff -Naur linux-3.2.11-hardened/include/linux/splice.h linux-3.2.11-hardened-au
 +			 struct pipe_inode_info *pipe, size_t len,
 +			 unsigned int flags);
  #endif
-diff -Naur linux-3.2.11-hardened/security/commoncap.c linux-3.2.11-hardened-aufs/security/commoncap.c
---- linux-3.2.11-hardened/security/commoncap.c	2012-04-26 22:50:02.676043471 -0400
-+++ linux-3.2.11-hardened-aufs/security/commoncap.c	2012-04-27 09:54:01.052110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/security/commoncap.c linux-3.2.11-pentoo/security/commoncap.c
+--- linux-3.2.11-pentoo-orig/security/commoncap.c	2012-05-14 21:09:54.662166786 -0400
++++ linux-3.2.11-pentoo/security/commoncap.c	2012-05-14 21:11:00.912168560 -0400
 @@ -979,3 +979,4 @@
  	}
  	return ret;
  }
 +EXPORT_SYMBOL(cap_file_mmap);
-diff -Naur linux-3.2.11-hardened/security/device_cgroup.c linux-3.2.11-hardened-aufs/security/device_cgroup.c
---- linux-3.2.11-hardened/security/device_cgroup.c	2012-01-04 18:55:44.000000000 -0500
-+++ linux-3.2.11-hardened-aufs/security/device_cgroup.c	2012-04-27 09:54:01.053110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/security/device_cgroup.c linux-3.2.11-pentoo/security/device_cgroup.c
+--- linux-3.2.11-pentoo-orig/security/device_cgroup.c	2012-05-14 21:09:54.663166786 -0400
++++ linux-3.2.11-pentoo/security/device_cgroup.c	2012-05-14 21:11:00.912168560 -0400
 @@ -7,6 +7,7 @@
  #include <linux/device_cgroup.h>
  #include <linux/cgroup.h>
@@ -30435,9 +30435,9 @@ diff -Naur linux-3.2.11-hardened/security/device_cgroup.c linux-3.2.11-hardened-
  
  int devcgroup_inode_mknod(int mode, dev_t dev)
  {
-diff -Naur linux-3.2.11-hardened/security/security.c linux-3.2.11-hardened-aufs/security/security.c
---- linux-3.2.11-hardened/security/security.c	2012-04-26 22:50:02.680043471 -0400
-+++ linux-3.2.11-hardened-aufs/security/security.c	2012-04-27 09:54:01.055110310 -0400
+diff -Naur linux-3.2.11-pentoo-orig/security/security.c linux-3.2.11-pentoo/security/security.c
+--- linux-3.2.11-pentoo-orig/security/security.c	2012-05-14 21:09:54.665166786 -0400
++++ linux-3.2.11-pentoo/security/security.c	2012-05-14 21:11:00.912168560 -0400
 @@ -413,6 +413,7 @@
  		return 0;
  	return security_ops->path_rmdir(dir, dentry);
