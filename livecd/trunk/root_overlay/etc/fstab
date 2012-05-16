@@ -32,4 +32,4 @@ aufs			/		aufs		defaults	0 0
 # (tmpfs is a dynamically expandable/shrinkable ramdisk, and will
 #  use almost no memory if not populated with files)
 
-#shm			/dev/shm	tmpfs		nodev,nosuid,noexec	0 0
+shm			/dev/shm	tmpfs		nodev,nosuid,noexec	0 0
