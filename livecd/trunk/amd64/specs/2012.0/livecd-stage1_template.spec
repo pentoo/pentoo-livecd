@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage1
 rel_type: default
 profile: default/linux/amd64/10.0
-snapshot: 20120430
+snapshot: 20120508
 source_subpath: default/stage4-amd64-2012.0
 portage_confdir: /usr/src/pentoo/livecd/trunk/portage
 portage_overlay: /usr/src/pentoo/portage/trunk
@@ -16,7 +16,7 @@ cxxflags: -Os -mtune=generic -pipe
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /mnt/storage/tmp/packages
+pkgcache_path: /mnt/storage/catalys/tmp/packages
 
 livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss video_cards_nouveau
 mmx sse sse2 mpi wps offensive dwm -doc -examples

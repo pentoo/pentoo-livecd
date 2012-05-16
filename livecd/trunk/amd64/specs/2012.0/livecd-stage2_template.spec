@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
 profile: default/linux/amd64/10.0
-snapshot: 20120430
+snapshot: 20120508
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_confdir: /usr/src/pentoo/livecd/trunk/portage
 portage_overlay: /usr/src/pentoo/portage/trunk
@@ -14,7 +14,7 @@ portage_overlay: /usr/src/pentoo/portage/trunk
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /mnt/storage/tmp/packages
+pkgcache_path: /mnt/storage/catalyst/tmp/packages
 
 # This allows the optional directory containing the output packages for kernel
 # builds.  Mainly used as a way for different spec files to access the same

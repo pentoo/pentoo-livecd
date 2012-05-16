@@ -109,7 +109,8 @@ mv /tmp/make.profile /etc/portage/
 ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
 emerge -1 pentoo-installer
 
-MAKEOPTS="-j5 -l4" USE="aufs bindist livecd" emerge -qN -kb -D @world
+USE="aufs bindist livecd" emerge -qN -kb -D @world
+emerge -1 pentoo/pentoo
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu
