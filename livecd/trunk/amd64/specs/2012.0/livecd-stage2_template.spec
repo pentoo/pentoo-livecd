@@ -58,7 +58,7 @@ livecd/fsscript: fsscript-livecd-stage2.sh
 # is used on the x86/amd64 release media to enable keymap selection.
 # example:
 # livecd/bootargs: dokeymap
-livecd/bootargs: aufs max_loop=256 dokeymap
+livecd/bootargs: nodetect aufs max_loop=256 dokeymap
 
 # This is a set of arguments that will be passed to genkernel for all kernels
 # defined in this target.  It is useful for passing arguments to genkernel that
@@ -66,7 +66,7 @@ livecd/bootargs: aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --makeopts=-j4 --dmraid --gpg --luks --lvm
+livecd/gk_mainargs: --dmraid --gpg --luks --lvm --compress-initramfs-type=xz
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
@@ -146,13 +146,6 @@ livecd/overlay: /usr/src/pentoo/livecd/trunk/isoroot
 # example:
 # livecd/root_overlay:
 livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
-
-# This is here to enable udev support in both catalyst and genkernel.  This
-# option requires genkernel >= 3.1.0, and is not needed with genkernel >=3.2.0,
-# as udev is the default.
-# example:
-# livecd/devmanager: udev
-# livecd/devmanager:
 
 # This is used by catalyst to copy the specified file to /etc/X11/xinit/xinitrc
 # and is used by the livecd/type gentoo-gamecd and generic-livecd.  While the
@@ -235,7 +228,7 @@ wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
-opengl dbus binary-drivers hal acpi usb subversion libkms
+opengl dbus binary-drivers hal acpi usb subversion libkms pentoo
 analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxie
 scanner rce footprint forging fuzzers voip wireless stage2
 
@@ -245,7 +238,6 @@ scanner rce footprint forging fuzzers voip wireless stage2
 # from overwriting each other.  We do not use this on the official media, so it
 # is left blank.
 # example:
-# boot/kernel/gentoo/extraversion:
 # boot/kernel/gentoo/extraversion:
 
 # This option is for merging kernel-dependent packages and external modules that
@@ -268,11 +260,10 @@ livecd/unmerge: sys-apps/zerosmagic dev-java/ant-core dev-java/libreadline-java 
 # a package that you wish to keep, but won't need the full functionality.
 # example:
 # livecd/empty: /var/tmp /var/cache /var/db /var/empty /var/lock /var/log /var/run /var/spool /var/state /tmp /usr/portage /usr/share/man /usr/share/info /usr/share/unimaps /usr/include /usr/share/zoneinfo /usr/share/dict /usr/share/doc /usr/share/ss /usr/share/state /usr/share/texinfo /usr/lib/python2.2 /usr/lib/portage /usr/share/gettext /usr/share/i18n /usr/share/rfc /usr/lib/X11/config /usr/lib/X11/etc /usr/lib/X11/doc /usr/src /usr/share/doc /usr/share/man /root/.ccache /etc/cron.daily /etc/cron.hourly /etc/cron.monthly /etc/cron.weekly /etc/logrotate.d /etc/rsync /usr/lib/awk /usr/lib/ccache /usr/lib/gcc-config /usr/lib/nfs /usr/local /usr/diet/include /usr/diet/man /usr/share/consolefonts/partialfonts /usr/share/consoletrans /usr/share/emacs /usr/share/gcc-data /usr/share/genkernel /etc/bootsplash/gentoo /etc/bootsplash/gentoo-highquality /etc/splash/gentoo /etc/splash/emergence /usr/share/gnuconfig /usr/share/lcms /usr/share/locale /etc/skel
-livecd/empty: /var/empty /var/lock /var/tmp /var/spool /var/state /tmp /usr/src/linux/Documentation /usr/local/portage/
+livecd/empty: /var/empty /var/lock /var/log /var/tmp /var/spool /var/state /tmp /usr/src/linux/Documentation /usr/local/portage/
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
 # example:
 # livecd/rm: /lib/*.a /usr/lib/*.a /usr/lib/gcc-lib/*/*/libgcj* /etc/dispatch-conf.conf /etc/etc-update.conf /etc/*- /etc/issue* /etc/make.conf /etc/man.conf /etc/*.old /root/.viminfo /usr/sbin/bootsplash* /usr/sbin/fb* /usr/sbin/fsck.cramfs /usr/sbin/fsck.minix /usr/sbin/mkfs.minix /usr/sbin/mkfs.bfs /usr/sbin/mkfs.cramfs /lib/security/pam_access.so /lib/security/pam_chroot.so /lib/security/pam_debug.so /lib/security/pam_ftp.so /lib/security/pam_issue.so /lib/security/pam_mail.so /lib/security/pam_motd.so /lib/security/pam_mkhomedir.so /lib/security/pam_postgresok.so /lib/security/pam_rhosts_auth.so /lib/security/pam_userdb.so /usr/share/consolefonts/1* /usr/share/consolefonts/7* /usr/share/consolefonts/8* /usr/share/consolefonts/9* /usr/share/consolefonts/A* /usr/share/consolefonts/C* /usr/share/consolefonts/E* /usr/share/consolefonts/G* /usr/share/consolefonts/L* /usr/share/consolefonts/M* /usr/share/consolefonts/R* /usr/share/consolefonts/a* /usr/share/consolefonts/c* /usr/share/consolefonts/dr* /usr/share/consolefonts/g* /usr/share/consolefonts/i* /usr/share/consolefonts/k* /usr/share/consolefonts/l* /usr/share/consolefonts/r* /usr/share/consolefonts/s* /usr/share/consolefonts/t* /usr/share/consolefonts/v* /etc/splash/livecd-2005.0/16* /etc/splash/livecd-2005.0/12* /etc/splash/livecd-2005.0/6* /etc/splash/livecd-2005.0/8* /etc/splash/livecd-2005.0/images/silent-16* /etc/splash/livecd-2005.0/images/silent-12* /etc/splash/livecd-2005.0/images/silent-6* /etc/splash/livecd-2005.0/images/silent-8* /etc/splash/livecd-2005.0/images/verbose-16* /etc/splash/livecd-2005.0/images/verbose-12* /etc/splash/livecd-2005.0/images/verbose-6* /etc/splash/livecd-2005.0/images/verbose-8* /etc/make.conf.example /etc/make.globals /etc/resolv.conf
-livecd/rm: /etc/resolv.conf /usr/share/gtk-doc /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre*  /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline* 
-# /usr/src/linux* we keep the sources
+livecd/rm: /etc/resolv.conf /usr/share/gtk-doc /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre*  /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline*

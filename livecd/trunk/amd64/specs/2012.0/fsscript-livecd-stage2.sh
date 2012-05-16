@@ -55,6 +55,7 @@ eselect opengl set xorg-x11 --dst-prefix=/etc/opengl/
 rm /usr/lib/libGLcore.so
 [ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
 [ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
+eselect opengl set xorg-x11
 
 # Set default java vm
 eselect java-vm set system sun-jdk-1.6
@@ -96,7 +97,7 @@ analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxies
 scanner rce footprint forging fuzzers voip wireless pentoo
 stage2"' >> /etc/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
-VIDEO_CARDS="nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
+VIDEO_CARDS="nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3"
 MAKEOPTS="-j2"' >> /etc/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/make.conf
@@ -108,7 +109,7 @@ mv /tmp/make.profile /etc/portage/
 ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
 emerge -1 pentoo-installer
 
-MAKEOPTS="-j4" USE="aufs bindist build livecd" emerge -qN -kb -D @world -vat
+MAKEOPTS="-j5 -l4" USE="aufs bindist livecd" emerge -qN -kb -D @world
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu
