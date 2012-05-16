@@ -7,8 +7,8 @@ snapshot: 20120508
 source_subpath: default/stage4-amd64-2012.0
 portage_confdir: /usr/src/pentoo/livecd/trunk/portage
 portage_overlay: /usr/src/pentoo/portage/trunk
-cflags: -Os -mtune=generic -pipe
-cxxflags: -Os -mtune=generic -pipe
+cflags: -Os -mtune=nocona -pipe
+cxxflags: -Os -mtune=nocona -pipe
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same

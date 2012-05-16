@@ -5,3 +5,5 @@ rel_type: default
 profile: default/linux/amd64/10.0
 snapshot: 20120508
 source_subpath: default/stage3-amd64-20120206
+cflags: -Os -mtune=nocona -pipe
+cxxflags: -Os -mtune=nocona -pipe
