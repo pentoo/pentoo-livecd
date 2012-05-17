@@ -1,17 +1,7 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-app-forensics/galleta
-app-forensics/pasco
 app-forensics/autopsy
-app-forensics/memdump
 app-forensics/rdd
 app-forensics/sleuthkit
-=app-forensics/afflib-3.3.4
-=app-forensics/libewf-20100226
 app-forensics/volatility
-app-forensics/vol-plugins-crypto
-app-forensics/vol-plugins-malware
-app-forensics/vol-plugins-moyix
-app-forensics/vol-plugins-reg
-

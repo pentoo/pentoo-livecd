@@ -2,7 +2,6 @@
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
 ~dev-ruby/mini_exiftool-1.0.1
-~dev-ruby/mime-types-1.16
 ~dev-ruby/spider-0.4.4
 ~dev-ruby/http_configuration-1.0.2
 ~dev-ruby/arel-3.0.2-r1
@@ -10,7 +9,6 @@
 ~dev-ruby/builder-3.0.0-r1
 ~dev-ruby/activesupport-3.2.3
 ~dev-ruby/bcrypt-ruby-3.0.1
-~dev-ruby/multi_json-1.2.0
 ~dev-ruby/i18n-0.6.0-r1
 ~dev-ruby/activemodel-3.2.3
 ~dev-ruby/memcache-client-1.8.5
@@ -19,7 +17,5 @@
 #required by metasploit-9999
 ~dev-ruby/activerecord-3.2.3 **
 ~dev-ruby/pg-0.13.2
-~dev-ruby/json-1.6.6
 ~dev-ruby/nokogiri-1.5.2
-~dev-ruby/msgpack-0.4.6
 ~dev-ruby/rjb-1.3.8

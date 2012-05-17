@@ -4,15 +4,10 @@
 app-fuzz/Peach
 app-fuzz/bed
 app-fuzz/bss
-app-fuzz/fusil
-app-fuzz/fuzzer
 app-fuzz/fuzzer-server
 app-fuzz/http-fuzz
 app-fuzz/ohrwurm
 app-fuzz/protos
-app-fuzz/scapy
-app-fuzz/sftf
 app-fuzz/smtp-fuzz
 app-fuzz/smudge
 app-fuzz/snmp-fuzzer
-app-fuzz/taof

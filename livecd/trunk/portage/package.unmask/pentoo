@@ -1,12 +1,5 @@
-sys-devel/prelink
 net-analyzer/wireshark
-app-misc/livecd-tools
-x11-misc/mkxf86config
-sys-apps/hwsetup
-=dev-util/nvidia-cuda-sdk-3.0-r2
-=dev-util/nvidia-cuda-toolkit-3.0
 #x11-drivers/ati-drivers
 x11-drivers/nvidia-drivers
 media-video/nvidia-settings
 net-analyzer/ncrack
-virtual/rubygems

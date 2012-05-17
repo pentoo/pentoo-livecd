@@ -1,18 +1,8 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-=sys-apps/baselayout-2.0.1
-sys-apps/dcfldd
-=sys-apps/openrc-0.7.0
-=sys-apps/sysvinit-2.86-r12
-=sys-apps/util-linux-2.16.1 ~amd64
-=sys-apps/hal-0.5.13-r2
 sys-apps/hwdata-redhat
-sys-apps/hwsetup
+sys-apps/hwsetup **
 sys-apps/microcode-data
-sys-apps/microcode-ctl
-sys-apps/parted 
 sys-apps/pkgcore
-=sys-apps/module-init-tools-3.11
-=sys-apps/vgabios-0.6c
 =sys-apps/openrc-0.9.9.3

@@ -1,12 +1,5 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-=sys-fs/lvm2-2.02.51-r1
-sys-fs/ntfs3g   
-sys-fs/ntfsprogs  
-~sys-fs/squashfs-tools-4.1
-=sys-fs/udev-146-r1
-=sys-fs/e2fsprogs-1.41.9
 sys-fs/cdfs
 =sys-fs/dmraid-1.0.0_rc16-r3
-sys-fs/diskdev_cmds

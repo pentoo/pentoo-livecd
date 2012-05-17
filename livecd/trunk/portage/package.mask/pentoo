@@ -4,27 +4,13 @@
 #this breaks on update so let's not use the old version
 <=x11-libs/vte-0.28.2-r201
 
-=net-analyzer/nessus-libraries-2.3.1
-=net-analyzer/libnasl-2.3.1
-=net-analyzer/nessus-core-2.3.1
-=net-analyzer/nessus-plugins-2.3.1
-=net-analyzer/nessus-2.3.1
 net-wireless/madwifi-ng-tools
-net-wireless/madwifi-old-tools
 >net-wireless/gnome-bluetooth-3
 
 # We don't want python-3 for now
 >=dev-lang/python-3.0
->=lxml/lxml-2.2.7
 
 #We have this slotted to no real need to mask it as that means many newer things can't work -ZC
 #Also of note I no longer have gnupg-1 on my system and my FDE still works with:
 #[ebuild   R   ] app-crypt/gnupg-2.0.17  USE="adns bzip2 caps ldap static -doc -nls -openct -pcsc-lite (-selinux) -smartcard" 0 kB
 #>=app-crypt/gnupg-2.0
-
-#Prevent downgrades
-<sys-apps/baselayout-2.0.0
-
-#intel video driver has known issues below this version
-<x11-drivers/xf86-video-intel-2.9.0
-

@@ -5,7 +5,6 @@
 =www-client/firefox-bin-12.0
 app-admin/genmenu -* **
 app-antivirus/malheur
-app-forensics/cmospwd
 app-text/cewl
 app-misc/emelfm2
 app-portage/maintainer-helper
@@ -13,24 +12,14 @@ app-portage/maintainer-helper
 dev-db/absinthe
 dev-db/mssqlscan
 dev-db/oat
-dev-db/sqlat
 dev-db/sqlbf
-dev-db/sqlinject
 dev-dotnet/wxnet
-=dev-lang/yasm-0.8.0 ~amd64
 app-portage/smart-live-rebuild
-=sys-block/gparted-0.12.0
-x11-plugins/firecat
 dev-util/edb
 dev-util/radare2
-dev-util/kbuild
-dev-util/ati-stream-sdk-bin
-net-ftp/gproftpd
-=dev-python/pysnmp-3.4.2 ~amd64
 dev-python/urwid
 net-wireless/orinoco-fwutils **
 net-firewall/firehol
-sys-kernel/pentoo-sources
 net-fs/winexe
 www-apps/beef
 app-portage/smart-live-rebuild
