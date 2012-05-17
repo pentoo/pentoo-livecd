@@ -8,6 +8,7 @@ pentoo/pentoo-forging **
 pentoo/pentoo-footprint **
 pentoo/pentoo-forensics **
 pentoo/pentoo-fuzzers **
+pentoo/pentoo-livecd **
 pentoo/pentoo-proxies **
 pentoo/pentoo-mitm **
 pentoo/pentoo-scanner **

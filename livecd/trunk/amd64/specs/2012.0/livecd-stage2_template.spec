@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
 profile: default/linux/amd64/10.0
-snapshot: 20120508
+snapshot: 20120515
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_confdir: /usr/src/pentoo/livecd/trunk/portage
 portage_overlay: /usr/src/pentoo/portage/trunk
