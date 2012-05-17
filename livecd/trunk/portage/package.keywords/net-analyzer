@@ -1,6 +1,19 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
+~net-analyzer/netwox-5.38.0
+~net-analyzer/aimsniff-0.9-r2
+~net-analyzer/hunt-1.5-r1
+~net-analyzer/ike-scan-1.9
+~net-analyzer/ncrack-0.4_alpha
+~net-analyzer/xprobe-0.3
+~net-analyzer/siphon-666-r1
+~net-analyzer/mbrowse-0.4.3
+~net-analyzer/fragroute-1.2-r3
+~net-analyzer/netwag-5.38.0
+~net-analyzer/arpantispoofer-1.0.1.32
+
+#below here likely needs cleaning up
 net-analyzer/argus
 net-analyzer/argus-clients
 net-analyzer/arping

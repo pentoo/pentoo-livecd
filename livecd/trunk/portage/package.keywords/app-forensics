@@ -5,3 +5,5 @@ app-forensics/autopsy
 app-forensics/rdd
 app-forensics/sleuthkit
 app-forensics/volatility
+~app-forensics/pasco-20040505_p1
+~app-forensics/galleta-20040505_p1

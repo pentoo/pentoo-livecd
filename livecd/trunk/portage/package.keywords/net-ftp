@@ -1,10 +1,5 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
-net-libs/libbtbb
-net-libs/libnids
-net-libs/libwhisker
-net-libs/libvidcap
-=net-libs/libbtbb-9999 **
-=net-libs/libnet-1.0.2a-r4
-~net-libs/netwib-5.38.0
+
+~net-ftp/gproftpd-8.3.2
