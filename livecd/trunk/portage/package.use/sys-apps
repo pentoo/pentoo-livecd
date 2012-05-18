@@ -1,2 +1,4 @@
 sys-apps/util-linux static-libs
 
+#required by dff
+sys-apps/file python
