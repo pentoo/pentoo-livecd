@@ -18,7 +18,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # pkgcache_path: /tmp/packages
 pkgcache_path: /mnt/storage/catalyst/tmp/packages
 
-livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss video_cards_nouveau
+livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
