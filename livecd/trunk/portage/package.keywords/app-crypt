@@ -1,6 +1,13 @@
 ##Warning!!!########################################################################################################
 #Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
 ##Warning!!!########################################################################################################
+
+~app-crypt/hashcat-bin-0.39
+~app-crypt/hashcat-gui-0.5.1
+~app-crypt/oclhashcat-plus-bin-0.081
+~app-crypt/oclhashcat-lite-bin-0.09
+
+#likely needs cleanup below this point
 app-crypt/asedriveiiie-serial
 app-crypt/asedriveiiie-usb
 app-crypt/asekey
