@@ -12,6 +12,7 @@
 ~net-analyzer/fragroute-1.2-r3
 ~net-analyzer/netwag-5.38.0
 ~net-analyzer/arpantispoofer-1.0.1.32
+~net-analyzer/upnpscan-0.4
 
 #below here likely needs cleaning up
 net-analyzer/argus
