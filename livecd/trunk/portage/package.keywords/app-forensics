@@ -7,3 +7,8 @@ app-forensics/sleuthkit
 app-forensics/volatility
 ~app-forensics/pasco-20040505_p1
 ~app-forensics/galleta-20040505_p1
+
+~app-forensics/dff-1.2.0
+~app-forensics/libbfio-0.0.20120425_alpha
+~app-forensics/libpff-0.0.20120513_alpha
+~app-forensics/libewf-20120504
