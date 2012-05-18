@@ -28,7 +28,7 @@ pkgcache_path: /mnt/storage/catalyst/tmp/packages
 kerncache_path: /mnt/storage/catalyst/kerncache
 
 livecd/fstype: squashfs
-livecd/fsops: -b 1048576 -comp xz -no-recovery -processors 4
+livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend -processors 4
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
 livecd/iso: /tmp/pentoo-x86_64-2012.0_alphazero.iso
 
@@ -230,9 +230,9 @@ wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
+dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
 opengl dbus binary-drivers hal acpi usb subversion libkms pentoo
-analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxie
+analyzer bluetooth cracking databse exploit forensics mitm proxie
 scanner rce footprint forging fuzzers voip wireless stage2
 
 # This option appends an extension to the name of your kernel, as viewed by a
@@ -248,7 +248,7 @@ scanner rce footprint forging fuzzers voip wireless stage2
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-#pentoo/pentoo
+pentoo/pentoo
 #I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening
 
 # This is a list of packages that will be unmerged after all the kernels have

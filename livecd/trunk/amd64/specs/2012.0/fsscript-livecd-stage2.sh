@@ -93,8 +93,8 @@ png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
-analyzer bluetooth cracking databse enlightenment exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless pentoo
+analyzer bluetooth cracking databse exploit forensics mitm proxies
+scanner rce footprint forging fuzzers voip wireless pentoo xfce
 stage2"' >> /etc/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
@@ -109,8 +109,8 @@ mv /tmp/make.profile /etc/portage/
 ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
 emerge -1 pentoo-installer
 
+USE="aufs bindist livecd" emerge -1 --newuse pentoo/pentoo
 USE="aufs bindist livecd" emerge -qN -kb -D @world
-emerge -1 pentoo/pentoo
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu

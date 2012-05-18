@@ -16,7 +16,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /mnt/storage/catalys/tmp/packages
+pkgcache_path: /mnt/storage/catalyst/tmp/packages
 
 livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss video_cards_nouveau
 mmx sse sse2 mpi wps offensive dwm -doc -examples

@@ -3,11 +3,12 @@ catalyst -a -f stage1.spec || exit
 catalyst -a -f stage2.spec || exit
 catalyst -a -f stage3.spec || exit
 catalyst -a -f stage4.spec || exit
+
 catalyst -a -f livecd-stage1_template.spec || exit
 
 #make the portage module
 mkdir -p /mnt/storage/catalyst/tmp/portage/rootfs/usr/
 rsync -aEXu /mnt/storage/catalyst/snapshot_cache/`awk '/snapshot:/ {print $2}' livecd-stage2_template.spec`/portage /mnt/storage/catalyst/tmp/portage/rootfs/usr/
-mksquashfs /mnt/storage/catalyst/tmp/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery
+mksquashfs /mnt/storage/catalyst/tmp/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend
 
 catalyst -a -f livecd-stage2_template.spec || exit
