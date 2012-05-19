@@ -28,7 +28,7 @@ dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxies
 scanner rce footprint forging fuzzers voip wireless pentoo
--stage2
+livecd-stage1
 
 # This is the set of packages that we will merge into the CD's filesystem.  They
 # will be built with the USE flags configured above.  These packages must not

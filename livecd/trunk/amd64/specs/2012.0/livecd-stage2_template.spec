@@ -131,7 +131,7 @@ livecd/rcadd: autoconfig|default acpid|default gpm|default dbus|default microcod
 # use this on the official media, so it is left blank.
 # example:
 # livecd/rcdel:
-livecd/rcdel: spind|default keymaps|boot
+livecd/rcdel: keymaps|boot
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,
@@ -188,14 +188,6 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 # livecd/volid: Gentoo Linux 2005.0 X86
 livecd/volid: 2012.0az
 
-# This option is only used when creating a GameCD.  This specifies the file that
-# contains the definitions for GAME_NAME and GAME_EXECUTABLE, which are used by
-# the GameCD scripts to set some specific options for the game.  This is not
-# used on the release media, and is therefore blank.
-# example:
-# gamecd/conf:
-gamecd/conf:
-
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
 # example:
@@ -233,7 +225,7 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
 opengl dbus binary-drivers hal acpi usb subversion libkms pentoo
 analyzer bluetooth cracking databse exploit forensics mitm proxie
-scanner rce footprint forging fuzzers voip wireless stage2
+scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -248,22 +240,21 @@ scanner rce footprint forging fuzzers voip wireless stage2
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-pentoo/pentoo
-#I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening
+#I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: sys-apps/zerosmagic dev-java/ant-core dev-java/libreadline-java dev-java/javacup dev-java/jakarta-oro dev-java/ant-nodeps dev-java/xml-commons-external dev-java/xml-commons-resolver dev-java/bcel dev-java/sun-jaf dev-java/commons-logging dev-java/ant-swing dev-java/jzlib dev-java/junit dev-java/ant-antlr dev-java/log4j dev-java/jakarta-regexp dev-java/xjavac dev-java/jdepend dev-java/ant-junit dev-java/xalan-serializer dev-java/commons-net dev-java/ant-apache-resolver dev-java/jsch dev-java/ant-apache-bcel dev-java/sun-javamail dev-java/ant-apache-oro dev-java/ant-apache-log4j dev-java/ant-apache-regexp dev-java/jython dev-java/ant-commons-logging dev-java/ant-jdepend dev-java/ant-commons-net dev-java/ant-jsch dev-java/ant-javamail dev-java/xerces dev-java/xalan dev-java/bsf dev-java/ant-trax dev-java/ant-apache-bsf dev-java/ant-tasks dev-java/ant dev-libs/klibc x11-libs/qt-webkit x11-libs/qt-assistant dev-texlive/texlive-latexrecommended dev-texlive/texlive-latex dev-texlive/texlive-basic app-text/texlive-core gentoo-sources dev-java/icedtea6-bin
+livecd/unmerge: app-text/texlive-core
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
 # livecd/empty: /var/tmp /var/cache /var/db /var/empty /var/lock /var/log /var/run /var/spool /var/state /tmp /usr/portage /usr/share/man /usr/share/info /usr/share/unimaps /usr/include /usr/share/zoneinfo /usr/share/dict /usr/share/doc /usr/share/ss /usr/share/state /usr/share/texinfo /usr/lib/python2.2 /usr/lib/portage /usr/share/gettext /usr/share/i18n /usr/share/rfc /usr/lib/X11/config /usr/lib/X11/etc /usr/lib/X11/doc /usr/src /usr/share/doc /usr/share/man /root/.ccache /etc/cron.daily /etc/cron.hourly /etc/cron.monthly /etc/cron.weekly /etc/logrotate.d /etc/rsync /usr/lib/awk /usr/lib/ccache /usr/lib/gcc-config /usr/lib/nfs /usr/local /usr/diet/include /usr/diet/man /usr/share/consolefonts/partialfonts /usr/share/consoletrans /usr/share/emacs /usr/share/gcc-data /usr/share/genkernel /etc/bootsplash/gentoo /etc/bootsplash/gentoo-highquality /etc/splash/gentoo /etc/splash/emergence /usr/share/gnuconfig /usr/share/lcms /usr/share/locale /etc/skel
-livecd/empty: /var/empty /var/lock /var/log /var/tmp /var/spool /var/state /tmp /usr/src/linux/Documentation /usr/local/portage/
+livecd/empty: /var/empty /var/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

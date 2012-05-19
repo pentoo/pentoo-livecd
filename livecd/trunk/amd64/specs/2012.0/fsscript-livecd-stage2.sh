@@ -85,7 +85,7 @@ eix-update
 updatedb
 
 # Fix /etc/make.conf
-echo 'USE="X -livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+echo 'USE="X gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
@@ -94,12 +94,11 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless pentoo xfce
-stage2"' >> /etc/make.conf
+scanner rce footprint forging fuzzers voip wireless pentoo xfce"' >> /etc/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3"
-MAKEOPTS="-j2"' >> /etc/make.conf
+MAKEOPTS="-j -l1"' >> /etc/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/make.conf
 echo 'ACCEPT_LICENSE="*"' >> /etc/make.conf
 
@@ -109,8 +108,23 @@ mv /tmp/make.profile /etc/portage/
 ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
 emerge -1 pentoo-installer
 
-USE="aufs bindist livecd" emerge -1 --newuse pentoo/pentoo
-USE="aufs bindist livecd" emerge -qN -kb -D @world
+# Fix the kernel dir & config
+for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
+	rm /usr/src/linux
+	ln -s linux-$krnl /usr/src/linux
+	cp /var/tmp/pentoo.config /usr/src/linux/.config
+	rm /lib/modules/$krnl/source /lib/modules/$krnl/build
+	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl/build
+	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl/source
+	cd /usr/src/linux
+	make prepare && make modules_prepare
+	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
+	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
+done
+
+#USE="aufs bindist livecd -livecd-stage1" emerge -1 --newuse pentoo/pentoo
+USE="aufs bindist livecd -livecd-stage1" emerge -qN -kb -D @world
+python-updater
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu
@@ -133,20 +147,6 @@ patch sbin/livecd-functions.sh patches/livecd-functions.patch
 patch lib/rc/sh/init.sh patches/rc.patch
 patch etc/init.d/autoconfig patches/autoconfig.patch
 rm -rf patches
-
-# Fix the kernel dir & config
-for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
-	rm /usr/src/linux
-	ln -s linux-$krnl /usr/src/linux
-	cp /var/tmp/pentoo.config /usr/src/linux/.config
-	rm /lib/modules/$krnl/source /lib/modules/$krnl/build
-	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl/build
-	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl/source
-	cd /usr/src/linux
-	make prepare && make modules_prepare
-	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
-	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
-done
 
 # fixes pax for binary drviers GPGPU
 paxctl -m /usr/bin/X
@@ -185,13 +185,9 @@ echo 'password=pentoo' > /root/.my.cnf
 emerge --config mysql
 rm -f /root/.my.cnf
 
-#set background for xfce
-#beta
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s /usr/share/pentoo/wallpaper/domo-roolz.jpg
-#release
-#xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s /usr/share/pentoo/wallpaper/tux-winfly-killah.1600x1200.jpg
+mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel.xml/
+cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel.xml/
 
-emerge --depclean -vat
 smart-live-rebuild
-revdep-rebuild
 
+CONFIG_PROTECT_MASK="/etc/" etc-update
