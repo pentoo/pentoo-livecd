@@ -132,12 +132,7 @@ patch etc/init.d/halt.sh patches/halt.patch
 patch sbin/livecd-functions.sh patches/livecd-functions.patch
 patch lib/rc/sh/init.sh patches/rc.patch
 patch etc/init.d/autoconfig patches/autoconfig.patch
-patch /usr/lib/metasploit3/lib/rex/socket/ssl_tcp_server.rb patches/patch-sslsniff.patch
 rm -rf patches
-
-# Fix net services
-sed -e '/PORTMAP_OPTS/ s/^#//' -i /etc/conf.d/portmap
-sed -e '/ESD_OPTIONS/ s/ -public//' -i /etc/conf.d/esound
 
 # Fix the kernel dir & config
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
@@ -189,3 +184,14 @@ ntop --set-admin-password=pentoo
 echo 'password=pentoo' > /root/.my.cnf
 emerge --config mysql
 rm -f /root/.my.cnf
+
+#set background for xfce
+#beta
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s /usr/share/pentoo/wallpaper/domo-roolz.jpg
+#release
+#xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s /usr/share/pentoo/wallpaper/tux-winfly-killah.1600x1200.jpg
+
+emerge --depclean -vat
+smart-live-rebuild
+revdep-rebuild
+
