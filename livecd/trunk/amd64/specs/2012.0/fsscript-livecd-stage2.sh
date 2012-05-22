@@ -85,6 +85,10 @@ eix-update
 updatedb
 
 # Fix /etc/make.conf
+sed -i 's#USE="mmx sse sse2"##' /etc/make.conf
+
+#WARNING WARNING WARING
+#DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
 echo 'USE="X gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
@@ -93,14 +97,16 @@ png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
+aufs bindist livecd
 analyzer bluetooth cracking databse exploit forensics mitm proxies
 scanner rce footprint forging fuzzers voip wireless pentoo xfce"' >> /etc/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3"
-MAKEOPTS="-j -l1"' >> /etc/make.conf
+MAKEOPTS="-j2 -l1"' >> /etc/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/make.conf
-echo 'ACCEPT_LICENSE="*"' >> /etc/make.conf
+echo 'ACCEPT_LICENSE="*"
+RUBY_TARGETS="ruby18 ruby19"' >> /etc/make.conf
 
 mv /etc/portage/make.profile /tmp
 rm -rf /etc/portage/*
@@ -122,8 +128,8 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
 done
 
-#USE="aufs bindist livecd -livecd-stage1" emerge -1 --newuse pentoo/pentoo
-USE="aufs bindist livecd -livecd-stage1" emerge -qN -kb -D @world
+emerge --deselect=y livecd-tools
+MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 @world
 python-updater
 
 # This makes sure we have the latest and greatest genmenu!
@@ -185,9 +191,11 @@ echo 'password=pentoo' > /root/.my.cnf
 emerge --config mysql
 rm -f /root/.my.cnf
 
-mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel.xml/
-cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel.xml/
+mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
+cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 smart-live-rebuild
 
 CONFIG_PROTECT_MASK="/etc/" etc-update
+
+eselect ruby set ruby19

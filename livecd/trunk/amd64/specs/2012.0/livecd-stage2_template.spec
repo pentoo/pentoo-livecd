@@ -216,7 +216,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+boot/kernel/pentoo/use: bindist X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
@@ -239,7 +239,7 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 # are configured against this kernel label.
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
-boot/kernel/pentoo/packages: 
+#boot/kernel/pentoo/packages: 
 #I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
