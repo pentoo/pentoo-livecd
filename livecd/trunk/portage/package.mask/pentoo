@@ -9,3 +9,5 @@ net-wireless/madwifi-ng-tools
 
 # We don't want python-3 for now
 >=dev-lang/python-3.0
+
+>sys-kernel/genkernel-3.4.32

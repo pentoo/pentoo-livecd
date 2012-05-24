@@ -22,3 +22,6 @@
 ~dev-ruby/mime-types-1.18
 ~dev-ruby/msgpack-0.4.7
 ~dev-ruby/json-1.6.7
+~dev-ruby/rake-compiler-0.8.1
+~dev-ruby/rexical-1.0.5
+
