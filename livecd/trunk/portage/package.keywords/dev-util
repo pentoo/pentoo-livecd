@@ -1,5 +1,5 @@
-~dev-util/nvidia-cuda-toolkit-4.1
-~dev-util/nvidia-cuda-sdk-4.1
+~dev-util/nvidia-cuda-toolkit-4.2
+~dev-util/nvidia-cuda-sdk-4.2
 dev-util/calpp
 dev-util/dissy
 dev-util/metasm
