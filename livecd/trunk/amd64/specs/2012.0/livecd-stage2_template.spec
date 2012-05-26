@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
 profile: default/linux/amd64/10.0
-snapshot: 20120515
+snapshot: 20120524
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_confdir: /usr/src/pentoo/livecd/trunk/portage
 portage_overlay: /usr/src/pentoo/portage/trunk
@@ -239,7 +239,8 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 # are configured against this kernel label.
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
-#boot/kernel/pentoo/packages: 
+boot/kernel/pentoo/packages: 
+pentoo/pentoo
 #I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
@@ -253,8 +254,7 @@ livecd/unmerge: app-text/texlive-core
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
-# livecd/empty: /var/tmp /var/cache /var/db /var/empty /var/lock /var/log /var/run /var/spool /var/state /tmp /usr/portage /usr/share/man /usr/share/info /usr/share/unimaps /usr/include /usr/share/zoneinfo /usr/share/dict /usr/share/doc /usr/share/ss /usr/share/state /usr/share/texinfo /usr/lib/python2.2 /usr/lib/portage /usr/share/gettext /usr/share/i18n /usr/share/rfc /usr/lib/X11/config /usr/lib/X11/etc /usr/lib/X11/doc /usr/src /usr/share/doc /usr/share/man /root/.ccache /etc/cron.daily /etc/cron.hourly /etc/cron.monthly /etc/cron.weekly /etc/logrotate.d /etc/rsync /usr/lib/awk /usr/lib/ccache /usr/lib/gcc-config /usr/lib/nfs /usr/local /usr/diet/include /usr/diet/man /usr/share/consolefonts/partialfonts /usr/share/consoletrans /usr/share/emacs /usr/share/gcc-data /usr/share/genkernel /etc/bootsplash/gentoo /etc/bootsplash/gentoo-highquality /etc/splash/gentoo /etc/splash/emergence /usr/share/gnuconfig /usr/share/lcms /usr/share/locale /etc/skel
-livecd/empty: /var/empty /var/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/
+livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

@@ -1,4 +1,15 @@
-#/bin/sh!
+#!/bin/sh
+
+#check lib link and fix
+if [ ! -L /lib ]
+then
+	if [ -d /lib64 ]
+	then
+		mv /lib/* /lib64/
+		rm -rf /lib
+		ln -s /lib64 lib
+	fi
+fi
 
 # Purge the uneeded locale, should keeps only en
 localepurge
@@ -76,6 +87,7 @@ eselect news purge
 rm -rf /usr/local/portage/*
 layman -L
 layman -a pentoo
+layman -S
 #layman -a enlightenment
 
 # Build the metadata cache
@@ -129,8 +141,9 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 done
 
 emerge --deselect=y livecd-tools
-MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 @world
-python-updater
+MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y @world
+MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y @world || exit 1
+MAKEOPTS="-j5 -l4" python-updater || exit 1
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu
