@@ -8,13 +8,12 @@ app-antivirus/malheur
 app-text/cewl
 app-misc/emelfm2
 app-portage/maintainer-helper
->=app-portage/gentoopm-0.1.2
+=app-portage/gentoopm-0.2.5
 dev-db/absinthe
 dev-db/mssqlscan
 dev-db/oat
 dev-db/sqlbf
 dev-dotnet/wxnet
-app-portage/smart-live-rebuild
 dev-util/edb
 dev-util/radare2
 dev-python/urwid
@@ -22,4 +21,3 @@ net-wireless/orinoco-fwutils **
 net-firewall/firehol
 net-fs/winexe
 www-apps/beef
-app-portage/smart-live-rebuild
