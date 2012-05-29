@@ -1,2 +1,2 @@
-sys-fs/udev extras gudev
+sys-fs/udev hwdb gudev
 sys-fs/cryptsetup static
