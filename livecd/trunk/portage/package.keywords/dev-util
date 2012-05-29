@@ -3,3 +3,4 @@
 dev-util/calpp
 dev-util/dissy
 dev-util/metasm
+~dev-util/boost-build-1.48.0
