@@ -1,7 +1,3 @@
-##Warning!!!########################################################################################################
-#Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
-##Warning!!!########################################################################################################
-
 ~app-crypt/hashcat-bin-0.39
 ~app-crypt/hashcat-gui-0.5.1
 ~app-crypt/oclhashcat-plus-bin-0.081

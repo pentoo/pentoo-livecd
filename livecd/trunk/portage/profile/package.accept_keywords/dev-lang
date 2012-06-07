@@ -1,6 +1,3 @@
-##Warning!!!########################################################################################################
-#Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
-##Warning!!!########################################################################################################
 ~dev-lang/lua-5.1.4
 
 # stabilising ruby 1.9 on x86, waiting for the bug # https://bugs.gentoo.org/show_bug.cgi?id=411507

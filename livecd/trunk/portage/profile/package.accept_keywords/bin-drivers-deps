@@ -1,6 +1,0 @@
-##Warning!!!########################################################################################################
-#Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
-##Warning!!!########################################################################################################
-x11-drivers/ati-drivers
-x11-drivers/nvidia-drivers
-media-video/nvidia-settings

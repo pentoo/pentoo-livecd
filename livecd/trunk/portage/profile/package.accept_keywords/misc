@@ -1,7 +1,3 @@
-##Warning!!!########################################################################################################
-#Warning!!! This file is under version control. If you must edit things then use the "user-keywords" file instead. #
-##Warning!!!########################################################################################################
-
 =www-client/firefox-bin-12.0
 app-admin/genmenu -* **
 app-antivirus/malheur
