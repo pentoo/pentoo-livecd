@@ -2,3 +2,4 @@ sys-apps/hwsetup **
 sys-apps/microcode-data
 sys-apps/pkgcore
 =sys-apps/openrc-0.9.9.3
+~sys-apps/portage-2.1.10.65
