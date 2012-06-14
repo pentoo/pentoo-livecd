@@ -42,7 +42,7 @@ net-misc/htun
 net-misc/iaxclient
 net-misc/iaxmodem
 net-misc/icaclient
-net-misc/iodine
+~net-misc/iodine-0.6.0_rc1
 net-misc/ipsvd
 net-misc/ipx-utils
 net-misc/knutclient
@@ -76,7 +76,7 @@ net-misc/proxychains
 net-misc/proxytunnel
 net-misc/puf
 net-misc/rdesktop
-=net-misc/rsync-3.0.9-r2
+~net-misc/rsync-3.0.9
 net-misc/s3cmd
 net-misc/selfdhcp
 net-misc/ser

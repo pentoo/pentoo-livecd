@@ -15,6 +15,6 @@ dev-util/edb
 dev-util/radare2
 dev-python/urwid
 net-wireless/orinoco-fwutils **
-net-firewall/firehol
+~net-firewall/firehol-1.273
 net-fs/winexe
 www-apps/beef
