@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
 profile: default/linux/amd64/10.0
-snapshot: 20120524
+snapshot: 20120528
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_confdir: /usr/src/pentoo/livecd/trunk/portage
 portage_overlay: /usr/src/pentoo/portage/trunk
@@ -30,7 +30,7 @@ kerncache_path: /mnt/storage/catalyst/kerncache
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend -processors 4
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2012.0_alphazero.iso
+livecd/iso: /tmp/pentoo-x86_64-2012.0_betazero.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -186,7 +186,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2012.0az
+livecd/volid: 2012.0bz
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -216,7 +216,7 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: bindist X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+boot/kernel/pentoo/use: bindist X aufs livecd gtk python -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
@@ -240,7 +240,7 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-pentoo/pentoo
+#pentoo/pentoo
 #I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
