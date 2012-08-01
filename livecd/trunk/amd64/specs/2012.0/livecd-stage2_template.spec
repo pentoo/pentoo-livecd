@@ -2,10 +2,9 @@ subarch: amd64
 version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
-profile: default/linux/amd64/10.0
-snapshot: 20120528
+profile: ../../local/portage/profiles/pentoo/default/linux/amd64
+snapshot: 20120726
 source_subpath: default/livecd-stage1-amd64-2012.0
-portage_confdir: /usr/src/pentoo/livecd/trunk/portage
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe
 cxxflags: -Os -mtune=nocona -pipe
@@ -186,7 +185,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: 2012.0bz
+livecd/volid: Pentoo Linux 2012.0 Beta One
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -194,13 +193,13 @@ livecd/volid: 2012.0bz
 # boot/kernel: gentoo
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: ~pentoo-sources-3.2.11
+boot/kernel/pentoo/sources: pentoo-sources
 
 # This option is the full path and filename to a kernel .config file that is
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/amd64/kernel/config-3.2.11
+boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/amd64/kernel/config-latest
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a

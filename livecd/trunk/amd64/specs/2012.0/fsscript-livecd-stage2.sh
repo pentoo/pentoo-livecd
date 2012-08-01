@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
+rm -rf /etc/make.conf /etc/make.profile
+ln -s ../../usr/local/portage/profiles/pentoo/default/linux/amd64 /etc/portage/make.profile
+
 #check lib link and fix
 if [ ! -L /lib ]
 then
@@ -85,10 +89,12 @@ eselect news read --quiet all
 eselect news purge
 
 # Add pentoo repo
-rm -rf /usr/local/portage/*
 layman -L
 layman -a pentoo
+rm -rf /usr/local/portage/*
+eselect profile set pentoo:pentoo/default/linux/amd64
 layman -S
+eselect profile set pentoo:pentoo/default/linux/amd64
 #layman -a enlightenment
 
 # Build the metadata cache
@@ -97,8 +103,8 @@ emerge --metadata
 eix-update
 updatedb
 
-# Fix /etc/make.conf
-sed -i 's#USE="mmx sse sse2"##' /etc/make.conf
+# Fix /etc/portage/make.conf
+sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf
 
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
@@ -112,19 +118,20 @@ dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 aufs bindist livecd
 analyzer bluetooth cracking databse exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless pentoo xfce"' >> /etc/make.conf
+scanner rce footprint forging fuzzers voip wireless pentoo xfce"' >> /etc/portage/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3"
-MAKEOPTS="-j2 -l1"' >> /etc/make.conf
-echo 'source /var/lib/layman/make.conf' >> /etc/make.conf
+MAKEOPTS="-j2 -l1"' >> /etc/portage/make.conf
+echo 'source /var/lib/layman/make.conf' >> /etc/portage/make.conf
 echo 'ACCEPT_LICENSE="*"
-RUBY_TARGETS="ruby18 ruby19"' >> /etc/make.conf
+RUBY_TARGETS="ruby18 ruby19"' >> /etc/portage/make.conf
 
-mv /etc/portage/make.profile /tmp
-rm -rf /etc/portage/*
-mv /tmp/make.profile /etc/portage/
-ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
+#mv /etc/portage/make.profile /tmp
+#rm -rf /etc/portage/*
+#mv /tmp/make.profile /etc/portage/
+#ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
+eselect profile set pentoo:pentoo/default/linux/amd64
 emerge -1 pentoo-installer
 
 # Fix the kernel dir & config
@@ -141,7 +148,9 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
 done
 
-emerge --deselect=y livecd-tools
+emerge --deselect=y livecd-tools dev-lang/python:2.7
+#Fucking asshattery
+export I_AM_CRAZY_TO_USE_MASKED_VERSIONS="1"
 MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y @world
 MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y @world || exit 1
 MAKEOPTS="-j5 -l4" python-updater || exit 1
@@ -152,6 +161,7 @@ emerge -1 app-admin/genmenu
 # Runs the incredible menu generator! Twice !
 genmenu.py -v -t urxvt
 genmenu.py -e -v -t urxvt
+genmenu.py -x -v -t Terminal
 
 # Fixes icons
 cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
