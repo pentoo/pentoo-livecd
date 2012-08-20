@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
 profile: ../../local/portage/profiles/pentoo/default/linux/amd64
-snapshot: 20120726
+snapshot: 20120819
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe
@@ -29,7 +29,7 @@ kerncache_path: /mnt/storage/catalyst/kerncache
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend -processors 4
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2012.0_betazero.iso
+livecd/iso: /tmp/pentoo-x86_64-2012.0_beta2.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -130,7 +130,7 @@ livecd/rcadd: autoconfig|default acpid|default gpm|default dbus|default microcod
 # use this on the official media, so it is left blank.
 # example:
 # livecd/rcdel:
-livecd/rcdel: keymaps|boot
+livecd/rcdel: keymaps|boot netmount|default
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,
@@ -185,7 +185,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: Pentoo Linux 2012.0 Beta One
+livecd/volid: Pentoo Linux 2012.0 Beta Two
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -239,7 +239,7 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-#pentoo/pentoo
+pentoo/pentoo
 #I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have

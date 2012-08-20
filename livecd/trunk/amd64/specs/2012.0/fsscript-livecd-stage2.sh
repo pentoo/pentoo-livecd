@@ -2,7 +2,8 @@
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile
-ln -s ../../usr/local/portage/profiles/pentoo/default/linux/amd64 /etc/portage/make.profile
+#ln -s ../../usr/local/portage/profiles/pentoo/default/linux/amd64 /etc/portage/make.profile
+eselect profile set pentoo:pentoo/default/linux/amd64
 
 #check lib link and fix
 if [ ! -L /lib ]
@@ -15,8 +16,13 @@ then
 	fi
 fi
 
-# Purge the uneeded locale, should keeps only en
+# Purge the uneeded locale, should keeps only en and utf8
+#sed '/^es/d' /etc/locale.nopurge #pretty sure this isn't needed
+echo en_US ISO-8859-1 >> /etc/locale.nopurge
+echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
+sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen
 localepurge
+locale-gen
 
 # Set the timezone
 if [[ -e /etc/conf.d/clock ]]
@@ -101,7 +107,6 @@ eselect profile set pentoo:pentoo/default/linux/amd64
 sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf
 emerge --metadata
 eix-update
-updatedb
 
 # Fix /etc/portage/make.conf
 sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf
@@ -148,17 +153,24 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
 done
 
-emerge --deselect=y livecd-tools dev-lang/python:2.7
-#Fucking asshattery
-export I_AM_CRAZY_TO_USE_MASKED_VERSIONS="1"
-MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y @world
-MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y @world || exit 1
+emerge --deselect=y livecd-tools
+MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y --binpkg-respect-use=y @world
+layman -S
+MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y --binpkg-respect-use=y @world || exit 1
+emerge --depclean
+revdep-rebuild
+rm /var/cache/revdep-rebuild/*.rr
+
+#after everything is built with python3 as default we make python2 default for user sanity
+eselect python set 2.7
+eselect python set 1
 MAKEOPTS="-j5 -l4" python-updater || exit 1
+MAKEOPTS="-j5 -l4" perl-cleaner --modules || exit 1
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu
 
-# Runs the incredible menu generator! Twice !
+# Runs the incredible menu generator! Twice ! Three is even better !
 genmenu.py -v -t urxvt
 genmenu.py -e -v -t urxvt
 genmenu.py -x -v -t Terminal
@@ -174,7 +186,7 @@ cd /
 patch bin/bashlogin patches/bashlogin.patch
 patch etc/init.d/halt.sh patches/halt.patch
 patch sbin/livecd-functions.sh patches/livecd-functions.patch
-patch lib/rc/sh/init.sh patches/rc.patch
+#patch lib/rc/sh/init.sh patches/rc.patch
 patch etc/init.d/autoconfig patches/autoconfig.patch
 rm -rf patches
 
@@ -220,6 +232,16 @@ cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce
 
 smart-live-rebuild
 
+#hack for openssh failing on livecd
+CONFIG_PROTECT_MASK="/etc/" emerge openssh -1
+
 CONFIG_PROTECT_MASK="/etc/" etc-update
 
 eselect ruby set ruby19
+
+revdep-rebuild
+rm /var/cache/revdep-rebuild/*.rr
+revdep-rebuild
+rm /var/cache/revdep-rebuild/*.rr
+rc-update -u
+updatedb

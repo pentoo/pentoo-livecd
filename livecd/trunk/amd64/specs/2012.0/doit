@@ -1,10 +1,9 @@
 #!/bin/sh
-#catalyst -a -f stage1.spec || exit
-#catalyst -a -f stage2.spec || exit
-#catalyst -a -f stage3.spec || exit
-#catalyst -a -f stage4.spec || exit
+catalyst -p -a -f stage1.spec || exit
+catalyst -a -f stage2.spec || exit
+catalyst -a -f stage3.spec || exit
 
-catalyst -f livecd-stage1_template.spec || exit
+catalyst -a -f livecd-stage1_template.spec || exit
 
 #make the portage module
 mkdir -p /mnt/storage/catalyst/tmp/portage/rootfs/usr/ || exit
