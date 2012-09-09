@@ -2,8 +2,8 @@ subarch: amd64
 version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
-profile: ../../local/portage/profiles/pentoo/default/linux/amd64
-snapshot: 20120819
+profile: pentoo:pentoo/hardened/linux/amd64
+snapshot: 20120905
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe
@@ -130,7 +130,7 @@ livecd/rcadd: autoconfig|default acpid|default gpm|default dbus|default microcod
 # use this on the official media, so it is left blank.
 # example:
 # livecd/rcdel:
-livecd/rcdel: keymaps|boot netmount|default
+livecd/rcdel: keymaps|boot netmount|default mdraid|boot
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,
@@ -240,14 +240,16 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
 pentoo/pentoo
-#I'm currently adding in livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
+app-text/build-docbook-catalog
+dev-util/lafilefixer
+#I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: app-text/texlive-core
+livecd/unmerge: app-text/texlive-core dev-util/lafilefixer
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from

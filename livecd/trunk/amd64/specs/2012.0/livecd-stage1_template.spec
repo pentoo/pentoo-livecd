@@ -2,8 +2,8 @@ subarch: amd64
 version_stamp: 2012.0
 target: livecd-stage1
 rel_type: default
-profile: ../../local/portage/profiles/pentoo/default/linux/amd64
-snapshot: 20120819
+profile: pentoo:pentoo/hardened/linux/amd64
+snapshot: 20120904
 source_subpath: default/stage3-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe

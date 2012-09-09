@@ -2,8 +2,8 @@ subarch: amd64
 target: stage3
 version_stamp: 2012.0
 rel_type: default
-profile: ../../local/portage/profiles/pentoo/default/linux/amd64
-snapshot: 20120819
+profile: pentoo:pentoo/hardened/linux/amd64
+snapshot: 20120903
 source_subpath: default/stage2-amd64-2012.0
 cflags: -Os -mtune=nocona -pipe
 cxxflags: -Os -mtune=nocona -pipe

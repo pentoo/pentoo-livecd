@@ -3,7 +3,7 @@
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile
 #ln -s ../../usr/local/portage/profiles/pentoo/default/linux/amd64 /etc/portage/make.profile
-eselect profile set pentoo:pentoo/default/linux/amd64
+eselect profile set pentoo:pentoo/hardened/linux/amd64
 
 #check lib link and fix
 if [ ! -L /lib ]
@@ -50,6 +50,12 @@ ln -s net.lo net.eth0
 rc-update -u
 sed -e '/provide net/D' -i dhcpcd
 
+#default net to null
+echo modules=\"\!wireless\" >> /etc/conf.d/net
+echo config_eth0=\"null\" >> /etc/conf.d/net
+echo config_wlan0=\"null\" >> /etc/conf.d/net
+
+
 # Bunzip all docs since they'll be in sqlzma format
 cd /usr/share/doc
 for maindir in `find ./ -maxdepth 1 -type d | sed -e 's:^./::'`
@@ -88,7 +94,7 @@ else
 fi
 
 # Fix the name of firefox so the user know it:
-sed -e 's/Namoroka/Firefox/' -i /usr/share/applications/mozilla-firefox-3.6.desktop
+#sed -e 's/Namoroka/Firefox/' -i /usr/share/applications/mozilla-firefox-3.6.desktop
 
 #mark all news read
 eselect news read --quiet all
@@ -126,7 +132,7 @@ analyzer bluetooth cracking databse exploit forensics mitm proxies
 scanner rce footprint forging fuzzers voip wireless pentoo xfce"' >> /etc/portage/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
-ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3"
+ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3 google-talkplugin"
 MAKEOPTS="-j2 -l1"' >> /etc/portage/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/portage/make.conf
 echo 'ACCEPT_LICENSE="*"
@@ -136,7 +142,7 @@ RUBY_TARGETS="ruby18 ruby19"' >> /etc/portage/make.conf
 #rm -rf /etc/portage/*
 #mv /tmp/make.profile /etc/portage/
 #ACCEPT_KEYWORDS="~amd64" emerge -1 pentoo/pentoo-etc-portage
-eselect profile set pentoo:pentoo/default/linux/amd64
+eselect profile set pentoo:pentoo/hardened/linux/amd64
 emerge -1 pentoo-installer
 
 # Fix the kernel dir & config
@@ -145,8 +151,8 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	ln -s linux-$krnl /usr/src/linux
 	cp /var/tmp/pentoo.config /usr/src/linux/.config
 	rm /lib/modules/$krnl/source /lib/modules/$krnl/build
-	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl/build
-	ln -s ../../../usr/src/linux-$krnl /lib/modules/$krnl/source
+	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/build
+	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
 	cd /usr/src/linux
 	make prepare && make modules_prepare
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
@@ -154,6 +160,9 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 done
 
 emerge --deselect=y livecd-tools
+emerge --deselect=y app-text/build-docbook-catalog
+
+/bin/bash
 MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y --binpkg-respect-use=y @world
 layman -S
 MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y --binpkg-respect-use=y @world || exit 1
@@ -161,9 +170,8 @@ emerge --depclean
 revdep-rebuild
 rm /var/cache/revdep-rebuild/*.rr
 
-#after everything is built with python3 as default we make python2 default for user sanity
-eselect python set 2.7
-eselect python set 1
+eselect python set python2.7
+#eselect python set 1
 MAKEOPTS="-j5 -l4" python-updater || exit 1
 MAKEOPTS="-j5 -l4" perl-cleaner --modules || exit 1
 
@@ -193,7 +201,7 @@ rm -rf patches
 # fixes pax for binary drviers GPGPU
 paxctl -m /usr/bin/X
 #paxctl -m /usr/bin/python2.6
-# fixes pax for metasploit/java attacks
+# fixes pax for metasploit/java attacks/wpscan
 paxctl -m /usr/bin/ruby
 
 # Setup fonts
@@ -238,6 +246,10 @@ CONFIG_PROTECT_MASK="/etc/" emerge openssh -1
 CONFIG_PROTECT_MASK="/etc/" etc-update
 
 eselect ruby set ruby19
+eselect bashcomp enable --global gentoo
+eselect bashcomp enable --global procps
+eselect bashcomp enable --global screen
+portageq has_version / module-init-tools && eselect bashcomp enable --global module-init-tools
 
 revdep-rebuild
 rm /var/cache/revdep-rebuild/*.rr
