@@ -202,11 +202,12 @@ rm -rf patches
 paxctl -m /usr/bin/X
 #paxctl -m /usr/bin/python2.6
 # fixes pax for metasploit/java attacks/wpscan
-paxctl -m /usr/bin/ruby
+paxctl -m /usr/bin/ruby19
 
 # Setup fonts
 cd /usr/share/fonts
 mkfontdir *
+eselect fontconfig enable 10-sub-pixel-rgb.conf
 
 # Setup kismet & airmon-ng
 [ -e /usr/sbin/airmon-ng ] && sed -i -e 's:/kismet::' /usr/sbin/airmon-ng
