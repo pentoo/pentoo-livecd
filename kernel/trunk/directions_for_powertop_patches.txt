@@ -1,0 +1,1 @@
+check https://github.com/fenrus75/powertop/tree/master/patches for the latest
