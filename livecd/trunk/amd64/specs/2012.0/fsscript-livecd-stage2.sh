@@ -208,6 +208,9 @@ paxctl -m /usr/bin/ruby19
 cd /usr/share/fonts
 mkfontdir *
 eselect fontconfig enable 10-sub-pixel-rgb.conf
+eselect fontconfig enable 57-dejavu-sans-mono.conf
+eselect fontconfig enable 57-dejavu-sans.conf
+eselect fontconfig enable 57-dejavu-serif.conf
 
 # Setup kismet & airmon-ng
 [ -e /usr/sbin/airmon-ng ] && sed -i -e 's:/kismet::' /usr/sbin/airmon-ng
