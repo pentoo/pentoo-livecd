@@ -239,6 +239,7 @@ echo 'password=pentoo' > /root/.my.cnf
 emerge --config mysql
 rm -f /root/.my.cnf
 
+gtk-theme-switch /usr/share/themes/Xfce-basic
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 
