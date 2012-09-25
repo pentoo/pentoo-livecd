@@ -178,10 +178,11 @@ MAKEOPTS="-j5 -l4" perl-cleaner --modules || exit 1
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu
 
-# Runs the incredible menu generator! Twice ! Three is even better !
-genmenu.py -v -t urxvt
-genmenu.py -e -v -t urxvt
-genmenu.py -x -v -t Terminal
+# Runs the menu generator with a specific parameters for a WM
+#genmenu.py -v -t urxvt
+#genmenu.py -e -v -t urxvt
+#genmenu.py -x -v -t Terminal
+genmenu.py -x -v
 
 # Fixes icons
 cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
