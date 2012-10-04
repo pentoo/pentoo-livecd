@@ -120,7 +120,7 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || exit
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
 echo 'USE="X gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
+cuda opencl mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig

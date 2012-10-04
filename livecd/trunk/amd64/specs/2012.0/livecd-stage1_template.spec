@@ -18,7 +18,7 @@ cxxflags: -Os -mtune=nocona -pipe
 pkgcache_path: /mnt/storage/catalyst/tmp/packages
 
 livecd/use: bindist aufs X livecd gtk python -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-mmx sse sse2 mpi wps offensive dwm -doc -examples
+cuda opencl mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
