@@ -17,7 +17,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # pkgcache_path: /tmp/packages
 pkgcache_path: /mnt/storage/catalyst/tmp/packages
 
-livecd/use: bindist aufs X livecd gtk python -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+livecd/use: bindist aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 cuda opencl mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
@@ -26,7 +26,7 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless pentoo
+scanner rce footprint forging fuzzers voip wireless
 livecd-stage1
 
 # This is the set of packages that we will merge into the CD's filesystem.  They

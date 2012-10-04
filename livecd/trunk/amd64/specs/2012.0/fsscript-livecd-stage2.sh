@@ -121,7 +121,7 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || exit
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
 echo 'USE="X gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 cuda opencl mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
-wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
+wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -129,7 +129,7 @@ dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 aufs bindist livecd
 analyzer bluetooth cracking databse exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless pentoo xfce"' >> /etc/portage/make.conf
+scanner rce footprint forging fuzzers voip wireless xfce"' >> /etc/portage/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="Oracle-BCLA-JavaSE AdobeFlash-10.3 google-talkplugin"

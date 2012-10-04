@@ -215,14 +215,14 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: bindist X aufs livecd gtk python -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+boot/kernel/pentoo/use: bindist X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 cuda opencl mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
-opengl dbus binary-drivers hal acpi usb subversion libkms pentoo
+opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxie
 scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 
