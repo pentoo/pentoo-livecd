@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# workaround read-only mount
+#this should be fixed in pm-utils
+mount -o remount,rw /mnt/cdrom
