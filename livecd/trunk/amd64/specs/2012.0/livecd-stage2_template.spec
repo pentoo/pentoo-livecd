@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20120905
+snapshot: 20121014
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe
@@ -29,7 +29,7 @@ kerncache_path: /mnt/storage/catalyst/kerncache
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend -processors 4
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2012.0_beta2.iso
+livecd/iso: /tmp/pentoo-x86_64-2012.0_beta2.5.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -68,7 +68,7 @@ livecd/bootargs: nodetect aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --dmraid --gpg --luks --lvm --compress-initramfs-type=xz
+livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --zfs --compress-initramfs-type=xz
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
@@ -185,7 +185,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: Pentoo Linux 2012.0 Beta Two
+livecd/volid: Pentoo Linux 2012.0 Beta 2.5
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -224,7 +224,7 @@ alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxie
-scanner rce footprint forging fuzzers voip wireless -livecd-stage1
+scanner rce footprint forging fuzzers voip wireless -livecd-stage1 symlink
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -239,9 +239,11 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
+@module-rebuild
 pentoo/pentoo
 app-text/build-docbook-catalog
 dev-util/lafilefixer
+sys-apps/gptfdisk
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have

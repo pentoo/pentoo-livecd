@@ -3,7 +3,7 @@ target: stage1
 version_stamp: 2012.0
 rel_type: default
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20120903
+snapshot: 20121014
 update_seed:why_not
 source_subpath: hardened/stage3-amd64-hardened-20120821
 cflags: -Os -mtune=nocona -pipe
