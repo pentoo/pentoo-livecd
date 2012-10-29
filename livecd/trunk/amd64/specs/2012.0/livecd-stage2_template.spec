@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20121014
+snapshot: 20121025
 source_subpath: default/livecd-stage1-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe
@@ -16,7 +16,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /mnt/storage/catalyst/tmp/packages
+pkgcache_path: /catalyst/tmp/packages
 
 # This allows the optional directory containing the output packages for kernel
 # builds.  Mainly used as a way for different spec files to access the same
@@ -24,12 +24,12 @@ pkgcache_path: /mnt/storage/catalyst/tmp/packages
 # by catalyst based on the spec file.
 # example:
 # kerncache_path: /tmp/kernel
-kerncache_path: /mnt/storage/catalyst/kerncache
+kerncache_path: /catalyst/kerncache
 
 livecd/fstype: squashfs
-livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend -processors 4
+livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /tmp/pentoo-x86_64-2012.0_beta2.5.iso
+livecd/iso: /catalyst/release/pentoo-x86_64-2012.0_beta2.7.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -185,7 +185,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: Pentoo Linux 2012.0 Beta 2.5
+livecd/volid: Pentoo Linux 2012.0 Beta 2.7
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -217,7 +217,7 @@ boot/kernel/pentoo/gk_kernargs:
 # boot/kernel/gentoo/use: pcmcia usb -X
 boot/kernel/pentoo/use: bindist X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 cuda opencl mmx sse sse2 mpi wps offensive dwm -doc -examples
-wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
+wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -239,11 +239,9 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1 symlink
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
-@module-rebuild
 pentoo/pentoo
 app-text/build-docbook-catalog
 dev-util/lafilefixer
-sys-apps/gptfdisk
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
@@ -257,7 +255,7 @@ livecd/unmerge: app-text/texlive-core dev-util/lafilefixer
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
-livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/
+livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/ /var/lib/layman /var/log/portage
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

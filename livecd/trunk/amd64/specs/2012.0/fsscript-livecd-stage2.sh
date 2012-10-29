@@ -123,7 +123,7 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
 echo 'USE="X gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 cuda opencl mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
-wifi injection lzma speed gnuplot pyx test-programs fwcutter qemu
+wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
@@ -135,7 +135,7 @@ scanner rce footprint forging fuzzers voip wireless xfce"' >> /etc/portage/make.
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="AdobeFlash-10.3 google-talkplugin"
-MAKEOPTS="-j2 -l1"' >> /etc/portage/make.conf
+MAKEOPTS="-j64 -l32"' >> /etc/portage/make.conf
 echo 'source /var/lib/layman/make.conf' >> /etc/portage/make.conf
 echo 'ACCEPT_LICENSE="*"
 RUBY_TARGETS="ruby18 ruby19"' >> /etc/portage/make.conf
@@ -160,16 +160,18 @@ done
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y app-text/build-docbook-catalog || /bin/bash
 
-MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y --binpkg-respect-use=y @world
+USE="-livecd-stage1" emerge -qN -kb -D --jobs --load-average=32 --keep-going=y --binpkg-respect-use=y @world
 layman -S
-MAKEOPTS="-j5 -l4" USE="-livecd-stage1" emerge -qN -kb -D --jobs=5 --load-average=4 --keep-going=y --binpkg-respect-use=y @world || /bin/bash
+USE="-livecd-stage1" emerge -qN -kb -D --jobs --load-average=32 --keep-going=y --binpkg-respect-use=y @world || /bin/bash
+USE="-livecd-stage1" emerge -qN -kb -D --jobs --load-average=32 --keep-going=y --binpkg-respect-use=y @x11-module-rebuild @module-rebuild || /bin/bash
+lafilefixer --justfixit || /bin/bash
 emerge --depclean || /bin/bash
 revdep-rebuild
 rm /var/cache/revdep-rebuild/*.rr
 
 eselect python set python2.7 || /bin/bash
-MAKEOPTS="-j5 -l4" python-updater || /bin/bash
-MAKEOPTS="-j5 -l4" perl-cleaner --modules || /bin/bash
+python-updater || /bin/bash
+perl-cleaner --modules || /bin/bash
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu || /bin/bash
@@ -269,3 +271,5 @@ rm /var/cache/revdep-rebuild/*.rr
 revdep-rebuild || /bin/bash
 rc-update -u || /bin/bash
 updatedb || /bin/bash
+sed -i 's#MAKEOPTS="-j64 -l32"#MAKEOPTS="-j2 -l1"#' /etc/portage/make.conf
+rm /root/.bash_history
