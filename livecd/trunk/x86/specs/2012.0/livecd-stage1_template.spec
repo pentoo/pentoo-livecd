@@ -1,13 +1,15 @@
-subarch: amd64
+subarch: i686
 version_stamp: 2012.0
 target: livecd-stage1
 rel_type: default
-profile: pentoo:pentoo/hardened/linux/amd64
+profile: pentoo:pentoo/hardened/linux/x86
 snapshot: 20121025
-source_subpath: default/stage4-amd64-2012.0
+source_subpath: default/stage4-i686-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
-cflags: -Os -mtune=nocona -pipe
-cxxflags: -Os -mtune=nocona -pipe
+# /usr/portage/local/layman/jokey
+cflags: -Os -march=i686 -mtune=generic -pipe -fomit-frame-pointer
+cxxflags: -Os -march=i686 -mtune=generic -pipe -fomit-frame-pointer
+
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -15,7 +17,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /catalyst/tmp/packages
+pkgcache_path: /catalyst/tmp/packages/x86-hardened
 
 livecd/use: bindist aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mmx sse sse2 mpi wps offensive dwm -doc -examples
@@ -34,5 +36,6 @@ scanner rce footprint forging fuzzers voip wireless
 # depend on a configured kernel.  If the package requires a configured kernel,
 # then it will be defined elsewhere.
 # example:
+# livecd/packages: livecd-tools dhcpcd acpid apmd gentoo-sources coldplug fxload irssi gpm syslog-ng parted links raidtools dosfstools nfs-utils jfsutils xfsprogs e2fsprogs reiserfsprogs ntfsprogs pwgen rp-pppoe screen mirrorselect penggy iputils hwdata-knoppix hwsetup lvm2 evms vim pptpclient mdadm ethtool wireless-tools prism54-firmware wpa_supplicant
 livecd/packages:
 pentoo/pentoo

@@ -2,8 +2,6 @@
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
-#ln -s ../../usr/local/portage/profiles/pentoo/default/linux/amd64 /etc/portage/make.profile
-eselect profile set pentoo:pentoo/hardened/linux/amd64 || /bin/bash
 
 #check lib link and fix
 if [ ! -L /lib ]
@@ -107,9 +105,19 @@ rm -rf /usr/local/portage/* || /bin/bash
 layman -L || /bin/bash
 layman -a pentoo || /bin/bash
 echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf || /bin/bash
-eselect profile set pentoo:pentoo/hardened/linux/amd64 || /bin/bash
+
+arch=$(uname -m)
+if [ $arch = "i686" ]; then
+	ARCH="x86"
+elif [ $arch = "x86_64" ]; then
+	ARCH="amd64"
+else
+	echo "failed to detect arch"
+	exit
+fi
+
+eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
 layman -S || /bin/bash
-eselect profile set pentoo:pentoo/hardened/linux/amd64 || /bin/bash
 
 # Build the metadata cache
 sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bash
@@ -126,7 +134,7 @@ cuda opencl mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
-alsa esd gstreamer jack mp3 vorbis wavpack wma
+alsa esd fuse gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 aufs bindist livecd
@@ -140,7 +148,6 @@ echo 'source /var/lib/layman/make.conf' >> /etc/portage/make.conf
 echo 'ACCEPT_LICENSE="*"
 RUBY_TARGETS="ruby18 ruby19"' >> /etc/portage/make.conf
 
-eselect profile set pentoo:pentoo/hardened/linux/amd64 || /bin/bash
 emerge -1 pentoo-installer || /bin/bash
 
 # Fix the kernel dir & config

@@ -1,14 +1,11 @@
-subarch: amd64
+subarch: i686
 version_stamp: 2012.0
 target: livecd-stage2
 rel_type: default
-profile: pentoo:pentoo/hardened/linux/amd64
+profile: pentoo:pentoo/hardened/linux/x86
 snapshot: 20121025
-source_subpath: default/livecd-stage1-amd64-2012.0
+source_subpath: default/livecd-stage1-i686-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
-cflags: -Os -mtune=nocona -pipe
-cxxflags: -Os -mtune=nocona -pipe
-
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -16,7 +13,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /catalyst/tmp/packages
+pkgcache_path: /catalyst/tmp/packages/x86-hardened
 
 # This allows the optional directory containing the output packages for kernel
 # builds.  Mainly used as a way for different spec files to access the same
@@ -24,12 +21,12 @@ pkgcache_path: /catalyst/tmp/packages
 # by catalyst based on the spec file.
 # example:
 # kerncache_path: /tmp/kernel
-kerncache_path: /catalyst/kerncache
+kerncache_path: /catalyst/kerncache/x86-hardened
 
 livecd/fstype: squashfs
-livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend
+livecd/fsops:  -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /catalyst/release/pentoo-x86_64-2012.0_beta2.7.iso
+livecd/iso: /catalyst/release/pentoo-i686-2012.0_beta2.7.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -41,7 +38,7 @@ livecd/iso: /catalyst/release/pentoo-x86_64-2012.0_beta2.7.iso
 # into the chroot by catalyst automatically.
 # example:
 # livecd/fsscript:
-livecd/fsscript: fsscript-livecd-stage2.sh
+livecd/fsscript: /usr/src/pentoo/livecd/trunk/amd64/specs/2012.0/fsscript-livecd-stage2.sh
 
 # The splash type determines the automatic arguments for the bootloader on
 # supported architectures.  The possible options are gensplash and bootsplash.
@@ -68,7 +65,7 @@ livecd/bootargs: nodetect aufs max_loop=256 dokeymap
 # example:
 # livecd/gk_mainargs: --lvm2 --dmraid
 #livecd/gk_mainargs: --no-clean --no-mrproper --unionfs --makeopts=-j5
-livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --zfs --compress-initramfs-type=xz
+livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --compress-initramfs-type=xz
 
 # This option allows you to specify your own linuxrc script for genkernel to use
 # when building your CD.  This is not checked for functionality, so it is up to
@@ -199,7 +196,7 @@ boot/kernel/pentoo/sources: pentoo-sources
 # used by genkernel to compile the kernel this label applies to.
 # example:
 # boot/kernel/gentoo/config: /tmp/2.6.11-smp.config
-boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/amd64/kernel/config-latest
+boot/kernel/pentoo/config:  /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest
 
 # This option sets genkernel parameters on a per-kernel basis and applies only
 # to this kernel label.  This can be used for building options into only a
@@ -219,8 +216,8 @@ boot/kernel/pentoo/use: bindist X aufs livecd gtk -kde -eds gtk2 cairo pam firef
 cuda opencl mmx sse sse2 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg fuse gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
-alsa esd gstreamer jack mp3 vorbis wavpack wma
+png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
+alsa esd fuse gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxie
@@ -233,16 +230,24 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1 symlink
 # is left blank.
 # example:
 # boot/kernel/gentoo/extraversion:
+# boot/kernel/gentoo/extraversion:
 
 # This option is for merging kernel-dependent packages and external modules that
 # are configured against this kernel label.
 # example:
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
+#pentoo/pentoo
 boot/kernel/pentoo/packages: 
 pentoo/pentoo
 app-text/build-docbook-catalog
 dev-util/lafilefixer
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
+
+# This option is only for ppc64 machines.  If used it will create the /etc/yaboot.conf
+# entry used for booting a ibm powerpc machine.
+# example:
+# boot/kernel/gentoo/machine_type: ibm
+# boot/kernel/gentoo/machine_type:
 
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you
@@ -260,5 +265,5 @@ livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/li
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
 # example:
-# livecd/rm: /lib/*.a /usr/lib/*.a /usr/lib/gcc-lib/*/*/libgcj* /etc/dispatch-conf.conf /etc/etc-update.conf /etc/*- /etc/issue* /etc/make.conf /etc/man.conf /etc/*.old /root/.viminfo /usr/sbin/bootsplash* /usr/sbin/fb* /usr/sbin/fsck.cramfs /usr/sbin/fsck.minix /usr/sbin/mkfs.minix /usr/sbin/mkfs.bfs /usr/sbin/mkfs.cramfs /lib/security/pam_access.so /lib/security/pam_chroot.so /lib/security/pam_debug.so /lib/security/pam_ftp.so /lib/security/pam_issue.so /lib/security/pam_mail.so /lib/security/pam_motd.so /lib/security/pam_mkhomedir.so /lib/security/pam_postgresok.so /lib/security/pam_rhosts_auth.so /lib/security/pam_userdb.so /usr/share/consolefonts/1* /usr/share/consolefonts/7* /usr/share/consolefonts/8* /usr/share/consolefonts/9* /usr/share/consolefonts/A* /usr/share/consolefonts/C* /usr/share/consolefonts/E* /usr/share/consolefonts/G* /usr/share/consolefonts/L* /usr/share/consolefonts/M* /usr/share/consolefonts/R* /usr/share/consolefonts/a* /usr/share/consolefonts/c* /usr/share/consolefonts/dr* /usr/share/consolefonts/g* /usr/share/consolefonts/i* /usr/share/consolefonts/k* /usr/share/consolefonts/l* /usr/share/consolefonts/r* /usr/share/consolefonts/s* /usr/share/consolefonts/t* /usr/share/consolefonts/v* /etc/splash/livecd-2005.0/16* /etc/splash/livecd-2005.0/12* /etc/splash/livecd-2005.0/6* /etc/splash/livecd-2005.0/8* /etc/splash/livecd-2005.0/images/silent-16* /etc/splash/livecd-2005.0/images/silent-12* /etc/splash/livecd-2005.0/images/silent-6* /etc/splash/livecd-2005.0/images/silent-8* /etc/splash/livecd-2005.0/images/verbose-16* /etc/splash/livecd-2005.0/images/verbose-12* /etc/splash/livecd-2005.0/images/verbose-6* /etc/splash/livecd-2005.0/images/verbose-8* /etc/make.conf.example /etc/make.globals /etc/resolv.conf
 livecd/rm: /etc/resolv.conf /usr/share/gtk-doc /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre*  /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline*
+
