@@ -2,11 +2,12 @@
 
 #disable things from grsec for building that we normally want enabled
 sysctl -w kernel.grsecurity.chroot_deny_mknod=0
+sysctl -w kernel.grsecurity.chroot_caps=0
 
-catalyst -p -f stage1.spec || exit
-catalyst -f stage2.spec || exit
-catalyst -f stage3.spec || exit
-catalyst -f stage4.spec || exit
+#catalyst -p -f stage1.spec || exit
+#catalyst -f stage2.spec || exit
+#catalyst -f stage3.spec || exit
+#catalyst -f stage4.spec || exit
 
 #we build livecd-stage1 twice because 99% of the time polkit fails on the first go
 catalyst -f livecd-stage1_template.spec
@@ -14,21 +15,21 @@ if [ $? -ne 0 ]; then
 	catalyst -f livecd-stage1_template.spec || exit
 fi
 
-rm -rf /usr/src/pentoo/livecd/trunk/isoroot/modules/*
+#rm -rf /usr/src/pentoo/livecd/trunk/isoroot/modules/*
 
 ##make the gentoo portage module
-mkdir -p /catalyst/tmp/portage/rootfs/usr/ || exit
-rm -rf /catalyst/tmp/portage/rootfs/usr/*
-rsync -aEXu /var/tmp/portage/snapshot_cache/`awk '/snapshot:/ {print $2}' livecd-stage1_template.spec`/portage /catalyst/tmp/portage/rootfs/usr/ || exit
-mksquashfs /catalyst/tmp/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-`awk '/snapshot:/ {print $2}' livecd-stage1_template.spec`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || exit
+#mkdir -p /catalyst/tmp/portage/rootfs/usr/ || exit
+#rm -rf /catalyst/tmp/portage/rootfs/usr/*
+#rsync -aEXu /var/tmp/portage/snapshot_cache/`awk '/snapshot:/ {print $2}' livecd-stage1_template.spec`/portage /catalyst/tmp/portage/rootfs/usr/ || exit
+#mksquashfs /catalyst/tmp/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-`awk '/snapshot:/ {print $2}' livecd-stage1_template.spec`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || exit
 
 ##make the pentoo portage module
-mkdir -p /catalyst/tmp/pentoo_portage/rootfs/var/lib/layman/pentoo/ || exit
-rm -rf /catalyst/tmp/pentoo_portage/rootfs/var/lib/layman/pentoo/*
-rsync -aEXu /usr/src/pentoo/portage/trunk/ /catalyst/tmp/pentoo_portage/rootfs/var/lib/layman/pentoo/ || exit
-mksquashfs /catalyst/tmp/pentoo_portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/pentoo_overlay-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || exit
+#mkdir -p /catalyst/tmp/pentoo_portage/rootfs/var/lib/layman/pentoo/ || exit
+#rm -rf /catalyst/tmp/pentoo_portage/rootfs/var/lib/layman/pentoo/*
+#rsync -aEXu /usr/src/pentoo/portage/trunk/ /catalyst/tmp/pentoo_portage/rootfs/var/lib/layman/pentoo/ || exit
+#mksquashfs /catalyst/tmp/pentoo_portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/pentoo_overlay-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || exit
 
-catalyst -f livecd-stage2_template.spec
+catalyst -f livecd-stage2_template.spec || exit
 
 chmod 777 /catalyst/release/
 su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg `awk '/livecd\/iso:/ {print $2}' livecd-stage2_template.spec`.DIGESTS"

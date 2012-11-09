@@ -1,10 +1,10 @@
 subarch: amd64
 version_stamp: 2012.0
 target: livecd-stage2
-rel_type: default
+rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20121025
-source_subpath: default/livecd-stage1-amd64-2012.0
+snapshot: 20121108
+source_subpath: hardened/livecd-stage1-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe
 cxxflags: -Os -mtune=nocona -pipe
@@ -16,7 +16,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /catalyst/tmp/packages
+pkgcache_path: /catalyst/tmp/packages/amd64-hardened
 
 # This allows the optional directory containing the output packages for kernel
 # builds.  Mainly used as a way for different spec files to access the same
@@ -24,12 +24,12 @@ pkgcache_path: /catalyst/tmp/packages
 # by catalyst based on the spec file.
 # example:
 # kerncache_path: /tmp/kernel
-kerncache_path: /catalyst/kerncache
+kerncache_path: /catalyst/kerncache/amd64-hardened
 
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /catalyst/release/pentoo-x86_64-2012.0_beta2.7.iso
+livecd/iso: /catalyst/release/pentoo-x86_64-2012.0_beta3.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -185,7 +185,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 # This option sets the volume ID of the CD created.
 # example:
 # livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: Pentoo Linux 2012.0 Beta 2.7
+livecd/volid: Pentoo Linux 2012.0 Beta 3
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -216,7 +216,7 @@ boot/kernel/pentoo/gk_kernargs:
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
 boot/kernel/pentoo/use: bindist X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-cuda opencl mmx sse sse2 mpi wps offensive dwm -doc -examples
+cuda opencl mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg fuse gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
@@ -242,6 +242,8 @@ boot/kernel/pentoo/packages:
 pentoo/pentoo
 app-text/build-docbook-catalog
 dev-util/lafilefixer
+sys-fs/zfs
+@module-rebuild
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
@@ -255,7 +257,7 @@ livecd/unmerge: dev-util/lafilefixer
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
-livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/ /var/lib/layman /var/log/portage
+livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/ /var/lib/layman/pentoo
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

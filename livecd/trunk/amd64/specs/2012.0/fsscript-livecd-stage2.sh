@@ -1,5 +1,5 @@
 #!/bin/sh
-
+source /tmp/envscript
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
 
@@ -109,14 +109,17 @@ echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf || /bin/bash
 arch=$(uname -m)
 if [ $arch = "i686" ]; then
 	ARCH="x86"
+	#no matter what I do, the x86 build just fails miserably when hardened, and can't even build on default
+	#sigh
+	eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
 elif [ $arch = "x86_64" ]; then
 	ARCH="amd64"
+	eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
 else
 	echo "failed to detect arch"
 	exit
 fi
 
-eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
 layman -S || /bin/bash
 
 # Build the metadata cache
@@ -130,7 +133,7 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
 echo 'USE="X gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-cuda opencl mmx sse sse2 mpi wps offensive dwm 32bit -doc -examples
+cuda opencl mpi wps offensive dwm 32bit -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
@@ -143,8 +146,7 @@ scanner rce footprint forging fuzzers voip wireless xfce"' >> /etc/portage/make.
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="AdobeFlash-10.3 google-talkplugin"
-MAKEOPTS="-j64 -l32"' >> /etc/portage/make.conf
-echo 'source /var/lib/layman/make.conf' >> /etc/portage/make.conf
+MAKEOPTS="-j2 -l1"' >> /etc/portage/make.conf
 echo 'ACCEPT_LICENSE="*"
 RUBY_TARGETS="ruby18 ruby19"' >> /etc/portage/make.conf
 
@@ -165,12 +167,12 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 done
 
 emerge --deselect=y livecd-tools || /bin/bash
-emerge --deselect=y app-text/build-docbook-catalog || /bin/bash
+emerge --deselect=y sys-fs/zfs || /bin/bash
 
-USE="-livecd-stage1" emerge -qN -kb -D --jobs --load-average=32 --keep-going=y --binpkg-respect-use=y @world
+emerge -qN -kb -D @world
 layman -S
-USE="-livecd-stage1" emerge -qN -kb -D --jobs --load-average=32 --keep-going=y --binpkg-respect-use=y @world || /bin/bash
-USE="-livecd-stage1" emerge -qN -kb -D --jobs --load-average=32 --keep-going=y --binpkg-respect-use=y @x11-module-rebuild @module-rebuild || /bin/bash
+emerge -qN -kb -D @world || /bin/bash
+emerge -qN -kb -D @x11-module-rebuild || /bin/bash
 lafilefixer --justfixit || /bin/bash
 emerge --depclean || /bin/bash
 revdep-rebuild
@@ -200,11 +202,11 @@ cd /
 #replaced by livecd-tools-2.0.3
 #patch bin/bashlogin patches/bashlogin.patch || /bin/bash
 #halt fails but shouldn't
-patch etc/init.d/halt.sh patches/halt.patch || /bin/bash
+#patch etc/init.d/halt.sh patches/halt.patch || /bin/bash
 patch sbin/livecd-functions.sh patches/livecd-functions.patch || /bin/bash
 #patch lib/rc/sh/init.sh patches/rc.patch
 #autoconf fails
-patch etc/init.d/autoconfig patches/autoconfig.patch || /bin/bash
+#patch etc/init.d/autoconfig patches/autoconfig.patch || /bin/bash
 rm -rf patches || /bin/bash
 
 # fixes pax for binary drivers GPGPU
@@ -240,7 +242,8 @@ chmod 777 -R /var/lib/ntop || /bin/bash
 ntop --set-admin-password=pentoo || /bin/bash
 
 # Configure mysql
-echo 'password=pentoo' > /root/.my.cnf
+echo '[client]' > /root/.my.cnf
+echo 'password=pentoo' >> /root/.my.cnf
 emerge --config mysql || /bin/bash
 rm -f /root/.my.cnf || /bin/bash
 
@@ -260,10 +263,7 @@ EOF
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 
-smart-live-rebuild
-
-#hack for openssh failing on livecd
-CONFIG_PROTECT_MASK="/etc/" emerge openssh -1 || /bin/bash
+smart-live-rebuild -E --timeout=60
 
 CONFIG_PROTECT_MASK="/etc/" etc-update || /bin/bash
 
@@ -278,5 +278,4 @@ rm /var/cache/revdep-rebuild/*.rr
 revdep-rebuild || /bin/bash
 rc-update -u || /bin/bash
 updatedb || /bin/bash
-sed -i 's#MAKEOPTS="-j64 -l32"#MAKEOPTS="-j2 -l1"#' /etc/portage/make.conf
 rm /root/.bash_history
