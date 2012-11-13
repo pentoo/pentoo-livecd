@@ -265,5 +265,5 @@ livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/li
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
 # example:
-livecd/rm: /etc/resolv.conf /usr/share/gtk-doc /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre*  /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline*
+livecd/rm: /etc/resolv.conf /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre*  /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline*
 
