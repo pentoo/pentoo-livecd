@@ -33,3 +33,5 @@ catalyst -f livecd-stage2_template.spec || exit
 
 chmod 777 /catalyst/release/
 su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg `awk '/livecd\/iso:/ {print $2}' livecd-stage2_template.spec`.DIGESTS"
+
+mktorrent -a http://tracker.cryptohaze.com/announce.php -n "$(grep ^livecd/volid livecd-stage2_template.spec | cut -d' ' -f2-)" /catalyst/release/*x86_64*
