@@ -3,11 +3,11 @@ version_stamp: 2012.0
 target: livecd-stage1
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20121108
+snapshot: 20121204
 source_subpath: hardened/stage4-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
-cflags: -Os -mtune=nocona -pipe
-cxxflags: -Os -mtune=nocona -pipe
+cflags: -Os -mtune=nocona -pipe -ggdb
+cxxflags: -Os -mtune=nocona -pipe -ggdb
 
 # This allows the optional directory containing the output packages for
 # catalyst.  Mainly used as a way for different spec files to access the same
@@ -17,7 +17,7 @@ cxxflags: -Os -mtune=nocona -pipe
 # pkgcache_path: /tmp/packages
 pkgcache_path: /catalyst/tmp/packages/amd64-hardened
 
-livecd/use: bindist aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
@@ -25,8 +25,6 @@ png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd fuse gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
-analyzer bluetooth cracking databse exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless
 -cuda -opencl livecd-stage1 symlink
 
 # This is the set of packages that we will merge into the CD's filesystem.  They

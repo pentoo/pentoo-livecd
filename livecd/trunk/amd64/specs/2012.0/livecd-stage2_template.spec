@@ -3,11 +3,11 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20121108
+snapshot: 20121204
 source_subpath: hardened/livecd-stage1-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
-cflags: -Os -mtune=nocona -pipe
-cxxflags: -Os -mtune=nocona -pipe
+cflags: -Os -mtune=nocona -pipe -ggdb
+cxxflags: -Os -mtune=nocona -pipe -ggdb
 
 
 # This allows the optional directory containing the output packages for
@@ -121,7 +121,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr nouveau 
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default acpid|default bluetooth|default gpm|default dbus|default microcode_ctl|boot
+livecd/rcadd: autoconfig|default acpid|default bluetooth|default consolekit|default gpm|default dbus|default microcode_ctl|boot
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -215,16 +215,15 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: bindist X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+boot/kernel/pentoo/use: X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 cuda opencl mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg fuse gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
-opengl dbus binary-drivers hal acpi usb subversion libkms
-analyzer bluetooth cracking databse exploit forensics mitm proxie
-scanner rce footprint forging fuzzers voip wireless -livecd-stage1 symlink
+dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
+opengl dbus binary-drivers acpi usb subversion libkms
+-livecd-stage1 symlink
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -243,7 +242,6 @@ pentoo/pentoo
 app-text/build-docbook-catalog
 dev-util/lafilefixer
 sys-fs/zfs
-@module-rebuild
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
 # This is a list of packages that will be unmerged after all the kernels have
@@ -257,7 +255,7 @@ livecd/unmerge: dev-util/lafilefixer
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
-livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/ /var/lib/layman/pentoo
+livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/ /var/lib/layman/pentoo /usr/lib/debug
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

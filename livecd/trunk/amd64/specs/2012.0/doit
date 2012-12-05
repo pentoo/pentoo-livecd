@@ -4,10 +4,10 @@
 sysctl -w kernel.grsecurity.chroot_deny_mknod=0
 sysctl -w kernel.grsecurity.chroot_caps=0
 
-#catalyst -p -f stage1.spec || exit
-#catalyst -f stage2.spec || exit
-#catalyst -f stage3.spec || exit
-#catalyst -f stage4.spec || exit
+catalyst -p -f stage1.spec || exit
+catalyst -f stage2.spec || exit
+catalyst -f stage3.spec || exit
+catalyst -f stage4.spec || exit
 
 #we build livecd-stage1 twice because 99% of the time polkit fails on the first go
 catalyst -f livecd-stage1_template.spec
@@ -34,4 +34,5 @@ catalyst -f livecd-stage2_template.spec || exit
 chmod 777 /catalyst/release/
 su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg `awk '/livecd\/iso:/ {print $2}' livecd-stage2_template.spec`.DIGESTS"
 
-mktorrent -a http://tracker.cryptohaze.com/announce.php -n "$(grep ^livecd/volid livecd-stage2_template.spec | cut -d' ' -f2-)" /catalyst/release/*x86_64*
+volid="$(grep ^livecd/volid livecd-stage2_template.spec | cut -d' ' -f2-)"
+mktorrent -a http://tracker.cryptohaze.com/announce.php -n "${volid}" /catalyst/release/*x86_64* -o /catalyst/release/"${volid}".torrent

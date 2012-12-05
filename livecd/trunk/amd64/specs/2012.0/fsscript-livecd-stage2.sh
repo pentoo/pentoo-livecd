@@ -1,5 +1,6 @@
 #!/bin/sh
 source /tmp/envscript
+
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
 
@@ -56,16 +57,16 @@ echo config_wlan0=\"null\" >> /etc/conf.d/net
 
 
 # Bunzip all docs since they'll be in sqlzma format
-cd /usr/share/doc
-for maindir in `find ./ -maxdepth 1 -type d | sed -e 's:^./::'`
-do
-        cd "${maindir}"
-        for file in `ls *.bz2`
-        do
-                bunzip2 "${file}"
-        done
-        cd ..
-done
+#cd /usr/share/doc
+#for maindir in `find ./ -maxdepth 1 -type d | sed -e 's:^./::'`
+#do
+#        cd "${maindir}"
+#        for file in `ls *.bz2`
+#        do
+#                bunzip2 "${file}"
+#        done
+#        cd ..
+#done
 
 # Over 1Mb doc is too much for now, we save some space <-- not sure I care anymore
 #cd /usr/share/doc
@@ -112,11 +113,13 @@ if [ $arch = "i686" ]; then
 	#no matter what I do, the x86 build just fails miserably when hardened, and can't even build on default
 	#sigh
 	eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/hardened/linux/${ARCH}/bleeding_edge
 elif [ $arch = "x86_64" ]; then
 	ARCH="amd64"
 	eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/hardened/linux/${ARCH}/bleeding_edge
 else
-	echo "failed to detect arch"
+	echo "failed to handle arch"
 	exit
 fi
 
@@ -132,23 +135,16 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
-echo 'USE="X gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-cuda opencl mpi wps offensive dwm 32bit -doc -examples
-wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
-alsa esd fuse gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
-opengl dbus binary-drivers hal acpi usb subversion libkms
-aufs bindist livecd
-analyzer bluetooth cracking databse exploit forensics mitm proxies
-scanner rce footprint forging fuzzers voip wireless xfce"' >> /etc/portage/make.conf
+echo 'USE="cuda opencl consolekit python
+32bit -doc -examples opengl
+aufs bindist livecd"' >> /etc/portage/make.conf
 echo 'INPUT_DEVICES="evdev synaptics"
 VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
 ACCEPT_LICENSE="AdobeFlash-10.3 google-talkplugin"
 MAKEOPTS="-j2 -l1"' >> /etc/portage/make.conf
 echo 'ACCEPT_LICENSE="*"
 RUBY_TARGETS="ruby18 ruby19"' >> /etc/portage/make.conf
+portageq has_version / pentoo/tribe && echo 'USE="${USE} -bluetooth -database -exploit -footprint -forensics -forging -fuzzers -mitm -mobile -proxies -qemu -radio -rce -scanner -voip -wireless -wireless-compat"' >> /etc/portage/make.conf
 
 emerge -1 pentoo-installer || /bin/bash
 
@@ -161,7 +157,8 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/build
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
 	cd /usr/src/linux
-	make prepare && make modules_prepare
+	ARCH=${arch} make prepare
+	ARCH=${arch} make modules_prepare
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
 done
@@ -175,8 +172,7 @@ emerge -qN -kb -D @world || /bin/bash
 emerge -qN -kb -D @x11-module-rebuild || /bin/bash
 lafilefixer --justfixit || /bin/bash
 emerge --depclean || /bin/bash
-revdep-rebuild
-rm /var/cache/revdep-rebuild/*.rr
+revdep-rebuild || rm /var/cache/revdep-rebuild/*.rr
 
 eselect python set python2.7 || /bin/bash
 python-updater || /bin/bash
@@ -265,6 +261,11 @@ cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce
 
 smart-live-rebuild -E --timeout=60
 
+emerge --oneshot media-gfx/graphviz
+
+#forcibly untrounce our blacklist, caused by udev remerging
+rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
+#merge all other desired changes into /etc
 CONFIG_PROTECT_MASK="/etc/" etc-update || /bin/bash
 
 eselect ruby set ruby19 || /bin/bash
@@ -275,9 +276,20 @@ eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash
 portageq has_version / module-init-tools && eselect bashcomp enable --global module-init-tools
 
-revdep-rebuild
-rm /var/cache/revdep-rebuild/*.rr
+revdep-rebuild || rm /var/cache/revdep-rebuild/*.rr
 revdep-rebuild || /bin/bash
 rc-update -u || /bin/bash
 updatedb || /bin/bash
-rm /root/.bash_history
+
+## XXX: THIS IS A HORRIBLY IDEA!!!!
+# So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
+# The issue is it isn't really possible (nor desirable) to have all this extra debug info on the iso so here is what we do...
+#We make a dir with full path for where the debug info goes abusing the fancy /var/tmp/portage tmpfs mount
+mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+#then we rsync all the debug info into a rootfs for building a module
+rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+# last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
+mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
+# and we add /usr/lib/debug to cleanables in livecd-stage2.spec
+
+rm -f /root/.bash_history
