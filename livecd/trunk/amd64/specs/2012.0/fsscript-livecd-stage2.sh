@@ -243,6 +243,9 @@ echo 'password=pentoo' >> /root/.my.cnf
 emerge --config mysql || /bin/bash
 rm -f /root/.my.cnf || /bin/bash
 
+#configure freeradius
+emerge --config net-dialup/freeradius || /bin/bash
+
 #gtk-theme-switch segfaults
 #gtk-theme-switch /usr/share/themes/Xfce-basic || /bin/bash
 echo gtk-theme-name="Xfce-basic" >> /root/.gtkrc-2.0
@@ -291,5 +294,7 @@ rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin
 # last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
 mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec
-
+rm -rf /var/tmp/portage/debug
+sync
+sleep 60
 rm -f /root/.bash_history

@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage1
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86
-snapshot: 20121204
+snapshot: 20121206
 source_subpath: hardened/stage4-i686-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -march=i686 -mtune=generic -pipe -fomit-frame-pointer -ggdb
@@ -18,7 +18,7 @@ cxxflags: -Os -march=i686 -mtune=generic -pipe -fomit-frame-pointer -ggdb
 # pkgcache_path: /tmp/packages
 pkgcache_path: /catalyst/tmp/packages/x86-hardened
 
-livecd/use: bindist aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
+livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
