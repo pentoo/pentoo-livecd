@@ -2,7 +2,7 @@ subarch: i686
 version_stamp: 2012.0
 target: livecd-stage2
 rel_type: hardened
-profile: pentoo:pentoo/hardened/linux/x86
+profile: pentoo:pentoo/hardened/linux/x86/bleeding_edge
 snapshot: 20130126
 source_subpath: hardened/livecd-stage1-i686-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
@@ -214,16 +214,8 @@ boot/kernel/pentoo/gk_kernargs:
 # the default USE for the specified profile.
 # example:
 # boot/kernel/gentoo/use: pcmcia usb -X
-boot/kernel/pentoo/use: X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-cuda opencl mpi wps offensive dwm -doc -examples
-wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
-alsa esd fuse gstreamer jack mp3 vorbis wavpack wma
-dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
-opengl dbus binary-drivers hal acpi usb subversion libkms
-analyzer bluetooth cracking databse exploit forensics mitm proxie
-scanner rce footprint forging fuzzers voip wireless -livecd-stage1 symlink
+boot/kernel/pentoo/use: X aufs livecd cuda opencl consolekit opengl python
+-bluetooth -database -exploit -footprint -forensics -forging -fuzzers -mitm -mobile -proxies -qemu -radio -rce -scanner -voip -wireless -windows-compat
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -241,6 +233,7 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1 symlink
 #pentoo/pentoo
 boot/kernel/pentoo/packages: 
 pentoo/pentoo
+pentoo/tribe
 app-text/build-docbook-catalog
 dev-util/lafilefixer
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking

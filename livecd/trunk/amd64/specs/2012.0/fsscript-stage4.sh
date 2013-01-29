@@ -1,4 +1,5 @@
 #!/bin/sh
 source /tmp/envscript
-emerge --deep --update --newuse @world
-python-updater
+USE="-directfb" emerge -1 libsdl DirectFB || exit 1
+emerge --deep --update --newuse @world || exit 1
+python-updater || exit 1

@@ -55,6 +55,11 @@ echo modules=\"\!wireless\" >> /etc/conf.d/net
 echo config_eth0=\"null\" >> /etc/conf.d/net
 echo config_wlan0=\"null\" >> /etc/conf.d/net
 
+# trigger load of modules we want to load no matter what
+# all entries must have a confirmed reason why it is
+# a module and not built in yet must still be loaded
+#microcode - module load triggers cpu microcode update, builtin doesn't
+echo 'modules="microcode"' >> /etc/conf.d/modules
 
 # Bunzip all docs since they'll be in sqlzma format
 #cd /usr/share/doc
@@ -102,7 +107,7 @@ eselect news read --quiet all || /bin/bash
 eselect news purge || /bin/bash
 
 # Add pentoo repo
-rm -rf /usr/local/portage/* || /bin/bash
+rm -r /usr/local/portage/* || /bin/bash
 layman -L || /bin/bash
 layman -a pentoo || /bin/bash
 echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf || /bin/bash
@@ -135,15 +140,19 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
-echo 'USE="cuda opencl consolekit python
-32bit -doc -examples opengl
-aufs bindist livecd"' >> /etc/portage/make.conf
-echo 'INPUT_DEVICES="evdev synaptics"
-VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
-ACCEPT_LICENSE="AdobeFlash-10.3 google-talkplugin"
-MAKEOPTS="-j2 -l1"' >> /etc/portage/make.conf
-echo 'ACCEPT_LICENSE="*"
-RUBY_TARGETS="ruby18 ruby19"' >> /etc/portage/make.conf
+cat <<-EOF > /etc/portage/make.conf
+	#Please adjust your use flags, if you don't use gpu cracking remove cuda and opencl
+	USE="cuda opencl -doc -examples"
+	USE="${USE} aufs bindist livecd"
+	#MAKEOPTS is set automatically by the profile to jobs equal to processors
+	#Please set your input devices, if you are only using evdev you may completely remove this line
+	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
+	#Please set your video_cards, live usb users should leave this alone, install should set it to one video card
+	VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
+	ACCEPT_LICENSE="AdobeFlash-10.3 Intel-SDP"
+	source /var/lib/layman/make.conf
+EOF
+portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
 portageq has_version / pentoo/tribe && echo 'USE="${USE} -bluetooth -database -exploit -footprint -forensics -forging -fuzzers -mitm -mobile -proxies -qemu -radio -rce -scanner -voip -wireless -wireless-compat"' >> /etc/portage/make.conf
 
 emerge -1 pentoo-installer || /bin/bash
@@ -157,8 +166,8 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/build
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
 	cd /usr/src/linux
-	ARCH=${arch} make prepare
-	ARCH=${arch} make modules_prepare
+	make prepare
+	make modules_prepare
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
 done
@@ -170,9 +179,14 @@ emerge -qN -kb -D @world
 layman -S
 emerge -qN -kb -D @world || /bin/bash
 emerge -qN -kb -D @x11-module-rebuild || /bin/bash
-lafilefixer --justfixit || /bin/bash
+lafilefixer --justfixit | grep -v "already clean, skipping update"
 emerge --depclean || /bin/bash
-revdep-rebuild || rm /var/cache/revdep-rebuild/*.rr
+revdep-rebuild
+if [ $? -ne 0 ]; then
+	rm /var/cache/revdep-rebuild/*.rr
+	revdep-rebuild
+fi
+
 
 eselect python set python2.7 || /bin/bash
 python-updater || /bin/bash
@@ -243,6 +257,18 @@ echo 'password=pentoo' >> /root/.my.cnf
 emerge --config mysql || /bin/bash
 rm -f /root/.my.cnf || /bin/bash
 
+#configure postgres
+echo y | emerge --config dev-db/postgresql-server || /bin/bash
+touch /run/openrc/softlevel
+/etc/init.d/postgresql-9.2 start || /bin/bash
+emerge --config net-analyzer/metasploit || /bash/bash
+
+#metasploit first run to create db, etc, and speed up livecd first run
+echo -e exit | msfconsole
+
+/etc/init.d/postgresql-9.2 stop || /bin/bash
+rm /run/openrc/softlevel || /bin/bash
+
 #configure freeradius
 emerge --config net-dialup/freeradius || /bin/bash
 
@@ -261,6 +287,8 @@ EOF
 
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
+#easy way to adjust wallpaper per install
+sed -i 's#domo-roolz#linux-christmas#' /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml || /bin/bash
 
 smart-live-rebuild -E --timeout=60
 
@@ -279,10 +307,12 @@ eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash
 portageq has_version / module-init-tools && eselect bashcomp enable --global module-init-tools
 
-revdep-rebuild || rm /var/cache/revdep-rebuild/*.rr
-revdep-rebuild || /bin/bash
+revdep-rebuild
+if [ $? -ne 0 ]; then
+	rm /var/cache/revdep-rebuild/*.rr
+	revdep-rebuild || /bin/bash
+fi
 rc-update -u || /bin/bash
-updatedb || /bin/bash
 
 ## XXX: THIS IS A HORRIBLY IDEA!!!!
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
@@ -295,6 +325,10 @@ rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin
 mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec
 rm -rf /var/tmp/portage/debug
+rm -rf /var/tmp/portage
+sync
+sleep 60
+updatedb || /bin/bash
 sync
 sleep 60
 rm -f /root/.bash_history

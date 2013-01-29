@@ -3,7 +3,7 @@ version_stamp: 2012.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20121206
+snapshot: 20130126
 source_subpath: hardened/livecd-stage1-amd64-2012.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe -ggdb
@@ -121,7 +121,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr nouveau 
 # This option will automatically create missing runlevels
 # example:
 # livecd/rcadd:
-livecd/rcadd: autoconfig|default acpid|default bluetooth|default consolekit|default gpm|default dbus|default microcode_ctl|boot
+livecd/rcadd: autoconfig|default acpid|default bluetooth|default consolekit|default gpm|default dbus|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -254,7 +254,7 @@ livecd/unmerge: dev-util/lafilefixer
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
 # example:
-livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/src/linux/Documentation /usr/local/portage/ /var/lib/layman/pentoo /usr/lib/debug
+livecd/empty: /var/empty /run/lock /var/log /var/tmp /var/spool /tmp /usr/local/portage/ /var/lib/layman/pentoo /usr/lib/debug
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
