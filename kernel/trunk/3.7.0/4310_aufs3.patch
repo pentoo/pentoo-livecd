@@ -1,6 +1,6 @@
 diff -Naur linux-3.7.0-hardened/Documentation/ABI/testing/debugfs-aufs linux-3.7.0-hardened-aufs/Documentation/ABI/testing/debugfs-aufs
 --- linux-3.7.0-hardened/Documentation/ABI/testing/debugfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/ABI/testing/debugfs-aufs	2013-01-31 18:44:26.972688000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/ABI/testing/debugfs-aufs	2013-01-31 23:56:43.895190000 -0500
 @@ -0,0 +1,37 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -41,7 +41,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/ABI/testing/debugfs-aufs linux-3.7
 +		will be empty. About XINO files, see the aufs manual.
 diff -Naur linux-3.7.0-hardened/Documentation/ABI/testing/sysfs-aufs linux-3.7.0-hardened-aufs/Documentation/ABI/testing/sysfs-aufs
 --- linux-3.7.0-hardened/Documentation/ABI/testing/sysfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/ABI/testing/sysfs-aufs	2013-01-31 18:44:26.972467000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/ABI/testing/sysfs-aufs	2013-01-31 23:56:43.894827000 -0500
 @@ -0,0 +1,24 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -69,7 +69,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/ABI/testing/sysfs-aufs linux-3.7.0
 +		will be empty. About XINO files, see the aufs manual.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/README linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/README
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/README	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/README	2013-01-31 18:44:26.974296000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/README	2013-01-31 23:56:43.891541000 -0500
 @@ -0,0 +1,333 @@
 +
 +Aufs3 -- advanced multi layered unification filesystem version 3.x
@@ -406,7 +406,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/README linux-3.7.
 +# End: ;
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/01intro.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/01intro.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/01intro.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/01intro.txt	2013-01-31 18:44:26.973803000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/01intro.txt	2013-01-31 23:56:43.893690000 -0500
 @@ -0,0 +1,162 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -572,7 +572,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/01intro.tx
 +about it. But currently I have implemented it in kernel space.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/02struct.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/02struct.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/02struct.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/02struct.txt	2013-01-31 18:44:26.973187000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/02struct.txt	2013-01-31 23:56:43.893861000 -0500
 @@ -0,0 +1,226 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -802,7 +802,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/02struct.t
 +dir, aufs reverts it after copy-up.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/03lookup.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/03lookup.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/03lookup.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/03lookup.txt	2013-01-31 18:44:26.973946000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/03lookup.txt	2013-01-31 23:56:43.891985000 -0500
 @@ -0,0 +1,106 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -912,7 +912,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/03lookup.t
 +   by over-mounting something (or another method).
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/04branch.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/04branch.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/04branch.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/04branch.txt	2013-01-31 18:44:26.974170000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/04branch.txt	2013-01-31 23:56:43.892973000 -0500
 @@ -0,0 +1,76 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -992,7 +992,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/04branch.t
 +    same named entry on the upper branch.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/05wbr_policy.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt	2013-01-31 18:44:26.973062000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt	2013-01-31 23:56:43.892626000 -0500
 @@ -0,0 +1,65 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1061,7 +1061,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/05wbr_poli
 +  copyup policy.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/06mmap.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/06mmap.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/06mmap.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/06mmap.txt	2013-01-31 18:44:26.973450000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/06mmap.txt	2013-01-31 23:56:43.894025000 -0500
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1112,7 +1112,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/06mmap.txt
 +switching the approach.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/07export.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/07export.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/07export.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/07export.txt	2013-01-31 18:44:26.973576000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/07export.txt	2013-01-31 23:56:43.893492000 -0500
 @@ -0,0 +1,59 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1175,7 +1175,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/07export.t
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/08shwh.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/08shwh.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/08shwh.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/08shwh.txt	2013-01-31 18:44:26.973683000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/08shwh.txt	2013-01-31 23:56:43.893315000 -0500
 @@ -0,0 +1,53 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1232,7 +1232,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/08shwh.txt
 +initramfs will use it to replace the old one at the next boot.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/10dynop.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/10dynop.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/10dynop.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/10dynop.txt	2013-01-31 18:44:26.973343000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/10dynop.txt	2013-01-31 23:56:43.893146000 -0500
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -1283,7 +1283,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/10dynop.tx
 +vm_operations_struct for regular files only.
 diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/99plan.txt linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/99plan.txt
 --- linux-3.7.0-hardened/Documentation/filesystems/aufs/design/99plan.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/99plan.txt	2013-01-31 18:44:26.974062000 -0500
++++ linux-3.7.0-hardened-aufs/Documentation/filesystems/aufs/design/99plan.txt	2013-01-31 23:56:43.892216000 -0500
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1383,7 +1383,7 @@ diff -Naur linux-3.7.0-hardened/Documentation/filesystems/aufs/design/99plan.txt
 +Otherwise from /new.
 diff -Naur linux-3.7.0-hardened/fs/Kconfig linux-3.7.0-hardened-aufs/fs/Kconfig
 --- linux-3.7.0-hardened/fs/Kconfig	2012-12-10 22:30:57.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/Kconfig	2013-01-31 18:44:01.909557000 -0500
++++ linux-3.7.0-hardened-aufs/fs/Kconfig	2013-01-31 23:56:20.554822000 -0500
 @@ -220,6 +220,7 @@
  source "fs/sysv/Kconfig"
  source "fs/ufs/Kconfig"
@@ -1394,7 +1394,7 @@ diff -Naur linux-3.7.0-hardened/fs/Kconfig linux-3.7.0-hardened-aufs/fs/Kconfig
  
 diff -Naur linux-3.7.0-hardened/fs/Makefile linux-3.7.0-hardened-aufs/fs/Makefile
 --- linux-3.7.0-hardened/fs/Makefile	2012-12-10 22:30:57.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/Makefile	2013-01-31 18:44:01.910001000 -0500
++++ linux-3.7.0-hardened-aufs/fs/Makefile	2013-01-31 23:56:20.555409000 -0500
 @@ -126,3 +126,4 @@
  obj-y				+= exofs/ # Multiple modules
  obj-$(CONFIG_CEPH_FS)		+= ceph/
@@ -1402,7 +1402,7 @@ diff -Naur linux-3.7.0-hardened/fs/Makefile linux-3.7.0-hardened-aufs/fs/Makefil
 +obj-$(CONFIG_AUFS_FS)           += aufs/
 diff -Naur linux-3.7.0-hardened/fs/aufs/Kconfig linux-3.7.0-hardened-aufs/fs/aufs/Kconfig
 --- linux-3.7.0-hardened/fs/aufs/Kconfig	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/Kconfig	2013-01-31 18:44:26.978225000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/Kconfig	2013-01-31 23:56:43.900667000 -0500
 @@ -0,0 +1,203 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -1609,7 +1609,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/Kconfig linux-3.7.0-hardened-aufs/fs/auf
 +endif
 diff -Naur linux-3.7.0-hardened/fs/aufs/Makefile linux-3.7.0-hardened-aufs/fs/aufs/Makefile
 --- linux-3.7.0-hardened/fs/aufs/Makefile	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/Makefile	2013-01-31 18:44:26.978012000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/Makefile	2013-01-31 23:56:43.904437000 -0500
 @@ -0,0 +1,42 @@
 +
 +include ${src}/magic.mk
@@ -1655,7 +1655,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/Makefile linux-3.7.0-hardened-aufs/fs/au
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
 diff -Naur linux-3.7.0-hardened/fs/aufs/aufs.h linux-3.7.0-hardened-aufs/fs/aufs/aufs.h
 --- linux-3.7.0-hardened/fs/aufs/aufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/aufs.h	2013-01-31 18:44:26.981402000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/aufs.h	2013-01-31 23:56:43.897375000 -0500
 @@ -0,0 +1,60 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1719,7 +1719,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/aufs.h linux-3.7.0-hardened-aufs/fs/aufs
 +#endif /* __AUFS_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/branch.c linux-3.7.0-hardened-aufs/fs/aufs/branch.c
 --- linux-3.7.0-hardened/fs/aufs/branch.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/branch.c	2013-01-31 18:44:26.982124000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/branch.c	2013-01-31 23:56:43.901100000 -0500
 @@ -0,0 +1,1172 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -2895,7 +2895,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/branch.c linux-3.7.0-hardened-aufs/fs/au
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/branch.h linux-3.7.0-hardened-aufs/fs/aufs/branch.h
 --- linux-3.7.0-hardened/fs/aufs/branch.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/branch.h	2013-01-31 18:44:26.977908000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/branch.h	2013-01-31 23:56:43.904568000 -0500
 @@ -0,0 +1,230 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -3129,7 +3129,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/branch.h linux-3.7.0-hardened-aufs/fs/au
 +#endif /* __AUFS_BRANCH_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/conf.mk linux-3.7.0-hardened-aufs/fs/aufs/conf.mk
 --- linux-3.7.0-hardened/fs/aufs/conf.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/conf.mk	2013-01-31 18:44:26.979979000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/conf.mk	2013-01-31 23:56:43.902515000 -0500
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -3171,7 +3171,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/conf.mk linux-3.7.0-hardened-aufs/fs/auf
 +-include ${srctree}/${src}/conf_priv.mk
 diff -Naur linux-3.7.0-hardened/fs/aufs/cpup.c linux-3.7.0-hardened-aufs/fs/aufs/cpup.c
 --- linux-3.7.0-hardened/fs/aufs/cpup.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/cpup.c	2013-01-31 18:44:26.976114000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/cpup.c	2013-01-31 23:56:43.905471000 -0500
 @@ -0,0 +1,1085 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4260,7 +4260,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/cpup.c linux-3.7.0-hardened-aufs/fs/aufs
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/cpup.h linux-3.7.0-hardened-aufs/fs/aufs/cpup.h
 --- linux-3.7.0-hardened/fs/aufs/cpup.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/cpup.h	2013-01-31 18:44:26.979167000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/cpup.h	2013-01-31 23:56:43.899765000 -0500
 @@ -0,0 +1,81 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4345,7 +4345,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/cpup.h linux-3.7.0-hardened-aufs/fs/aufs
 +#endif /* __AUFS_CPUP_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/dbgaufs.c linux-3.7.0-hardened-aufs/fs/aufs/dbgaufs.c
 --- linux-3.7.0-hardened/fs/aufs/dbgaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dbgaufs.c	2013-01-31 18:44:26.975884000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dbgaufs.c	2013-01-31 23:56:43.903270000 -0500
 @@ -0,0 +1,334 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4683,7 +4683,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dbgaufs.c linux-3.7.0-hardened-aufs/fs/a
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/dbgaufs.h linux-3.7.0-hardened-aufs/fs/aufs/dbgaufs.h
 --- linux-3.7.0-hardened/fs/aufs/dbgaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dbgaufs.h	2013-01-31 18:44:26.978953000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dbgaufs.h	2013-01-31 23:56:43.897630000 -0500
 @@ -0,0 +1,49 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4736,7 +4736,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dbgaufs.h linux-3.7.0-hardened-aufs/fs/a
 +#endif /* __DBGAUFS_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/dcsub.c linux-3.7.0-hardened-aufs/fs/aufs/dcsub.c
 --- linux-3.7.0-hardened/fs/aufs/dcsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dcsub.c	2013-01-31 18:44:26.974794000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dcsub.c	2013-01-31 23:56:43.895952000 -0500
 @@ -0,0 +1,243 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4983,7 +4983,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dcsub.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/dcsub.h linux-3.7.0-hardened-aufs/fs/aufs/dcsub.h
 --- linux-3.7.0-hardened/fs/aufs/dcsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dcsub.h	2013-01-31 18:44:26.980577000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dcsub.h	2013-01-31 23:56:43.903550000 -0500
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -5081,7 +5081,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dcsub.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_DCSUB_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/debug.c linux-3.7.0-hardened-aufs/fs/aufs/debug.c
 --- linux-3.7.0-hardened/fs/aufs/debug.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/debug.c	2013-01-31 18:44:26.981753000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/debug.c	2013-01-31 23:56:43.904707000 -0500
 @@ -0,0 +1,490 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -5575,7 +5575,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/debug.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/debug.h linux-3.7.0-hardened-aufs/fs/aufs/debug.h
 --- linux-3.7.0-hardened/fs/aufs/debug.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/debug.h	2013-01-31 18:44:26.977540000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/debug.h	2013-01-31 23:56:43.900061000 -0500
 @@ -0,0 +1,242 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -5821,7 +5821,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/debug.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_DEBUG_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/dentry.c linux-3.7.0-hardened-aufs/fs/aufs/dentry.c
 --- linux-3.7.0-hardened/fs/aufs/dentry.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dentry.c	2013-01-31 18:44:26.979754000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dentry.c	2013-01-31 23:56:43.896867000 -0500
 @@ -0,0 +1,1060 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -6885,7 +6885,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dentry.c linux-3.7.0-hardened-aufs/fs/au
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/dentry.h linux-3.7.0-hardened-aufs/fs/aufs/dentry.h
 --- linux-3.7.0-hardened/fs/aufs/dentry.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dentry.h	2013-01-31 18:44:26.975535000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dentry.h	2013-01-31 23:56:43.902974000 -0500
 @@ -0,0 +1,234 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -7123,7 +7123,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dentry.h linux-3.7.0-hardened-aufs/fs/au
 +#endif /* __AUFS_DENTRY_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/dinfo.c linux-3.7.0-hardened-aufs/fs/aufs/dinfo.c
 --- linux-3.7.0-hardened/fs/aufs/dinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dinfo.c	2013-01-31 18:44:26.978381000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dinfo.c	2013-01-31 23:56:43.900803000 -0500
 @@ -0,0 +1,543 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -7670,7 +7670,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dinfo.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/dir.c linux-3.7.0-hardened-aufs/fs/aufs/dir.c
 --- linux-3.7.0-hardened/fs/aufs/dir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dir.c	2013-01-31 18:44:26.974682000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dir.c	2013-01-31 23:56:43.901256000 -0500
 @@ -0,0 +1,633 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -8307,7 +8307,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dir.c linux-3.7.0-hardened-aufs/fs/aufs/
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/dir.h linux-3.7.0-hardened-aufs/fs/aufs/dir.h
 --- linux-3.7.0-hardened/fs/aufs/dir.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dir.h	2013-01-31 18:44:26.980471000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dir.h	2013-01-31 23:56:43.903865000 -0500
 @@ -0,0 +1,137 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -8448,7 +8448,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dir.h linux-3.7.0-hardened-aufs/fs/aufs/
 +#endif /* __AUFS_DIR_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/dynop.c linux-3.7.0-hardened-aufs/fs/aufs/dynop.c
 --- linux-3.7.0-hardened/fs/aufs/dynop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dynop.c	2013-01-31 18:44:26.981026000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dynop.c	2013-01-31 23:56:43.904002000 -0500
 @@ -0,0 +1,379 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -8831,7 +8831,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dynop.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/dynop.h linux-3.7.0-hardened-aufs/fs/aufs/dynop.h
 --- linux-3.7.0-hardened/fs/aufs/dynop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/dynop.h	2013-01-31 18:44:26.978623000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/dynop.h	2013-01-31 23:56:43.901433000 -0500
 @@ -0,0 +1,76 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -8911,7 +8911,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/dynop.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_DYNOP_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/export.c linux-3.7.0-hardened-aufs/fs/aufs/export.c
 --- linux-3.7.0-hardened/fs/aufs/export.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/export.c	2013-01-31 18:44:26.981870000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/export.c	2013-01-31 23:56:43.900194000 -0500
 @@ -0,0 +1,812 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -9727,7 +9727,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/export.c linux-3.7.0-hardened-aufs/fs/au
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/f_op.c linux-3.7.0-hardened-aufs/fs/aufs/f_op.c
 --- linux-3.7.0-hardened/fs/aufs/f_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/f_op.c	2013-01-31 18:44:26.976736000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/f_op.c	2013-01-31 23:56:43.902386000 -0500
 @@ -0,0 +1,723 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -10454,7 +10454,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/f_op.c linux-3.7.0-hardened-aufs/fs/aufs
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/f_op_sp.c linux-3.7.0-hardened-aufs/fs/aufs/f_op_sp.c
 --- linux-3.7.0-hardened/fs/aufs/f_op_sp.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/f_op_sp.c	2013-01-31 18:44:26.978119000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/f_op_sp.c	2013-01-31 23:56:43.905296000 -0500
 @@ -0,0 +1,295 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -10753,7 +10753,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/f_op_sp.c linux-3.7.0-hardened-aufs/fs/a
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/file.c linux-3.7.0-hardened-aufs/fs/aufs/file.c
 --- linux-3.7.0-hardened/fs/aufs/file.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/file.c	2013-01-31 18:44:26.977188000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/file.c	2013-01-31 23:56:43.901726000 -0500
 @@ -0,0 +1,683 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -11440,7 +11440,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/file.c linux-3.7.0-hardened-aufs/fs/aufs
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/file.h linux-3.7.0-hardened-aufs/fs/aufs/file.h
 --- linux-3.7.0-hardened/fs/aufs/file.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/file.h	2013-01-31 18:44:26.982601000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/file.h	2013-01-31 23:56:43.898214000 -0500
 @@ -0,0 +1,298 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -11742,7 +11742,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/file.h linux-3.7.0-hardened-aufs/fs/aufs
 +#endif /* __AUFS_FILE_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/finfo.c linux-3.7.0-hardened-aufs/fs/aufs/finfo.c
 --- linux-3.7.0-hardened/fs/aufs/finfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/finfo.c	2013-01-31 18:44:26.975643000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/finfo.c	2013-01-31 23:56:43.898083000 -0500
 @@ -0,0 +1,156 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -11902,7 +11902,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/finfo.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/fstype.h linux-3.7.0-hardened-aufs/fs/aufs/fstype.h
 --- linux-3.7.0-hardened/fs/aufs/fstype.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/fstype.h	2013-01-31 18:44:26.978496000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/fstype.h	2013-01-31 23:56:43.905602000 -0500
 @@ -0,0 +1,481 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -12387,7 +12387,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/fstype.h linux-3.7.0-hardened-aufs/fs/au
 +#endif /* __AUFS_FSTYPE_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/hfsnotify.c linux-3.7.0-hardened-aufs/fs/aufs/hfsnotify.c
 --- linux-3.7.0-hardened/fs/aufs/hfsnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/hfsnotify.c	2013-01-31 18:44:26.976614000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/hfsnotify.c	2013-01-31 23:56:43.905144000 -0500
 @@ -0,0 +1,257 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -12648,7 +12648,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/hfsnotify.c linux-3.7.0-hardened-aufs/fs
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/hfsplus.c linux-3.7.0-hardened-aufs/fs/aufs/hfsplus.c
 --- linux-3.7.0-hardened/fs/aufs/hfsplus.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/hfsplus.c	2013-01-31 18:44:26.979870000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/hfsplus.c	2013-01-31 23:56:43.896123000 -0500
 @@ -0,0 +1,57 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -12709,7 +12709,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/hfsplus.c linux-3.7.0-hardened-aufs/fs/a
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/hnotify.c linux-3.7.0-hardened-aufs/fs/aufs/hnotify.c
 --- linux-3.7.0-hardened/fs/aufs/hnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/hnotify.c	2013-01-31 18:44:26.977308000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/hnotify.c	2013-01-31 23:56:43.904281000 -0500
 @@ -0,0 +1,713 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -13426,7 +13426,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/hnotify.c linux-3.7.0-hardened-aufs/fs/a
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/i_op.c linux-3.7.0-hardened-aufs/fs/aufs/i_op.c
 --- linux-3.7.0-hardened/fs/aufs/i_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/i_op.c	2013-01-31 18:44:26.981524000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/i_op.c	2013-01-31 23:56:43.896565000 -0500
 @@ -0,0 +1,1026 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -14456,7 +14456,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/i_op.c linux-3.7.0-hardened-aufs/fs/aufs
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/i_op_add.c linux-3.7.0-hardened-aufs/fs/aufs/i_op_add.c
 --- linux-3.7.0-hardened/fs/aufs/i_op_add.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/i_op_add.c	2013-01-31 18:44:26.977800000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/i_op_add.c	2013-01-31 23:56:43.900945000 -0500
 @@ -0,0 +1,713 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -15173,7 +15173,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/i_op_add.c linux-3.7.0-hardened-aufs/fs/
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/i_op_del.c linux-3.7.0-hardened-aufs/fs/aufs/i_op_del.c
 --- linux-3.7.0-hardened/fs/aufs/i_op_del.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/i_op_del.c	2013-01-31 18:44:26.979530000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/i_op_del.c	2013-01-31 23:56:43.902818000 -0500
 @@ -0,0 +1,477 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -15654,7 +15654,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/i_op_del.c linux-3.7.0-hardened-aufs/fs/
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/i_op_ren.c linux-3.7.0-hardened-aufs/fs/aufs/i_op_ren.c
 --- linux-3.7.0-hardened/fs/aufs/i_op_ren.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/i_op_ren.c	2013-01-31 18:44:26.975164000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/i_op_ren.c	2013-01-31 23:56:43.897954000 -0500
 @@ -0,0 +1,1026 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -16684,7 +16684,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/i_op_ren.c linux-3.7.0-hardened-aufs/fs/
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/iinfo.c linux-3.7.0-hardened-aufs/fs/aufs/iinfo.c
 --- linux-3.7.0-hardened/fs/aufs/iinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/iinfo.c	2013-01-31 18:44:26.976847000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/iinfo.c	2013-01-31 23:56:43.899483000 -0500
 @@ -0,0 +1,276 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -16964,7 +16964,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/iinfo.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/inode.c linux-3.7.0-hardened-aufs/fs/aufs/inode.c
 --- linux-3.7.0-hardened/fs/aufs/inode.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/inode.c	2013-01-31 18:44:26.978844000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/inode.c	2013-01-31 23:56:43.901856000 -0500
 @@ -0,0 +1,488 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -17456,7 +17456,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/inode.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/inode.h linux-3.7.0-hardened-aufs/fs/aufs/inode.h
 --- linux-3.7.0-hardened/fs/aufs/inode.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/inode.h	2013-01-31 18:44:26.975773000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/inode.h	2013-01-31 23:56:43.898374000 -0500
 @@ -0,0 +1,588 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -18048,7 +18048,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/inode.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_INODE_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/ioctl.c linux-3.7.0-hardened-aufs/fs/aufs/ioctl.c
 --- linux-3.7.0-hardened/fs/aufs/ioctl.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/ioctl.c	2013-01-31 18:44:26.977434000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/ioctl.c	2013-01-31 23:56:43.899921000 -0500
 @@ -0,0 +1,196 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -18248,7 +18248,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/ioctl.c linux-3.7.0-hardened-aufs/fs/auf
 +#endif
 diff -Naur linux-3.7.0-hardened/fs/aufs/loop.c linux-3.7.0-hardened-aufs/fs/aufs/loop.c
 --- linux-3.7.0-hardened/fs/aufs/loop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/loop.c	2013-01-31 18:44:26.981283000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/loop.c	2013-01-31 23:56:43.895662000 -0500
 @@ -0,0 +1,133 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -18385,7 +18385,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/loop.c linux-3.7.0-hardened-aufs/fs/aufs
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/loop.h linux-3.7.0-hardened-aufs/fs/aufs/loop.h
 --- linux-3.7.0-hardened/fs/aufs/loop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/loop.h	2013-01-31 18:44:26.978731000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/loop.h	2013-01-31 23:56:43.903424000 -0500
 @@ -0,0 +1,50 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -18439,7 +18439,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/loop.h linux-3.7.0-hardened-aufs/fs/aufs
 +#endif /* __AUFS_LOOP_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/magic.mk linux-3.7.0-hardened-aufs/fs/aufs/magic.mk
 --- linux-3.7.0-hardened/fs/aufs/magic.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/magic.mk	2013-01-31 18:44:26.979634000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/magic.mk	2013-01-31 23:56:43.896716000 -0500
 @@ -0,0 +1,54 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -18497,7 +18497,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/magic.mk linux-3.7.0-hardened-aufs/fs/au
 +endif
 diff -Naur linux-3.7.0-hardened/fs/aufs/module.c linux-3.7.0-hardened-aufs/fs/aufs/module.c
 --- linux-3.7.0-hardened/fs/aufs/module.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/module.c	2013-01-31 18:44:26.975028000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/module.c	2013-01-31 23:56:43.902115000 -0500
 @@ -0,0 +1,202 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -18703,7 +18703,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/module.c linux-3.7.0-hardened-aufs/fs/au
 +module_exit(aufs_exit);
 diff -Naur linux-3.7.0-hardened/fs/aufs/module.h linux-3.7.0-hardened-aufs/fs/aufs/module.h
 --- linux-3.7.0-hardened/fs/aufs/module.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/module.h	2013-01-31 18:44:26.980683000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/module.h	2013-01-31 23:56:43.898816000 -0500
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -18812,7 +18812,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/module.h linux-3.7.0-hardened-aufs/fs/au
 +#endif /* __AUFS_MODULE_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/opts.c linux-3.7.0-hardened-aufs/fs/aufs/opts.c
 --- linux-3.7.0-hardened/fs/aufs/opts.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/opts.c	2013-01-31 18:44:26.977684000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/opts.c	2013-01-31 23:56:43.902691000 -0500
 @@ -0,0 +1,1677 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -20493,7 +20493,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/opts.c linux-3.7.0-hardened-aufs/fs/aufs
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/opts.h linux-3.7.0-hardened-aufs/fs/aufs/opts.h
 --- linux-3.7.0-hardened/fs/aufs/opts.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/opts.h	2013-01-31 18:44:26.981984000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/opts.h	2013-01-31 23:56:43.897764000 -0500
 @@ -0,0 +1,209 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -20706,7 +20706,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/opts.h linux-3.7.0-hardened-aufs/fs/aufs
 +#endif /* __AUFS_OPTS_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/plink.c linux-3.7.0-hardened-aufs/fs/aufs/plink.c
 --- linux-3.7.0-hardened/fs/aufs/plink.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/plink.c	2013-01-31 18:44:26.975276000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/plink.c	2013-01-31 23:56:43.897023000 -0500
 @@ -0,0 +1,511 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -21221,7 +21221,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/plink.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/poll.c linux-3.7.0-hardened-aufs/fs/aufs/poll.c
 --- linux-3.7.0-hardened/fs/aufs/poll.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/poll.c	2013-01-31 18:44:26.980796000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/poll.c	2013-01-31 23:56:43.896268000 -0500
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -21281,7 +21281,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/poll.c linux-3.7.0-hardened-aufs/fs/aufs
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/procfs.c linux-3.7.0-hardened-aufs/fs/aufs/procfs.c
 --- linux-3.7.0-hardened/fs/aufs/procfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/procfs.c	2013-01-31 18:44:26.981639000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/procfs.c	2013-01-31 23:56:43.900544000 -0500
 @@ -0,0 +1,170 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -21455,7 +21455,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/procfs.c linux-3.7.0-hardened-aufs/fs/au
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/rdu.c linux-3.7.0-hardened-aufs/fs/aufs/rdu.c
 --- linux-3.7.0-hardened/fs/aufs/rdu.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/rdu.c	2013-01-31 18:44:26.980919000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/rdu.c	2013-01-31 23:56:43.903711000 -0500
 @@ -0,0 +1,384 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -21843,7 +21843,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/rdu.c linux-3.7.0-hardened-aufs/fs/aufs/
 +#endif
 diff -Naur linux-3.7.0-hardened/fs/aufs/rwsem.h linux-3.7.0-hardened-aufs/fs/aufs/rwsem.h
 --- linux-3.7.0-hardened/fs/aufs/rwsem.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/rwsem.h	2013-01-31 18:44:26.976350000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/rwsem.h	2013-01-31 23:56:43.899200000 -0500
 @@ -0,0 +1,188 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -22035,7 +22035,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/rwsem.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_RWSEM_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/sbinfo.c linux-3.7.0-hardened-aufs/fs/aufs/sbinfo.c
 --- linux-3.7.0-hardened/fs/aufs/sbinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/sbinfo.c	2013-01-31 18:44:26.982485000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/sbinfo.c	2013-01-31 23:56:43.901586000 -0500
 @@ -0,0 +1,343 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -22382,7 +22382,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/sbinfo.c linux-3.7.0-hardened-aufs/fs/au
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/spl.h linux-3.7.0-hardened-aufs/fs/aufs/spl.h
 --- linux-3.7.0-hardened/fs/aufs/spl.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/spl.h	2013-01-31 18:44:26.980086000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/spl.h	2013-01-31 23:56:43.904836000 -0500
 @@ -0,0 +1,62 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -22448,7 +22448,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/spl.h linux-3.7.0-hardened-aufs/fs/aufs/
 +#endif /* __AUFS_SPL_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/super.c linux-3.7.0-hardened-aufs/fs/aufs/super.c
 --- linux-3.7.0-hardened/fs/aufs/super.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/super.c	2013-01-31 18:44:26.979311000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/super.c	2013-01-31 23:56:43.901993000 -0500
 @@ -0,0 +1,993 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -23445,7 +23445,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/super.c linux-3.7.0-hardened-aufs/fs/auf
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/super.h linux-3.7.0-hardened-aufs/fs/aufs/super.h
 --- linux-3.7.0-hardened/fs/aufs/super.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/super.h	2013-01-31 18:44:26.976228000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/super.h	2013-01-31 23:56:43.898684000 -0500
 @@ -0,0 +1,546 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -23995,7 +23995,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/super.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_SUPER_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/sysaufs.c linux-3.7.0-hardened-aufs/fs/aufs/sysaufs.c
 --- linux-3.7.0-hardened/fs/aufs/sysaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/sysaufs.c	2013-01-31 18:44:26.976961000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/sysaufs.c	2013-01-31 23:56:43.904150000 -0500
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -24104,7 +24104,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/sysaufs.c linux-3.7.0-hardened-aufs/fs/a
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/sysaufs.h linux-3.7.0-hardened-aufs/fs/aufs/sysaufs.h
 --- linux-3.7.0-hardened/fs/aufs/sysaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/sysaufs.h	2013-01-31 18:44:26.982370000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/sysaufs.h	2013-01-31 23:56:43.900414000 -0500
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -24212,7 +24212,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/sysaufs.h linux-3.7.0-hardened-aufs/fs/a
 +#endif /* __SYSAUFS_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/sysfs.c linux-3.7.0-hardened-aufs/fs/aufs/sysfs.c
 --- linux-3.7.0-hardened/fs/aufs/sysfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/sysfs.c	2013-01-31 18:44:26.977070000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/sysfs.c	2013-01-31 23:56:43.899642000 -0500
 @@ -0,0 +1,257 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -24473,7 +24473,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/sysfs.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/sysrq.c linux-3.7.0-hardened-aufs/fs/aufs/sysrq.c
 --- linux-3.7.0-hardened/fs/aufs/sysrq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/sysrq.c	2013-01-31 18:44:26.974910000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/sysrq.c	2013-01-31 23:56:43.896420000 -0500
 @@ -0,0 +1,148 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -24625,7 +24625,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/sysrq.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/vdir.c linux-3.7.0-hardened-aufs/fs/aufs/vdir.c
 --- linux-3.7.0-hardened/fs/aufs/vdir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/vdir.c	2013-01-31 18:44:26.982245000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/vdir.c	2013-01-31 23:56:43.898533000 -0500
 @@ -0,0 +1,885 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -25514,7 +25514,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/vdir.c linux-3.7.0-hardened-aufs/fs/aufs
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/vfsub.c linux-3.7.0-hardened-aufs/fs/aufs/vfsub.c
 --- linux-3.7.0-hardened/fs/aufs/vfsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/vfsub.c	2013-01-31 18:44:26.980362000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/vfsub.c	2013-01-31 23:56:43.903117000 -0500
 @@ -0,0 +1,777 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -26295,7 +26295,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/vfsub.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/vfsub.h linux-3.7.0-hardened-aufs/fs/aufs/vfsub.h
 --- linux-3.7.0-hardened/fs/aufs/vfsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/vfsub.h	2013-01-31 18:44:26.975406000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/vfsub.h	2013-01-31 23:56:43.897511000 -0500
 @@ -0,0 +1,284 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -26583,7 +26583,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/vfsub.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_VFSUB_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/wbr_policy.c linux-3.7.0-hardened-aufs/fs/aufs/wbr_policy.c
 --- linux-3.7.0-hardened/fs/aufs/wbr_policy.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/wbr_policy.c	2013-01-31 18:44:26.980222000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/wbr_policy.c	2013-01-31 23:56:43.897210000 -0500
 @@ -0,0 +1,700 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -27287,7 +27287,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/wbr_policy.c linux-3.7.0-hardened-aufs/f
 +};
 diff -Naur linux-3.7.0-hardened/fs/aufs/whout.c linux-3.7.0-hardened-aufs/fs/aufs/whout.c
 --- linux-3.7.0-hardened/fs/aufs/whout.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/whout.c	2013-01-31 18:44:26.976507000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/whout.c	2013-01-31 23:56:43.899034000 -0500
 @@ -0,0 +1,1042 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -28333,7 +28333,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/whout.c linux-3.7.0-hardened-aufs/fs/auf
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/whout.h linux-3.7.0-hardened-aufs/fs/aufs/whout.h
 --- linux-3.7.0-hardened/fs/aufs/whout.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/whout.h	2013-01-31 18:44:26.979418000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/whout.h	2013-01-31 23:56:43.902233000 -0500
 @@ -0,0 +1,88 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -28425,7 +28425,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/whout.h linux-3.7.0-hardened-aufs/fs/auf
 +#endif /* __AUFS_WHOUT_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/wkq.c linux-3.7.0-hardened-aufs/fs/aufs/wkq.c
 --- linux-3.7.0-hardened/fs/aufs/wkq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/wkq.c	2013-01-31 18:44:26.975993000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/wkq.c	2013-01-31 23:56:43.899339000 -0500
 @@ -0,0 +1,214 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -28643,7 +28643,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/wkq.c linux-3.7.0-hardened-aufs/fs/aufs/
 +}
 diff -Naur linux-3.7.0-hardened/fs/aufs/wkq.h linux-3.7.0-hardened-aufs/fs/aufs/wkq.h
 --- linux-3.7.0-hardened/fs/aufs/wkq.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/wkq.h	2013-01-31 18:44:26.979059000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/wkq.h	2013-01-31 23:56:43.905001000 -0500
 @@ -0,0 +1,92 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -28739,7 +28739,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/wkq.h linux-3.7.0-hardened-aufs/fs/aufs/
 +#endif /* __AUFS_WKQ_H__ */
 diff -Naur linux-3.7.0-hardened/fs/aufs/xino.c linux-3.7.0-hardened-aufs/fs/aufs/xino.c
 --- linux-3.7.0-hardened/fs/aufs/xino.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/aufs/xino.c	2013-01-31 18:44:26.981177000 -0500
++++ linux-3.7.0-hardened-aufs/fs/aufs/xino.c	2013-01-31 23:56:43.895813000 -0500
 @@ -0,0 +1,1265 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -30008,7 +30008,7 @@ diff -Naur linux-3.7.0-hardened/fs/aufs/xino.c linux-3.7.0-hardened-aufs/fs/aufs
 +}
 diff -Naur linux-3.7.0-hardened/fs/file_table.c linux-3.7.0-hardened-aufs/fs/file_table.c
 --- linux-3.7.0-hardened/fs/file_table.c	2012-12-10 22:30:57.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/file_table.c	2013-01-31 18:44:13.018011000 -0500
++++ linux-3.7.0-hardened-aufs/fs/file_table.c	2013-01-31 23:56:29.490355000 -0500
 @@ -36,7 +36,8 @@
  	.max_files = NR_FILE
  };
@@ -30030,7 +30030,7 @@ diff -Naur linux-3.7.0-hardened/fs/file_table.c linux-3.7.0-hardened-aufs/fs/fil
  /*
 diff -Naur linux-3.7.0-hardened/fs/inode.c linux-3.7.0-hardened-aufs/fs/inode.c
 --- linux-3.7.0-hardened/fs/inode.c	2013-01-26 22:32:10.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/inode.c	2013-01-31 18:44:13.018792000 -0500
++++ linux-3.7.0-hardened-aufs/fs/inode.c	2013-01-31 23:56:29.493173000 -0500
 @@ -56,6 +56,7 @@
  static __cacheline_aligned_in_smp DEFINE_SPINLOCK(inode_hash_lock);
  
@@ -30058,7 +30058,7 @@ diff -Naur linux-3.7.0-hardened/fs/inode.c linux-3.7.0-hardened-aufs/fs/inode.c
   *	touch_atime	-	update the access time
 diff -Naur linux-3.7.0-hardened/fs/namespace.c linux-3.7.0-hardened-aufs/fs/namespace.c
 --- linux-3.7.0-hardened/fs/namespace.c	2013-01-26 22:32:10.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/namespace.c	2013-01-31 18:44:13.019675000 -0500
++++ linux-3.7.0-hardened-aufs/fs/namespace.c	2013-01-31 23:56:29.495488000 -0500
 @@ -50,6 +50,7 @@
   * tree or hash is modified or when a vfsmount structure is modified.
   */
@@ -30077,7 +30077,7 @@ diff -Naur linux-3.7.0-hardened/fs/namespace.c linux-3.7.0-hardened-aufs/fs/name
  {
 diff -Naur linux-3.7.0-hardened/fs/notify/group.c linux-3.7.0-hardened-aufs/fs/notify/group.c
 --- linux-3.7.0-hardened/fs/notify/group.c	2012-12-10 22:30:57.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/notify/group.c	2013-01-31 18:44:13.020068000 -0500
++++ linux-3.7.0-hardened-aufs/fs/notify/group.c	2013-01-31 23:56:29.498360000 -0500
 @@ -22,6 +22,7 @@
  #include <linux/srcu.h>
  #include <linux/rculist.h>
@@ -30101,7 +30101,7 @@ diff -Naur linux-3.7.0-hardened/fs/notify/group.c linux-3.7.0-hardened-aufs/fs/n
 +EXPORT_SYMBOL(fsnotify_alloc_group);
 diff -Naur linux-3.7.0-hardened/fs/notify/mark.c linux-3.7.0-hardened-aufs/fs/notify/mark.c
 --- linux-3.7.0-hardened/fs/notify/mark.c	2012-12-10 22:30:57.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/notify/mark.c	2013-01-31 18:44:13.020528000 -0500
++++ linux-3.7.0-hardened-aufs/fs/notify/mark.c	2013-01-31 23:56:29.500214000 -0500
 @@ -112,6 +112,7 @@
  	if (atomic_dec_and_test(&mark->refcnt))
  		mark->free_mark(mark);
@@ -30136,7 +30136,7 @@ diff -Naur linux-3.7.0-hardened/fs/notify/mark.c linux-3.7.0-hardened-aufs/fs/no
  {
 diff -Naur linux-3.7.0-hardened/fs/open.c linux-3.7.0-hardened-aufs/fs/open.c
 --- linux-3.7.0-hardened/fs/open.c	2013-01-26 22:32:10.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/open.c	2013-01-31 18:44:13.021087000 -0500
++++ linux-3.7.0-hardened-aufs/fs/open.c	2013-01-31 23:56:29.501632000 -0500
 @@ -62,6 +62,7 @@
  	mutex_unlock(&dentry->d_inode->i_mutex);
  	return ret;
@@ -30147,7 +30147,7 @@ diff -Naur linux-3.7.0-hardened/fs/open.c linux-3.7.0-hardened-aufs/fs/open.c
  {
 diff -Naur linux-3.7.0-hardened/fs/splice.c linux-3.7.0-hardened-aufs/fs/splice.c
 --- linux-3.7.0-hardened/fs/splice.c	2013-01-26 22:32:10.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/fs/splice.c	2013-01-31 18:44:13.021789000 -0500
++++ linux-3.7.0-hardened-aufs/fs/splice.c	2013-01-31 23:56:29.503566000 -0500
 @@ -1093,8 +1093,8 @@
  /*
   * Attempt to initiate a splice from pipe to file.
@@ -30187,7 +30187,7 @@ diff -Naur linux-3.7.0-hardened/fs/splice.c linux-3.7.0-hardened-aufs/fs/splice.
   * splice_direct_to_actor - splices data directly between two non-pipes
 diff -Naur linux-3.7.0-hardened/include/linux/aufs_type.h linux-3.7.0-hardened-aufs/include/linux/aufs_type.h
 --- linux-3.7.0-hardened/include/linux/aufs_type.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/include/linux/aufs_type.h	2013-01-31 18:44:38.930543000 -0500
++++ linux-3.7.0-hardened-aufs/include/linux/aufs_type.h	2013-01-31 23:57:02.012879000 -0500
 @@ -0,0 +1,19 @@
 +/*
 + * Copyright (C) 2012-2013 Junjiro R. Okajima
@@ -30210,7 +30210,7 @@ diff -Naur linux-3.7.0-hardened/include/linux/aufs_type.h linux-3.7.0-hardened-a
 +#include <uapi/linux/aufs_type.h>
 diff -Naur linux-3.7.0-hardened/include/linux/fs.h linux-3.7.0-hardened-aufs/include/linux/fs.h
 --- linux-3.7.0-hardened/include/linux/fs.h	2013-01-26 22:32:10.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/include/linux/fs.h	2013-01-31 18:44:07.340647000 -0500
++++ linux-3.7.0-hardened-aufs/include/linux/fs.h	2013-01-31 23:56:24.965665000 -0500
 @@ -2554,6 +2554,7 @@
  extern int inode_newsize_ok(const struct inode *, loff_t offset);
  extern void setattr_copy(struct inode *inode, const struct iattr *attr);
@@ -30221,7 +30221,7 @@ diff -Naur linux-3.7.0-hardened/include/linux/fs.h linux-3.7.0-hardened-aufs/inc
  extern int generic_show_options(struct seq_file *m, struct dentry *root);
 diff -Naur linux-3.7.0-hardened/include/linux/splice.h linux-3.7.0-hardened-aufs/include/linux/splice.h
 --- linux-3.7.0-hardened/include/linux/splice.h	2012-12-10 22:30:57.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/include/linux/splice.h	2013-01-31 18:44:07.341084000 -0500
++++ linux-3.7.0-hardened-aufs/include/linux/splice.h	2013-01-31 23:56:24.966379000 -0500
 @@ -91,4 +91,10 @@
  extern void spd_release_page(struct splice_pipe_desc *, unsigned int);
  
@@ -30233,9 +30233,246 @@ diff -Naur linux-3.7.0-hardened/include/linux/splice.h linux-3.7.0-hardened-aufs
 +			 struct pipe_inode_info *pipe, size_t len,
 +			 unsigned int flags);
  #endif
+diff -Naur linux-3.7.0-hardened/include/uapi/linux/aufs_type.h linux-3.7.0-hardened-aufs/include/uapi/linux/aufs_type.h
+--- linux-3.7.0-hardened/include/uapi/linux/aufs_type.h	1969-12-31 19:00:00.000000000 -0500
++++ linux-3.7.0-hardened-aufs/include/uapi/linux/aufs_type.h	2013-01-31 23:57:17.777488000 -0500
+@@ -0,0 +1,233 @@
++/*
++ * Copyright (C) 2005-2013 Junjiro R. Okajima
++ *
++ * This program, aufs is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++ */
++
++#ifndef __AUFS_TYPE_H__
++#define __AUFS_TYPE_H__
++
++#define AUFS_NAME	"aufs"
++
++#ifdef __KERNEL__
++/*
++ * define it before including all other headers.
++ * sched.h may use pr_* macros before defining "current", so define the
++ * no-current version first, and re-define later.
++ */
++#define pr_fmt(fmt)	AUFS_NAME " %s:%d: " fmt, __func__, __LINE__
++#include <linux/sched.h>
++#undef pr_fmt
++#define pr_fmt(fmt)	AUFS_NAME " %s:%d:%s[%d]: " fmt, \
++		__func__, __LINE__, current->comm, current->pid
++#else
++#include <stdint.h>
++#include <sys/types.h>
++#endif /* __KERNEL__ */
++
++#include <linux/limits.h>
++
++#define AUFS_VERSION	"3.7-20130114"
++
++/* todo? move this to linux-2.6.19/include/magic.h */
++#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
++
++/* ---------------------------------------------------------------------- */
++
++#ifdef CONFIG_AUFS_BRANCH_MAX_127
++typedef int8_t aufs_bindex_t;
++#define AUFS_BRANCH_MAX 127
++#else
++typedef int16_t aufs_bindex_t;
++#ifdef CONFIG_AUFS_BRANCH_MAX_511
++#define AUFS_BRANCH_MAX 511
++#elif defined(CONFIG_AUFS_BRANCH_MAX_1023)
++#define AUFS_BRANCH_MAX 1023
++#elif defined(CONFIG_AUFS_BRANCH_MAX_32767)
++#define AUFS_BRANCH_MAX 32767
++#endif
++#endif
++
++#ifdef __KERNEL__
++#ifndef AUFS_BRANCH_MAX
++#error unknown CONFIG_AUFS_BRANCH_MAX value
++#endif
++#endif /* __KERNEL__ */
++
++/* ---------------------------------------------------------------------- */
++
++#define AUFS_FSTYPE		AUFS_NAME
++
++#define AUFS_ROOT_INO		2
++#define AUFS_FIRST_INO		11
++
++#define AUFS_WH_PFX		".wh."
++#define AUFS_WH_PFX_LEN		((int)sizeof(AUFS_WH_PFX) - 1)
++#define AUFS_WH_TMP_LEN		4
++/* a limit for rmdir/rename a dir */
++#define AUFS_MAX_NAMELEN	(NAME_MAX \
++				- AUFS_WH_PFX_LEN * 2	/* doubly whiteouted */\
++				- 1			/* dot */\
++				- AUFS_WH_TMP_LEN)	/* hex */
++#define AUFS_XINO_FNAME		"." AUFS_NAME ".xino"
++#define AUFS_XINO_DEFPATH	"/tmp/" AUFS_XINO_FNAME
++#define AUFS_XINO_TRUNC_INIT	64 /* blocks */
++#define AUFS_XINO_TRUNC_STEP	4  /* blocks */
++#define AUFS_DIRWH_DEF		3
++#define AUFS_RDCACHE_DEF	10 /* seconds */
++#define AUFS_RDCACHE_MAX	3600 /* seconds */
++#define AUFS_RDBLK_DEF		512 /* bytes */
++#define AUFS_RDHASH_DEF		32
++#define AUFS_WKQ_NAME		AUFS_NAME "d"
++#define AUFS_MFS_DEF_SEC	30 /* seconds */
++#define AUFS_MFS_MAX_SEC	3600 /* seconds */
++#define AUFS_PLINK_WARN		100 /* number of plinks */
++
++/* pseudo-link maintenace under /proc */
++#define AUFS_PLINK_MAINT_NAME	"plink_maint"
++#define AUFS_PLINK_MAINT_DIR	"fs/" AUFS_NAME
++#define AUFS_PLINK_MAINT_PATH	AUFS_PLINK_MAINT_DIR "/" AUFS_PLINK_MAINT_NAME
++
++#define AUFS_DIROPQ_NAME	AUFS_WH_PFX ".opq" /* whiteouted doubly */
++#define AUFS_WH_DIROPQ		AUFS_WH_PFX AUFS_DIROPQ_NAME
++
++#define AUFS_BASE_NAME		AUFS_WH_PFX AUFS_NAME
++#define AUFS_PLINKDIR_NAME	AUFS_WH_PFX "plnk"
++#define AUFS_ORPHDIR_NAME	AUFS_WH_PFX "orph"
++
++/* doubly whiteouted */
++#define AUFS_WH_BASE		AUFS_WH_PFX AUFS_BASE_NAME
++#define AUFS_WH_PLINKDIR	AUFS_WH_PFX AUFS_PLINKDIR_NAME
++#define AUFS_WH_ORPHDIR		AUFS_WH_PFX AUFS_ORPHDIR_NAME
++
++/* branch permissions and attributes */
++#define AUFS_BRPERM_RW		"rw"
++#define AUFS_BRPERM_RO		"ro"
++#define AUFS_BRPERM_RR		"rr"
++#define AUFS_BRRATTR_WH		"wh"
++#define AUFS_BRWATTR_NLWH	"nolwh"
++
++/* ---------------------------------------------------------------------- */
++
++/* ioctl */
++enum {
++	/* readdir in userspace */
++	AuCtl_RDU,
++	AuCtl_RDU_INO,
++
++	/* pathconf wrapper */
++	AuCtl_WBR_FD,
++
++	/* busy inode */
++	AuCtl_IBUSY
++};
++
++/* borrowed from linux/include/linux/kernel.h */
++#ifndef ALIGN
++#define ALIGN(x, a)		__ALIGN_MASK(x, (typeof(x))(a)-1)
++#define __ALIGN_MASK(x, mask)	(((x)+(mask))&~(mask))
++#endif
++
++/* borrowed from linux/include/linux/compiler-gcc3.h */
++#ifndef __aligned
++#define __aligned(x)			__attribute__((aligned(x)))
++#endif
++
++#ifdef __KERNEL__
++#ifndef __packed
++#define __packed			__attribute__((packed))
++#endif
++#endif
++
++struct au_rdu_cookie {
++	uint64_t	h_pos;
++	int16_t		bindex;
++	uint8_t		flags;
++	uint8_t		pad;
++	uint32_t	generation;
++} __aligned(8);
++
++struct au_rdu_ent {
++	uint64_t	ino;
++	int16_t		bindex;
++	uint8_t		type;
++	uint8_t		nlen;
++	uint8_t		wh;
++	char		name[0];
++} __aligned(8);
++
++static inline int au_rdu_len(int nlen)
++{
++	/* include the terminating NULL */
++	return ALIGN(sizeof(struct au_rdu_ent) + nlen + 1,
++		     sizeof(uint64_t));
++}
++
++union au_rdu_ent_ul {
++	struct au_rdu_ent __user	*e;
++	uint64_t			ul;
++};
++
++enum {
++	AufsCtlRduV_SZ,
++	AufsCtlRduV_End
++};
++
++struct aufs_rdu {
++	/* input */
++	union {
++		uint64_t	sz;	/* AuCtl_RDU */
++		uint64_t	nent;	/* AuCtl_RDU_INO */
++	};
++	union au_rdu_ent_ul	ent;
++	uint16_t		verify[AufsCtlRduV_End];
++
++	/* input/output */
++	uint32_t		blk;
++
++	/* output */
++	union au_rdu_ent_ul	tail;
++	/* number of entries which were added in a single call */
++	uint64_t		rent;
++	uint8_t			full;
++	uint8_t			shwh;
++
++	struct au_rdu_cookie	cookie;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++struct aufs_wbr_fd {
++	uint32_t	oflags;
++	int16_t		brid;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++struct aufs_ibusy {
++	uint64_t	ino, h_ino;
++	int16_t		bindex;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++#define AuCtlType		'A'
++#define AUFS_CTL_RDU		_IOWR(AuCtlType, AuCtl_RDU, struct aufs_rdu)
++#define AUFS_CTL_RDU_INO	_IOWR(AuCtlType, AuCtl_RDU_INO, struct aufs_rdu)
++#define AUFS_CTL_WBR_FD		_IOW(AuCtlType, AuCtl_WBR_FD, \
++				     struct aufs_wbr_fd)
++#define AUFS_CTL_IBUSY		_IOWR(AuCtlType, AuCtl_IBUSY, struct aufs_ibusy)
++
++#endif /* __AUFS_TYPE_H__ */
 diff -Naur linux-3.7.0-hardened/security/commoncap.c linux-3.7.0-hardened-aufs/security/commoncap.c
 --- linux-3.7.0-hardened/security/commoncap.c	2013-01-26 22:32:11.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/security/commoncap.c	2013-01-31 18:44:13.022365000 -0500
++++ linux-3.7.0-hardened-aufs/security/commoncap.c	2013-01-31 23:56:29.505192000 -0500
 @@ -1008,9 +1008,11 @@
  	}
  	return ret;
@@ -30250,7 +30487,7 @@ diff -Naur linux-3.7.0-hardened/security/commoncap.c linux-3.7.0-hardened-aufs/s
 +EXPORT_SYMBOL(cap_mmap_file);
 diff -Naur linux-3.7.0-hardened/security/device_cgroup.c linux-3.7.0-hardened-aufs/security/device_cgroup.c
 --- linux-3.7.0-hardened/security/device_cgroup.c	2012-12-10 22:30:57.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/security/device_cgroup.c	2013-01-31 18:44:13.022855000 -0500
++++ linux-3.7.0-hardened-aufs/security/device_cgroup.c	2013-01-31 23:56:29.507573000 -0500
 @@ -7,6 +7,7 @@
  #include <linux/device_cgroup.h>
  #include <linux/cgroup.h>
@@ -30269,7 +30506,7 @@ diff -Naur linux-3.7.0-hardened/security/device_cgroup.c linux-3.7.0-hardened-au
  {
 diff -Naur linux-3.7.0-hardened/security/security.c linux-3.7.0-hardened-aufs/security/security.c
 --- linux-3.7.0-hardened/security/security.c	2013-01-26 22:32:11.000000000 -0500
-+++ linux-3.7.0-hardened-aufs/security/security.c	2013-01-31 18:44:13.023752000 -0500
++++ linux-3.7.0-hardened-aufs/security/security.c	2013-01-31 23:56:29.509404000 -0500
 @@ -399,6 +399,7 @@
  		return 0;
  	return security_ops->path_rmdir(dir, dentry);

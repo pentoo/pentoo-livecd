@@ -9,7 +9,7 @@ NOTE: I have no idea how to update in this state, I rm -rf the whole thing and s
 - apply ./aufs3-base.patch
 - apply ./aufs3-proc_map.patch DRY RUN FIRST!! if it fails, just drop it
 - apply ./aufs3-standalone.patch
-- copy ./{Documentation,fs,include/linux/aufs_type.h} files to your
-  kernel source tree. Never copy ./include/linux/Kbuild.
+- copy ./{Documentation,fs,include/linux/aufs_type.h,include/uapi/linux/aufs_type.h} files to your
+  kernel source tree. Never copy ./include/uapi/linux/Kbuild.
 
 steal latest pax patch from gentoo's aufs ebuild, set for USE=pax_kernel
