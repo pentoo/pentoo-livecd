@@ -1,9 +1,9 @@
 subarch: i686
 target: stage1
-version_stamp: 2012.0
+version_stamp: 2013.0
 rel_type: hardened
-profile: pentoo:pentoo/hardened/linux/x86
-snapshot: 20130126
+profile: --force pentoo:pentoo/hardened/linux/x86/bootstrap
+snapshot: 20130222
 update_seed:yes
 update_seed_command:"--update sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2"
 source_subpath: hardened/stage3-i686-hardened-20121213

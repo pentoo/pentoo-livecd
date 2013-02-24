@@ -10,10 +10,10 @@ sysctl -w kernel.grsecurity.chroot_caps=0
 #catalyst -f stage4.spec || exit
 
 #we build livecd-stage1 twice because 99% of the time polkit fails on the first go
-catalyst -f livecd-stage1.spec
-if [ $? -ne 0 ]; then
-	catalyst -f livecd-stage1.spec || exit
-fi
+#catalyst -f livecd-stage1.spec
+#if [ $? -ne 0 ]; then
+#	catalyst -f livecd-stage1.spec || exit
+#fi
 
 catalyst -f livecd-stage2.spec || exit
 

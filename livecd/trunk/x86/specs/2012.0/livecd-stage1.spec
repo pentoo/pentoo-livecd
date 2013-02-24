@@ -1,10 +1,10 @@
 subarch: i686
-version_stamp: 2012.0
+version_stamp: 2013.0
 target: livecd-stage1
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86
-snapshot: 20130126
-source_subpath: hardened/stage4-i686-2012.0
+snapshot: 20130222
+source_subpath: hardened/stage4-i686-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
 cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb

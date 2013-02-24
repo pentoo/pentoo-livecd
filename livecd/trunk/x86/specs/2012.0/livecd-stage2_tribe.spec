@@ -1,10 +1,10 @@
 subarch: i686
-version_stamp: 2012.0
+version_stamp: 2013.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86/bleeding_edge
-snapshot: 20130126
-source_subpath: hardened/livecd-stage1-i686-2012.0
+snapshot: 20130222
+source_subpath: hardened/livecd-stage1-i686-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
 cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
@@ -28,7 +28,7 @@ kerncache_path: /catalyst/kerncache/x86-hardened
 livecd/fstype: squashfs
 livecd/fsops:  -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /catalyst/release/pentoo-i686-2012.0_RC1.iso
+livecd/iso: /catalyst/release/pentoo-i686-2013.0_RC1.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -183,8 +183,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 
 # This option sets the volume ID of the CD created.
 # example:
-# livecd/volid: Gentoo Linux 2005.0 X86
-livecd/volid: Pentoo Linux 2012.0 i686 RC1
+livecd/volid: Pentoo Linux 2013.0 i686 RC1
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.

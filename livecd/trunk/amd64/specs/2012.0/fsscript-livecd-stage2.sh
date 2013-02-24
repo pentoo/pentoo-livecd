@@ -149,7 +149,7 @@ cat <<-EOF > /etc/portage/make.conf
 	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
 	#Please set your video_cards, live usb users should leave this alone, install should set it to one video card
 	VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
-	ACCEPT_LICENSE="AdobeFlash-10.3 Intel-SDP"
+	ACCEPT_LICENSE="AdobeFlash-11.x Intel-SDP"
 	source /var/lib/layman/make.conf
 EOF
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf

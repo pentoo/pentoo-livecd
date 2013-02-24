@@ -1,10 +1,10 @@
 subarch: i686
 target: stage4
-version_stamp: 2012.0
+version_stamp: 2013.0
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86
-snapshot: 20130126
-source_subpath: hardened/stage3-i686-2012.0
+snapshot: 20130222
+source_subpath: hardened/stage3-i686-2013.0
 pkgcache_path: /catalyst/tmp/packages/x86-hardened
 portage_overlay: /usr/src/pentoo/portage/trunk
 stage4/use: python opengl

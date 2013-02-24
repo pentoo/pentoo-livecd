@@ -1,10 +1,10 @@
 subarch: amd64
-version_stamp: 2012.0
+version_stamp: 2013.0
 target: livecd-stage1
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20130126
-source_subpath: hardened/stage4-amd64-2012.0
+snapshot: 20130222
+source_subpath: hardened/stage4-amd64-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe -ggdb
 cxxflags: -Os -mtune=nocona -pipe -ggdb
