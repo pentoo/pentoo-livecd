@@ -109,7 +109,7 @@ eselect news purge || /bin/bash
 # Add pentoo repo
 rm -r /usr/local/portage/* || /bin/bash
 layman -L || /bin/bash
-layman -a pentoo || /bin/bash
+layman -s pentoo || ( layman -a pentoo || /bin/bash )
 echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf || /bin/bash
 
 arch=$(uname -m)
@@ -128,8 +128,6 @@ else
 	exit
 fi
 
-layman -S || /bin/bash
-
 # Build the metadata cache
 sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bash
 emerge --metadata || /bin/bash
@@ -142,7 +140,7 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
 cat <<-EOF > /etc/portage/make.conf
 	#Please adjust your use flags, if you don't use gpu cracking remove cuda and opencl
-	USE="cuda opencl -doc -examples"
+	USE="binary-drivers cuda opencl qemu -doc -examples"
 	USE="${USE} aufs bindist livecd"
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors
 	#Please set your input devices, if you are only using evdev you may completely remove this line
@@ -288,7 +286,6 @@ EOF
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #easy way to adjust wallpaper per install
-sed -i 's#domo-roolz#linux-christmas#' /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml || /bin/bash
 
 smart-live-rebuild -E --timeout=60
 

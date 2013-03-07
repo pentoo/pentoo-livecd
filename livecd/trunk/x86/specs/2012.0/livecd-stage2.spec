@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86
-snapshot: 20130222
+snapshot: 20130305
 source_subpath: hardened/livecd-stage1-i686-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
@@ -240,7 +240,6 @@ scanner rce footprint forging fuzzers voip wireless -livecd-stage1 symlink
 #pentoo/pentoo
 boot/kernel/pentoo/packages: 
 pentoo/pentoo
-app-text/build-docbook-catalog
 dev-util/lafilefixer
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
@@ -255,7 +254,7 @@ dev-util/lafilefixer
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: dev-util/lafilefixer
+livecd/unmerge: dev-util/lafilefixer x11-drivers/ati-drivers x11-drivers/nvidia-drivers
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
