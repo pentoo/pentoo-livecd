@@ -9,7 +9,6 @@ catalyst -f stage2.spec || exit
 catalyst -f stage3.spec || exit
 catalyst -f stage4.spec || exit
 
-#we build livecd-stage1 twice because 99% of the time polkit fails on the first go
 catalyst -f livecd-stage1.spec
 if [ $? -ne 0 ]; then
 	catalyst -f livecd-stage1.spec || exit
@@ -21,5 +20,5 @@ chmod 777 /catalyst/release/
 su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg `awk '/livecd\/iso:/ {print $2}' livecd-stage2.spec`.DIGESTS"
 
 volid="$(grep ^livecd/volid livecd-stage2.spec | cut -d' ' -f2-)"
-mktorrent -a http://tracker.cryptohaze.com/announce.php -n "${volid}" /catalyst/release/*i686* -o /catalyst/release/"${volid}"-i686.torrent
+mktorrent -a http://tracker.cryptohaze.com/announce.php -n "${volid}" /catalyst/release/*i686* -o /catalyst/release/"${volid}".torrent
 

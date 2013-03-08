@@ -104,7 +104,7 @@ fi
 
 #mark all news read
 eselect news read --quiet all || /bin/bash
-eselect news purge || /bin/bash
+#eselect news purge || /bin/bash
 
 # Add pentoo repo
 rm -r /usr/local/portage/* || /bin/bash
@@ -289,7 +289,7 @@ cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce
 
 smart-live-rebuild -E --timeout=60
 
-emerge --oneshot media-gfx/graphviz
+emerge --oneshot --usepkg=n media-gfx/graphviz
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
@@ -311,7 +311,7 @@ if [ $? -ne 0 ]; then
 fi
 rc-update -u || /bin/bash
 
-## XXX: THIS IS A HORRIBLY IDEA!!!!
+## XXX: THIS IS A HORRIBLE IDEA!!!!
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
 # The issue is it isn't really possible (nor desirable) to have all this extra debug info on the iso so here is what we do...
 #We make a dir with full path for where the debug info goes abusing the fancy /var/tmp/portage tmpfs mount

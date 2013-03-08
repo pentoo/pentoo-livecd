@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86/bleeding_edge
-snapshot: 20130305
+snapshot: 20130307
 source_subpath: hardened/livecd-stage1-i686-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
