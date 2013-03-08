@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20130307
+snapshot: 20130308
 source_subpath: hardened/livecd-stage1-amd64-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe -ggdb
@@ -29,7 +29,7 @@ kerncache_path: /catalyst/kerncache/amd64-hardened
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /catalyst/release/pentoo-x86_64-2013.0_RC1.1.iso
+livecd/iso: /catalyst/release/Pentoo_x86_64/pentoo-x86_64-2013.0_RC1.1.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 

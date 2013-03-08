@@ -3,7 +3,7 @@ target: stage1
 version_stamp: 2013.0
 rel_type: hardened
 profile: --force pentoo:pentoo/hardened/linux/x86/bootstrap
-snapshot: 20130307
+snapshot: 20130308
 update_seed:yes
 update_seed_command:"--update sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2"
 source_subpath: hardened/stage3-i686-hardened-20121213

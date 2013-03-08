@@ -22,4 +22,4 @@ chmod 777 /catalyst/release/
 su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg `awk '/livecd\/iso:/ {print $2}' livecd-stage2.spec`.DIGESTS"
 
 volid="$(grep ^livecd/volid livecd-stage2.spec | cut -d' ' -f2-)"
-mktorrent -a http://tracker.cryptohaze.com/announce.php -n "${volid}" /catalyst/release/*x86_64* -o /catalyst/release/"${volid}".torrent
+mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_x86_64
