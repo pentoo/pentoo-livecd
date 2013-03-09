@@ -145,8 +145,9 @@ cat <<-EOF > /etc/portage/make.conf
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors
 	#Please set your input devices, if you are only using evdev you may completely remove this line
 	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
-	#Please set your video_cards, live usb users should leave this alone, install should set it to one video card
-	VIDEO_CARDS="virtualbox nvidia fglrx nouveau fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
+	#Default VIDEO_CARDS setting enables nearly everything, you can enable fewer here if you like:
+	#At a minimum you should have these PLUS your specific videocard
+	#VIDEO_CARDS="vesa vga fbdev"
 	ACCEPT_LICENSE="AdobeFlash-11.x Intel-SDP"
 	source /var/lib/layman/make.conf
 EOF
