@@ -148,6 +148,7 @@ cat <<-EOF > /etc/portage/make.conf
 	#Default VIDEO_CARDS setting enables nearly everything, you can enable fewer here if you like:
 	#At a minimum you should have these PLUS your specific videocard
 	#VIDEO_CARDS="vesa vga fbdev"
+	#you can check available options with "emerge -vp xorg-drivers"
 	ACCEPT_LICENSE="AdobeFlash-11.x Intel-SDP"
 	source /var/lib/layman/make.conf
 EOF
