@@ -7,7 +7,6 @@ VER="2013.0 RC1.1"
 echo "<h1>Tools List $VER </h1>"
 echo "<table>"
 echo "<thead><tr><th><strong>TYPE</strong></th><th><strong>APP</strong></th><th><strong>VERSION</strong></th><th><strong>DESCRIPTION</strong></th></tr></thead>"
-echo "<tbody>"
 
 MYFR='\<tr\>
 	\<td\><category>\</td\>
