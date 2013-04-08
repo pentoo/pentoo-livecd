@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86
-snapshot: 20130308
+snapshot: 20130408
 source_subpath: hardened/livecd-stage1-i686-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
@@ -27,8 +27,8 @@ kerncache_path: /catalyst/kerncache/x86-hardened
 
 livecd/fstype: squashfs
 livecd/fsops:  -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery
-livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /catalyst/release/Pentoo_i686/pentoo-i686-2013.0_RC1.1.iso
+livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-memtest86+-cdtar.tar.bz2
+livecd/iso: /catalyst/release/Pentoo_i686/pentoo-i686-2013.0_RC1.3.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -110,7 +110,7 @@ livecd/type: generic-livecd
 # even if ti is detected by hotplug.
 # example:
 # livecd/modblacklist: 8139cp
-livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr nouveau ieee1394 ar9170usb
+livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394 ar9170usb rtl2832
 
 # This is for adding init scripts to runlevels.  The syntax for the init script
 # is the script name, followed by a pipe, followed by the runlevel in which you
@@ -183,7 +183,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 
 # This option sets the volume ID of the CD created.
 # example:
-livecd/volid: Pentoo Linux 2013.0 i686 RC1.1
+livecd/volid: Pentoo Linux 2013.0 i686 RC1.3
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -218,7 +218,7 @@ cuda opencl mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
 -quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
 png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
-alsa esd fuse gstreamer jack mp3 vorbis wavpack wma
+alsa esd fuse jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss xfce
 opengl dbus binary-drivers hal acpi usb subversion libkms
 analyzer bluetooth cracking databse exploit forensics mitm proxie

@@ -1,4 +1,6 @@
 #!/bin/sh
+source /etc/profile
+env-update
 source /tmp/envscript
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
@@ -10,7 +12,7 @@ then
 	if [ -d /lib64 ]
 	then
 		echo "BLOODY MURDER"
-		mv /lib/* /lib64/
+		mv -f /lib/* /lib64/
 		rm -rf /lib
 		ln -s /lib64 lib
 	fi
@@ -84,9 +86,9 @@ ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || /bin/bash
 sed -i -e 's/^root:\*:/root::/' /etc/shadow || /bin/bash
 
 # Remove useless opengl setup <--remove or fix this right
-rm /etc/init.d/x-setup
+rm -rf /etc/init.d/x-setup
 eselect opengl set xorg-x11 --dst-prefix=/etc/opengl/ || /bin/bash
-rm /usr/lib/libGLcore.so
+rm -rf /usr/lib/libGLcore.so
 [ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
 [ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
 eselect opengl set xorg-x11 || /bin/bash
@@ -99,15 +101,12 @@ else
 	eselect java-nsplugin set icedtea-bin-7 || /bin/bash
 fi
 
-# Fix the name of firefox so the user know it:
-#sed -e 's/Namoroka/Firefox/' -i /usr/share/applications/mozilla-firefox-3.6.desktop
-
 #mark all news read
 eselect news read --quiet all || /bin/bash
 #eselect news purge || /bin/bash
 
 # Add pentoo repo
-rm -r /usr/local/portage/* || /bin/bash
+rm -rf /usr/local/portage/* || /bin/bash
 layman -L || /bin/bash
 layman -s pentoo || ( layman -a pentoo || /bin/bash )
 echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf || /bin/bash
@@ -159,10 +158,10 @@ emerge -1 pentoo-installer || /bin/bash
 
 # Fix the kernel dir & config
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
-	rm /usr/src/linux
+	rm -rf /usr/src/linux
 	ln -s linux-$krnl /usr/src/linux
 	cp /var/tmp/pentoo.config /usr/src/linux/.config
-	rm /lib/modules/$krnl/source /lib/modules/$krnl/build
+	rm -rf /lib/modules/$krnl/source /lib/modules/$krnl/build
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/build
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
 	cd /usr/src/linux
@@ -175,15 +174,15 @@ done
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 
-emerge -qN -kb -D @world
+USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vat
 layman -S
-emerge -qN -kb -D @world || /bin/bash
+USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vat || /bin/bash
 emerge -qN -kb -D @x11-module-rebuild || /bin/bash
 lafilefixer --justfixit | grep -v "already clean, skipping update"
 emerge --depclean || /bin/bash
 revdep-rebuild
 if [ $? -ne 0 ]; then
-	rm /var/cache/revdep-rebuild/*.rr
+	rm -rf /var/cache/revdep-rebuild/*.rr
 	revdep-rebuild
 fi
 
@@ -196,10 +195,9 @@ perl-cleaner --modules || /bin/bash
 emerge -1 app-admin/genmenu || /bin/bash
 
 # Runs the menu generator with a specific parameters for a WM
-#genmenu.py -v -t urxvt
-#genmenu.py -e -v -t urxvt
-#genmenu.py -x -v -t Terminal
-genmenu.py -x -v || /bin/bash
+genmenu.py -v -t terminology || /bin/bash
+genmenu.py -e -v -t terminology || /bin/bash
+genmenu.py -x -v -t Terminal || /bin/bash
 
 # Fixes icons
 cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
@@ -267,7 +265,7 @@ emerge --config net-analyzer/metasploit || /bash/bash
 echo -e exit | msfconsole
 
 /etc/init.d/postgresql-9.2 stop || /bin/bash
-rm /run/openrc/softlevel || /bin/bash
+rm -rf /run/openrc/softlevel || /bin/bash
 
 #configure freeradius
 emerge --config net-dialup/freeradius || /bin/bash
@@ -308,7 +306,7 @@ portageq has_version / module-init-tools && eselect bashcomp enable --global mod
 
 revdep-rebuild
 if [ $? -ne 0 ]; then
-	rm /var/cache/revdep-rebuild/*.rr
+	rm -rf /var/cache/revdep-rebuild/*.rr
 	revdep-rebuild || /bin/bash
 fi
 rc-update -u || /bin/bash
@@ -324,6 +322,15 @@ rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin
 mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec
 rm -rf /var/tmp/portage/debug
+
+## More with the horrible hack
+# So it seems I have picked /var/log/portage to just randomly spew stuff into
+wget https://pentoo.googlecode.com/svn/genhtml/gen_installedlist.sh
+wget https://pentoo.googlecode.com/svn/genhtml/header.inc
+wget https://pentoo.googlecode.com/svn/genhtml/footer.inc
+sh gen_installedlist.sh > /var/log/portage/tools_list_${arch}_`date "+%Y%m%d"`.html
+rm -rf gen_installedlist.sh header.inc footer.inc
+
 rm -rf /var/tmp/portage
 sync
 sleep 60

@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage1
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20130308
+snapshot: 20130408
 source_subpath: hardened/stage4-amd64-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe -ggdb
@@ -20,9 +20,9 @@ pkgcache_path: /catalyst/tmp/packages/amd64-hardened
 livecd/use: aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 mpi wps offensive dwm -doc -examples
 wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
--quicktime -qt -qt3 qt3support qt4 -webkit -cups -spell lua curl -dso
-png jpeg gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
-alsa esd fuse gstreamer jack mp3 vorbis wavpack wma
+-quicktime -qt -qt3 qt3support qt4 lua curl -dso
+png jpeg gif dri svg aac nsplugin xrandr consolekit fontconfig
+alsa esd gstreamer jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
 opengl dbus binary-drivers hal acpi usb subversion libkms
 -cuda -opencl livecd-stage1 symlink

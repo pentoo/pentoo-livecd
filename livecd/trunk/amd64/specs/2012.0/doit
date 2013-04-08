@@ -11,14 +11,11 @@ catalyst -f stage2.spec || exit
 catalyst -f stage3.spec || exit
 catalyst -f stage4.spec || exit
 
-catalyst -f livecd-stage1.spec
-if [ $? -ne 0 ]; then
-	catalyst -f livecd-stage1.spec || exit
-fi
-
+#catalyst -f livecd-stage1.spec
 catalyst -f livecd-stage2.spec || exit
 
-chmod 777 /catalyst/release/
+mkdir /catalyst/release/Pentoo_x86_64
+chmod 777 /catalyst/release/Pentoo_x86_64
 su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg `awk '/livecd\/iso:/ {print $2}' livecd-stage2.spec`.DIGESTS"
 
 volid="$(grep ^livecd/volid livecd-stage2.spec | cut -d' ' -f2-)"

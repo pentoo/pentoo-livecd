@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/x86/bleeding_edge
-snapshot: 20130308
+snapshot: 20130408
 source_subpath: hardened/livecd-stage1-i686-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
@@ -15,7 +15,7 @@ cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb
 # by catalyst based on the spec file.
 # example:
 # pkgcache_path: /tmp/packages
-pkgcache_path: /catalyst/tmp/packages/x86-hardened
+pkgcache_path: /catalyst/tmp/packages/x86-hardened/tribe
 
 # This allows the optional directory containing the output packages for kernel
 # builds.  Mainly used as a way for different spec files to access the same
