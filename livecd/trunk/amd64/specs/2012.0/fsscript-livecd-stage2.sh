@@ -92,11 +92,11 @@ rm /usr/lib/libGLcore.so
 eselect opengl set xorg-x11 || /bin/bash
 
 # Set default java vm
-eselect java-vm set system icedtea-bin-6 || /bin/bash
+eselect java-vm set system icedtea-bin-7 || /bin/bash
 if [ -e /usr/lib64 ] ; then
-	eselect java-nsplugin set 64bit icedtea-bin-6 || /bin/bash
+	eselect java-nsplugin set 64bit icedtea-bin-7 || /bin/bash
 else
-	eselect java-nsplugin set icedtea-bin-6 || /bin/bash
+	eselect java-nsplugin set icedtea-bin-7 || /bin/bash
 fi
 
 # Fix the name of firefox so the user know it:
