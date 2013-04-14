@@ -137,9 +137,10 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
+#We need to amend pentoo-installer to optionally toggle on and off these use flags, some of may be non-desirable for an installed system
 cat <<-EOF > /etc/portage/make.conf
 	#Please adjust your use flags, if you don't use gpu cracking remove cuda and opencl
-	USE="binary-drivers cuda opencl qemu -doc -examples"
+	USE="binary-drivers cuda opencl qemu -doc -examples -gtk-autostart"
 	USE="${USE} aufs bindist livecd"
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors
 	#Please set your input devices, if you are only using evdev you may completely remove this line
@@ -174,9 +175,9 @@ done
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 
-USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vat
+USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vt
 layman -S
-USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vat || /bin/bash
+USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vt || /bin/bash
 emerge -qN -kb -D @x11-module-rebuild || /bin/bash
 lafilefixer --justfixit | grep -v "already clean, skipping update"
 emerge --depclean || /bin/bash
@@ -200,10 +201,10 @@ genmenu.py -e -v -t terminology || /bin/bash
 genmenu.py -x -v -t Terminal || /bin/bash
 
 # Fixes icons
-cp -a /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
+#cp -af /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
 
 # Fixes menu
-cp -a /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
+cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
 
 # Apply patches to root
 cd /
@@ -240,7 +241,7 @@ eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
-cp /etc/tor/torrc.sample /etc/tor/torrc || /bin/bash
+mv -f /etc/tor/torrc.sample /etc/tor/torrc || /bin/bash
 mkdir /var/log/tor || /bin/bash
 chown tor:tor /var/lib/tor || /bin/bash
 chown tor:tor /var/log/tor || /bin/bash
