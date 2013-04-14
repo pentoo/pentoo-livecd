@@ -181,10 +181,10 @@ USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vt || /bin/bash
 emerge -qN -kb -D @x11-module-rebuild || /bin/bash
 lafilefixer --justfixit | grep -v "already clean, skipping update"
 emerge --depclean || /bin/bash
-revdep-rebuild
+revdep-rebuild --buildpkg=y
 if [ $? -ne 0 ]; then
 	rm -rf /var/cache/revdep-rebuild/*.rr
-	revdep-rebuild
+	revdep-rebuild --buildpkg=y
 fi
 
 
@@ -276,6 +276,10 @@ emerge --config net-dialup/freeradius || /bin/bash
 echo gtk-theme-name="Xfce-basic" >> /root/.gtkrc-2.0
 echo gtk-icon-theme-name="Tango" >> /root/.gtkrc-2.0
 
+#set the hostname properly
+sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
+sed -i 's/livecd/pentoo/' /etc/hosts
+
 mkdir -p /root/.config/gtk-3.0/
 cat <<-EOF > /root/.config/gtk-3.0/settings.ini
 	[Settings]
@@ -305,10 +309,10 @@ eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash
 portageq has_version / module-init-tools && eselect bashcomp enable --global module-init-tools
 
-revdep-rebuild
+revdep-rebuild --buildpkg=y
 if [ $? -ne 0 ]; then
 	rm -rf /var/cache/revdep-rebuild/*.rr
-	revdep-rebuild || /bin/bash
+	revdep-rebuild --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
 

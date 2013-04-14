@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage1
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20130408
+snapshot: 20130412
 source_subpath: hardened/stage4-amd64-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe -ggdb
