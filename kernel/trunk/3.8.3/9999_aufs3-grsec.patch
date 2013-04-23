@@ -72,14 +72,3 @@
  			if (p->fop.aio_read)
  				p->fop.aio_read = aufs_aio_read_sp;
  			if (p->fop.aio_write)
---- a/fs/aufs/branch.h	2012-10-09 15:41:32.652989534 -0400
-+++ b/fs/aufs/branch.h	2012-10-09 15:41:58.562989820 -0400
-@@ -81,7 +81,7 @@
- 
- #ifdef CONFIG_AUFS_HFSNOTIFY
- 	struct fsnotify_group	*br_hfsn_group;
--	struct fsnotify_ops	br_hfsn_ops;
-+	fsnotify_ops_no_const	br_hfsn_ops;
- #endif
- 
- #ifdef CONFIG_SYSFS
