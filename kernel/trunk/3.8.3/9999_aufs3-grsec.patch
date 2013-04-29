@@ -72,3 +72,19 @@
  			if (p->fop.aio_read)
  				p->fop.aio_read = aufs_aio_read_sp;
  			if (p->fop.aio_write)
+diff -Naur linux-3.8.3-pentoo/fs/aufs/sysfs.c linux-3.8.3-pentoo-aufsfix/fs/aufs/sysfs.c
+--- linux-3.8.3-pentoo/fs/aufs/sysfs.c	2013-04-29 00:07:50.478827567 -0400
++++ linux-3.8.3-pentoo-aufsfix/fs/aufs/sysfs.c	2013-04-28 23:46:23.724793109 -0400
+@@ -208,8 +208,10 @@
+ 	struct attribute *attr = &br->br_attr;
+ 
+ 	sysfs_attr_init(attr);
+-	attr->name = br->br_name;
+-	attr->mode = S_IRUGO;
++	pax_open_kernel();
++	*(void **)&attr->name = br->br_name;
++	*(void **)&attr->mode = S_IRUGO;
++	pax_close_kernel();
+ }
+ 
+ void sysaufs_brs_del(struct super_block *sb, aufs_bindex_t bindex)
