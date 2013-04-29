@@ -1,6 +1,6 @@
-find correct branch from http://aufs.git.sourceforge.net/git/gitweb.cgi?p=aufs/aufs3-standalone.git;a=summary
+find correct branch from http://sourceforge.net/p/aufs/aufs3-standalone/ref/master/branches/
 
-git clone git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git
+git clone git://git.code.sf.net/p/aufs/aufs3-standalone aufs-aufs3-standalone
 git checkout origin/aufs3.x (where x is the desired branch)
 
 NOTE: I have no idea how to update in this state, I rm -rf the whole thing and start over each time
