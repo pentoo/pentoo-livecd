@@ -1,7 +1,10 @@
-#!/bin/sh
+#!/bin/sh -x
 source /etc/profile
 env-update
 source /tmp/envscript
+
+#somehow the default .bashrc runs X.... WTF????
+rm -f /root/.bashrc
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
@@ -175,22 +178,22 @@ done
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 
-USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vt
+emerge -qN -kb -D @world -vt
 layman -S
-USE="fuse fontconfig binary-drivers" emerge -qN -kb -D @world -vt || /bin/bash
-emerge -qN -kb -D @x11-module-rebuild || /bin/bash
-lafilefixer --justfixit | grep -v "already clean, skipping update"
+emerge -qN -kb -D @world -vt || /bin/bash
+#dropping usepkg on x11-modules-rebuild, doesn't make sense to use
+emerge -qN -D --buildpkg=y @x11-module-rebuild || /bin/bash
 emerge --depclean || /bin/bash
-revdep-rebuild --buildpkg=y
+revdep-rebuild -- --buildpkg=y
 if [ $? -ne 0 ]; then
 	rm -rf /var/cache/revdep-rebuild/*.rr
-	revdep-rebuild --buildpkg=y
+	revdep-rebuild -- --buildpkg=y || rm -rf /var/cache/revdep-rebuild/*.rr
 fi
 
 
 eselect python set python2.7 || /bin/bash
-python-updater || /bin/bash
-perl-cleaner --modules || /bin/bash
+python-updater -- --buildpkg=y|| /bin/bash
+perl-cleaner --modules -- --buildpkg=y || /bin/bash
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu || /bin/bash
@@ -292,14 +295,20 @@ mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #easy way to adjust wallpaper per install
 
-smart-live-rebuild -E --timeout=60
+smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
-emerge --oneshot --usepkg=n media-gfx/graphviz
+emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz
+
+#prevent the "new style" network interface names for now
+ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 #merge all other desired changes into /etc
 CONFIG_PROTECT_MASK="/etc/" etc-update || /bin/bash
+
+#forcibly remove binary driver files, unmerge isn't good enough it seems
+rm -rf /lib/modules/$(uname -r)/video
 
 eselect ruby set ruby19 || /bin/bash
 eselect bashcomp enable --global base || /bin/bash
@@ -307,12 +316,12 @@ eselect bashcomp enable --global eselect || /bin/bash
 eselect bashcomp enable --global gentoo || /bin/bash
 eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash
-portageq has_version / module-init-tools && eselect bashcomp enable --global module-init-tools
+eselect bashcomp enable --global module-init-tools || /bin/bash
 
-revdep-rebuild --buildpkg=y
+revdep-rebuild -- --buildpkg=y
 if [ $? -ne 0 ]; then
 	rm -rf /var/cache/revdep-rebuild/*.rr
-	revdep-rebuild --buildpkg=y || /bin/bash
+	revdep-rebuild -- --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
 
@@ -336,7 +345,7 @@ wget https://pentoo.googlecode.com/svn/genhtml/footer.inc
 sh gen_installedlist.sh > /var/log/portage/tools_list_${arch}_`date "+%Y%m%d"`.html
 rm -rf gen_installedlist.sh header.inc footer.inc
 
-rm -rf /var/tmp/portage
+rm -rf /var/tmp/portage/*
 sync
 sleep 60
 updatedb || /bin/bash

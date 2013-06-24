@@ -3,7 +3,7 @@ version_stamp: 2013.0
 target: livecd-stage2
 rel_type: hardened
 profile: pentoo:pentoo/hardened/linux/amd64
-snapshot: 20130412
+snapshot: 20130623
 source_subpath: hardened/livecd-stage1-amd64-2013.0
 portage_overlay: /usr/src/pentoo/portage/trunk
 cflags: -Os -mtune=nocona -pipe -ggdb
@@ -28,8 +28,9 @@ kerncache_path: /catalyst/kerncache/amd64-hardened
 
 livecd/fstype: squashfs
 livecd/fsops: -b 1048576 -comp xz -no-recovery -noappend
-livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
-livecd/iso: /catalyst/release/Pentoo_x86_64/pentoo-x86_64-2013.0_RC1.3.iso
+#livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
+livecd/cdtar: /usr/src/pentoo/livecd/trunk/isolinux-elilo-memtest86+-cdtar.tar.bz2
+livecd/iso: /catalyst/release/Pentoo_x86_64/pentoo-x86_64-2013.0_RC1.7.iso
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -184,7 +185,7 @@ livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
 
 # This option sets the volume ID of the CD created.
 # example:
-livecd/volid: Pentoo Linux 2013.0 x86_64 RC1.3
+livecd/volid: Pentoo Linux 2013.0 x86_64 RC1.7
 
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
@@ -216,12 +217,12 @@ boot/kernel/pentoo/gk_kernargs:
 # boot/kernel/gentoo/use: pcmcia usb -X
 boot/kernel/pentoo/use: X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 cuda opencl mpi wps offensive dwm -doc -examples
-wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu
+wifi injection lzma speed gnuplot python pyx test-programs fwcutter
 -quicktime -qt -qt3 qt3support qt4 -cups -spell lua curl -dso
 png jpeg fuse gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
 alsa esd jack mp3 vorbis wavpack wma
 dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
-opengl dbus binary-drivers acpi usb subversion libkms
+opengl dbus acpi usb subversion libkms
 -livecd-stage1 symlink
 
 # This option appends an extension to the name of your kernel, as viewed by a
@@ -238,7 +239,6 @@ opengl dbus binary-drivers acpi usb subversion libkms
 # boot/kernel/gentoo/packages: pcmcia-cs speedtouch slmodem globespan-adsl hostap-driver hostap-utils ipw2100 ipw2200 fritzcapi fcdsl cryptsetup
 boot/kernel/pentoo/packages: 
 pentoo/pentoo
-dev-util/lafilefixer
 sys-fs/zfs
 #I'm currently adding some livecd stage2 packages in from fsscript, it allows significantly more visibility into what is happening and kernel sources need a little tweaking
 
@@ -247,7 +247,7 @@ sys-fs/zfs
 # add here.  They can potentially break your CD.
 # example:
 # livecd/unmerge: acl attr autoconf automake bin86 binutils libtool m4 bison ld.so make perl patch linux-headers man-pages sash bison flex gettext texinfo ccache distcc addpatches man groff lib-compat miscfiles rsync sysklogd bc lcms libmng genkernel diffutils libperl gnuconfig gcc-config gcc bin86 cpio cronbase ed expat grub lilo help2man libtool gentoo-sources
-livecd/unmerge: dev-util/lafilefixer x11-drivers/ati-drivers x11-drivers/nvidia-drivers
+livecd/unmerge: x11-drivers/ati-drivers x11-drivers/nvidia-drivers
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
