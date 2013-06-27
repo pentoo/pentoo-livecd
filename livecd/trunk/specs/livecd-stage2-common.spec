@@ -36,7 +36,7 @@ livecd/type: generic-livecd
 # This is for blacklisting modules from being hotplugged that are known to cause
 # problems.  Putting a module name here will keep it from being auto-loaded,
 # even if ti is detected by hotplug.
-livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394 ar9170usb rtl2832
+livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394 ar9170usb rtl2832 rtl2830 dvb_usb_rtl28xxu
 
 # This is for adding init scripts to runlevels.  The syntax for the init script
 # is the script name, followed by a pipe, followed by the runlevel in which you

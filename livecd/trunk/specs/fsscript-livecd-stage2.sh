@@ -178,9 +178,9 @@ done
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 
-emerge -qN -kb -D @world -vt
+emerge -qN -kb -D --with-bdeps=y @world -vt
 layman -S
-emerge -qN -kb -D @world -vt || /bin/bash
+emerge -qN -kb -D --with-bdeps=y @world -vt || /bin/bash
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --buildpkg=y @x11-module-rebuild || /bin/bash
 emerge --depclean || /bin/bash

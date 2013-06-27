@@ -1,22 +1,39 @@
 #!/bin/sh
 
+set -e
+
 #disable things from grsec for building that we normally want enabled
-sysctl -w kernel.grsecurity.chroot_deny_mknod=0
-sysctl -w kernel.grsecurity.chroot_caps=0
+sysctl -w kernel.grsecurity.chroot_deny_mknod=0 || echo "already disabled"
+sysctl -w kernel.grsecurity.chroot_caps=0 || echo "already disabled"
 
-#./snap.sh || exit
-#catalyst -f stage1.spec || exit
-#./make_modules.sh || exit
-#catalyst -f stage2.spec || exit
-#catalyst -f stage3.spec || exit
-#catalyst -f stage4.spec || exit
+ARCH="i686"
 
-#catalyst -f livecd-stage1.spec || exit
-catalyst -f livecd-stage2.spec || exit
+#./snap.sh
 
-mkdir /catalyst/release/Pentoo_x86_64
-chmod 777 /catalyst/release/Pentoo_x86_64
-su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg `awk '/livecd\/iso:/ {print $2}' livecd-stage2.spec`.DIGESTS"
+for arch in ${ARCH}
+do
+	./build_spec.sh ${arch} stage1 > /tmp/${arch}-stage1.spec
+	catalyst -f /tmp/${arch}-stage1.spec
+done
 
-volid="$(grep ^livecd/volid livecd-stage2.spec | cut -d' ' -f2-)"
-mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_x86_64
+#./make_modules.sh
+
+for arch in ${ARCH}
+do
+	#for stage in stage2 stage3 stage4 livecd-stage1 livecd-stage2
+	for stage in livecd-stage1
+	do
+		./build_spec.sh ${arch} ${stage} > /tmp/${arch}-${stage}.spec
+		catalyst -f /tmp/${arch}-${stage}.spec
+	done
+done
+
+for arch in ${ARCH}
+do
+	mkdir -p /catalyst/release/Pentoo_${arch}
+	chmod 777 /catalyst/release/Pentoo_${arch}
+	su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+	/catalyst/release/Pentoo_${arch}/pentoo-${arch}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_RC$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS"
+	volid="Pentoo Linux ${arch} $(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2) RC$(grep RC= build_spec.sh | cut -d'=' -f2)"
+	mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}
+done
