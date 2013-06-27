@@ -6,7 +6,7 @@ set -e
 sysctl -w kernel.grsecurity.chroot_deny_mknod=0 || echo "already disabled"
 sysctl -w kernel.grsecurity.chroot_caps=0 || echo "already disabled"
 
-ARCH="i686"
+ARCH="amd64 i686"
 
 #./snap.sh
 
@@ -21,7 +21,7 @@ done
 for arch in ${ARCH}
 do
 	#for stage in stage2 stage3 stage4 livecd-stage1 livecd-stage2
-	for stage in livecd-stage1
+	for stage in livecd-stage2
 	do
 		./build_spec.sh ${arch} ${stage} > /tmp/${arch}-${stage}.spec
 		catalyst -f /tmp/${arch}-${stage}.spec
