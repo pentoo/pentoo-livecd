@@ -8,7 +8,7 @@ sysctl -w kernel.grsecurity.chroot_caps=0 || echo "already disabled"
 
 ARCH="amd64 i686"
 
-#./snap.sh
+./snap.sh
 
 for arch in ${ARCH}
 do
@@ -16,12 +16,12 @@ do
 	catalyst -f /tmp/${arch}-stage1.spec
 done
 
-#./make_modules.sh
+./make_modules.sh
 
 for arch in ${ARCH}
 do
-	#for stage in stage2 stage3 stage4 livecd-stage1 livecd-stage2
-	for stage in livecd-stage2
+	for stage in stage2 stage3 stage4 livecd-stage1 livecd-stage2
+	#for stage in livecd-stage2
 	do
 		./build_spec.sh ${arch} ${stage} > /tmp/${arch}-${stage}.spec
 		catalyst -f /tmp/${arch}-${stage}.spec
@@ -33,7 +33,7 @@ do
 	mkdir -p /catalyst/release/Pentoo_${arch}
 	chmod 777 /catalyst/release/Pentoo_${arch}
 	su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-	/catalyst/release/Pentoo_${arch}/pentoo-${arch}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_RC$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS"
+	/catalyst/release/Pentoo_${arch}/pentoo-${arch}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS"
 	volid="Pentoo Linux ${arch} $(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2) RC$(grep RC= build_spec.sh | cut -d'=' -f2)"
 	mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}
 done

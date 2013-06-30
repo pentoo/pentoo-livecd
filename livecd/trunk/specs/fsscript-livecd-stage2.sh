@@ -279,10 +279,6 @@ emerge --config net-dialup/freeradius || /bin/bash
 echo gtk-theme-name="Xfce-basic" >> /root/.gtkrc-2.0
 echo gtk-icon-theme-name="Tango" >> /root/.gtkrc-2.0
 
-#set the hostname properly
-sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
-sed -i 's/livecd/pentoo/' /etc/hosts
-
 mkdir -p /root/.config/gtk-3.0/
 cat <<-EOF > /root/.config/gtk-3.0/settings.ini
 	[Settings]
@@ -306,6 +302,10 @@ ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 #merge all other desired changes into /etc
 CONFIG_PROTECT_MASK="/etc/" etc-update || /bin/bash
+
+#set the hostname properly
+sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
+sed -i 's/livecd/pentoo/' /etc/hosts
 
 #forcibly remove binary driver files, unmerge isn't good enough it seems
 rm -rf /lib/modules/$(uname -r)/video
