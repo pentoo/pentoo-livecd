@@ -5,7 +5,7 @@ set -e
 
 VERSION_STAMP=2013.0
 echo "version_stamp: ${VERSION_STAMP}"
-RC=RC1.7
+RC=RC1.8
 case ${2} in
 	stage1)
 		if [ ${1} = amd64 ]
@@ -63,7 +63,7 @@ case ${2} in
 		if [ ${1} = amd64 ]
 		then
 			echo "livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --zfs --compress-initramfs-type=xz"
-		elif [ ${1} =i686 ]
+		elif [ ${1} = i686 ]
 		then
 			echo "livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --compress-initramfs-type=xz"
 		fi

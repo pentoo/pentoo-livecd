@@ -1,4 +1,4 @@
-livecd/use: livecd livecd-stage1
+livecd/use: aufs livecd livecd-stage1
 #aufs X livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 #mpi wps offensive dwm -doc -examples
 #wifi injection lzma speed gnuplot python pyx test-programs fwcutter qemu

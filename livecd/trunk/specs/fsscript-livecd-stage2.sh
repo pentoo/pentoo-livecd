@@ -169,8 +169,8 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/build
 	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
 	cd /usr/src/linux
-	make prepare
-	make modules_prepare
+	make -j prepare
+	make -j modules_prepare
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
 	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
 done
@@ -300,12 +300,12 @@ ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
+
 #merge all other desired changes into /etc
-CONFIG_PROTECT_MASK="/etc/" etc-update || /bin/bash
+CONFIG_PROTECT="" etc-update || /bin/bash
 
 #set the hostname properly
 sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
-sed -i 's/livecd/pentoo/' /etc/hosts
 
 #forcibly remove binary driver files, unmerge isn't good enough it seems
 rm -rf /lib/modules/$(uname -r)/video

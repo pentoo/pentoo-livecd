@@ -1,5 +1,6 @@
 livecd/fstype: squashfs
 #livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
+#livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-memtest86+-cdtar.tar.bz2
 livecd/cdtar: /usr/src/pentoo/livecd/trunk/isolinux-elilo-memtest86+-cdtar.tar.bz2
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
@@ -32,7 +33,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: autoconfig|default acpid|default bluetooth|default consolekit|default gpm|default dbus|default
+livecd/rcadd: autoconfig|default acpid|default bluetooth|default consolekit|default firmware|boot gpm|default dbus|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -77,7 +78,7 @@ boot/kernel/pentoo/gk_kernargs:
 # This option sets the USE flags used to build the kernel and also any packages
 # which are defined under this kernel label.  These USE flags are additive from
 # the default USE for the specified profile.
-boot/kernel/pentoo/use: livecd
+boot/kernel/pentoo/use: aufs livecd
 #X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
 #cuda opencl mpi wps offensive dwm -doc -examples
 #wifi injection lzma speed gnuplot python pyx test-programs fwcutter
