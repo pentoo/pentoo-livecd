@@ -15,7 +15,7 @@ livecd/fsscript: fsscript-livecd-stage2.sh
 
 # This is a set of arguments that get passed to the bootloader for your CD.  It
 # is used on the x86/amd64 release media to enable keymap selection.
-livecd/bootargs: nodetect aufs max_loop=256 dokeymap
+livecd/bootargs: nodetect aufs max_loop=256 dokeymap
 
 # This option controls quite a bit of catalyst internals and sets up several
 # defaults.  Each type behaves slightly differently and is explained below.
