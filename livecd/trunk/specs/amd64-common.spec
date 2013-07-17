@@ -1,3 +1,3 @@
 subarch: amd64
-cflags: -Os -mtune=nocona -pipe -ggdb
-cxxflags: -Os -mtune=nocona -pipe -ggdb
+cflags: -Os -mtune=nocona -pipe
+cxxflags: -Os -mtune=nocona -pipe

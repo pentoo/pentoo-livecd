@@ -5,7 +5,12 @@ set -e
 
 VERSION_STAMP=2013.0
 echo "version_stamp: ${VERSION_STAMP}"
-RC=RC1.8
+RC=RC1.9
+
+echo "rel_type: hardened"
+echo "snapshot: 20130715 "
+echo "portage_overlay: /usr/src/pentoo/portage/trunk"
+
 case ${2} in
 	stage1)
 		if [ ${1} = amd64 ]
@@ -80,7 +85,7 @@ case ${2} in
 esac
 
 #grab common things
-cat ${1}-common.spec full-common.spec
+cat ${1}-common.spec
 echo "target: ${2}"
 
 #fix profiles
