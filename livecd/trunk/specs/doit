@@ -6,39 +6,28 @@ set -e
 sysctl -w kernel.grsecurity.chroot_deny_mknod=0 || echo "already disabled"
 sysctl -w kernel.grsecurity.chroot_caps=0 || echo "already disabled"
 
-ARCH="amd64 i686"
+#start a new screen session for the builds
+screen -d -m -S catalyst -t catalyst bash
 
-./snap.sh
+#attach to screen and auto-detach or it refuses to accept commands
+#recurse screen inside screen or it won't run
+screen -d -m screen -r catalyst
+sleep 1
+screen -d catalyst
 
-#first we prep directories and build all the spec files
-for arch in ${ARCH}
-do
-	mkdir -p /catalyst/release/Pentoo_${arch}
-	chmod 777 /catalyst/release/Pentoo_${arch}
+#now run what we want
 
-	for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
-	do
-		./build_spec.sh ${arch} ${stage} > /tmp/${arch}-${stage}.spec
-	done
-done
+#take the snapshot
+screen -S catalyst -p 0 -X stuff './snap.sh'$(printf \\r)
 
-#then we make the modules
-./make_modules.sh
+#kick off amd64 build
+screen -S catalyst -p 0 -X stuff './run_catalyst.sh amd64'$(printf \\r)
 
-#then the actual builds (rewrite to do x86 and amd64 at the same time)
-for arch in ${ARCH}
-do
-	for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
-	do
-		catalyst -f /tmp/${arch}-${stage}.spec
-	done
-done
+#to keep io down we stagger the builds just a bit
+screen -S catalyst -p 1 -X screen bash
+screen -S catalyst -p 1 -X stuff 'sleep 20m'$(printf \\r)
+screen -S catalyst -p 1 -X stuff './make_modules.sh'$(printf \\r)
 
-#last generate the sig and torrent
-for arch in ${ARCH}
-do
-	su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-	/catalyst/release/Pentoo_${arch}/pentoo-${arch}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS"
-	volid="Pentoo Linux_${arch}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2)"
-	mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}
-done
+screen -S catalyst -p 1 -X stuff './run_catalyst.sh i686'$(printf \\r)
+
+screen -xr catalyst

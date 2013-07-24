@@ -9,3 +9,4 @@ perl-cleaner --modules -- --buildpkg=y || /bin/bash
 python-updater -- --buildpkg=y || /bin/bash
 #rebuild everything to ensure packages exist for everything.
 emerge -e -kb @world || /bin/bash
+revdep-rebuild -- --buildpkg=y

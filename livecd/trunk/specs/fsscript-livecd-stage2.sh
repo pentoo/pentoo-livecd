@@ -302,7 +302,7 @@ ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 
 #merge all other desired changes into /etc
-CONFIG_PROTECT="" etc-update || /bin/bash
+etc-update --automode -5 || /bin/bash
 
 #set the hostname properly
 sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
@@ -312,7 +312,6 @@ rm -rf /lib/modules/$(uname -r)/video
 
 eselect ruby set ruby19 || /bin/bash
 eselect bashcomp enable --global base || /bin/bash
-eselect bashcomp enable --global eselect || /bin/bash
 eselect bashcomp enable --global gentoo || /bin/bash
 eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash

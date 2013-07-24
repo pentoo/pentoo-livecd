@@ -6,7 +6,7 @@ mkdir -p /dev/shm/portage/rootfs/usr/
 mkdir -p /catalyst/tmp/portage/portage/distfiles
 mkdir -p /catalyst/tmp/portage/portage/metadata
 rsync -aEXu --delete /catalyst/tmp/portage/portage /dev/shm/portage/rootfs/usr/ || exit
-mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-`awk '/snapshot:/ {print $2}' full-common.spec`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || exit
+mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-`awk '/snapshot:/ {print $3}' build_spec.sh`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || exit
 rm -rf /catalyst/tmp/portage/portage/distfiles
 rm -rf /catalyst/tmp/portage/portage/metadata
 
