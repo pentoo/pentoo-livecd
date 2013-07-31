@@ -16,20 +16,30 @@ do
 	done
 done
 
-#then the actual builds (rewrite to do x86 and amd64 at the same time)
+#then the actual builds
 for arch in ${ARCH}
 do
-	for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
+	#for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
+	for stage in stage4 livecd-stage1 livecd-stage2
 	do
 		catalyst -f /tmp/${arch}-${stage}.spec
+		if [ $? -ne 0 ]; then
+			catalyst -f /tmp/${arch}-${stage}.spec
+			if [ $? -ne 0 ]; then
+				catalyst -f /tmp/${arch}-${stage}.spec
+				if [ $? -ne 0 ]; then
+					catalyst -f /tmp/${arch}-${stage}.spec
+				fi
+			fi
+		fi
 	done
 done
 
 #last generate the sig and torrent
 for arch in ${ARCH}
 do
-	su zero -c "gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-	/catalyst/release/Pentoo_${arch}/pentoo-${arch}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS"
+	gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+	/catalyst/release/Pentoo_${arch}/pentoo-${arch}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS
 	volid="Pentoo Linux_${arch}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2)"
 	mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}
 done
