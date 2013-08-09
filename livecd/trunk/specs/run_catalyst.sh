@@ -19,8 +19,7 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
-	#for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
-	for stage in stage4 livecd-stage1 livecd-stage2
+	for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
 	do
 		catalyst -f /tmp/${arch}-${stage}.spec
 		if [ $? -ne 0 ]; then

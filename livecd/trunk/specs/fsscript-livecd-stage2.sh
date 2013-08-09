@@ -345,6 +345,7 @@ sh gen_installedlist.sh > /var/log/portage/tools_list_${arch}_`date "+%Y%m%d"`.h
 rm -rf gen_installedlist.sh header.inc footer.inc
 
 rm -rf /var/tmp/portage/*
+emaint-pkg
 sync
 sleep 60
 updatedb || /bin/bash
