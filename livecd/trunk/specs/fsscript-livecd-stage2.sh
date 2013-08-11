@@ -199,9 +199,8 @@ perl-cleaner --modules -- --buildpkg=y || /bin/bash
 emerge -1 app-admin/genmenu || /bin/bash
 
 # Runs the menu generator with a specific parameters for a WM
-genmenu.py -v -t terminology || /bin/bash
-genmenu.py -e -v -t terminology || /bin/bash
-genmenu.py -x -v -t Terminal || /bin/bash
+genmenu.py -e || /bin/bash
+genmenu.py -x || /bin/bash
 
 # Fixes icons
 #cp -af /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
