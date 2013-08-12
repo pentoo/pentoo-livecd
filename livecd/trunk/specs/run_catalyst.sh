@@ -7,6 +7,7 @@ ARCH="$1"
 #first we prep directories and build all the spec files
 for arch in ${ARCH}
 do
+	rm -rf /catalyst/release/Pentoo_${arch} /catalyst/release/Pentoo*${arch}*.torrent
 	mkdir -p /catalyst/release/Pentoo_${arch}
 	chmod 777 /catalyst/release/Pentoo_${arch}
 

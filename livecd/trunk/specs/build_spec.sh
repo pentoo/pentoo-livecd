@@ -5,20 +5,20 @@ set -e
 
 VERSION_STAMP=2013.0
 echo "version_stamp: ${VERSION_STAMP}"
-RC=RC1.9
+RC=RC2.0
 
 echo "rel_type: hardened"
-echo "snapshot: 20130805 "
+echo "snapshot: 20130811 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 
 case ${2} in
 	stage1)
 		if [ ${1} = amd64 ]
 		then
-			echo "source_subpath: hardened/stage3-amd64-hardened-20130523"
+			echo "source_subpath: hardened/stage3-amd64-hardened-20130801"
 		elif [ ${1} = i686 ]
 		then
-			echo "source_subpath: hardened/stage3-i686-hardened-20130423"
+			echo "source_subpath: hardened/stage3-i686-hardened-20130806"
 		fi
 		;;
 	stage2)
