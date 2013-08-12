@@ -13,6 +13,8 @@ do
 
 	for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
 	do
+		#I have nfc why it's loosing exec all of a sudden but I can compensate
+		chmod +x build_spec.sh
 		./build_spec.sh ${arch} ${stage} > /tmp/${arch}-${stage}.spec
 	done
 done

@@ -8,7 +8,7 @@ echo "version_stamp: ${VERSION_STAMP}"
 RC=RC2.0
 
 echo "rel_type: hardened"
-echo "snapshot: 20130811 "
+echo "snapshot: 20130812 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 
 case ${2} in
