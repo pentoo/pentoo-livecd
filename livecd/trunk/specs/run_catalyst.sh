@@ -37,6 +37,14 @@ do
 	done
 done
 
+#sync packages
+if [ ${ARCH} = amd64 ]; then
+	rsync -aEXuh --progress --delete /catalyst/tmp/packages/${ARCH}-hardened /mnt/mirror/local_mirror/Packages/
+elif [ ${ARCH} = i686 ]; then
+	rsync -aEXuh --progress --delete /catalyst/tmp/packages/x86-hardened /mnt/mirror/local_mirror/Packages/
+fi
+/mnt/mirror/mirror.sh
+
 #last generate the sig and torrent
 for arch in ${ARCH}
 do

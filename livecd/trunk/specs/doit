@@ -21,17 +21,13 @@ screen -d catalyst
 screen -S catalyst -p 0 -X stuff './snap.sh'$(printf \\r)
 
 #kick off amd64 build
-screen -S catalyst -p 0 -X stuff './run_catalyst.sh amd64 \
-&& rsync -aEXuh --progress --delete /catalyst/tmp/packages/amd64-hardened /mnt/mirror/local_mirror/Packages/ \
-&& /mnt/mirror/mirror.sh'$(printf \\r)
+screen -S catalyst -p 0 -X stuff './run_catalyst.sh amd64'$(printf \\r)
 
 #to keep io down we stagger the builds just a bit
 screen -S catalyst -p 1 -X screen bash
-screen -S catalyst -p 1 -X stuff 'sleep 20m'$(printf \\r)
+screen -S catalyst -p 1 -X stuff 'sleep 30m'$(printf \\r)
 screen -S catalyst -p 1 -X stuff './make_modules.sh'$(printf \\r)
 
-screen -S catalyst -p 1 -X stuff './run_catalyst.sh i686 \
-&& rsync -aEXuh --progress --delete /catalyst/tmp/packages/x86-hardened /mnt/mirror/local_mirror/Packages/ \
-&& /mnt/mirror/mirror.sh'$(printf \\r)
+screen -S catalyst -p 1 -X stuff './run_catalyst.sh i686'$(printf \\r)
 
 screen -xr catalyst

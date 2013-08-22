@@ -11,3 +11,4 @@ python-updater -- --buildpkg=y || /bin/bash
 emerge -e -kb @world || /bin/bash
 emerge -1 --buildpkg=y app-portage/gentoolkit || /bin/bash
 revdep-rebuild -- --buildpkg=y || /bin/bash
+USE=aufs emerge -1 --buildpkg=y sys-kernel/pentoo-sources || /bin/bash
