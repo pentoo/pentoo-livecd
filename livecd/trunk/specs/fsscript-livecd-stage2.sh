@@ -311,6 +311,7 @@ rm -rf /lib/modules/$(uname -r)/video
 
 eselect ruby set ruby19 || /bin/bash
 eselect bashcomp enable --global base || /bin/bash
+eselect bashcomp enable --global eselect || /bin/bash
 eselect bashcomp enable --global gentoo || /bin/bash
 eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash
