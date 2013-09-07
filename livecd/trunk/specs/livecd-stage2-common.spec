@@ -79,15 +79,6 @@ boot/kernel/pentoo/gk_kernargs:
 # which are defined under this kernel label.  These USE flags are additive from
 # the default USE for the specified profile.
 boot/kernel/pentoo/use: aufs livecd
-#X aufs livecd gtk -kde -eds gtk2 cairo pam firefox gpm dvdr oss
-#cuda opencl mpi wps offensive dwm -doc -examples
-#wifi injection lzma speed gnuplot python pyx test-programs fwcutter
-#-quicktime -qt -qt3 qt3support qt4 -cups -spell lua curl -dso
-#png jpeg fuse gif dri svg aac nsplugin xrandr consolekit -ffmpeg fontconfig
-#alsa esd jack mp3 vorbis wavpack wma
-#dvd mpeg ogg rtsp x264 xvid sqlite truetype nss
-#opengl dbus acpi usb subversion libkms
-#-livecd-stage1 symlink
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This

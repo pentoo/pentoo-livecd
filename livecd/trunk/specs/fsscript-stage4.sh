@@ -7,6 +7,7 @@ emerge --deep --update --newuse -kb @world || /bin/bash
 #fix interpreted stuff
 perl-cleaner --modules -- --buildpkg=y || /bin/bash
 python-updater -- --buildpkg=y || /bin/bash
+eselect ruby set ruby19 || /bin/bash
 #rebuild everything to ensure packages exist for everything.
 emerge -e -kb @world || /bin/bash
 emerge -1 --buildpkg=y app-portage/gentoolkit || /bin/bash

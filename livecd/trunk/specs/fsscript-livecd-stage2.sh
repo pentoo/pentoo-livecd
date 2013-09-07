@@ -292,7 +292,8 @@ cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce
 
 smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
-emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz
+#an attempt to fix a bug, never actually worked
+#emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz
 
 #prevent the "new style" network interface names for now
 ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
@@ -310,6 +311,15 @@ sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
 rm -rf /lib/modules/$(uname -r)/video
 
 eselect ruby set ruby19 || /bin/bash
+
+#rebuild any bash-completion that is in the wrong place
+#if [ -d /usr/share/bash-completion/completions ]; then
+#	BAD_BASH="$(qfile --nocolor /usr/share/bash-completion/completions/* | cut -f1 -d' ')"
+#	emerge --usepkg=n --buildpkg=y "${BAD_BASH}" -a1
+#	/bin/bash
+#fi
+rm -rf /usr/share/bash-completion/completions
+emerge --usepkg=n --buildpkg=y dev-vcs/mercurial -1
 eselect bashcomp enable --global base || /bin/bash
 eselect bashcomp enable --global eselect || /bin/bash
 eselect bashcomp enable --global gentoo || /bin/bash
@@ -328,13 +338,16 @@ rc-update -u || /bin/bash
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
 # The issue is it isn't really possible (nor desirable) to have all this extra debug info on the iso so here is what we do...
 #We make a dir with full path for where the debug info goes abusing the fancy /var/tmp/portage tmpfs mount
-mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+#mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+
 #then we rsync all the debug info into a rootfs for building a module
-rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+#rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+
 # last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
-mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
+#mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
+
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec
-rm -rf /var/tmp/portage/debug
+#rm -rf /var/tmp/portage/debug
 
 ## More with the horrible hack
 # So it seems I have picked /var/log/portage to just randomly spew stuff into
