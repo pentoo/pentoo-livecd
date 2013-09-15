@@ -33,10 +33,15 @@ do
 				if [ $? -ne 0 ]; then
 					catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 				fi
+					if [ $? -ne 0 ]; then
+						break
+					fi
 			fi
 		fi
 	done
 done
+
+#until catalyst -f /tmp/i686-hardened-livecd-stage2.spec; do echo failed; sleep 30; done
 
 #sync packages
 if [ ${ARCH} = amd64 ]; then
