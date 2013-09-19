@@ -181,9 +181,17 @@ emerge --deselect=y sys-fs/zfs || /bin/bash
 emerge -qN -kb -D --with-bdeps=y @world -vt
 layman -S
 emerge -qN -kb -D --with-bdeps=y @world -vt || /bin/bash
+portageq list_preserved_libs /
+if [ $? -ne 0 ]; then
+	emerge @preserved-rebuild -q || /bin/bash
+fi
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --buildpkg=y @x11-module-rebuild || /bin/bash
 emerge --depclean || /bin/bash
+portageq list_preserved_libs /
+if [ $? -ne 0 ]; then
+        emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
+fi
 revdep-rebuild -- --buildpkg=y
 if [ $? -ne 0 ]; then
 	rm -rf /var/cache/revdep-rebuild/*.rr
@@ -261,7 +269,16 @@ rm -f /root/.my.cnf || /bin/bash
 #configure postgres
 echo y | emerge --config dev-db/postgresql-server || /bin/bash
 touch /run/openrc/softlevel
-/etc/init.d/postgresql-9.2 start || /bin/bash
+/etc/init.d/postgresql-9.2 start
+if [ $? -ne 0 ]; then
+	sleep 5m
+	/etc/init.d/postgresql-9.2 start
+	if [ $? -ne 0 ]; then
+		sleep 5m
+		killall postgres
+		/etc/init.d/postgresql-9.2 start || /bin/bash
+	fi
+fi
 emerge --config net-analyzer/metasploit || /bash/bash
 
 #metasploit first run to create db, etc, and speed up livecd first run
@@ -290,7 +307,7 @@ mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #easy way to adjust wallpaper per install
 
-smart-live-rebuild -E --timeout=60 -- --buildpkg=y
+smart-live-rebuild -E --timeout=60 -- --buildpkg=y || /bin/bash
 
 #an attempt to fix a bug, never actually worked
 #emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz
@@ -316,8 +333,9 @@ eselect ruby set ruby19 || /bin/bash
 #make sure the directory does not exist before rebuilding all scripts
 if [ -d /usr/share/bash-completion/completions ]; then
 	BAD_BASH="$(qfile --nocolor /usr/share/bash-completion/completions/* | cut -f1 -d' ')"
+	BAD_BASH="$(echo ${BAD_BASH} | sort -ub)"
 	rm -rf /usr/share/bash-completion/completions
-	emerge --usepkg=n --buildpkg=y "${BAD_BASH}" -a1
+	emerge --usepkg=n --buildpkg=y ${BAD_BASH} -a1
 fi
 eselect bashcomp enable --global base || /bin/bash
 eselect bashcomp enable --global eselect || /bin/bash
@@ -325,6 +343,11 @@ eselect bashcomp enable --global gentoo || /bin/bash
 eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash
 eselect bashcomp enable --global module-init-tools || /bin/bash
+
+portageq list_preserved_libs /
+if [ $? -ne 0 ]; then
+	emerge @preserved-rebuild -q || /bin/bash
+fi
 
 revdep-rebuild -- --buildpkg=y
 if [ $? -ne 0 ]; then
@@ -354,6 +377,9 @@ wget https://pentoo.googlecode.com/svn/genhtml/gen_installedlist.sh
 wget https://pentoo.googlecode.com/svn/genhtml/header.inc
 wget https://pentoo.googlecode.com/svn/genhtml/footer.inc
 sh gen_installedlist.sh > /var/log/portage/tools_list_${arch}_`date "+%Y%m%d"`.html
+if [ $? -ne 0 ]; then
+	/bin/bash
+fi
 rm -rf gen_installedlist.sh header.inc footer.inc
 
 rm -rf /var/tmp/portage/*
