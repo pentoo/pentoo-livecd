@@ -307,7 +307,8 @@ mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #easy way to adjust wallpaper per install
 
-smart-live-rebuild -E --timeout=60 -- --buildpkg=y || /bin/bash
+#allow this to fail for right now so builds don't randomly stop and piss me off
+smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
 #an attempt to fix a bug, never actually worked
 #emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz
