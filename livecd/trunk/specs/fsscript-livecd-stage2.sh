@@ -330,14 +330,6 @@ rm -rf /lib/modules/$(uname -r)/video
 
 eselect ruby set ruby19 || /bin/bash
 
-#bash-completion 1.3 does not support scripts in the completions/* directory
-#make sure the directory does not exist before rebuilding all scripts
-if [ -d /usr/share/bash-completion/completions ]; then
-	BAD_BASH="$(qfile --nocolor /usr/share/bash-completion/completions/* | cut -f1 -d' ')"
-	BAD_BASH="$(echo ${BAD_BASH} | sort -ub)"
-	rm -rf /usr/share/bash-completion/completions
-	emerge --usepkg=n --buildpkg=y ${BAD_BASH} -a1
-fi
 eselect bashcomp enable --global base || /bin/bash
 eselect bashcomp enable --global eselect || /bin/bash
 eselect bashcomp enable --global gentoo || /bin/bash
