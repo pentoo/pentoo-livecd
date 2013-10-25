@@ -4,6 +4,8 @@ source /tmp/envscript
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
 
+emerge -1 -kb wgetpaste || /bin/bash
+
 #ease transition to the new use flags
 USE="-directfb" emerge -1 -kb libsdl DirectFB || /bin/bash
 portageq list_preserved_libs /

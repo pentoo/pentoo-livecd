@@ -13,7 +13,7 @@ fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20130924 "
+echo "snapshot: 20131021 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -23,7 +23,7 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-amd64-${2}-20130801"
+				echo "source_subpath: ${2}/stage3-amd64-${2}-20130822"
 			elif [ ${2} = default ]
 			then
 				echo "source_subpath: ${2}/stage3-amd64-20130822"
@@ -32,7 +32,7 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-i686-${2}-20130806"
+				echo "source_subpath: ${2}/stage3-i686-${2}-20130827"
 			elif [ ${2} = default ]
 			then
 				echo "source_subpath: ${2}/stage3-i686-20130827"
@@ -143,28 +143,28 @@ case ${3} in
 	stage1)
 		if [ ${1} = amd64 ]
 		then
-			echo "pkgcache_path: /catalyst/tmp/packages/${1}-${2}-bootstrap/${3}"
+			echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap/${3}"
 		elif [ ${1} = i686 ]
 		then
-			echo "pkgcache_path: /catalyst/tmp/packages/x86-${2}-bootstrap/${3}"
+			echo "pkgcache_path: /catalyst/packages/x86-${2}-bootstrap/${3}"
 		fi
 		;;
 	stage2|stage3)
 		if [ ${1} = amd64 ]
 		then
-			echo "pkgcache_path: /catalyst/tmp/packages/${1}-${2}-bootstrap"
+			echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap"
 		elif [ ${1} = i686 ]
 		then
-			echo "pkgcache_path: /catalyst/tmp/packages/x86-${2}-bootstrap"
+			echo "pkgcache_path: /catalyst/packages/x86-${2}-bootstrap"
 		fi
 		;;
 	stage4|livecd-stage1|livecd-stage2)
 		if [ ${1} = amd64 ]
 		then
-			echo "pkgcache_path: /catalyst/tmp/packages/${1}-${2}"
+			echo "pkgcache_path: /catalyst/packages/${1}-${2}"
 		elif [ ${1} = i686 ]
 		then
-			echo "pkgcache_path: /catalyst/tmp/packages/x86-${2}"
+			echo "pkgcache_path: /catalyst/packages/x86-${2}"
 		fi
 		;;
 esac
