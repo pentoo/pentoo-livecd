@@ -114,17 +114,27 @@ layman -L || /bin/bash
 layman -s pentoo || ( layman -a pentoo || /bin/bash )
 echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf || /bin/bash
 
+#echo "see what /etc/portage/make.profile looks like"
+#/bin/bash
+
+#foo=$(readlink /etc/portage/make.profile); foo="${PORTDIR}/profiles/${foo#*profiles/}; ln -snf "${foo}" /etc/portage/make.profile
+
+if gcc -v 2>&1 | grep -q Hardened
+then
+	hardening=hardened
+else
+        hardening=default
+fi
+
 arch=$(uname -m)
 if [ $arch = "i686" ]; then
 	ARCH="x86"
-	#no matter what I do, the x86 build just fails miserably when hardened, and can't even build on default
-	#sigh
-	eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/hardened/linux/${ARCH}/bleeding_edge
+	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 elif [ $arch = "x86_64" ]; then
 	ARCH="amd64"
-	eselect profile set pentoo:pentoo/hardened/linux/${ARCH} || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/hardened/linux/${ARCH}/bleeding_edge
+	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 else
 	echo "failed to handle arch"
 	exit
@@ -177,6 +187,17 @@ done
 
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
+
+#work around for detecting bug #461824
+grep -r _portage_reinstall_ /etc {/usr,}/{*bin,lib*} | grep -v doebuild > /tmp/urfuct.txt
+if [ -f /tmp/urfuct.txt ]; then
+	for badfile in `cat /tmp/urfuct.txt` ; do
+		echo ${badfile} | cut -d":" -f1 | xargs qfile - | cut -d' ' -f1 >> /tmp/badpkg_us.txt
+	done
+	cat /tmp/badpkg_us.txt | sort -u > /tmp/badpkg.txt
+	emerge -1 --buildpkg=y --nodeps $(cat /tmp/badpkg.txt) || /bin/bash
+	rm /tmp/urfuct.txt /tmp/badpkg_us.txt /tmp/badpkg.txt
+fi
 
 emerge -qN -kb -D --with-bdeps=y @world -vt
 layman -S
@@ -353,16 +374,16 @@ rc-update -u || /bin/bash
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
 # The issue is it isn't really possible (nor desirable) to have all this extra debug info on the iso so here is what we do...
 #We make a dir with full path for where the debug info goes abusing the fancy /var/tmp/portage tmpfs mount
-#mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 
 #then we rsync all the debug info into a rootfs for building a module
-#rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 
 # last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
-#mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
+mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
 
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec
-#rm -rf /var/tmp/portage/debug
+rm -rf /var/tmp/portage/debug
 
 ## More with the horrible hack
 # So it seems I have picked /var/log/portage to just randomly spew stuff into

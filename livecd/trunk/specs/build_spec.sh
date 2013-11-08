@@ -13,7 +13,7 @@ fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20131021 "
+echo "snapshot: 20131107 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -103,9 +103,13 @@ esac
 if [ ${1} = amd64 ]
 then
 	echo "subarch: amd64"
+	echo "cflags: -Os -mtune=nocona -pipe -ggdb"
+	echo "cxxflags: -Os -mtune=nocona -pipe -ggdb"
 elif [ ${1} = i686 ]
 then
 	echo "subarch: i686"
+	echo "cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb"
+	echo "cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb"
 fi
 
 if [ ${3} = stage5 ]
