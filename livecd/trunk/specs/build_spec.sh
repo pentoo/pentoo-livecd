@@ -4,16 +4,19 @@
 set -e
 
 VERSION_STAMP=2013.0
-if [ ${3} = stage5 ]
+if [ ${3} = stage4-pentoo ]
 then
-	echo "version_stamp: 5-${VERSION_STAMP}"
+	echo "version_stamp: pentoo-${VERSION_STAMP}"
+elif [ ${3} = binpkg-update ]
+then
+	echo "version_stamp: binpkg-update-${VERSION_STAMP}"
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20131107 "
+echo "snapshot: 20131112 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -48,12 +51,15 @@ case ${3} in
 	stage4)
 		echo "source_subpath: ${2}/stage3-${1}-${VERSION_STAMP}"
 		;;
-	stage5)
+	stage4-pentoo)
 		echo "source_subpath: ${2}/stage4-${1}-${VERSION_STAMP}"
+		;;
+	binpkg-update)
+		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
 		;;
 	livecd-stage1)
 		echo "source_subpath: ${2}/stage4-${1}-${VERSION_STAMP}"
-		#echo "source_subpath: ${2}/stage5-${1}-5-${VERSION_STAMP}"
+		#echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
 		;;
 	livecd-stage2)
 		echo "source_subpath: ${2}/livecd-stage1-${1}-${VERSION_STAMP}"
@@ -91,8 +97,8 @@ case ${3} in
 
 		echo "# This option is for merging kernel-dependent packages and external modules that"
 		echo "# are configured against this kernel label."
-		echo "boot/kernel/pentoo/packages:"
-		echo "pentoo/pentoo"
+		echo "boot/kernel/pentoo/packages: pentoo/pentoo"
+
 		if [ ${1} = amd64 ]
 		then
 			echo "sys-fs/zfs"
@@ -112,9 +118,12 @@ then
 	echo "cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb"
 fi
 
-if [ ${3} = stage5 ]
+if [ ${3} = stage4-pentoo ]
 then
 	echo "target: stage4"
+elif [ ${3} = binpkg-update ]
+then
+	echo "target: livecd-stage1"
 else
 	echo "target: ${3}"
 fi
@@ -130,7 +139,7 @@ case ${3} in
 			echo "profile: --force pentoo:pentoo/${2}/linux/x86/bootstrap"
 		fi
 		;;
-	stage4|livecd-stage1|livecd-stage2)
+	stage4|stage4-pentoo|binpkg-update|livecd-stage1|livecd-stage2)
 		if [ ${1} = amd64 ]
 		then
 			echo "profile: pentoo:pentoo/${2}/linux/${1}"
@@ -143,6 +152,25 @@ esac
 
 [ -f ${3}-common.spec ] && cat ${3}-common.spec
 
+#kitchen sink
+case ${3} in
+	stage4)
+		echo "stage4/fsscript: fsscript-stage4.sh"
+		echo "stage4/packages: dev-lang/python:2.7"
+		;;
+	stage4-pentoo)
+		echo "stage4/packages: pentoo/pentoo"
+		;;
+	binpkg-update)
+		echo "stage4/fsscript: pentoo-updater.sh"
+		;;
+	livecd-stage1)
+		echo "livecd/use: aufs livecd livecd-stage1"
+		echo "livecd/packages: pentoo/pentoo"
+		;;
+esac
+
+#pkgcache_path
 case ${3} in
 	stage1)
 		if [ ${1} = amd64 ]
@@ -162,7 +190,7 @@ case ${3} in
 			echo "pkgcache_path: /catalyst/packages/x86-${2}-bootstrap"
 		fi
 		;;
-	stage4|livecd-stage1|livecd-stage2)
+	stage4|stage4-pentoo|binpkg-update|livecd-stage1|livecd-stage2)
 		if [ ${1} = amd64 ]
 		then
 			echo "pkgcache_path: /catalyst/packages/${1}-${2}"
