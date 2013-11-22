@@ -23,9 +23,13 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
-	for stage in stage1 stage2 stage3 stage4 livecd-stage1 livecd-stage2
+	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update livecd-stage1 livecd-stage2
 	do
-		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
+		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
+		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2" ]
+		then
+			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2013.0
+		fi
 	#	if [ $? -ne 0 ]; then
 	#		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 	#		if [ $? -ne 0 ]; then

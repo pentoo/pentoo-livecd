@@ -16,7 +16,7 @@ fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20131112 "
+echo "snapshot: 20131117 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -58,11 +58,12 @@ case ${3} in
 		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
 		;;
 	livecd-stage1)
-		echo "source_subpath: ${2}/stage4-${1}-${VERSION_STAMP}"
-		#echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
+		#echo "source_subpath: ${2}/stage4-${1}-${VERSION_STAMP}"
 		;;
 	livecd-stage2)
 		echo "source_subpath: ${2}/livecd-stage1-${1}-${VERSION_STAMP}"
+		#echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
 		echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
 		echo "livecd/volid: Pentoo Linux ${1} ${VERSION_STAMP} ${RC}"
 
@@ -123,7 +124,7 @@ then
 	echo "target: stage4"
 elif [ ${3} = binpkg-update ]
 then
-	echo "target: livecd-stage1"
+	echo "target: stage4"
 else
 	echo "target: ${3}"
 fi
@@ -159,9 +160,12 @@ case ${3} in
 		echo "stage4/packages: dev-lang/python:2.7"
 		;;
 	stage4-pentoo)
+		echo "stage4/use: aufs livecd livecd-stage1"
 		echo "stage4/packages: pentoo/pentoo"
 		;;
 	binpkg-update)
+		echo "stage4/use: aufs livecd livecd-stage1"
+		echo "stage4/packages: pentoo/pentoo"
 		echo "stage4/fsscript: pentoo-updater.sh"
 		;;
 	livecd-stage1)

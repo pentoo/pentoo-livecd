@@ -191,12 +191,15 @@ emerge --deselect=y sys-fs/zfs || /bin/bash
 #work around for detecting bug #461824
 grep -r _portage_reinstall_ /etc {/usr,}/{*bin,lib*} | grep -v doebuild > /tmp/urfuct.txt
 if [ -n "$(cat /tmp/urfuct.txt)" ]; then
-	for badfile in `cat /tmp/urfuct.txt` ; do
-		echo ${badfile} | cut -d":" -f1 | qfile -C - | cut -d' ' -f1 >> /tmp/badpkg_us.txt
+	for badhit in "$(cat /tmp/urfuct.txt)" ; do
+		echo ${badhit} | cut -d":" -f1 >> /tmp/badfiles.txt
+	done
+	for badfile in $(cat /tmp/badfiles.txt); do
+		qfile -C ${badfile} | cut -d' ' -f1 >> /tmp/badpkg_us.txt
 	done
 	cat /tmp/badpkg_us.txt | sort -u > /tmp/badpkg.txt
 	emerge -1 --buildpkg=y --nodeps $(cat /tmp/badpkg.txt) || /bin/bash
-	rm -f /tmp/urfuct.txt /tmp/badpkg_us.txt /tmp/badpkg.txt
+	rm -f /tmp/urfuct.txt /tmp/badfiles.txt /tmp/badpkg_us.txt /tmp/badpkg.txt
 fi
 
 emerge -qN -kb -D --with-bdeps=y @world -vt
@@ -397,7 +400,7 @@ fi
 rm -rf gen_installedlist.sh header.inc footer.inc
 
 rm -rf /var/tmp/portage/*
-eclean-pkg
+eclean-pkg -d
 sync
 sleep 60
 updatedb || /bin/bash
