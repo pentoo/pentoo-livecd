@@ -1,0 +1,11 @@
+#because fuck ruby
+dev-lang/ruby:1.8
+
+#trying to troubleshoot what is pulling in old xorg-server
+<x11-base/xorg-server-1.13
+
+#help force a preference for self-built so it actually runs on hardened
+www-client/firefox-bin
+
+#stopping pulling in old gcc
+<sys-devel/gcc-4.7.3-r1

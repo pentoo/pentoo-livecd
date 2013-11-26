@@ -1,0 +1,2 @@
+#unmask livecd-stage1 only during catalyst builds
+-livecd-stage1
