@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #input arch ($1), profile ($2) and stage ($3), output working spec
 
 set -e
@@ -7,7 +7,7 @@ VERSION_STAMP=2013.0
 if [ ${3} = stage4-pentoo ]
 then
 	echo "version_stamp: pentoo-${VERSION_STAMP}"
-elif [ ${3} = binpkg-update ]
+elif [[ ${3} = binpkg-update* ]]
 then
 	echo "version_stamp: binpkg-update-${VERSION_STAMP}"
 else
@@ -16,7 +16,7 @@ fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20131117 "
+echo "snapshot: 20131123 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -26,19 +26,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-amd64-${2}-20130822"
+				echo "source_subpath: ${2}/stage3-amd64-${2}-20131024"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/stage3-amd64-20130822"
+				echo "source_subpath: ${2}/stage3-amd64-20131031"
 			fi
 		elif [ ${1} = i686 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-i686-${2}-20130827"
+				echo "source_subpath: ${2}/stage3-i686-${2}-20131029"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/stage3-i686-20130827"
+				echo "source_subpath: ${2}/stage3-i686-20131029"
 			fi
 		fi
 		;;
@@ -54,8 +54,13 @@ case ${3} in
 	stage4-pentoo)
 		echo "source_subpath: ${2}/stage4-${1}-${VERSION_STAMP}"
 		;;
-	binpkg-update)
+	binpkg-update-seed)
 		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
+		;;
+	binpkg-update)
+		#this might be really dangerous but to avoid remaking the same fixes over and over
+		#I'm going to seed binpkg-update with binpkg-update :-)
+		echo "source_subpath: ${2}/stage4-${1}-binpkg-update-${VERSION_STAMP}"
 		;;
 	livecd-stage1)
 		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
@@ -122,7 +127,7 @@ fi
 if [ ${3} = stage4-pentoo ]
 then
 	echo "target: stage4"
-elif [ ${3} = binpkg-update ]
+elif [[ ${3} = binpkg-update* ]]
 then
 	echo "target: stage4"
 else
@@ -140,7 +145,7 @@ case ${3} in
 			echo "profile: --force pentoo:pentoo/${2}/linux/x86/bootstrap"
 		fi
 		;;
-	stage4|stage4-pentoo|binpkg-update|livecd-stage1|livecd-stage2)
+	stage4|stage4-pentoo|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2)
 		if [ ${1} = amd64 ]
 		then
 			echo "profile: pentoo:pentoo/${2}/linux/${1}"
@@ -156,17 +161,18 @@ esac
 #kitchen sink
 case ${3} in
 	stage4)
-		echo "stage4/fsscript: fsscript-stage4.sh"
+		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/fsscript-stage4.sh"
 		echo "stage4/packages: dev-lang/python:2.7"
 		;;
 	stage4-pentoo)
+		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: aufs livecd livecd-stage1"
 		echo "stage4/packages: pentoo/pentoo"
 		;;
-	binpkg-update)
+	binpkg-update*)
 		echo "stage4/use: aufs livecd livecd-stage1"
 		echo "stage4/packages: pentoo/pentoo"
-		echo "stage4/fsscript: pentoo-updater.sh"
+		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/pentoo-updater.sh"
 		;;
 	livecd-stage1)
 		echo "livecd/use: aufs livecd livecd-stage1"
@@ -194,7 +200,7 @@ case ${3} in
 			echo "pkgcache_path: /catalyst/packages/x86-${2}-bootstrap"
 		fi
 		;;
-	stage4|stage4-pentoo|binpkg-update|livecd-stage1|livecd-stage2)
+	stage4|stage4-pentoo|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2)
 		if [ ${1} = amd64 ]
 		then
 			echo "pkgcache_path: /catalyst/packages/${1}-${2}"

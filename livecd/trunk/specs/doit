@@ -25,7 +25,7 @@ screen -d catalyst
 #443m -53m
 
 #take the snapshot
-screen -S catalyst -p 0 -X stuff 'ulimit -Hn 8192; ulimit -Sn 4096; find /var/log/portage -type f ! -name "summary.log*" -mtime +7 -delete ; ./snap.sh'$(printf \\r)
+screen -S catalyst -p 0 -X stuff 'ulimit -Hn 8192; ulimit -Sn 4096; find /catalyst/log -type f ! -name "summary.log*" -mtime +7 -delete ; ./snap.sh'$(printf \\r)
 
 #kick off amd64 build
 
