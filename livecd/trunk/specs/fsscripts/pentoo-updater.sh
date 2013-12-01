@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 source /etc/profile
 env-update
 source /tmp/envscript
@@ -13,7 +13,7 @@ emerge --onlydeps --oneshot --deep --update --newuse pentoo/pentoo || /bin/bash
 etc-update --automode -5 || /bin/bash
 #emerge --depclean || /bin/bash
 emerge @preserved-rebuild --buildpkg=y || /bin/bash
-smart-live-rebuild || /bin/bash
+smart-live-rebuild 2>&1 || /bin/bash
 revdep-rebuild || /bin/bash
 etc-update --automode -5 || /bin/bash
 #remove gnome/kde use flags
