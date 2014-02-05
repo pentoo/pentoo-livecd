@@ -23,7 +23,8 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
-	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update livecd-stage1 livecd-stage2
+	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update livecd-stage1 livecd-stage2
+	for stage in livecd-stage1 livecd-stage2
 	do
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2" ]

@@ -188,19 +188,7 @@ done
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 
-#work around for detecting bug #461824
-grep -r _portage_reinstall_ /etc {/usr,}/{*bin,lib*} | grep -v doebuild > /tmp/urfuct.txt
-if [ -n "$(cat /tmp/urfuct.txt)" ]; then
-	for badhit in "$(cat /tmp/urfuct.txt)" ; do
-		echo ${badhit} | cut -d":" -f1 >> /tmp/badfiles.txt
-	done
-	for badfile in $(cat /tmp/badfiles.txt); do
-		qfile -C ${badfile} | cut -d' ' -f1 >> /tmp/badpkg_us.txt
-	done
-	cat /tmp/badpkg_us.txt | sort -u > /tmp/badpkg.txt
-	emerge -1 --buildpkg=y --nodeps $(cat /tmp/badpkg.txt) || /bin/bash
-	rm -f /tmp/urfuct.txt /tmp/badfiles.txt /tmp/badpkg_us.txt /tmp/badpkg.txt
-fi
+/var/lib/layman/pentoo/scripts/bug-461824.sh
 
 emerge -qN -kb -D --with-bdeps=y @world -vt
 layman -S
@@ -216,16 +204,18 @@ portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
 fi
-revdep-rebuild -- --buildpkg=y
+revdep-rebuild.py -- --buildpkg=y
 if [ $? -ne 0 ]; then
 	rm -rf /var/cache/revdep-rebuild/*.rr
-	revdep-rebuild -- --buildpkg=y || rm -rf /var/cache/revdep-rebuild/*.rr
+	revdep-rebuild.py -- --buildpkg=y || rm -rf /var/cache/revdep-rebuild/*.rr
 fi
 
 
 eselect python set python2.7 || /bin/bash
-python-updater -- --buildpkg=y|| /bin/bash
-perl-cleaner --modules -- --buildpkg=y || /bin/bash
+python-updater -- --buildpkg=y --rebuild-exclude sys-devel/gdb || /bin/bash
+perl-cleaner --all -- --buildpkg=y || /bin/bash
+
+/var/lib/layman/pentoo/scripts/bug-461824.sh
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu || /bin/bash
@@ -293,14 +283,14 @@ rm -f /root/.my.cnf || /bin/bash
 #configure postgres
 echo y | emerge --config dev-db/postgresql-server || /bin/bash
 touch /run/openrc/softlevel
-/etc/init.d/postgresql-9.2 start
+/etc/init.d/postgresql-9.3 start
 if [ $? -ne 0 ]; then
 	sleep 5m
-	/etc/init.d/postgresql-9.2 start
+	/etc/init.d/postgresql-9.3 start
 	if [ $? -ne 0 ]; then
 		sleep 5m
 		killall postgres
-		/etc/init.d/postgresql-9.2 start || /bin/bash
+		/etc/init.d/postgresql-9.3 start || /bin/bash
 	fi
 fi
 emerge --config net-analyzer/metasploit || /bash/bash
@@ -308,7 +298,7 @@ emerge --config net-analyzer/metasploit || /bash/bash
 #metasploit first run to create db, etc, and speed up livecd first run
 echo -e exit | msfconsole
 
-/etc/init.d/postgresql-9.2 stop || /bin/bash
+/etc/init.d/postgresql-9.3 stop || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash
 
 #configure freeradius
@@ -366,10 +356,10 @@ if [ $? -ne 0 ]; then
 	emerge @preserved-rebuild -q || /bin/bash
 fi
 
-revdep-rebuild -- --buildpkg=y
+revdep-rebuild.py -- --buildpkg=y
 if [ $? -ne 0 ]; then
 	rm -rf /var/cache/revdep-rebuild/*.rr
-	revdep-rebuild -- --buildpkg=y || /bin/bash
+	revdep-rebuild.py -- --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
 

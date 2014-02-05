@@ -4,7 +4,7 @@
 set -e
 
 VERSION_STAMP=2013.0
-if [ ${3} = stage4-pentoo ]
+if [ "${3}" = stage4-pentoo ]
 then
 	echo "version_stamp: pentoo-${VERSION_STAMP}"
 elif [[ ${3} = binpkg-update* ]]
@@ -16,7 +16,7 @@ fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20131201 "
+echo "snapshot: 20140205 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -64,7 +64,7 @@ case ${3} in
 		;;
 	livecd-stage1)
 		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
-		#echo "source_subpath: ${2}/stage4-${1}-${VERSION_STAMP}"
+		#echo "source_subpath: ${2}/stage4-${1}-binpkg-update-${VERSION_STAMP}"
 		;;
 	livecd-stage2)
 		echo "source_subpath: ${2}/livecd-stage1-${1}-${VERSION_STAMP}"
@@ -124,7 +124,7 @@ then
 	echo "cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb"
 fi
 
-if [ ${3} = stage4-pentoo ]
+if [ "${3}" = stage4-pentoo ]
 then
 	echo "target: stage4"
 elif [[ ${3} = binpkg-update* ]]
