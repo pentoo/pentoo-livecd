@@ -1,13 +1,19 @@
 #!/bin/bash
-# This is an example catalystrc. As such, it doesn't actually *do* anything.
+#WARNING WARNING WARNING
+#this rc file is meant for use on Nu only, please modify to meet your needs
 
-# Uncomment the following to increase the number of threads used to compile.
-export MAKEOPTS="-j8"
-
-#export ESVN_OFFLINE="True"
-#export GENTOO_MIRRORS="ftp://mirror.switch.ch/mirror/gentoo"
-export INPUT_DEVICES="keyboard mouse"
-export VIDEO_CARDS="fbdev glint intel mach64 mga neomagic nv radeon radeonhd savage sis tdfx trident vesa vga via vmware voodoo apm ark chips cirrus cyrix epson i128 i740 imstt nsc rendition s3 s3virge siliconmotion"
-#export FETCHCOMMAND="/usr/bin/wget --no-check-certificate -t 5 -T 60 --passive-ftp \${URI} -P \${DISTDIR}"
-#export RESUMECOMMAND="/usr/bin/wget --no-check-certificate -c -t 5 -T 60 --passive-ftp \${URI} -P \${DISTDIR}"
-
+export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=32 --load-average=32 --backtrack=99"
+export MAKEOPTS="-j32 -l32"
+#export MAKEOPTS="-j1"
+export INPUT_DEVICES="$(portageq envvar INPUT_DEVICES) synaptics"
+export clst_myfeatures="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup"
+export FEATURES="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup"
+export ACCEPT_LICENSE="Intel-SDP NVIDIA-CUDA"
+export PORTAGE_NICENESS="15"
+#c 0-3 n 0-7 lower number is higher priority
+export PORTAGE_IO_NICENESS="ionice -c 3 -p \${PID}"
+export PORT_LOGDIR="/var/log/portage"
+export PORTAGE_COMPRESS=""
+export CONFIG_CHECK_FATAL=0
+export LANG="en_US.UTF-8"
+export TERM="linux"
