@@ -25,7 +25,7 @@ etc-update --automode -5 || /bin/bash
 #emerge --depclean || /bin/bash
 emerge @preserved-rebuild --buildpkg=y || /bin/bash
 smart-live-rebuild 2>&1 || /bin/bash
-revdep-rebuild.py || /bin/bash
+revdep-rebuild.py -- --buildpkg=y || /bin/bash
 etc-update --automode -5 || /bin/bash
 #remove gnome/kde use flags
 rm /etc/portage/package.use

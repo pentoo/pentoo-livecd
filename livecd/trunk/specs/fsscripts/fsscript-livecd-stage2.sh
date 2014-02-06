@@ -204,15 +204,15 @@ portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
 fi
+
 revdep-rebuild.py -- --buildpkg=y
 if [ $? -ne 0 ]; then
-	rm -rf /var/cache/revdep-rebuild/*.rr
-	revdep-rebuild.py -- --buildpkg=y || rm -rf /var/cache/revdep-rebuild/*.rr
+	revdep-rebuild.py -- --buildpkg=y || /bin/bash
 fi
 
 
 eselect python set python2.7 || /bin/bash
-python-updater -- --buildpkg=y --rebuild-exclude sys-devel/gdb || /bin/bash
+python-updater -- --buildpkg=y --rebuild-exclude sys-devel/gdb --exclude sys-devel/gdb || /bin/bash
 perl-cleaner --all -- --buildpkg=y || /bin/bash
 
 /var/lib/layman/pentoo/scripts/bug-461824.sh
@@ -358,7 +358,6 @@ fi
 
 revdep-rebuild.py -- --buildpkg=y
 if [ $? -ne 0 ]; then
-	rm -rf /var/cache/revdep-rebuild/*.rr
 	revdep-rebuild.py -- --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
