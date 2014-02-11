@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION_STAMP=2013.0
+VERSION_STAMP=2014.0
 if [ "${3}" = stage4-pentoo ]
 then
 	echo "version_stamp: pentoo-${VERSION_STAMP}"
@@ -16,7 +16,7 @@ fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140205 "
+echo "snapshot: 20140210 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -88,7 +88,7 @@ case ${3} in
 		echo "# by catalyst based on the spec file."
 		echo "kerncache_path: /catalyst/kerncache/${1}-${2}"
 
-		echo "livecd/fsops: -comp xz -b 1048576 -no-recovery -noappend -Xdict-size 1048576"
+		echo "livecd/fsops: -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576"
 
 		echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
 		echo "# defined in this target.  It is useful for passing arguments to genkernel that"

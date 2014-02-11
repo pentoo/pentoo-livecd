@@ -15,7 +15,7 @@ livecd/fsscript: fsscripts/fsscript-livecd-stage2.sh
 
 # This is a set of arguments that get passed to the bootloader for your CD.  It
 # is used on the x86/amd64 release media to enable keymap selection.
-livecd/bootargs: nodetect aufs max_loop=256 dokeymap
+livecd/bootargs: aufs max_loop=256 dokeymap
 
 # This option controls quite a bit of catalyst internals and sets up several
 # defaults.  Each type behaves slightly differently and is explained below.
@@ -33,7 +33,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: autoconfig|default acpid|default bluetooth|default consolekit|default firmware|boot gpm|default dbus|default
+livecd/rcadd: udev|sysvinit udev-mount|sysvinit autoconfig|default acpid|default bluetooth|default consolekit|default firmware|boot gpm|default dbus|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using

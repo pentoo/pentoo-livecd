@@ -26,7 +26,7 @@ if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
-revdep-rebuild.py -- --buildpkg=y || /bin/bash
+revdep-rebuild.py -i -- --buildpkg=y || /bin/bash
 
 /usr/local/portage/scripts/bug-461824.sh
 

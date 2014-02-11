@@ -26,10 +26,41 @@ do
 	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update livecd-stage1 livecd-stage2
 	for stage in livecd-stage1 livecd-stage2
 	do
+		#IO load is CRUSHING my build system, so if a heavy IO operation is running, hold off on starting the next one
+		#rsync is used to copy from livecd-stage1 to livecd-stage2
+		while ps aux | grep "[r]sync -a --delete /catalyst/"
+		do
+			echo IO at max, sleeping 2m
+			sleep 2m
+		done
+		#this is unpacking a stage
+		while ps aux | grep "[t]ar -I pixz -xpf /catalyst/"
+		do
+			echo IO at max, sleeping 2m
+			sleep 2m
+		done
+		#this is packing a stage
+		while ps aux | grep "[t]ar -I pixz -cpf /catalyst/"
+		do
+			echo IO at max, sleeping 2m
+			sleep 2m
+		done
+		#bug 461824 script (grep of majority of stage)
+		while ps aux | grep "[g]rep -r _portage_reinstall_"
+		do
+			echo IO at max, sleeping 2m
+			sleep 2m
+		done
+		#end excessive IO handling
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2013.0
+			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2014.0
+		fi
+		if [ "${stage}" = "livecd-stage2" ]
+		then
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${arch}-2014.0
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${arch}-2014.0
 		fi
 	#	if [ $? -ne 0 ]; then
 	#		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec

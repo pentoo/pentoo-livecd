@@ -2,7 +2,7 @@
 
 set -e
 
-/etc/init.d/fcron stop
+#/etc/init.d/fcron stop
 
 #disable things from grsec for building that we normally want enabled
 sysctl -w kernel.grsecurity.chroot_deny_mknod=0 || echo "already disabled"
