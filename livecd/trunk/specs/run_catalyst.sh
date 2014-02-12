@@ -45,6 +45,12 @@ do
 			echo IO at max, sleeping 2m
 			sleep 2m
 		done
+		#removing tempfiles when complete
+		while ps aux | grep "[r]m -rf /catalyst/tmp/"
+		do
+			echo IO at max, sleeping 2m
+			sleep 2m
+		done
 		#bug 461824 script (grep of majority of stage)
 		while ps aux | grep "[g]rep -r _portage_reinstall_"
 		do
