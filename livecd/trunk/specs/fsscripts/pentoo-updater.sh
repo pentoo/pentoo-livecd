@@ -14,18 +14,18 @@ python-updater -- --buildpkg=y --rebuild-exclude sys-devel/gdb --exclude sys-dev
 
 perl-cleaner --ph-clean --modules -- --buildpkg=y || /bin/bash
 
+#emerge -C efreet ethumb edje eeze eet eina emotion eio ecore evas embryo
 emerge --deep --update --newuse -kb @world || /bin/bash
 
 #add gnome/kde use flags
 echo "pentoo/pentoo gnome kde" >> /etc/portage/package.use
 emerge --onlydeps --oneshot --deep --update --newuse pentoo/pentoo || /bin/bash
-#unstable no binpkgs yet
-#emerge --oneshot --deep --update --newuse pentoo/pentoo-cinnamon || /bin/bash
 etc-update --automode -5 || /bin/bash
 #emerge --depclean || /bin/bash
 emerge @preserved-rebuild --buildpkg=y || /bin/bash
 smart-live-rebuild 2>&1 || /bin/bash
 revdep-rebuild.py -i -- --buildpkg=y || /bin/bash
+emerge --deep --update --newuse -kb @world || /bin/bash
 etc-update --automode -5 || /bin/bash
 #remove gnome/kde use flags
 rm /etc/portage/package.use
