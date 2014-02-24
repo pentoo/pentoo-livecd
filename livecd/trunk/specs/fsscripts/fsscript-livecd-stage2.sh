@@ -4,7 +4,7 @@ env-update
 source /tmp/envscript
 
 #somehow the default .bashrc runs X.... WTF????
-rm -f /root/.bashrc
+mv /root/.bashrc /root/.bashrc.bak
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
@@ -392,7 +392,8 @@ rm -rf /var/tmp/portage/*
 eclean-pkg -d
 sync
 sleep 60
-updatedb || /bin/bash
+mv /root/.bashrc.bak /root/.bashrc
+updatedb
 sync
 sleep 60
 rm -f /root/.bash_history
