@@ -2,6 +2,39 @@
 
 set -e
 
+#IO load is CRUSHING my build system, so if a heavy IO operation is running, hold off on starting the next one
+#rsync is used to copy from livecd-stage1 to livecd-stage2
+while ps aux | grep "[r]sync -a --delete /catalyst/"
+do
+	echo IO at max, sleeping 2m
+	sleep 2m
+done
+#this is unpacking a stage
+while ps aux | grep "[t]ar -I pixz -xpf /catalyst/"
+do
+	echo IO at max, sleeping 2m
+	sleep 2m
+done
+#this is packing a stage
+while ps aux | grep "[t]ar -I pixz -cpf /catalyst/"
+do
+	echo IO at max, sleeping 2m
+	sleep 2m
+done
+#removing tempfiles when complete
+while ps aux | grep "[r]m -rf /catalyst/tmp/"
+do
+	echo IO at max, sleeping 2m
+	sleep 2m
+done
+#bug 461824 script (grep of majority of stage)
+while ps aux | grep "[g]rep -r _portage_reinstall_"
+do
+	echo IO at max, sleeping 2m
+	sleep 2m
+done
+#end excessive IO handling
+
 rm -rf /usr/src/pentoo/livecd/trunk/isoroot/modules/*
 
 ##make the gentoo portage module
