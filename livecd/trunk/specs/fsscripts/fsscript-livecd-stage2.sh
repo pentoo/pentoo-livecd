@@ -327,9 +327,6 @@ smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 #an attempt to fix a bug, never actually worked
 #emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz
 
-#prevent the "new style" network interface names for now
-ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
-
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 

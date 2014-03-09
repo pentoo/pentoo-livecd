@@ -16,7 +16,7 @@ fi
 RC=RC2.0
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140227 "
+echo "snapshot: 20140308 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -26,19 +26,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-amd64-${2}-20131024"
+				echo "source_subpath: ${2}/stage3-amd64-${2}-20140227"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/stage3-amd64-20131031"
+				echo "source_subpath: ${2}/stage3-amd64-20140227"
 			fi
 		elif [ ${1} = i686 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-i686-${2}-20131029"
+				echo "source_subpath: ${2}/stage3-i686-${2}-20140304"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/stage3-i686-20131029"
+				echo "source_subpath: ${2}/stage3-i686-20140304"
 			fi
 		fi
 		;;
@@ -67,8 +67,8 @@ case ${3} in
 		#echo "source_subpath: ${2}/stage4-${1}-binpkg-update-${VERSION_STAMP}"
 		;;
 	livecd-stage2)
-		echo "source_subpath: ${2}/livecd-stage1-${1}-${VERSION_STAMP}"
-		#echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
+		#echo "source_subpath: ${2}/livecd-stage1-${1}-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
 		echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
 		echo "livecd/volid: Pentoo Linux ${1} ${VERSION_STAMP} ${RC}"
 
