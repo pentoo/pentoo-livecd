@@ -190,9 +190,9 @@ emerge --deselect=y sys-fs/zfs || /bin/bash
 
 /var/lib/layman/pentoo/scripts/bug-461824.sh
 
-emerge -qN -kb -D --with-bdeps=y @world -vt
+emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99
 layman -S
-emerge -qN -kb -D --with-bdeps=y @world -vt || /bin/bash
+emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 || /bin/bash
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
 	emerge @preserved-rebuild -q || /bin/bash
@@ -296,7 +296,7 @@ fi
 emerge --config net-analyzer/metasploit || /bash/bash
 
 #metasploit first run to create db, etc, and speed up livecd first run
-echo -e exit | msfconsole
+echo -e exit | HOME=/root msfconsole || /bin/bash
 
 /etc/init.d/postgresql-9.3 stop || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash

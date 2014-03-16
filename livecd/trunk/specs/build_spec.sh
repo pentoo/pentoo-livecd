@@ -13,10 +13,10 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-RC=RC2.0
+RC=RC2.1_p$(date "+%Y%m%d")
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140308 "
+echo "snapshot: 20140313 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
