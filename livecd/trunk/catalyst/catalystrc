@@ -17,3 +17,4 @@ export PORTAGE_COMPRESS=""
 export CONFIG_CHECK_FATAL=0
 export LANG="en_US.UTF-8"
 export TERM="linux"
+export INSTALL_MASK=""
