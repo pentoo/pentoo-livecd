@@ -1,0 +1,13 @@
+diff -Naur linux-3.13.orig/net/mac80211/tx.c linux-3.13/net/mac80211/tx.c
+--- linux-3.13.orig/net/mac80211/tx.c	2014-04-01 21:58:47.146429392 +0200
++++ linux-3.13/net/mac80211/tx.c	2014-04-01 21:59:31.576430907 +0200
+@@ -760,7 +760,8 @@
+ 	if (ratetbl)
+ 		return TX_CONTINUE;
+ 
+-	if (unlikely(!info->control.rates[0].count))
++	if (unlikely(!info->control.rates[0].count) ||
++	    info->flags & IEEE80211_TX_CTL_NO_ACK)
+ 		info->control.rates[0].count = 1;
+ 
+ 	if (WARN_ON_ONCE((info->control.rates[0].count > 1) &&
