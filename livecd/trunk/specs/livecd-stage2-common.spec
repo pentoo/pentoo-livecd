@@ -33,7 +33,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: udev|sysvinit udev-mount|sysvinit autoconfig|default acpid|default bluetooth|default consolekit|default firmware|boot gpm|default dbus|default
+livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default bluetooth|default consolekit|default firmware|boot gpm|default dbus|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
