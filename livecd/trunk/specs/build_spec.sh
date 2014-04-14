@@ -16,7 +16,7 @@ fi
 RC=RC2.1_p$(date "+%Y%m%d")
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140313 "
+echo "snapshot: 20140413 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 

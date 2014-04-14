@@ -205,9 +205,9 @@ if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
 fi
 
-revdep-rebuild.py -i -- --buildpkg=y
+revdep-rebuild.py -i --no-pretend -- --buildpkg=y
 if [ $? -ne 0 ]; then
-	revdep-rebuild.py -i -- --buildpkg=y || /bin/bash
+	revdep-rebuild.py -i --no-pretend -- --buildpkg=y || /bin/bash
 fi
 
 
@@ -353,9 +353,9 @@ if [ $? -ne 0 ]; then
 	emerge @preserved-rebuild -q || /bin/bash
 fi
 
-revdep-rebuild.py -i -- --buildpkg=y
+revdep-rebuild.py -i --no-pretend -- --buildpkg=y
 if [ $? -ne 0 ]; then
-	revdep-rebuild.py -i -- --buildpkg=y || /bin/bash
+	revdep-rebuild.py -i --no-pretend -- --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
 
