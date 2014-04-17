@@ -16,7 +16,7 @@ fi
 RC=RC2.1_p$(date "+%Y%m%d")
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140413 "
+echo "snapshot: 20140416 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -70,7 +70,7 @@ case ${3} in
 		#echo "source_subpath: ${2}/livecd-stage1-${1}-${VERSION_STAMP}"
 		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
 		echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
-		echo "livecd/volid: Pentoo Linux ${1} ${VERSION_STAMP} ${RC}"
+		echo "livecd/volid: Pentoo Linux ${1} ${VERSION_STAMP} ${RC:0:5}"
 
 		echo -e "\n# This option is the full path and filename to a kernel .config file that is"
 		echo "# used by genkernel to compile the kernel this label applies to."

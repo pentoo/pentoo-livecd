@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 source /etc/profile
 env-update
 source /tmp/envscript
@@ -18,7 +18,7 @@ perl-cleaner --ph-clean --modules -- --buildpkg=y || /bin/bash
 emerge --deep --update --newuse -kb @world || /bin/bash
 
 #add kde use flag, gnome is unbuildable
-echo "pentoo/pentoo kde" >> /etc/portage/package.use
+echo "pentoo/pentoo kde mate" >> /etc/portage/package.use
 emerge --onlydeps --oneshot --deep --update --newuse pentoo/pentoo || /bin/bash
 etc-update --automode -5 || /bin/bash
 #emerge --depclean || /bin/bash
@@ -27,7 +27,7 @@ smart-live-rebuild 2>&1 || /bin/bash
 revdep-rebuild.py -i --no-pretend -- --buildpkg=y || /bin/bash
 emerge --deep --update --newuse -kb @world || /bin/bash
 etc-update --automode -5 || /bin/bash
-#remove gnome/kde use flags
+#remove kde/mate use flags
 rm /etc/portage/package.use
 
 /usr/local/portage/scripts/bug-461824.sh

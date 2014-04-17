@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 source /tmp/envscript
 
 #merge all other desired changes into /etc

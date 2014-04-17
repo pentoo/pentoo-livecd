@@ -199,7 +199,6 @@ if [ $? -ne 0 ]; then
 fi
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --buildpkg=y @x11-module-rebuild || /bin/bash
-emerge --depclean || /bin/bash
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
@@ -242,10 +241,12 @@ patch sbin/livecd-functions.sh patches/livecd-functions.patch || /bin/bash
 #patch etc/init.d/autoconfig patches/autoconfig.patch || /bin/bash
 rm -rf patches || /bin/bash
 
-# fixes pax for binary drivers GPGPU
-paxctl -m /usr/bin/X || /bin/bash
-# fixes pax for metasploit/java attacks/wpscan
-paxctl -m /usr/bin/ruby19 || /bin/bash
+if [ $(command -v paxctl 2> /dev/null) ]; then
+	# fixes pax for binary drivers GPGPU
+	paxctl -m /usr/bin/X || /bin/bash
+	# fixes pax for metasploit/java attacks/wpscan
+	paxctl -m /usr/bin/ruby19 || /bin/bash
+fi
 
 # Setup fonts
 cd /usr/share/fonts
@@ -280,6 +281,9 @@ echo 'password=pentoo' >> /root/.my.cnf
 emerge --config mysql || /bin/bash
 rm -f /root/.my.cnf || /bin/bash
 
+#allow this to fail for right now so builds don't randomly stop and piss me off
+smart-live-rebuild -E --timeout=60 -- --buildpkg=y
+
 #configure postgres
 echo y | emerge --config dev-db/postgresql-server || /bin/bash
 touch /run/openrc/softlevel
@@ -293,7 +297,9 @@ if [ $? -ne 0 ]; then
 		/etc/init.d/postgresql-9.3 start || /bin/bash
 	fi
 fi
-emerge --config net-analyzer/metasploit || /bash/bash
+
+eselect metasploit set metasploit9999
+emerge --config net-analyzer/metasploit:9999 || /bash/bash
 
 #metasploit first run to create db, etc, and speed up livecd first run
 echo -e exit | HOME=/root msfconsole || /bin/bash
@@ -320,9 +326,6 @@ EOF
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #easy way to adjust wallpaper per install
-
-#allow this to fail for right now so builds don't randomly stop and piss me off
-smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
 #an attempt to fix a bug, never actually worked
 #emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz

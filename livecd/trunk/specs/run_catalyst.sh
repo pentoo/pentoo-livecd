@@ -58,7 +58,7 @@ do
 			sleep 2m
 		done
 		#end excessive IO handling
-		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
+		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2" ]
 		then
 			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2014.0
@@ -94,14 +94,16 @@ fi
 /mnt/mirror/mirror.sh
 
 #last generate the sig and torrent
+RC="$(grep RC= build_spec.sh |cut -d'=' -f2)"
+RC="${RC:0:7}$(date "+%Y%m%d")"
 for arch in ${ARCH}
 do
-	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS ]
+	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
 	then
 		gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2).iso.DIGESTS
+		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
 
-		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_$(grep RC= build_spec.sh | cut -d'=' -f2)"
+		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
 		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
 	fi
 done
