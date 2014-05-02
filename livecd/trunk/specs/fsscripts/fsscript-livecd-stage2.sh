@@ -162,7 +162,7 @@ cat <<-EOF > /etc/portage/make.conf
 	#At a minimum you should have these PLUS your specific videocard
 	#VIDEO_CARDS="vesa vga fbdev"
 	#you can check available options with "emerge -vp xorg-drivers"
-	ACCEPT_LICENSE="AdobeFlash-11.x Intel-SDP"
+	$(printf "\tACCEPT_LICENSE=\"AdobeFlash-11.x $(portageq envvar ACCEPT_LICENSE)\"")
 	source /var/lib/layman/make.conf
 EOF
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
@@ -389,7 +389,7 @@ fi
 rm -rf gen_installedlist.sh header.inc footer.inc
 
 rm -rf /var/tmp/portage/*
-eclean-pkg -d
+eclean-pkg
 sync
 sleep 60
 mv /root/.bashrc.bak /root/.bashrc
