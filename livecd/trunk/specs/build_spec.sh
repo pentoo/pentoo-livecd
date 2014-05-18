@@ -16,7 +16,7 @@ fi
 RC=RC2.1_p$(date "+%Y%m%d")
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140416 "
+echo "snapshot: 20140516 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -172,7 +172,7 @@ case ${3} in
 	binpkg-update*)
 		echo "stage4/use: aufs livecd livecd-stage1"
 		echo "stage4/packages: pentoo/pentoo"
-		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/pentoo-updater.sh"
+		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/call-pentoo-updater.sh"
 		;;
 	livecd-stage1)
 		echo "livecd/use: aufs livecd livecd-stage1"
