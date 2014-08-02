@@ -13,3 +13,5 @@ NOTE: I have no idea how to update in this state, I rm -rf the whole thing and s
   kernel source tree. Never copy ./include/uapi/linux/Kbuild.
 
 steal latest pax patch from gentoo's aufs ebuild, set for USE=pax_kernel
+
+When you make the patch for the added files, run sed -i 's@linux-3.15.5-pentoo-[^/]\+/@@' to fix the patch to apply right at -p0

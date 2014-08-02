@@ -1,6 +1,6 @@
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/ABI/testing/debugfs-aufs linux-3.15.5-pentoo-aufs/Documentation/ABI/testing/debugfs-aufs
---- linux-3.15.5-pentoo-orig/Documentation/ABI/testing/debugfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/ABI/testing/debugfs-aufs	2014-08-01 23:23:09.894272261 -0400
+diff -Naur Documentation/ABI/testing/debugfs-aufs linux-3.15.5-pentoo-aufs/Documentation/ABI/testing/debugfs-aufs
+--- Documentation/ABI/testing/debugfs-aufs	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/ABI/testing/debugfs-aufs	2014-08-01 23:23:09.894272261 -0400
 @@ -0,0 +1,50 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -52,9 +52,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/ABI/testing/debugfs-aufs linux
 +		be created.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/ABI/testing/sysfs-aufs linux-3.15.5-pentoo-aufs/Documentation/ABI/testing/sysfs-aufs
---- linux-3.15.5-pentoo-orig/Documentation/ABI/testing/sysfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/ABI/testing/sysfs-aufs	2014-08-01 23:23:09.894272261 -0400
+diff -Naur Documentation/ABI/testing/sysfs-aufs linux-3.15.5-pentoo-aufs/Documentation/ABI/testing/sysfs-aufs
+--- Documentation/ABI/testing/sysfs-aufs	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/ABI/testing/sysfs-aufs	2014-08-01 23:23:09.894272261 -0400
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -87,9 +87,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/ABI/testing/sysfs-aufs linux-3
 +		even if it is the default path.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/01intro.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/01intro.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/01intro.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/01intro.txt	2014-08-01 23:23:09.893272261 -0400
+diff -Naur Documentation/filesystems/aufs/design/01intro.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/01intro.txt
+--- Documentation/filesystems/aufs/design/01intro.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/01intro.txt	2014-08-01 23:23:09.893272261 -0400
 @@ -0,0 +1,161 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -252,9 +252,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/01intr
 +Some people may think it is better to pass such work to user space
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/02struct.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/02struct.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/02struct.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/02struct.txt	2014-08-01 23:23:09.891272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/02struct.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/02struct.txt
+--- Documentation/filesystems/aufs/design/02struct.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/02struct.txt	2014-08-01 23:23:09.891272260 -0400
 @@ -0,0 +1,251 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -507,9 +507,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/02stru
 +- etc.
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/03lookup.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/03lookup.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/03lookup.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/03lookup.txt	2014-08-01 23:23:09.892272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/03lookup.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/03lookup.txt
+--- Documentation/filesystems/aufs/design/03lookup.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/03lookup.txt	2014-08-01 23:23:09.892272260 -0400
 @@ -0,0 +1,133 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -644,9 +644,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/03look
 +   test, and skip therevalidatin in step 4. It is useful and improves
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/04branch.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/04branch.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/04branch.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/04branch.txt	2014-08-01 23:23:09.891272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/04branch.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/04branch.txt
+--- Documentation/filesystems/aufs/design/04branch.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/04branch.txt	2014-08-01 23:23:09.891272260 -0400
 @@ -0,0 +1,75 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -723,9 +723,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/04bran
 +  - a file on the branch is mmap-ed.
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/05wbr_policy.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt	2014-08-01 23:23:09.892272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/05wbr_policy.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt
+--- Documentation/filesystems/aufs/design/05wbr_policy.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/05wbr_policy.txt	2014-08-01 23:23:09.892272260 -0400
 @@ -0,0 +1,64 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -791,9 +791,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/05wbr_
 +  where the source and the target exists and selects the higher
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/06fhsm.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/06fhsm.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/06fhsm.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/06fhsm.txt	2014-08-01 23:23:09.891272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/06fhsm.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/06fhsm.txt
+--- Documentation/filesystems/aufs/design/06fhsm.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/06fhsm.txt	2014-08-01 23:23:09.891272260 -0400
 @@ -0,0 +1,120 @@
 +
 +# Copyright (C) 2011-2014 Junjiro R. Okajima
@@ -915,9 +915,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/06fhsm
 +
 +And of course, in every step, an error may happen. So the operation
 +should restore the original file state after an error happens.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/06mmap.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/06mmap.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/06mmap.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/06mmap.txt	2014-08-01 23:23:09.892272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/06mmap.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/06mmap.txt
+--- Documentation/filesystems/aufs/design/06mmap.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/06mmap.txt	2014-08-01 23:23:09.892272260 -0400
 @@ -0,0 +1,46 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -965,9 +965,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/06mmap
 +generic_file_mmap() and handles struct vm_operations_struct. In this
 +approach, aufs met a hard problem and I could not solve it without
 +switching the approach.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/07export.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/07export.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/07export.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/07export.txt	2014-08-01 23:23:09.890272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/07export.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/07export.txt
+--- Documentation/filesystems/aufs/design/07export.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/07export.txt	2014-08-01 23:23:09.890272260 -0400
 @@ -0,0 +1,58 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -1027,9 +1027,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/07expo
 +  convert it into ESTALE for NFSD.
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/08shwh.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/08shwh.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/08shwh.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/08shwh.txt	2014-08-01 23:23:09.892272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/08shwh.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/08shwh.txt
+--- Documentation/filesystems/aufs/design/08shwh.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/08shwh.txt	2014-08-01 23:23:09.892272260 -0400
 @@ -0,0 +1,52 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -1083,9 +1083,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/08shwh
 +
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/10dynop.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/10dynop.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/10dynop.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/10dynop.txt	2014-08-01 23:23:09.890272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/10dynop.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/10dynop.txt
+--- Documentation/filesystems/aufs/design/10dynop.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/10dynop.txt	2014-08-01 23:23:09.890272260 -0400
 @@ -0,0 +1,46 @@
 +
 +# Copyright (C) 2010-2014 Junjiro R. Okajima
@@ -1133,9 +1133,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/10dyno
 +XIP mainly.
 +Currently this approach is applied to file_operations and
 +vm_operations_struct for regular files only.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/99plan.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/99plan.txt
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/99plan.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/99plan.txt	2014-08-01 23:23:09.892272260 -0400
+diff -Naur Documentation/filesystems/aufs/design/99plan.txt linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/design/99plan.txt
+--- Documentation/filesystems/aufs/design/99plan.txt	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/design/99plan.txt	2014-08-01 23:23:09.892272260 -0400
 @@ -0,0 +1,58 @@
 +
 +# Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -1195,9 +1195,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/design/99plan
 +Opened File) is specified (by default), aufs returns the filedata from
 +/new.
 +Otherwise from /new.
-diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/README linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/README
---- linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/README	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/README	2014-08-01 23:23:09.893272261 -0400
+diff -Naur Documentation/filesystems/aufs/README linux-3.15.5-pentoo-aufs/Documentation/filesystems/aufs/README
+--- Documentation/filesystems/aufs/README	1969-12-31 19:00:00.000000000 -0500
++++ Documentation/filesystems/aufs/README	2014-08-01 23:23:09.893272261 -0400
 @@ -0,0 +1,368 @@
 +
 +Aufs3 -- advanced multi layered unification filesystem version 3.x
@@ -1567,9 +1567,9 @@ diff -Naur linux-3.15.5-pentoo-orig/Documentation/filesystems/aufs/README linux-
 +# Local variables: ;
 +# mode: text;
 +# End: ;
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/aufs.h linux-3.15.5-pentoo-aufs/fs/aufs/aufs.h
---- linux-3.15.5-pentoo-orig/fs/aufs/aufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/aufs.h	2014-08-01 23:23:09.896272261 -0400
+diff -Naur fs/aufs/aufs.h linux-3.15.5-pentoo-aufs/fs/aufs/aufs.h
+--- fs/aufs/aufs.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/aufs.h	2014-08-01 23:23:09.896272261 -0400
 @@ -0,0 +1,59 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -1630,9 +1630,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/aufs.h linux-3.15.5-pentoo-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/branch.c linux-3.15.5-pentoo-aufs/fs/aufs/branch.c
---- linux-3.15.5-pentoo-orig/fs/aufs/branch.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/branch.c	2014-08-01 23:23:09.897272261 -0400
+diff -Naur fs/aufs/branch.c linux-3.15.5-pentoo-aufs/fs/aufs/branch.c
+--- fs/aufs/branch.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/branch.c	2014-08-01 23:23:09.897272261 -0400
 @@ -0,0 +1,1374 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -3008,9 +3008,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/branch.c linux-3.15.5-pentoo-aufs/fs
 +
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/branch.h linux-3.15.5-pentoo-aufs/fs/aufs/branch.h
---- linux-3.15.5-pentoo-orig/fs/aufs/branch.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/branch.h	2014-08-01 23:23:09.911272261 -0400
+diff -Naur fs/aufs/branch.h linux-3.15.5-pentoo-aufs/fs/aufs/branch.h
+--- fs/aufs/branch.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/branch.h	2014-08-01 23:23:09.911272261 -0400
 @@ -0,0 +1,267 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -3279,9 +3279,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/branch.h linux-3.15.5-pentoo-aufs/fs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/conf.mk linux-3.15.5-pentoo-aufs/fs/aufs/conf.mk
---- linux-3.15.5-pentoo-orig/fs/aufs/conf.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/conf.mk	2014-08-01 23:23:09.925272261 -0400
+diff -Naur fs/aufs/conf.mk linux-3.15.5-pentoo-aufs/fs/aufs/conf.mk
+--- fs/aufs/conf.mk	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/conf.mk	2014-08-01 23:23:09.925272261 -0400
 @@ -0,0 +1,37 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -3320,9 +3320,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/conf.mk linux-3.15.5-pentoo-aufs/fs/
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/cpup.c linux-3.15.5-pentoo-aufs/fs/aufs/cpup.c
---- linux-3.15.5-pentoo-orig/fs/aufs/cpup.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/cpup.c	2014-08-01 23:23:09.902272261 -0400
+diff -Naur fs/aufs/cpup.c linux-3.15.5-pentoo-aufs/fs/aufs/cpup.c
+--- fs/aufs/cpup.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/cpup.c	2014-08-01 23:23:09.902272261 -0400
 @@ -0,0 +1,1301 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -4625,9 +4625,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/cpup.c linux-3.15.5-pentoo-aufs/fs/a
 +	dput(parent);
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/cpup.h linux-3.15.5-pentoo-aufs/fs/aufs/cpup.h
---- linux-3.15.5-pentoo-orig/fs/aufs/cpup.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/cpup.h	2014-08-01 23:23:09.920272261 -0400
+diff -Naur fs/aufs/cpup.h linux-3.15.5-pentoo-aufs/fs/aufs/cpup.h
+--- fs/aufs/cpup.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/cpup.h	2014-08-01 23:23:09.920272261 -0400
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -4723,9 +4723,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/cpup.h linux-3.15.5-pentoo-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dbgaufs.c linux-3.15.5-pentoo-aufs/fs/aufs/dbgaufs.c
---- linux-3.15.5-pentoo-orig/fs/aufs/dbgaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dbgaufs.c	2014-08-01 23:23:09.908272261 -0400
+diff -Naur fs/aufs/dbgaufs.c linux-3.15.5-pentoo-aufs/fs/aufs/dbgaufs.c
+--- fs/aufs/dbgaufs.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dbgaufs.c	2014-08-01 23:23:09.908272261 -0400
 @@ -0,0 +1,432 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -5159,9 +5159,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dbgaufs.c linux-3.15.5-pentoo-aufs/f
 +		err = 0;
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dbgaufs.h linux-3.15.5-pentoo-aufs/fs/aufs/dbgaufs.h
---- linux-3.15.5-pentoo-orig/fs/aufs/dbgaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dbgaufs.h	2014-08-01 23:23:09.911272261 -0400
+diff -Naur fs/aufs/dbgaufs.h linux-3.15.5-pentoo-aufs/fs/aufs/dbgaufs.h
+--- fs/aufs/dbgaufs.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dbgaufs.h	2014-08-01 23:23:09.911272261 -0400
 @@ -0,0 +1,48 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -5211,9 +5211,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dbgaufs.h linux-3.15.5-pentoo-aufs/f
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dcsub.c linux-3.15.5-pentoo-aufs/fs/aufs/dcsub.c
---- linux-3.15.5-pentoo-orig/fs/aufs/dcsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dcsub.c	2014-08-01 23:23:09.911272261 -0400
+diff -Naur fs/aufs/dcsub.c linux-3.15.5-pentoo-aufs/fs/aufs/dcsub.c
+--- fs/aufs/dcsub.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dcsub.c	2014-08-01 23:23:09.911272261 -0400
 @@ -0,0 +1,243 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -5458,9 +5458,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dcsub.c linux-3.15.5-pentoo-aufs/fs/
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dcsub.h linux-3.15.5-pentoo-aufs/fs/aufs/dcsub.h
---- linux-3.15.5-pentoo-orig/fs/aufs/dcsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dcsub.h	2014-08-01 23:23:09.897272261 -0400
+diff -Naur fs/aufs/dcsub.h linux-3.15.5-pentoo-aufs/fs/aufs/dcsub.h
+--- fs/aufs/dcsub.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dcsub.h	2014-08-01 23:23:09.897272261 -0400
 @@ -0,0 +1,120 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -5582,9 +5582,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dcsub.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/debug.c linux-3.15.5-pentoo-aufs/fs/aufs/debug.c
---- linux-3.15.5-pentoo-orig/fs/aufs/debug.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/debug.c	2014-08-01 23:23:09.925272261 -0400
+diff -Naur fs/aufs/debug.c linux-3.15.5-pentoo-aufs/fs/aufs/debug.c
+--- fs/aufs/debug.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/debug.c	2014-08-01 23:23:09.925272261 -0400
 @@ -0,0 +1,519 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -6105,9 +6105,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/debug.c linux-3.15.5-pentoo-aufs/fs/
 +
 +	return 0;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/debug.h linux-3.15.5-pentoo-aufs/fs/aufs/debug.h
---- linux-3.15.5-pentoo-orig/fs/aufs/debug.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/debug.h	2014-08-01 23:23:09.925272261 -0400
+diff -Naur fs/aufs/debug.h linux-3.15.5-pentoo-aufs/fs/aufs/debug.h
+--- fs/aufs/debug.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/debug.h	2014-08-01 23:23:09.925272261 -0400
 @@ -0,0 +1,247 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -6356,9 +6356,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/debug.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dentry.c linux-3.15.5-pentoo-aufs/fs/aufs/dentry.c
---- linux-3.15.5-pentoo-orig/fs/aufs/dentry.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dentry.c	2014-08-01 23:23:09.921272261 -0400
+diff -Naur fs/aufs/dentry.c linux-3.15.5-pentoo-aufs/fs/aufs/dentry.c
+--- fs/aufs/dentry.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dentry.c	2014-08-01 23:23:09.921272261 -0400
 @@ -0,0 +1,1094 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -7454,9 +7454,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dentry.c linux-3.15.5-pentoo-aufs/fs
 +	.d_weak_revalidate	= aufs_d_revalidate,
 +	.d_release		= aufs_d_release
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dentry.h linux-3.15.5-pentoo-aufs/fs/aufs/dentry.h
---- linux-3.15.5-pentoo-orig/fs/aufs/dentry.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dentry.h	2014-08-01 23:23:09.910272261 -0400
+diff -Naur fs/aufs/dentry.h linux-3.15.5-pentoo-aufs/fs/aufs/dentry.h
+--- fs/aufs/dentry.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dentry.h	2014-08-01 23:23:09.910272261 -0400
 @@ -0,0 +1,233 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -7691,9 +7691,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dentry.h linux-3.15.5-pentoo-aufs/fs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dinfo.c linux-3.15.5-pentoo-aufs/fs/aufs/dinfo.c
---- linux-3.15.5-pentoo-orig/fs/aufs/dinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dinfo.c	2014-08-01 23:23:09.898272261 -0400
+diff -Naur fs/aufs/dinfo.c linux-3.15.5-pentoo-aufs/fs/aufs/dinfo.c
+--- fs/aufs/dinfo.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dinfo.c	2014-08-01 23:23:09.898272261 -0400
 @@ -0,0 +1,544 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -8239,9 +8239,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dinfo.c linux-3.15.5-pentoo-aufs/fs/
 +			return bindex;
 +	return -1;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dir.c linux-3.15.5-pentoo-aufs/fs/aufs/dir.c
---- linux-3.15.5-pentoo-orig/fs/aufs/dir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dir.c	2014-08-01 23:23:09.907272261 -0400
+diff -Naur fs/aufs/dir.c linux-3.15.5-pentoo-aufs/fs/aufs/dir.c
+--- fs/aufs/dir.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dir.c	2014-08-01 23:23:09.907272261 -0400
 @@ -0,0 +1,645 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -8888,9 +8888,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dir.c linux-3.15.5-pentoo-aufs/fs/au
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dir.h linux-3.15.5-pentoo-aufs/fs/aufs/dir.h
---- linux-3.15.5-pentoo-orig/fs/aufs/dir.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dir.h	2014-08-01 23:23:09.911272261 -0400
+diff -Naur fs/aufs/dir.h linux-3.15.5-pentoo-aufs/fs/aufs/dir.h
+--- fs/aufs/dir.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dir.h	2014-08-01 23:23:09.911272261 -0400
 @@ -0,0 +1,136 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -9028,9 +9028,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dir.h linux-3.15.5-pentoo-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dynop.c linux-3.15.5-pentoo-aufs/fs/aufs/dynop.c
---- linux-3.15.5-pentoo-orig/fs/aufs/dynop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dynop.c	2014-08-01 23:23:09.902272261 -0400
+diff -Naur fs/aufs/dynop.c linux-3.15.5-pentoo-aufs/fs/aufs/dynop.c
+--- fs/aufs/dynop.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dynop.c	2014-08-01 23:23:09.902272261 -0400
 @@ -0,0 +1,379 @@
 +/*
 + * Copyright (C) 2010-2014 Junjiro R. Okajima
@@ -9411,9 +9411,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dynop.c linux-3.15.5-pentoo-aufs/fs/
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!list_empty(&dynop[i].head));
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dynop.h linux-3.15.5-pentoo-aufs/fs/aufs/dynop.h
---- linux-3.15.5-pentoo-orig/fs/aufs/dynop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/dynop.h	2014-08-01 23:23:09.909272261 -0400
+diff -Naur fs/aufs/dynop.h linux-3.15.5-pentoo-aufs/fs/aufs/dynop.h
+--- fs/aufs/dynop.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/dynop.h	2014-08-01 23:23:09.909272261 -0400
 @@ -0,0 +1,75 @@
 +/*
 + * Copyright (C) 2010-2014 Junjiro R. Okajima
@@ -9490,9 +9490,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/dynop.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/export.c linux-3.15.5-pentoo-aufs/fs/aufs/export.c
---- linux-3.15.5-pentoo-orig/fs/aufs/export.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/export.c	2014-08-01 23:23:09.920272261 -0400
+diff -Naur fs/aufs/export.c linux-3.15.5-pentoo-aufs/fs/aufs/export.c
+--- fs/aufs/export.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/export.c	2014-08-01 23:23:09.920272261 -0400
 @@ -0,0 +1,831 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -10325,9 +10325,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/export.c linux-3.15.5-pentoo-aufs/fs
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/fhsm.c linux-3.15.5-pentoo-aufs/fs/aufs/fhsm.c
---- linux-3.15.5-pentoo-orig/fs/aufs/fhsm.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/fhsm.c	2014-08-01 23:23:09.913272261 -0400
+diff -Naur fs/aufs/fhsm.c linux-3.15.5-pentoo-aufs/fs/aufs/fhsm.c
+--- fs/aufs/fhsm.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/fhsm.c	2014-08-01 23:23:09.913272261 -0400
 @@ -0,0 +1,395 @@
 +/*
 + * Copyright (C) 2011-2014 Junjiro R. Okajima
@@ -10724,9 +10724,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/fhsm.c linux-3.15.5-pentoo-aufs/fs/a
 +	if (u != AUFS_FHSM_CACHE_DEF_SEC)
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/file.c linux-3.15.5-pentoo-aufs/fs/aufs/file.c
---- linux-3.15.5-pentoo-orig/fs/aufs/file.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/file.c	2014-08-01 23:23:09.910272261 -0400
+diff -Naur fs/aufs/file.c linux-3.15.5-pentoo-aufs/fs/aufs/file.c
+--- fs/aufs/file.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/file.c	2014-08-01 23:23:09.910272261 -0400
 @@ -0,0 +1,836 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -11564,9 +11564,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/file.c linux-3.15.5-pentoo-aufs/fs/a
 +	.swap_deactivate	= aufs_swap_deactivate
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/file.h linux-3.15.5-pentoo-aufs/fs/aufs/file.h
---- linux-3.15.5-pentoo-orig/fs/aufs/file.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/file.h	2014-08-01 23:23:09.905272261 -0400
+diff -Naur fs/aufs/file.h linux-3.15.5-pentoo-aufs/fs/aufs/file.h
+--- fs/aufs/file.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/file.h	2014-08-01 23:23:09.905272261 -0400
 @@ -0,0 +1,289 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -11857,9 +11857,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/file.h linux-3.15.5-pentoo-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/finfo.c linux-3.15.5-pentoo-aufs/fs/aufs/finfo.c
---- linux-3.15.5-pentoo-orig/fs/aufs/finfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/finfo.c	2014-08-01 23:23:09.913272261 -0400
+diff -Naur fs/aufs/finfo.c linux-3.15.5-pentoo-aufs/fs/aufs/finfo.c
+--- fs/aufs/finfo.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/finfo.c	2014-08-01 23:23:09.913272261 -0400
 @@ -0,0 +1,156 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -12017,9 +12017,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/finfo.c linux-3.15.5-pentoo-aufs/fs/
 +out:
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/f_op.c linux-3.15.5-pentoo-aufs/fs/aufs/f_op.c
---- linux-3.15.5-pentoo-orig/fs/aufs/f_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/f_op.c	2014-08-01 23:23:09.906272261 -0400
+diff -Naur fs/aufs/f_op.c linux-3.15.5-pentoo-aufs/fs/aufs/f_op.c
+--- fs/aufs/f_op.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/f_op.c	2014-08-01 23:23:09.906272261 -0400
 @@ -0,0 +1,807 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -12828,9 +12828,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/f_op.c linux-3.15.5-pentoo-aufs/fs/a
 +#endif
 +	.fallocate	= aufs_fallocate
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/fstype.h linux-3.15.5-pentoo-aufs/fs/aufs/fstype.h
---- linux-3.15.5-pentoo-orig/fs/aufs/fstype.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/fstype.h	2014-08-01 23:23:09.907272261 -0400
+diff -Naur fs/aufs/fstype.h linux-3.15.5-pentoo-aufs/fs/aufs/fstype.h
+--- fs/aufs/fstype.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/fstype.h	2014-08-01 23:23:09.907272261 -0400
 @@ -0,0 +1,469 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -13301,9 +13301,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/fstype.h linux-3.15.5-pentoo-aufs/fs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/hfsnotify.c linux-3.15.5-pentoo-aufs/fs/aufs/hfsnotify.c
---- linux-3.15.5-pentoo-orig/fs/aufs/hfsnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/hfsnotify.c	2014-08-01 23:23:09.910272261 -0400
+diff -Naur fs/aufs/hfsnotify.c linux-3.15.5-pentoo-aufs/fs/aufs/hfsnotify.c
+--- fs/aufs/hfsnotify.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/hfsnotify.c	2014-08-01 23:23:09.910272261 -0400
 @@ -0,0 +1,281 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -13586,9 +13586,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/hfsnotify.c linux-3.15.5-pentoo-aufs
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/hfsplus.c linux-3.15.5-pentoo-aufs/fs/aufs/hfsplus.c
---- linux-3.15.5-pentoo-orig/fs/aufs/hfsplus.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/hfsplus.c	2014-08-01 23:23:09.898272261 -0400
+diff -Naur fs/aufs/hfsplus.c linux-3.15.5-pentoo-aufs/fs/aufs/hfsplus.c
+--- fs/aufs/hfsplus.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/hfsplus.c	2014-08-01 23:23:09.898272261 -0400
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2010-2014 Junjiro R. Okajima
@@ -13646,9 +13646,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/hfsplus.c linux-3.15.5-pentoo-aufs/f
 +		au_sbr_put(dentry->d_sb, bindex);
 +	}
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/hnotify.c linux-3.15.5-pentoo-aufs/fs/aufs/hnotify.c
---- linux-3.15.5-pentoo-orig/fs/aufs/hnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/hnotify.c	2014-08-01 23:23:09.905272261 -0400
+diff -Naur fs/aufs/hnotify.c linux-3.15.5-pentoo-aufs/fs/aufs/hnotify.c
+--- fs/aufs/hnotify.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/hnotify.c	2014-08-01 23:23:09.905272261 -0400
 @@ -0,0 +1,714 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -14364,9 +14364,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/hnotify.c linux-3.15.5-pentoo-aufs/f
 +	if (au_cachep[AuCache_HNOTIFY])
 +		au_hn_destroy_cache();
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/iinfo.c linux-3.15.5-pentoo-aufs/fs/aufs/iinfo.c
---- linux-3.15.5-pentoo-orig/fs/aufs/iinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/iinfo.c	2014-08-01 23:23:09.909272261 -0400
+diff -Naur fs/aufs/iinfo.c linux-3.15.5-pentoo-aufs/fs/aufs/iinfo.c
+--- fs/aufs/iinfo.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/iinfo.c	2014-08-01 23:23:09.909272261 -0400
 @@ -0,0 +1,277 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -14645,9 +14645,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/iinfo.c linux-3.15.5-pentoo-aufs/fs/
 +	iinfo->ii_hinode = NULL;
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/inode.c linux-3.15.5-pentoo-aufs/fs/aufs/inode.c
---- linux-3.15.5-pentoo-orig/fs/aufs/inode.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/inode.c	2014-08-01 23:23:09.920272261 -0400
+diff -Naur fs/aufs/inode.c linux-3.15.5-pentoo-aufs/fs/aufs/inode.c
+--- fs/aufs/inode.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/inode.c	2014-08-01 23:23:09.920272261 -0400
 @@ -0,0 +1,492 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -15141,9 +15141,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/inode.c linux-3.15.5-pentoo-aufs/fs/
 +		mask |= MAY_READ; /* force permission check */
 +	return au_test_h_perm(h_inode, mask);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/inode.h linux-3.15.5-pentoo-aufs/fs/aufs/inode.h
---- linux-3.15.5-pentoo-orig/fs/aufs/inode.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/inode.h	2014-08-01 23:23:09.904272261 -0400
+diff -Naur fs/aufs/inode.h linux-3.15.5-pentoo-aufs/fs/aufs/inode.h
+--- fs/aufs/inode.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/inode.h	2014-08-01 23:23:09.904272261 -0400
 @@ -0,0 +1,601 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -15746,9 +15746,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/inode.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/ioctl.c linux-3.15.5-pentoo-aufs/fs/aufs/ioctl.c
---- linux-3.15.5-pentoo-orig/fs/aufs/ioctl.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/ioctl.c	2014-08-01 23:23:09.908272261 -0400
+diff -Naur fs/aufs/ioctl.c linux-3.15.5-pentoo-aufs/fs/aufs/ioctl.c
+--- fs/aufs/ioctl.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/ioctl.c	2014-08-01 23:23:09.908272261 -0400
 @@ -0,0 +1,214 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -15964,9 +15964,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/ioctl.c linux-3.15.5-pentoo-aufs/fs/
 +	return aufs_ioctl_nondir(file, cmd, (unsigned long)compat_ptr(arg));
 +}
 +#endif
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op_add.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op_add.c
---- linux-3.15.5-pentoo-orig/fs/aufs/i_op_add.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/i_op_add.c	2014-08-01 23:23:09.921272261 -0400
+diff -Naur fs/aufs/i_op_add.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op_add.c
+--- fs/aufs/i_op_add.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/i_op_add.c	2014-08-01 23:23:09.921272261 -0400
 @@ -0,0 +1,885 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -16853,9 +16853,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op_add.c linux-3.15.5-pentoo-aufs/
 +out:
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op.c
---- linux-3.15.5-pentoo-orig/fs/aufs/i_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/i_op.c	2014-08-01 23:23:09.913272261 -0400
+diff -Naur fs/aufs/i_op.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op.c
+--- fs/aufs/i_op.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/i_op.c	2014-08-01 23:23:09.913272261 -0400
 @@ -0,0 +1,1142 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -17999,9 +17999,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op.c linux-3.15.5-pentoo-aufs/fs/a
 +
 +	.update_time	= aufs_update_time
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op_del.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op_del.c
---- linux-3.15.5-pentoo-orig/fs/aufs/i_op_del.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/i_op_del.c	2014-08-01 23:23:09.898272261 -0400
+diff -Naur fs/aufs/i_op_del.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op_del.c
+--- fs/aufs/i_op_del.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/i_op_del.c	2014-08-01 23:23:09.898272261 -0400
 @@ -0,0 +1,507 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -18510,9 +18510,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op_del.c linux-3.15.5-pentoo-aufs/
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op_ren.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op_ren.c
---- linux-3.15.5-pentoo-orig/fs/aufs/i_op_ren.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/i_op_ren.c	2014-08-01 23:23:09.900272261 -0400
+diff -Naur fs/aufs/i_op_ren.c linux-3.15.5-pentoo-aufs/fs/aufs/i_op_ren.c
+--- fs/aufs/i_op_ren.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/i_op_ren.c	2014-08-01 23:23:09.900272261 -0400
 @@ -0,0 +1,1034 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -19548,9 +19548,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/i_op_ren.c linux-3.15.5-pentoo-aufs/
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/Kconfig linux-3.15.5-pentoo-aufs/fs/aufs/Kconfig
---- linux-3.15.5-pentoo-orig/fs/aufs/Kconfig	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/Kconfig	2014-08-01 23:23:09.897272261 -0400
+diff -Naur fs/aufs/Kconfig linux-3.15.5-pentoo-aufs/fs/aufs/Kconfig
+--- fs/aufs/Kconfig	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/Kconfig	2014-08-01 23:23:09.897272261 -0400
 @@ -0,0 +1,177 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -19729,9 +19729,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/Kconfig linux-3.15.5-pentoo-aufs/fs/
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/loop.c linux-3.15.5-pentoo-aufs/fs/aufs/loop.c
---- linux-3.15.5-pentoo-orig/fs/aufs/loop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/loop.c	2014-08-01 23:23:09.923272261 -0400
+diff -Naur fs/aufs/loop.c linux-3.15.5-pentoo-aufs/fs/aufs/loop.c
+--- fs/aufs/loop.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/loop.c	2014-08-01 23:23:09.923272261 -0400
 @@ -0,0 +1,145 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -19878,9 +19878,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/loop.c linux-3.15.5-pentoo-aufs/fs/a
 +	symbol_put(loop_backing_file);
 +	kfree(au_warn_loopback_array);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/loop.h linux-3.15.5-pentoo-aufs/fs/aufs/loop.h
---- linux-3.15.5-pentoo-orig/fs/aufs/loop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/loop.h	2014-08-01 23:23:09.895272261 -0400
+diff -Naur fs/aufs/loop.h linux-3.15.5-pentoo-aufs/fs/aufs/loop.h
+--- fs/aufs/loop.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/loop.h	2014-08-01 23:23:09.895272261 -0400
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -19934,9 +19934,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/loop.h linux-3.15.5-pentoo-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/magic.mk linux-3.15.5-pentoo-aufs/fs/aufs/magic.mk
---- linux-3.15.5-pentoo-orig/fs/aufs/magic.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/magic.mk	2014-08-01 23:23:09.895272261 -0400
+diff -Naur fs/aufs/magic.mk linux-3.15.5-pentoo-aufs/fs/aufs/magic.mk
+--- fs/aufs/magic.mk	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/magic.mk	2014-08-01 23:23:09.895272261 -0400
 @@ -0,0 +1,54 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -19992,9 +19992,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/magic.mk linux-3.15.5-pentoo-aufs/fs
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/Makefile linux-3.15.5-pentoo-aufs/fs/aufs/Makefile
---- linux-3.15.5-pentoo-orig/fs/aufs/Makefile	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/Makefile	2014-08-01 23:23:09.909272261 -0400
+diff -Naur fs/aufs/Makefile linux-3.15.5-pentoo-aufs/fs/aufs/Makefile
+--- fs/aufs/Makefile	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/Makefile	2014-08-01 23:23:09.909272261 -0400
 @@ -0,0 +1,42 @@
 +
 +include ${src}/magic.mk
@@ -20038,9 +20038,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/Makefile linux-3.15.5-pentoo-aufs/fs
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/module.c linux-3.15.5-pentoo-aufs/fs/aufs/module.c
---- linux-3.15.5-pentoo-orig/fs/aufs/module.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/module.c	2014-08-01 23:23:09.896272261 -0400
+diff -Naur fs/aufs/module.c linux-3.15.5-pentoo-aufs/fs/aufs/module.c
+--- fs/aufs/module.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/module.c	2014-08-01 23:23:09.896272261 -0400
 @@ -0,0 +1,210 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -20252,9 +20252,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/module.c linux-3.15.5-pentoo-aufs/fs
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/module.h linux-3.15.5-pentoo-aufs/fs/aufs/module.h
---- linux-3.15.5-pentoo-orig/fs/aufs/module.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/module.h	2014-08-01 23:23:09.896272261 -0400
+diff -Naur fs/aufs/module.h linux-3.15.5-pentoo-aufs/fs/aufs/module.h
+--- fs/aufs/module.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/module.h	2014-08-01 23:23:09.896272261 -0400
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -20360,9 +20360,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/module.h linux-3.15.5-pentoo-aufs/fs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/mvdown.c linux-3.15.5-pentoo-aufs/fs/aufs/mvdown.c
---- linux-3.15.5-pentoo-orig/fs/aufs/mvdown.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/mvdown.c	2014-08-01 23:23:09.901272261 -0400
+diff -Naur fs/aufs/mvdown.c linux-3.15.5-pentoo-aufs/fs/aufs/mvdown.c
+--- fs/aufs/mvdown.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/mvdown.c	2014-08-01 23:23:09.901272261 -0400
 @@ -0,0 +1,653 @@
 +/*
 + * Copyright (C) 2011-2014 Junjiro R. Okajima
@@ -21017,9 +21017,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/mvdown.c linux-3.15.5-pentoo-aufs/fs
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/opts.c linux-3.15.5-pentoo-aufs/fs/aufs/opts.c
---- linux-3.15.5-pentoo-orig/fs/aufs/opts.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/opts.c	2014-08-01 23:23:09.912272261 -0400
+diff -Naur fs/aufs/opts.c linux-3.15.5-pentoo-aufs/fs/aufs/opts.c
+--- fs/aufs/opts.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/opts.c	2014-08-01 23:23:09.912272261 -0400
 @@ -0,0 +1,1788 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -22809,9 +22809,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/opts.c linux-3.15.5-pentoo-aufs/fs/a
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/opts.h linux-3.15.5-pentoo-aufs/fs/aufs/opts.h
---- linux-3.15.5-pentoo-orig/fs/aufs/opts.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/opts.h	2014-08-01 23:23:09.905272261 -0400
+diff -Naur fs/aufs/opts.h linux-3.15.5-pentoo-aufs/fs/aufs/opts.h
+--- fs/aufs/opts.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/opts.h	2014-08-01 23:23:09.905272261 -0400
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -23026,9 +23026,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/opts.h linux-3.15.5-pentoo-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/plink.c linux-3.15.5-pentoo-aufs/fs/aufs/plink.c
---- linux-3.15.5-pentoo-orig/fs/aufs/plink.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/plink.c	2014-08-01 23:23:09.904272261 -0400
+diff -Naur fs/aufs/plink.c linux-3.15.5-pentoo-aufs/fs/aufs/plink.c
+--- fs/aufs/plink.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/plink.c	2014-08-01 23:23:09.904272261 -0400
 @@ -0,0 +1,532 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -23562,9 +23562,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/plink.c linux-3.15.5-pentoo-aufs/fs/
 +		}
 +	}
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/poll.c linux-3.15.5-pentoo-aufs/fs/aufs/poll.c
---- linux-3.15.5-pentoo-orig/fs/aufs/poll.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/poll.c	2014-08-01 23:23:09.909272261 -0400
+diff -Naur fs/aufs/poll.c linux-3.15.5-pentoo-aufs/fs/aufs/poll.c
+--- fs/aufs/poll.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/poll.c	2014-08-01 23:23:09.909272261 -0400
 @@ -0,0 +1,55 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -23621,9 +23621,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/poll.c linux-3.15.5-pentoo-aufs/fs/a
 +	AuTraceErr((int)mask);
 +	return mask;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/procfs.c linux-3.15.5-pentoo-aufs/fs/aufs/procfs.c
---- linux-3.15.5-pentoo-orig/fs/aufs/procfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/procfs.c	2014-08-01 23:23:09.923272261 -0400
+diff -Naur fs/aufs/procfs.c linux-3.15.5-pentoo-aufs/fs/aufs/procfs.c
+--- fs/aufs/procfs.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/procfs.c	2014-08-01 23:23:09.923272261 -0400
 @@ -0,0 +1,169 @@
 +/*
 + * Copyright (C) 2010-2014 Junjiro R. Okajima
@@ -23794,9 +23794,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/procfs.c linux-3.15.5-pentoo-aufs/fs
 +out:
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/rdu.c linux-3.15.5-pentoo-aufs/fs/aufs/rdu.c
---- linux-3.15.5-pentoo-orig/fs/aufs/rdu.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/rdu.c	2014-08-01 23:23:09.915272261 -0400
+diff -Naur fs/aufs/rdu.c linux-3.15.5-pentoo-aufs/fs/aufs/rdu.c
+--- fs/aufs/rdu.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/rdu.c	2014-08-01 23:23:09.915272261 -0400
 @@ -0,0 +1,388 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -24186,9 +24186,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/rdu.c linux-3.15.5-pentoo-aufs/fs/au
 +	return err;
 +}
 +#endif
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/rwsem.h linux-3.15.5-pentoo-aufs/fs/aufs/rwsem.h
---- linux-3.15.5-pentoo-orig/fs/aufs/rwsem.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/rwsem.h	2014-08-01 23:23:09.922272261 -0400
+diff -Naur fs/aufs/rwsem.h linux-3.15.5-pentoo-aufs/fs/aufs/rwsem.h
+--- fs/aufs/rwsem.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/rwsem.h	2014-08-01 23:23:09.922272261 -0400
 @@ -0,0 +1,191 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -24381,9 +24381,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/rwsem.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sbinfo.c linux-3.15.5-pentoo-aufs/fs/aufs/sbinfo.c
---- linux-3.15.5-pentoo-orig/fs/aufs/sbinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/sbinfo.c	2014-08-01 23:23:09.903272261 -0400
+diff -Naur fs/aufs/sbinfo.c linux-3.15.5-pentoo-aufs/fs/aufs/sbinfo.c
+--- fs/aufs/sbinfo.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/sbinfo.c	2014-08-01 23:23:09.903272261 -0400
 @@ -0,0 +1,353 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -24738,9 +24738,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sbinfo.c linux-3.15.5-pentoo-aufs/fs
 +	p = radix_tree_delete(&sbinfo->au_si_pid.tree, current->pid);
 +	spin_unlock(&sbinfo->au_si_pid.tree_lock);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/spl.h linux-3.15.5-pentoo-aufs/fs/aufs/spl.h
---- linux-3.15.5-pentoo-orig/fs/aufs/spl.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/spl.h	2014-08-01 23:23:09.914272261 -0400
+diff -Naur fs/aufs/spl.h linux-3.15.5-pentoo-aufs/fs/aufs/spl.h
+--- fs/aufs/spl.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/spl.h	2014-08-01 23:23:09.914272261 -0400
 @@ -0,0 +1,111 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -24853,9 +24853,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/spl.h linux-3.15.5-pentoo-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/super.c linux-3.15.5-pentoo-aufs/fs/aufs/super.c
---- linux-3.15.5-pentoo-orig/fs/aufs/super.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/super.c	2014-08-01 23:23:09.904272261 -0400
+diff -Naur fs/aufs/super.c linux-3.15.5-pentoo-aufs/fs/aufs/super.c
+--- fs/aufs/super.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/super.c	2014-08-01 23:23:09.904272261 -0400
 @@ -0,0 +1,1004 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -25861,9 +25861,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/super.c linux-3.15.5-pentoo-aufs/fs/
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/super.h linux-3.15.5-pentoo-aufs/fs/aufs/super.h
---- linux-3.15.5-pentoo-orig/fs/aufs/super.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/super.h	2014-08-01 23:23:09.908272261 -0400
+diff -Naur fs/aufs/super.h linux-3.15.5-pentoo-aufs/fs/aufs/super.h
+--- fs/aufs/super.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/super.h	2014-08-01 23:23:09.908272261 -0400
 @@ -0,0 +1,640 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -26505,9 +26505,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/super.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysaufs.c linux-3.15.5-pentoo-aufs/fs/aufs/sysaufs.c
---- linux-3.15.5-pentoo-orig/fs/aufs/sysaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/sysaufs.c	2014-08-01 23:23:09.901272261 -0400
+diff -Naur fs/aufs/sysaufs.c linux-3.15.5-pentoo-aufs/fs/aufs/sysaufs.c
+--- fs/aufs/sysaufs.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/sysaufs.c	2014-08-01 23:23:09.901272261 -0400
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -26613,9 +26613,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysaufs.c linux-3.15.5-pentoo-aufs/f
 +out:
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysaufs.h linux-3.15.5-pentoo-aufs/fs/aufs/sysaufs.h
---- linux-3.15.5-pentoo-orig/fs/aufs/sysaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/sysaufs.h	2014-08-01 23:23:09.912272261 -0400
+diff -Naur fs/aufs/sysaufs.h linux-3.15.5-pentoo-aufs/fs/aufs/sysaufs.h
+--- fs/aufs/sysaufs.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/sysaufs.h	2014-08-01 23:23:09.912272261 -0400
 @@ -0,0 +1,107 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -26724,9 +26724,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysaufs.h linux-3.15.5-pentoo-aufs/f
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysfs.c linux-3.15.5-pentoo-aufs/fs/aufs/sysfs.c
---- linux-3.15.5-pentoo-orig/fs/aufs/sysfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/sysfs.c	2014-08-01 23:23:09.914272261 -0400
+diff -Naur fs/aufs/sysfs.c linux-3.15.5-pentoo-aufs/fs/aufs/sysfs.c
+--- fs/aufs/sysfs.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/sysfs.c	2014-08-01 23:23:09.914272261 -0400
 @@ -0,0 +1,372 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -27100,9 +27100,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysfs.c linux-3.15.5-pentoo-aufs/fs/
 +		}
 +	}
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysrq.c linux-3.15.5-pentoo-aufs/fs/aufs/sysrq.c
---- linux-3.15.5-pentoo-orig/fs/aufs/sysrq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/sysrq.c	2014-08-01 23:23:09.907272261 -0400
+diff -Naur fs/aufs/sysrq.c linux-3.15.5-pentoo-aufs/fs/aufs/sysrq.c
+--- fs/aufs/sysrq.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/sysrq.c	2014-08-01 23:23:09.907272261 -0400
 @@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -27261,9 +27261,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/sysrq.c linux-3.15.5-pentoo-aufs/fs/
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/vdir.c linux-3.15.5-pentoo-aufs/fs/aufs/vdir.c
---- linux-3.15.5-pentoo-orig/fs/aufs/vdir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/vdir.c	2014-08-01 23:23:09.914272261 -0400
+diff -Naur fs/aufs/vdir.c linux-3.15.5-pentoo-aufs/fs/aufs/vdir.c
+--- fs/aufs/vdir.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/vdir.c	2014-08-01 23:23:09.914272261 -0400
 @@ -0,0 +1,889 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -28154,9 +28154,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/vdir.c linux-3.15.5-pentoo-aufs/fs/a
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/vfsub.c linux-3.15.5-pentoo-aufs/fs/aufs/vfsub.c
---- linux-3.15.5-pentoo-orig/fs/aufs/vfsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/vfsub.c	2014-08-01 23:23:09.924272261 -0400
+diff -Naur fs/aufs/vfsub.c linux-3.15.5-pentoo-aufs/fs/aufs/vfsub.c
+--- fs/aufs/vfsub.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/vfsub.c	2014-08-01 23:23:09.924272261 -0400
 @@ -0,0 +1,782 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -28940,9 +28940,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/vfsub.c linux-3.15.5-pentoo-aufs/fs/
 +
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/vfsub.h linux-3.15.5-pentoo-aufs/fs/aufs/vfsub.h
---- linux-3.15.5-pentoo-orig/fs/aufs/vfsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/vfsub.h	2014-08-01 23:23:09.898272261 -0400
+diff -Naur fs/aufs/vfsub.h linux-3.15.5-pentoo-aufs/fs/aufs/vfsub.h
+--- fs/aufs/vfsub.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/vfsub.h	2014-08-01 23:23:09.898272261 -0400
 @@ -0,0 +1,284 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -29228,9 +29228,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/vfsub.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/wbr_policy.c linux-3.15.5-pentoo-aufs/fs/aufs/wbr_policy.c
---- linux-3.15.5-pentoo-orig/fs/aufs/wbr_policy.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/wbr_policy.c	2014-08-01 23:23:09.906272261 -0400
+diff -Naur fs/aufs/wbr_policy.c linux-3.15.5-pentoo-aufs/fs/aufs/wbr_policy.c
+--- fs/aufs/wbr_policy.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/wbr_policy.c	2014-08-01 23:23:09.906272261 -0400
 @@ -0,0 +1,765 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -29997,9 +29997,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/wbr_policy.c linux-3.15.5-pentoo-auf
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/whout.c linux-3.15.5-pentoo-aufs/fs/aufs/whout.c
---- linux-3.15.5-pentoo-orig/fs/aufs/whout.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/whout.c	2014-08-01 23:23:09.895272261 -0400
+diff -Naur fs/aufs/whout.c linux-3.15.5-pentoo-aufs/fs/aufs/whout.c
+--- fs/aufs/whout.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/whout.c	2014-08-01 23:23:09.895272261 -0400
 @@ -0,0 +1,1056 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -31057,9 +31057,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/whout.c linux-3.15.5-pentoo-aufs/fs/
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/whout.h linux-3.15.5-pentoo-aufs/fs/aufs/whout.h
---- linux-3.15.5-pentoo-orig/fs/aufs/whout.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/whout.h	2014-08-01 23:23:09.906272261 -0400
+diff -Naur fs/aufs/whout.h linux-3.15.5-pentoo-aufs/fs/aufs/whout.h
+--- fs/aufs/whout.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/whout.h	2014-08-01 23:23:09.906272261 -0400
 @@ -0,0 +1,85 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -31146,9 +31146,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/whout.h linux-3.15.5-pentoo-aufs/fs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/wkq.c linux-3.15.5-pentoo-aufs/fs/aufs/wkq.c
---- linux-3.15.5-pentoo-orig/fs/aufs/wkq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/wkq.c	2014-08-01 23:23:09.903272261 -0400
+diff -Naur fs/aufs/wkq.c linux-3.15.5-pentoo-aufs/fs/aufs/wkq.c
+--- fs/aufs/wkq.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/wkq.c	2014-08-01 23:23:09.903272261 -0400
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -31363,9 +31363,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/wkq.c linux-3.15.5-pentoo-aufs/fs/au
 +
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/wkq.h linux-3.15.5-pentoo-aufs/fs/aufs/wkq.h
---- linux-3.15.5-pentoo-orig/fs/aufs/wkq.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/wkq.h	2014-08-01 23:23:09.922272261 -0400
+diff -Naur fs/aufs/wkq.h linux-3.15.5-pentoo-aufs/fs/aufs/wkq.h
+--- fs/aufs/wkq.h	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/wkq.h	2014-08-01 23:23:09.922272261 -0400
 @@ -0,0 +1,91 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -31458,9 +31458,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/wkq.h linux-3.15.5-pentoo-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/xino.c linux-3.15.5-pentoo-aufs/fs/aufs/xino.c
---- linux-3.15.5-pentoo-orig/fs/aufs/xino.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/fs/aufs/xino.c	2014-08-01 23:23:09.902272261 -0400
+diff -Naur fs/aufs/xino.c linux-3.15.5-pentoo-aufs/fs/aufs/xino.c
+--- fs/aufs/xino.c	1969-12-31 19:00:00.000000000 -0500
++++ fs/aufs/xino.c	2014-08-01 23:23:09.902272261 -0400
 @@ -0,0 +1,1312 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -32774,9 +32774,9 @@ diff -Naur linux-3.15.5-pentoo-orig/fs/aufs/xino.c linux-3.15.5-pentoo-aufs/fs/a
 +out:
 +	return err;
 +}
-diff -Naur linux-3.15.5-pentoo-orig/include/uapi/linux/aufs_type.h linux-3.15.5-pentoo-aufs/include/uapi/linux/aufs_type.h
---- linux-3.15.5-pentoo-orig/include/uapi/linux/aufs_type.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-3.15.5-pentoo-aufs/include/uapi/linux/aufs_type.h	2014-08-01 23:23:03.087272078 -0400
+diff -Naur include/uapi/linux/aufs_type.h linux-3.15.5-pentoo-aufs/include/uapi/linux/aufs_type.h
+--- include/uapi/linux/aufs_type.h	1969-12-31 19:00:00.000000000 -0500
++++ include/uapi/linux/aufs_type.h	2014-08-01 23:23:03.087272078 -0400
 @@ -0,0 +1,379 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
