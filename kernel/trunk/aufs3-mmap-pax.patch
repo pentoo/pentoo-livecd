@@ -1,0 +1,51 @@
+--- aufs3-mmap.patch	2014-08-01 21:56:11.748132523 -0400
++++ aufs3-mmap-pax.patch	2014-08-01 22:44:56.057210833 -0400
+@@ -99,9 +99,9 @@
+ +#define vmr_fput(region)		vmr_do_fput(region, __func__, __LINE__)
+ +#endif /* CONFIG_MMU */
+ +
+- extern int access_process_vm(struct task_struct *tsk, unsigned long addr, void *buf, int len, int write);
+- extern int access_remote_vm(struct mm_struct *mm, unsigned long addr,
+- 		void *buf, int len, int write);
++ extern ssize_t access_process_vm(struct task_struct *tsk, unsigned long addr, void *buf, size_t len, int write);
++ extern ssize_t access_remote_vm(struct mm_struct *mm, unsigned long addr,
++ 		void *buf, size_t len, int write);
+ diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
+ index 8967e20..a57b589 100644
+ --- a/include/linux/mm_types.h
+@@ -126,15 +126,15 @@
+ index 54a8d26..dcf08b6 100644
+ --- a/kernel/fork.c
+ +++ b/kernel/fork.c
+-@@ -416,7 +416,7 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
+- 			struct inode *inode = file_inode(file);
+- 			struct address_space *mapping = file->f_mapping;
+- 
+--			get_file(file);
+-+			vma_get_file(tmp);
+- 			if (tmp->vm_flags & VM_DENYWRITE)
+- 				atomic_dec(&inode->i_writecount);
+- 			mutex_lock(&mapping->i_mmap_mutex);
++@@ -379,7 +379,7 @@ static struct vm_area_struct *dup_vma(struct mm_struct *mm, struct mm_struct *oldmm, struct vm_area_struct *mpnt)
++ 		struct inode *inode = file_inode(file);
++ 		struct address_space *mapping = file->f_mapping;
++ 
++-		get_file(file);
+++		vma_get_file(tmp);
++ 		if (tmp->vm_flags & VM_DENYWRITE)
++ 			atomic_dec(&inode->i_writecount);
++ 		mutex_lock(&mapping->i_mmap_mutex);
+ diff --git a/mm/Makefile b/mm/Makefile
+ index b484452..84d53c1 100644
+ --- a/mm/Makefile
+@@ -275,9 +275,9 @@
+  	if (new->vm_file)
+ -		fput(new->vm_file);
+ +		vma_fput(new);
+- 	unlink_anon_vmas(new);
+   out_free_mpol:
+  	mpol_put(vma_policy(new));
++  out_free_vma:
+ @@ -2840,7 +2840,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+  			if (anon_vma_clone(new_vma, vma))
+  				goto out_free_mempol;
