@@ -372,7 +372,7 @@ mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 
 # last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
-mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug-info-${ARCH}-${hardening}-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
+mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug/debug-info-${ARCH}-${hardening}-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
 
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec
 rm -rf /var/tmp/portage/debug
@@ -382,7 +382,7 @@ rm -rf /var/tmp/portage/debug
 wget https://pentoo.googlecode.com/svn/genhtml/gen_installedlist.sh
 wget https://pentoo.googlecode.com/svn/genhtml/header.inc
 wget https://pentoo.googlecode.com/svn/genhtml/footer.inc
-sh gen_installedlist.sh > /var/log/portage/tools_list_${arch}-${hardening}_`date "+%Y%m%d"`.html
+sh gen_installedlist.sh > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_`date "+%Y%m%d"`.html
 if [ $? -ne 0 ]; then
 	/bin/bash
 fi

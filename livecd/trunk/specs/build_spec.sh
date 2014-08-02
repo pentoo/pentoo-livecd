@@ -16,7 +16,7 @@ fi
 RC=RC2.1_p$(date "+%Y%m%d")
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140516 "
+echo "snapshot: 20140802 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -74,12 +74,18 @@ case ${3} in
 
 		echo -e "\n# This option is the full path and filename to a kernel .config file that is"
 		echo "# used by genkernel to compile the kernel this label applies to."
-		if [ ${1} = amd64 ]
+		if [ ${1} = amd64 ] && [ ${2} = hardened ]
 		then
 			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/${1}/kernel/config-latest"
-		elif [ ${1} = i686 ]
+		elif [ ${1} = amd64 ] && [ ${2} = default ]
+		then
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/${1}/kernel/config-latest-soft"
+		elif [ ${1} = i686 ] && [ ${2} = hardened ]
 		then
 			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest"
+		elif [ ${1} = i686 ] && [ ${2} = default ]
+		then
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest-soft"
 		fi
 
 		echo -e "\n# This allows the optional directory containing the output packages for kernel"

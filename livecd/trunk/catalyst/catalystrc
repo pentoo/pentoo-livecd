@@ -8,6 +8,8 @@ export MAKEOPTS="-j32 -l32"
 export INPUT_DEVICES="$(portageq envvar INPUT_DEVICES) synaptics"
 export clst_myfeatures="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup"
 export FEATURES="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup"
+#export clst_myfeatures="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup test test-fail-continue"
+#export FEATURES="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup test test-fail-continue"
 export ACCEPT_LICENSE="Intel-SDP NVIDIA-CUDA"
 export PORTAGE_NICENESS="15"
 #c 0-3 n 0-7 lower number is higher priority
@@ -18,3 +20,10 @@ export CONFIG_CHECK_FATAL=0
 export LANG="en_US.UTF-8"
 export TERM="linux"
 export INSTALL_MASK=""
+
+#kensington's tinderbox script settings
+export TINDERBOX_DIR=/var/log/portage/tinderbox
+export DEPCHECK_BIN=/etc/portage/depcheck
+
+#this toggles on and off various debug shells to fix issues during catalyst builds
+#export debugshell=true
