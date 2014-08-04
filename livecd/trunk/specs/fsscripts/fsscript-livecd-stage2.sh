@@ -168,21 +168,29 @@ EOF
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
 portageq has_version / pentoo/tribe && echo 'USE="${USE} -bluetooth -database -exploit -footprint -forensics -forging -fuzzers -mitm -mobile -proxies -qemu -radio -rce -scanner -voip -wireless -wireless-compat"' >> /etc/portage/make.conf
 
-emerge -1 pentoo-installer || /bin/bash
+emerge -1kb pentoo-installer || /bin/bash
 
 # Fix the kernel dir & config
+
+#XXX: HACK ALERT
+if [ -d /usr/src/linux-3.9.9-pentoo ] ; then
+	rm -rf /usr/src/linux-3.9.9-pentoo
+fi
+#XXX: end hack alert
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
-	rm -rf /usr/src/linux
-	ln -s linux-$krnl /usr/src/linux
-	cp /var/tmp/pentoo.config /usr/src/linux/.config
-	rm -rf /lib/modules/$krnl/source /lib/modules/$krnl/build
-	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/build
-	ln -s /usr/src/linux-$krnl /lib/modules/$krnl/source
+	if [ -d /tmp/kernel_maps ] ; then
+		rm -rf /tmp/kernel_maps
+	fi
+	mkdir /tmp/kernel_maps
+	cp -a /usr/src/linux/?odule* /tmp/kernel_maps/
+	cp -a /usr/src/linux/System.map /tmp/kernel_maps/
 	cd /usr/src/linux
+	make -j mrproper
+	cp -a /var/tmp/pentoo.config /usr/src/linux/.config
+	cp -a /tmp/kernel_maps/* /usr/src/linux
 	make -j prepare
 	make -j modules_prepare
-	cp -a /tmp/kerncache/pentoo/usr/src/linux/?odule* ./
-	cp -a /tmp/kerncache/pentoo/usr/src/linux/System.map ./
+
 done
 
 emerge --deselect=y livecd-tools || /bin/bash

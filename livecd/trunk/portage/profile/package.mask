@@ -16,3 +16,5 @@ mail-mta/msmtp
 
 #nfc
 <sys-fs/udev-208
+
+<sys-kernel/pentoo-sources-3.15.5

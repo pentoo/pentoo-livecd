@@ -1,3 +1,5 @@
 media-libs/mesa pax_kernel
 
 sys-apps/portage stupid_patches
+
+sys-kernel/pentoo-sources aufs symlink

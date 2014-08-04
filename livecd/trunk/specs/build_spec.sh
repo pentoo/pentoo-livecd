@@ -16,7 +16,7 @@ fi
 RC=RC2.1_p$(date "+%Y%m%d")
 
 echo "rel_type: ${2}"
-echo "snapshot: 20140802 "
+echo "snapshot: 20140804 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -104,7 +104,7 @@ case ${3} in
 			echo "livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --zfs --compress-initramfs-type=xz"
 		elif [ ${1} = i686 ]
 		then
-			echo "livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --compress-initramfs-type=xz"
+			echo "livecd/gk_mainargs: --aufs --disklabel --dmraid --gpg --luks --lvm --compress-initramfs-type=xz"
 		fi
 
 		echo "# This option is for merging kernel-dependent packages and external modules that"

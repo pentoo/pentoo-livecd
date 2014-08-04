@@ -12,7 +12,7 @@ do
 	mkdir -p /catalyst/release/Pentoo_${arch}_${PROFILE}
 	chmod 777 /catalyst/release/Pentoo_${arch}_${PROFILE}
 
-	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update livecd-stage1 livecd-stage2
+	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed binpkg-update livecd-stage1 livecd-stage2
 	do
 		#I have nfc why it's loosing exec all of a sudden but I can compensate
 		chmod +x build_spec.sh
@@ -23,7 +23,8 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
-	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update livecd-stage1 livecd-stage2
+	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
+	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	for stage in livecd-stage2
 	do
 		#IO load is CRUSHING my build system, so if a heavy IO operation is running, hold off on starting the next one
@@ -59,9 +60,17 @@ do
 		done
 		#end excessive IO handling
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
-		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2" ]
+		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]
 		then
 			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2014.0
+		fi
+		if [ "${stage}" = "stage4-pentoo" ]
+		then
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-pentoo-2014.0
+		fi
+		if [ "${stage}" = "binpkg-update-seed" ]
+		then
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-binpkg-update-2014.0
 		fi
 		if [ "${stage}" = "livecd-stage2" ]
 		then
@@ -100,8 +109,8 @@ for arch in ${ARCH}
 do
 	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
 	then
-		gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
+#		gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+#		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
 
 		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
 		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
