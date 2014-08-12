@@ -3,6 +3,8 @@ source /etc/profile
 env-update
 source /tmp/envscript
 
+emerge -1kb --newuse --update sys-apps/portage || /bin/bash
+
 #somehow the default .bashrc runs X.... WTF????
 mv /root/.bashrc /root/.bashrc.bak
 
@@ -143,7 +145,7 @@ fi
 # Build the metadata cache
 sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bash
 emerge --metadata || /bin/bash
-eix-update || /bin/bash
+HOME=/tmp eix-update || /bin/bash
 
 # Fix /etc/portage/make.conf
 sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
@@ -351,6 +353,9 @@ sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
 rm -rf /lib/modules/$(uname -r)/video
 
 eselect ruby set ruby19 || /bin/bash
+
+#mossmann said do this or I'm lame
+eselect lapack set 1
 
 eselect bashcomp enable --global base || /bin/bash
 eselect bashcomp enable --global eselect || /bin/bash

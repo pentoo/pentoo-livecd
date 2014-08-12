@@ -1,6 +1,8 @@
 #!/bin/sh
 source /tmp/envscript
 
+emerge -1kb --newuse --update sys-apps/portage || /bin/bash
+
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
 
