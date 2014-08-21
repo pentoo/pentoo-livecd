@@ -5,6 +5,11 @@ set -e
 ARCH="$1"
 PROFILE="$2"
 
+if [ -z ${1} ] || [ -z ${2} ] ; then
+	echo "need two params"
+	exit
+fi
+
 #first we prep directories and build all the spec files
 for arch in ${ARCH}
 do
@@ -100,6 +105,7 @@ if [ ${ARCH} = amd64 ]; then
 elif [ ${ARCH} = i686 ]; then
 	rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/x86-${PROFILE} /mnt/mirror/local_mirror/Packages/
 fi
+
 /mnt/mirror/mirror.sh
 
 #last generate the sig and torrent
@@ -109,8 +115,8 @@ for arch in ${ARCH}
 do
 	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
 	then
-#		gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-#		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
+		gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
 
 		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
 		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}

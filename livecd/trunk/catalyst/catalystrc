@@ -21,6 +21,8 @@ export LANG="en_US.UTF-8"
 export TERM="linux"
 export INSTALL_MASK=""
 
+export LC_ALL="C"
+
 #kensington's tinderbox script settings
 export TINDERBOX_DIR=/var/log/portage/tinderbox
 export DEPCHECK_BIN=/etc/portage/depcheck

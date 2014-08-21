@@ -333,6 +333,8 @@ cat <<-EOF > /root/.config/gtk-3.0/settings.ini
 	gtk-fallback-icon-theme = gnome
 EOF
 
+mkdir -p /root/.config/xfce4/
+cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #easy way to adjust wallpaper per install
@@ -403,6 +405,7 @@ rm -rf gen_installedlist.sh header.inc footer.inc
 
 rm -rf /var/tmp/portage/*
 eclean-pkg
+fixpackages
 sync
 sleep 60
 mv /root/.bashrc.bak /root/.bashrc
