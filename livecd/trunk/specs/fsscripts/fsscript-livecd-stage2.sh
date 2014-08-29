@@ -350,6 +350,8 @@ etc-update --automode -5 || /bin/bash
 
 #set the hostname properly
 sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
+#set the hostname in /etc/hosts too (bug #236)
+sed -i 's/livecd/pentoo/g' /etc/hosts
 
 #forcibly remove binary driver files, unmerge isn't good enough it seems
 rm -rf /lib/modules/$(uname -r)/video
