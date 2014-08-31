@@ -29,3 +29,4 @@ export DEPCHECK_BIN=/etc/portage/depcheck
 
 #this toggles on and off various debug shells to fix issues during catalyst builds
 #export debugshell=true
+export reckless=true
