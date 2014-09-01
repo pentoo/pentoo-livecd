@@ -154,17 +154,37 @@ sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
 #We need to amend pentoo-installer to optionally toggle on and off these use flags, some of may be non-desirable for an installed system
 cat <<-EOF > /etc/portage/make.conf
-	#Please adjust your use flags, if you don't use gpu cracking remove cuda and opencl
+	#This is the default Pentoo make.conf file, it controls many basic system settings.
+	#You can find information on how to edit this file in "man make.conf" as well as
+	#on the web at https://wiki.gentoo.org/wiki//etc/portage/make.conf
+
+	#Please adjust your CFLAGS as desired, information can be found here: https://wiki.gentoo.org/wiki/CFLAGS
+	#Do not modify these FLAGS unless you know what you are doing, always check the defaults first with "portageq envvar CFLAGS"
+	#This is the default for pentoo at the time of build:
+	#CFLAGS="$(portageq envvar CFLAGS)"
+	#A safe choice would be to keep whatever Pentoo defaults are, but optimize for your specific machine:
+	#CFLAGS="${CFLAGS} -march=native"
+	#If you do change your CFLAGS, it is best for all the compile flags to match so uncomment the following three lines:
+	#CXXFLAGS="${CFLAGS}"
+	#FCFLAGS="${CFLAGS}"
+	#FFLAGS="${CFLAGS}"
+
+	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
 	USE="binary-drivers cuda opencl qemu -doc -examples -gtk-autostart"
 	USE="${USE} aufs bindist livecd"
+
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors
+
 	#Please set your input devices, if you are only using evdev you may completely remove this line
 	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
+
 	#Default VIDEO_CARDS setting enables nearly everything, you can enable fewer here if you like:
 	#At a minimum you should have these PLUS your specific videocard
 	#VIDEO_CARDS="vesa vga fbdev"
 	#you can check available options with "emerge -vp xorg-drivers"
-	$(printf "\tACCEPT_LICENSE=\"AdobeFlash-11.x $(portageq envvar ACCEPT_LICENSE)\"")
+
+	$(printf "ACCEPT_LICENSE=\"AdobeFlash-11.x $(portageq envvar ACCEPT_LICENSE)\"")
+
 	source /var/lib/layman/make.conf
 EOF
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
