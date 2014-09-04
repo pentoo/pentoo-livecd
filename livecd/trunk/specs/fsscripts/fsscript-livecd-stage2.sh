@@ -399,6 +399,12 @@ if [ $? -ne 0 ]; then
 fi
 rc-update -u || /bin/bash
 
+#cleanup temp stuff in /etc/portage from catalyst build
+rm -f /etc/portage/make.conf.old
+rm -f /etc/portage/make.conf.catalyst
+rm -f /etc/portage/depcheck
+rm -rf /etc/portage/profile
+
 ## XXX: THIS IS A HORRIBLE IDEA!!!!
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
 # The issue is it isn't really possible (nor desirable) to have all this extra debug info on the iso so here is what we do...
