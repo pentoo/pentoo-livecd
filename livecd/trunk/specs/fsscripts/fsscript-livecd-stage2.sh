@@ -259,16 +259,7 @@ genmenu.py -x || /bin/bash
 # Fixes menu
 cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
 
-# Apply patches to root
-cd /
-#replaced by livecd-tools-2.0.3
-#patch bin/bashlogin patches/bashlogin.patch || /bin/bash
-#halt fails but shouldn't
-#patch etc/init.d/halt.sh patches/halt.patch || /bin/bash
-patch sbin/livecd-functions.sh patches/livecd-functions.patch || /bin/bash
-#patch lib/rc/sh/init.sh patches/rc.patch
-#autoconf fails
-#patch etc/init.d/autoconfig patches/autoconfig.patch || /bin/bash
+#remove this after patches is gone
 rm -rf patches || /bin/bash
 
 if [ $(command -v paxctl 2> /dev/null) ]; then
