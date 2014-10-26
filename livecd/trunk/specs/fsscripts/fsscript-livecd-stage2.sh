@@ -375,9 +375,11 @@ eselect lapack set 1
 eselect bashcomp enable --global base || /bin/bash
 eselect bashcomp enable --global eselect || /bin/bash
 eselect bashcomp enable --global gentoo || /bin/bash
-eselect bashcomp enable --global procps || /bin/bash
 eselect bashcomp enable --global screen || /bin/bash
-eselect bashcomp enable --global module-init-tools || /bin/bash
+eselect bashcomp enable --global killall  || /bin/bash
+eselect bashcomp enable --global insmod || /bin/bash
+eselect bashcomp enable --global rmmod || /bin/bash
+eselect bashcomp enable --global modprobe || /bin/bash
 
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
