@@ -34,7 +34,7 @@ eselect python set --python2 $(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -
 eselect python set --python3 $(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
 python2.7 -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:2.7
 python3.3 -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:3.3
-python-updater -- --buildpkg=y --rebuild-exclude sys-devel/gdb --exclude sys-devel/gdb || /bin/bash
+python-updater -- --buildpkg=y || /bin/bash
 
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
@@ -44,8 +44,6 @@ eselect ruby set ruby19 || /bin/bash
 
 emerge --depclean || /bin/bash
 
-#rebuild everything to ensure packages exist for everything.
-emerge -e -kb @world || /bin/bash
 emerge -1 -kb app-portage/gentoolkit || /bin/bash
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
@@ -57,7 +55,7 @@ revdep-rebuild.py -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude de
 /usr/local/portage/scripts/bug-461824.sh
 
 #some things fail in livecd-stage1 but work here, nfc why
-USE=aufs emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
+USE="aufs symlink" emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #emerge -1 -kb app-crypt/johntheripper || /bin/bash
 
 #fix java circular deps in next stage

@@ -183,7 +183,7 @@ cat <<-EOF > /etc/portage/make.conf
 	#VIDEO_CARDS="vesa vga fbdev"
 	#you can check available options with "emerge -vp xorg-drivers"
 
-	$(printf "ACCEPT_LICENSE=\"AdobeFlash-11.x $(portageq envvar ACCEPT_LICENSE)\"")
+	$(printf "ACCEPT_LICENSE=\"AdobeFlash-11.x\"")
 
 	source /var/lib/layman/make.conf
 EOF
@@ -197,6 +197,9 @@ emerge -1kb pentoo-installer || /bin/bash
 #XXX: HACK ALERT
 if [ -d /usr/src/linux-3.9.9-pentoo ] ; then
 	rm -rf /usr/src/linux-3.9.9-pentoo
+fi
+if [ -d /lib/modules/3.9.9-pentoo ] ; then
+	rm -rf /lib/modules/3.9.9-pentoo
 fi
 #XXX: end hack alert
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
@@ -241,7 +244,7 @@ fi
 
 
 eselect python set python2.7 || /bin/bash
-python-updater -- --buildpkg=y --rebuild-exclude sys-devel/gdb --exclude sys-devel/gdb || /bin/bash
+python-updater -- --buildpkg=y || /bin/bash
 perl-cleaner --all -- --buildpkg=y || /bin/bash
 
 /var/lib/layman/pentoo/scripts/bug-461824.sh
@@ -397,6 +400,9 @@ rm -f /etc/portage/make.conf.old
 rm -f /etc/portage/make.conf.catalyst
 rm -f /etc/portage/depcheck
 rm -rf /etc/portage/profile
+
+#cleanup binary drivers
+rm -f /lib/modules/*/video/*
 
 ## XXX: THIS IS A HORRIBLE IDEA!!!!
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
