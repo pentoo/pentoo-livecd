@@ -1,7 +1,8 @@
 livecd/fstype: squashfs
 #livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
 #livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-memtest86+-cdtar.tar.bz2
-livecd/cdtar: /usr/src/pentoo/livecd/trunk/isolinux-elilo-memtest86+-cdtar.tar.bz2
+#livecd/cdtar: /usr/src/pentoo/livecd/trunk/isolinux-elilo-memtest86+-cdtar.tar.bz2
+livecd/cdtar: /usr/src/pentoo/livecd/trunk/pentoo-syslinux-5.10-memtest86plus-4.20.tar.bz2
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -25,7 +26,7 @@ livecd/type: generic-livecd
 # This is for blacklisting modules from being hotplugged that are known to cause
 # problems.  Putting a module name here will keep it from being auto-loaded,
 # even if ti is detected by hotplug.
-livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394 ar9170usb rtl2832 rtl2830 dvb_usb_rtl28xxu radeon nouveau
+livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394 ar9170usb rtl2832 rtl2830 dvb_usb_rtl28xxu radeon nouveau nvidia fglrx
 
 # This is for adding init scripts to runlevels.  The syntax for the init script
 # is the script name, followed by a pipe, followed by the runlevel in which you
@@ -33,14 +34,14 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default bluetooth|default consolekit|default firmware|boot gpm|default dbus|default
+livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default bluetooth|default consolekit|default gpm|default dbus|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
 # this option.  It can follow the same syntax as livcd/rcadd, or you can leave
 # the runlevel off to remove the script from any runlevels detected.  We do not
 # use this on the official media, so it is left blank.
-livecd/rcdel: keymaps|boot netmount|default mdraid|boot
+livecd/rcdel: mdraid|boot netmount|default
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,

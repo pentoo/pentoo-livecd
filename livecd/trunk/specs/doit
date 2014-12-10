@@ -35,7 +35,7 @@ screen -S catalyst -p 0 -X stuff './run_catalyst.sh amd64 hardened && ./run_cata
 
 #to keep io down we stagger the builds just a bit
 screen -S catalyst -p 1 -X screen bash
-screen -S catalyst -p 1 -X stuff 'ulimit -Hn 8192; ulimit -Sn 4096; sleep 50m'$(printf \\r)
+screen -S catalyst -p 1 -X stuff 'ulimit -Hn 8192; ulimit -Sn 4096; sleep 30m'$(printf \\r)
 screen -S catalyst -p 1 -X stuff './make_modules.sh'$(printf \\r)
 
 screen -S catalyst -p 1 -X stuff './run_catalyst.sh i686 hardened && ./run_catalyst.sh i686 default'$(printf \\r)

@@ -43,7 +43,7 @@ mkdir -p /catalyst/tmp/portage/portage/distfiles
 mkdir -p /catalyst/tmp/portage/portage/metadata
 mkdir -p /catalyst/tmp/portage/portage/packages
 rsync -aEXu --delete /catalyst/tmp/portage/portage /dev/shm/portage/rootfs/usr/
-chown portage.portage -R /dev/shm/portage/rootfs/
+chown portage.portage -R /dev/shm/portage/rootfs/usr/portage
 mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-`awk '/snapshot:/ {print $3}' build_spec.sh`.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
 rm -rf /catalyst/tmp/portage/portage/distfiles
 rm -rf /catalyst/tmp/portage/portage/metadata

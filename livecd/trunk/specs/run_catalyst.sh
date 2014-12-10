@@ -32,38 +32,45 @@ do
 	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	for stage in livecd-stage2
 	do
+		#building in tmpfs isn't exactly friendly on my ram usage, so let's limit to one catalyst at a time
+		#while ps aux | grep "[c]atalyst -f"
+		#do
+		#	echo "Catalyst already running, sleeping 2m"
+		#	sleep 2m
+		#done
 		#IO load is CRUSHING my build system, so if a heavy IO operation is running, hold off on starting the next one
 		#rsync is used to copy from livecd-stage1 to livecd-stage2
 		while ps aux | grep "[r]sync -a --delete /catalyst/"
 		do
-			echo IO at max, sleeping 2m
+			echo "IO at max, sleeping 2m"
 			sleep 2m
 		done
 		#this is unpacking a stage
 		while ps aux | grep "[t]ar -I pixz -xpf /catalyst/"
 		do
-			echo IO at max, sleeping 2m
+			echo "IO at max, sleeping 2m"
 			sleep 2m
 		done
 		#this is packing a stage
 		while ps aux | grep "[t]ar -I pixz -cpf /catalyst/"
 		do
-			echo IO at max, sleeping 2m
+			echo "IO at max, sleeping 2m"
 			sleep 2m
 		done
 		#removing tempfiles when complete
 		while ps aux | grep "[r]m -rf /catalyst/tmp/"
 		do
-			echo IO at max, sleeping 2m
+			echo "IO at max, sleeping 2m"
 			sleep 2m
 		done
 		#bug 461824 script (grep of majority of stage)
-		while ps aux | grep "[g]rep -r _portage_reinstall_"
-		do
-			echo IO at max, sleeping 2m
-			sleep 2m
-		done
+		#while ps aux | grep "[g]rep -r _portage_reinstall_"
+		#do
+		#	echo "IO at max, sleeping 2m"
+		#	sleep 2m
+		#done
 		#end excessive IO handling
+
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]
 		then
@@ -109,8 +116,8 @@ fi
 /mnt/mirror/mirror.sh
 
 #last generate the sig and torrent
-RC="$(grep RC= build_spec.sh |cut -d'=' -f2)"
-RC="${RC:0:7}$(date "+%Y%m%d")"
+RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
+#RC="${RC:0:7}$(date "+%Y%m%d")"
 for arch in ${ARCH}
 do
 	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
@@ -120,5 +127,6 @@ do
 
 		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
 		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+		mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
 	fi
 done
