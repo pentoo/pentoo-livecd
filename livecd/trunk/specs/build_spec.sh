@@ -17,7 +17,7 @@ fi
 RC=RC3.7
 
 echo "rel_type: ${2}"
-echo "snapshot: 20141209 "
+echo "snapshot: 20141227 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 

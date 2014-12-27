@@ -163,17 +163,17 @@ cat <<-EOF > /etc/portage/make.conf
 	#This is the default for pentoo at the time of build:
 	#CFLAGS="$(portageq envvar CFLAGS)"
 	#A safe choice would be to keep whatever Pentoo defaults are, but optimize for your specific machine:
-	#CFLAGS="${CFLAGS} -march=native"
+	#CFLAGS="\${CFLAGS} -march=native"
 	#If you do change your CFLAGS, it is best for all the compile flags to match so uncomment the following three lines:
-	#CXXFLAGS="${CFLAGS}"
-	#FCFLAGS="${CFLAGS}"
-	#FFLAGS="${CFLAGS}"
+	#CXXFLAGS="\${CFLAGS}"
+	#FCFLAGS="\${CFLAGS}"
+	#FFLAGS="\${CFLAGS}"
 
 	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
 	USE="binary-drivers cuda opencl qemu -doc -examples -gtk-autostart"
-	USE="${USE} aufs bindist livecd"
+	USE="\${USE} aufs bindist livecd"
 
-	#MAKEOPTS is set automatically by the profile to jobs equal to processors
+	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not ne to set it.
 
 	#Please set your input devices, if you are only using evdev you may completely remove this line
 	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
@@ -182,8 +182,6 @@ cat <<-EOF > /etc/portage/make.conf
 	#At a minimum you should have these PLUS your specific videocard
 	#VIDEO_CARDS="vesa vga fbdev"
 	#you can check available options with "emerge -vp xorg-drivers"
-
-	$(printf "ACCEPT_LICENSE=\"AdobeFlash-11.x\"")
 
 	source /var/lib/layman/make.conf
 EOF
@@ -347,10 +345,12 @@ cat <<-EOF > /root/.config/gtk-3.0/settings.ini
 	gtk-fallback-icon-theme = gnome
 EOF
 
-mkdir -p /root/.config/xfce4/
+mkdir -p /root/.config/xfce4/ /home/pentoo/.config/xfce4/
 cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/
-mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/
+cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/
+mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
+cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #easy way to adjust wallpaper per install
 
 #an attempt to fix a bug, never actually worked
@@ -433,6 +433,10 @@ rm -rf gen_installedlist.sh header.inc footer.inc
 rm -rf /var/tmp/portage/*
 eclean-pkg
 fixpackages
+
+#bug #477498
+ln -snf /proc/self/mounts /etc/mtab
+
 sync
 sleep 60
 mv /root/.bashrc.bak /root/.bashrc

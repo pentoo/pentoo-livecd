@@ -9,3 +9,5 @@ mail-mta/nullmailer
 mail-mta/msmtp
 
 <sys-kernel/pentoo-sources-3.15.5
+
+<sys-devel/gcc-4.8.3

@@ -2,7 +2,7 @@
 #WARNING WARNING WARNING
 #this rc file is meant for use on Nu only, please modify to meet your needs
 
-export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=32 --load-average=32 --backtrack=99"
+export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=64 --load-average=32 --backtrack=99"
 export MAKEOPTS="-j32 -l32"
 #export MAKEOPTS="-j1"
 export INPUT_DEVICES="$(portageq envvar INPUT_DEVICES) synaptics"
@@ -21,7 +21,9 @@ export LANG="en_US.UTF-8"
 export TERM="linux"
 export INSTALL_MASK=""
 
-export LC_ALL="C"
+#export LC_ALL="C"
+
+#export PORTAGE_BINHOST="http://192.168.1.251/pentoo/Packages/amd64-default/ http://192.168.1.251/pentoo/Packages/amd64-hardened/ http://192.168.1.251/pentoo/Packages/x86-default/ http://192.168.1.251/pentoo/Packages/x86-hardened/"
 
 #kensington's tinderbox script settings
 export TINDERBOX_DIR=/var/log/portage/tinderbox
@@ -29,4 +31,4 @@ export DEPCHECK_BIN=/etc/portage/depcheck
 
 #this toggles on and off various debug shells to fix issues during catalyst builds
 #export debugshell=true
-export reckless=true
+#export reckless=true
