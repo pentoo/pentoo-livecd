@@ -28,8 +28,8 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
-	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
-	#for stage in livecd-stage2
+	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
+	for stage in livecd-stage2
 	do
 		#building in tmpfs isn't exactly friendly on my ram usage, so let's limit to one catalyst at a time
 		#while ps aux | grep "[c]atalyst -f"
@@ -73,20 +73,20 @@ do
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2014.0
+			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2015.0
 		fi
 		if [ "${stage}" = "stage4-pentoo" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-pentoo-2014.0
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-pentoo-2015.0
 		fi
 		if [ "${stage}" = "binpkg-update-seed" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-binpkg-update-2014.0
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-binpkg-update-2015.0
 		fi
 		if [ "${stage}" = "livecd-stage2" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${arch}-2014.0
-			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${arch}-2014.0
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${arch}-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${arch}-2015.0
 		fi
 	#	if [ $? -ne 0 ]; then
 	#		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec

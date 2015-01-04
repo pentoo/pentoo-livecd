@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION_STAMP=2014.0
+VERSION_STAMP=2015.0
 if [ "${3}" = stage4-pentoo ]
 then
 	echo "version_stamp: pentoo-${VERSION_STAMP}"
@@ -13,11 +13,11 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-#RC=RC3_p$(date "+%Y%m%d")
-RC=RC3.7
+RC=RC3.7_p$(date "+%Y%m%d")
+#RC=RC3.7
 
 echo "rel_type: ${2}"
-echo "snapshot: 20141227 "
+echo "snapshot: 20150104 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -83,7 +83,9 @@ case ${3} in
 			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/${1}/kernel/config-latest-soft"
 		elif [ ${1} = i686 ] && [ ${2} = hardened ]
 		then
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest"
+			#echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest"
+			#we are using the soft config right now and forcing USE=-pax_kernel due to aufs issues
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest-soft"
 		elif [ ${1} = i686 ] && [ ${2} = default ]
 		then
 			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest-soft"

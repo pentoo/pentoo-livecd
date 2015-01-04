@@ -3,6 +3,14 @@ source /etc/profile
 env-update
 source /tmp/envscript
 
+fix_locale() {
+	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
+	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
+	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
+	localepurge || /bin/bash
+	locale-gen || /bin/bash
+}
+
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
 #somehow the default .bashrc runs X.... WTF????
@@ -24,12 +32,7 @@ then
 fi
 
 # Purge the uneeded locale, should keeps only en and utf8
-#sed '/^es/d' /etc/locale.nopurge #pretty sure this isn't needed
-echo en_US ISO-8859-1 >> /etc/locale.nopurge
-echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
-sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
-localepurge || /bin/bash
-locale-gen || /bin/bash
+fix_locale
 
 # Set the timezone
 if [[ -e /etc/conf.d/clock ]]
@@ -54,8 +57,8 @@ fi
 cd /etc/init.d/
 ln -s net.lo net.wlan0
 ln -s net.lo net.eth0
-rc-update -u || /bin/bash
 sed -e '/provide net/D' -i dhcpcd || /bin/bash
+rc-update -u || /bin/bash
 
 #default net to null
 echo modules=\"\!wireless\" >> /etc/conf.d/net
@@ -103,7 +106,7 @@ eselect java-vm set system icedtea-bin-7 || /bin/bash
 if [ -e /usr/lib64 ] ; then
 	eselect java-nsplugin set 64bit icedtea-bin-7 || /bin/bash
 else
-	eselect java-nsplugin set icedtea-bin-7 || /bin/bash
+	eselect java-nsplugin set icedtea-web@icedtea-bin-7 || /bin/bash
 fi
 
 #mark all news read
@@ -213,7 +216,6 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	cp -a /tmp/kernel_maps/* /usr/src/linux
 	make -j prepare
 	make -j modules_prepare
-
 done
 
 emerge --deselect=y livecd-tools || /bin/bash
@@ -307,7 +309,7 @@ rm -f /root/.my.cnf || /bin/bash
 smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
 #configure postgres
-echo y | emerge --config dev-db/postgresql-server || /bin/bash
+echo y | emerge --config dev-db/postgresql || /bin/bash
 touch /run/openrc/softlevel
 /etc/init.d/postgresql-9.3 start
 if [ $? -ne 0 ]; then
@@ -361,6 +363,9 @@ rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
+
+#etc-update looks like it sometimes crushes our locale settings
+fix_locale
 
 #set the hostname properly
 sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
