@@ -44,7 +44,7 @@ mkdir -p /catalyst/tmp/portage/portage/metadata
 mkdir -p /catalyst/tmp/portage/portage/packages
 rsync -aEXu --delete /catalyst/tmp/portage/portage /dev/shm/portage/rootfs/usr/
 chown portage.portage -R /dev/shm/portage/rootfs/usr/portage
-mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-`awk '/snapshot:/ {print $3}' build_spec.sh`.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
+mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/livecd/trunk/specs/build_spec.sh).lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
 rm -rf /catalyst/tmp/portage/portage/distfiles
 rm -rf /catalyst/tmp/portage/portage/metadata
 rm -rf /catalyst/tmp/portage/portage/packages
@@ -53,7 +53,7 @@ rm -rf /catalyst/tmp/portage/portage/packages
 layman -s pentoo
 mkdir -p /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo/
 rsync -aEXu --delete /var/lib/layman/pentoo/ /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo/
-mksquashfs /dev/shm/pentoo_portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/pentoo_overlay-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
+mksquashfs /dev/shm/pentoo_portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/pentoo_overlay-$(date "+%Y%m%d").lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
 
 ##make the zdistfiles module, just one for now, too ugly to make two
 mkdir -p /dev/shm/distfiles/rootfs/usr/portage/distfiles/
@@ -66,4 +66,4 @@ chown root.root /dev/shm/distfiles/rootfs/usr
 chown root.root /dev/shm/distfiles/rootfs
 chown root.root /dev/shm/distfiles
 chown portage.portage -R /dev/shm/distfiles/rootfs/usr/portage/
-mksquashfs /dev/shm/distfiles/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/zdistfiles-`date "+%Y%m%d"`.lzm -comp xz -b 1048576 -Xdict-size 1048576 -no-recovery -noappend
+mksquashfs /dev/shm/distfiles/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/zdistfiles-$(date "+%Y%m%d").lzm -comp xz -b 1048576 -Xdict-size 1048576 -no-recovery -noappend
