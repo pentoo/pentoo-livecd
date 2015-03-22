@@ -1,6 +1,15 @@
 #!/bin/sh
 source /tmp/envscript
 
+fix_locale() {
+	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
+	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
+	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
+	locale-gen || /bin/bash
+}
+
+fix_locale
+
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
 #merge all other desired changes into /etc

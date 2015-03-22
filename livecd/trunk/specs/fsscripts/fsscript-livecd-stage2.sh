@@ -231,7 +231,7 @@ if [ $? -ne 0 ]; then
 	emerge @preserved-rebuild -q || /bin/bash
 fi
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
-emerge -qN -D --buildpkg=y @x11-module-rebuild || /bin/bash
+emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || /bin/bash
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
@@ -371,6 +371,9 @@ fix_locale
 sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
 #set the hostname in /etc/hosts too (bug #236)
 sed -i 's/livecd/pentoo/g' /etc/hosts
+
+#make nano pretty, turn on all syntax hilighting
+sed -i '/include/s/# //' /etc/nanorc
 
 #forcibly remove binary driver files, unmerge isn't good enough it seems
 rm -rf /lib/modules/$(uname -r)/video

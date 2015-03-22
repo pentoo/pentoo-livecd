@@ -17,7 +17,7 @@ RC=RC3.7_p$(date "+%Y%m%d")
 #RC=RC3.7
 
 echo "rel_type: ${2}"
-echo "snapshot: 20150109 "
+echo "snapshot: 20150321 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -27,19 +27,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-amd64-${2}-20141106"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20150312"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/stage3-amd64-20141106"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20150312"
 			fi
 		elif [ ${1} = i686 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/stage3-i686-${2}-20140415"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20150303"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/stage3-i686-20141111"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20150303"
 			fi
 		fi
 		;;
@@ -175,16 +175,16 @@ case ${3} in
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/fsscript-stage4-pentoo.sh"
-		echo "stage4/use: aufs livecd livecd-stage1"
+		echo "stage4/use: aufs livecd livecd-stage1 -vaapi"
 		echo "stage4/packages: pentoo/pentoo"
 		;;
 	binpkg-update*)
-		echo "stage4/use: aufs livecd livecd-stage1"
+		echo "stage4/use: aufs livecd livecd-stage1 -vaapi"
 		echo "stage4/packages: pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/call-pentoo-updater.sh"
 		;;
 	livecd-stage1)
-		echo "livecd/use: aufs livecd livecd-stage1"
+		echo "livecd/use: aufs livecd livecd-stage1 -vaapi"
 		echo "livecd/packages: pentoo/pentoo"
 		;;
 esac
