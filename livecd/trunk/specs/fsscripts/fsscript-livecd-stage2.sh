@@ -270,6 +270,8 @@ if [ $(command -v paxctl 2> /dev/null) ]; then
 	paxctl -m /usr/bin/X || /bin/bash
 	# fixes pax for metasploit/java attacks/wpscan
 	paxctl -m /usr/bin/ruby19 || /bin/bash
+	paxctl -m /usr/bin/ruby20 || /bin/bash
+	paxctl -m /usr/bin/ruby21 || /bin/bash
 fi
 
 # Setup fonts
@@ -378,7 +380,7 @@ sed -i '/include/s/# //' /etc/nanorc
 #forcibly remove binary driver files, unmerge isn't good enough it seems
 rm -rf /lib/modules/$(uname -r)/video
 
-eselect ruby set ruby19 || /bin/bash
+eselect ruby set ruby20 || /bin/bash
 
 #mossmann said do this or I'm lame
 eselect lapack set 1

@@ -49,7 +49,9 @@ portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
-eselect ruby set ruby19 || /bin/bash
+
+#there doesn't actually appear to be a ruby installed at this point except long dead 1.8
+#eselect ruby set ruby20 || /bin/bash
 
 emerge --depclean || /bin/bash
 

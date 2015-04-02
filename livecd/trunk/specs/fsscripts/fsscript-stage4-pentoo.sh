@@ -28,6 +28,8 @@ if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
+eselect ruby set ruby20 || /bin/bash
+
 revdep-rebuild.py -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
 
 /usr/local/portage/scripts/bug-461824.sh
