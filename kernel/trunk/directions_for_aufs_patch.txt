@@ -1,17 +1,16 @@
-find correct branch from http://sourceforge.net/p/aufs/aufs3-standalone/ref/master/branches/
+find correct branch from https://github.com/sfjro/aufs4-standalone
 
-git clone git://git.code.sf.net/p/aufs/aufs3-standalone aufs-aufs3-standalone
-git checkout origin/aufs3.x (where x is the desired branch)
+git clone https://github.com/sfjro/aufs4-standalone.git
+git checkout aufs4.x (where x is the desired branch)
 
-NOTE: I have no idea how to update in this state, I rm -rf the whole thing and start over each time
+- cp aufs3-kbuild.patch 4506_aufs4-kbuild.patch
+- cp aufs3-base.patch 4507_aufs4-base.patch
+- cp aufs3-mmap.patch 4508_aufs4-mmap.patch
+- cp aufs3-standalone.patch 4509_aufs4-standalone.patch
 
-- apply ./aufs3-kbuild.patch
-- apply ./aufs3-base.patch
-- apply ./aufs3-mmap.patch
-- apply ./aufs3-standalone.patch
 - copy ./{Documentation,fs,include/uapi/linux/aufs_type.h} files to your
   kernel source tree. Never copy ./include/uapi/linux/Kbuild.
+diff and create 4510_aufs4-files.patch
+When you make the patch for the added files, run sed -i 's@linux-3.15.5-pentoo-[^/]\+/@@' to fix the patch to apply right at -p0
 
 steal latest pax patch from gentoo's aufs ebuild, set for USE=pax_kernel
-
-When you make the patch for the added files, run sed -i 's@linux-3.15.5-pentoo-[^/]\+/@@' to fix the patch to apply right at -p0
