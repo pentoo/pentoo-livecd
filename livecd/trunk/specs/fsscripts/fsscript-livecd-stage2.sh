@@ -328,7 +328,7 @@ eselect metasploit set metasploit9999
 emerge --config net-analyzer/metasploit:9999 || /bash/bash
 
 #metasploit first run to create db, etc, and speed up livecd first run
-echo -e exit | HOME=/root msfconsole || /bin/bash
+HOME=/root msfconsole -x exit || /bin/bash
 
 /etc/init.d/postgresql-9.3 stop || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash
