@@ -39,10 +39,12 @@ if [ $? -ne 0 ]; then
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
-eselect python set --python2 $(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 1 |sed 's#_#.#') || /bin/bash
-eselect python set --python3 $(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
-python2.7 -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:2.7
-python3.3 -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:3.3
+PYTHON2=$(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 1 |sed 's#_#.#')
+PYTHON3=$(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#')
+eselect python set --python2 ${PYTHON2} || /bin/bash
+eselect python set --python3 ${PYTHON3} || /bin/bash
+${PYTHON2} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON2#python}
+${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
 python-updater -- --buildpkg=y || /bin/bash
 
 portageq list_preserved_libs /

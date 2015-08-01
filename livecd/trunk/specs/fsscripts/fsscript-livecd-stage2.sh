@@ -313,14 +313,14 @@ smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 #configure postgres
 echo y | emerge --config dev-db/postgresql || /bin/bash
 touch /run/openrc/softlevel
-/etc/init.d/postgresql-9.3 start
+/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
 if [ $? -ne 0 ]; then
 	sleep 5m
-	/etc/init.d/postgresql-9.3 start
+	/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
 	if [ $? -ne 0 ]; then
 		sleep 5m
 		killall postgres
-		/etc/init.d/postgresql-9.3 start || /bin/bash
+		/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start || /bin/bash
 	fi
 fi
 
@@ -330,7 +330,7 @@ emerge --config net-analyzer/metasploit:9999 || /bash/bash
 #metasploit first run to create db, etc, and speed up livecd first run
 HOME=/root msfconsole -x exit || /bin/bash
 
-/etc/init.d/postgresql-9.3 stop || /bin/bash
+/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') stop || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash
 
 #configure freeradius
