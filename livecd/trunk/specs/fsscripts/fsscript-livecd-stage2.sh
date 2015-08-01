@@ -424,6 +424,7 @@ mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 
 # last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
+mkdir -p /var/log/portage/debug/
 mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug/debug-info-${ARCH}-${hardening}-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
 
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec

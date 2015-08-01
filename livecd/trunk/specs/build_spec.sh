@@ -13,11 +13,11 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-RC=RC3.7_p$(date "+%Y%m%d")
-#RC=RC3.7
+#RC=RC3.8_p$(date "+%Y%m%d")
+RC=RC3.8
 
 echo "rel_type: ${2}"
-echo "snapshot: 20150401 "
+echo "snapshot: 20150801 "
 echo "portage_overlay: /usr/src/pentoo/portage/trunk"
 echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
 
@@ -27,19 +27,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20150312"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20150423"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20150312"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20150423"
 			fi
 		elif [ ${1} = i686 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20150303"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20150428"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20150303"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20150428"
 			fi
 		fi
 		;;

@@ -28,8 +28,8 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
-	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
-	for stage in livecd-stage2
+	#for stage in livecd-stage2
+	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
 	do
 		#building in tmpfs isn't exactly friendly on my ram usage, so let's limit to one catalyst at a time
 		#while ps aux | grep "[c]atalyst -f"
@@ -62,12 +62,6 @@ do
 			echo "IO at max, sleeping 2m"
 			sleep 2m
 		done
-		#bug 461824 script (grep of majority of stage)
-		#while ps aux | grep "[g]rep -r _portage_reinstall_"
-		#do
-		#	echo "IO at max, sleeping 2m"
-		#	sleep 2m
-		#done
 		#end excessive IO handling
 
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
