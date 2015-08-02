@@ -435,6 +435,7 @@ rm -rf /var/tmp/portage/debug
 wget https://pentoo.googlecode.com/svn/genhtml/gen_installedlist.sh
 wget https://pentoo.googlecode.com/svn/genhtml/header.inc
 wget https://pentoo.googlecode.com/svn/genhtml/footer.inc
+mkdir -p /var/log/portage/tool-list
 sh gen_installedlist.sh > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_`date "+%Y%m%d"`.html
 if [ $? -ne 0 ]; then
 	/bin/bash
