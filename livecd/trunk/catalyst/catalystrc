@@ -2,8 +2,9 @@
 #WARNING WARNING WARNING
 #this rc file is meant for use on Nu only, please modify to meet your needs
 
-export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=64 --load-average=32 --backtrack=99"
-export MAKEOPTS="-j32 -l32"
+export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=32 --load-average=32 --backtrack=99"
+#export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=1 --quiet --backtrack=99"
+export MAKEOPTS="-j8"
 #export MAKEOPTS="-j1"
 export INPUT_DEVICES="$(portageq envvar INPUT_DEVICES) synaptics"
 export clst_myfeatures="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup"
