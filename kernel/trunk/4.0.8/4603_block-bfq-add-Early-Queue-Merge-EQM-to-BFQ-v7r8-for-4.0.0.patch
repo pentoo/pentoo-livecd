@@ -41,8 +41,8 @@ Signed-off-by: Paolo Valente <paolo.valente@unimore.it>
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
 index 773b2ee..71b51c1 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
+--- block/bfq-iosched.c
++++ block/bfq-iosched.c
 @@ -573,6 +573,57 @@ static inline unsigned int bfq_wr_duration(struct bfq_data *bfqd)
  	return dur;
  }
@@ -1062,8 +1062,8 @@ index 773b2ee..71b51c1 100644
  	return 0;
 diff --git a/block/bfq-sched.c b/block/bfq-sched.c
 index c343099..d0890c6 100644
---- a/block/bfq-sched.c
-+++ b/block/bfq-sched.c
+--- block/bfq-sched.c
++++ block/bfq-sched.c
 @@ -1085,34 +1085,6 @@ static struct bfq_queue *bfq_get_next_queue(struct bfq_data *bfqd)
  	return bfqq;
  }
@@ -1101,8 +1101,8 @@ index c343099..d0890c6 100644
  	if (bfqd->in_service_bic != NULL) {
 diff --git a/block/bfq.h b/block/bfq.h
 index 81a89c3..0ea164d 100644
---- a/block/bfq.h
-+++ b/block/bfq.h
+--- block/bfq.h
++++ block/bfq.h
 @@ -218,18 +218,21 @@ struct bfq_group;
   *                      idle @bfq_queue with no outstanding requests, then
   *                      the task associated with the queue it is deemed as
