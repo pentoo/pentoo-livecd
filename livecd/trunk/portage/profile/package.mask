@@ -12,5 +12,13 @@ mail-mta/msmtp
 
 #force upgrade
 <sys-devel/libtool-2.4.3-r2:2
+<sys-apps/attr-2.4.47-r2
 
 <sys-fs/udev-init-scripts-27
+
+##should go without saying but we want portage by default
+sys-apps/paludis
+
+#we don't really want mysql if we can avoid it, try to avoid it
+virtual/mysql
+dev-db/mysql
