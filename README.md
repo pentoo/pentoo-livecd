@@ -31,6 +31,7 @@ dd bs=512k if=/path/to/pentoo-amd64-hardened-2015.0_RC*.iso of=/dev/sdx && sync
 If you’re running under Windows, you’ll need to download the Win32 Disk Imager utility:
 
 <a href="http://sourceforge.net/projects/win32diskimager/"><img src="https://a.fsdn.com/con/app/proj/win32diskimager/screenshots/win32-imagewriter.png"></a>
+
 *Creating on OS X*
 
 Run the following command, replacing /dev/diskx with your drive, e.g. /dev/disk7.
