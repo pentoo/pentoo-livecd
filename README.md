@@ -1,7 +1,6 @@
 # Pentoo Penetration Testing LiveCD
+Pentoo Penetration Testing LiveCD
 <a href="http://pentoo.ch"><img src="https://github.com/pentoo/pentoo-overlay/wiki/images/pentoo2.png"></a>
-
-**The Pentoo Livecd**
 
 
 <a href="http://pentoo.ch"><img src="https://avatars0.githubusercontent.com/u/6411603?v=3&s=200" align="left" hspace="10" vspace="6"></a>
@@ -9,7 +8,7 @@ Pentoo is a Live CD and Live USB designed for penetration testing and security a
 
 Pentoo comes in many flavors and it is important to choose wisely. Right now, you have two main choices:
 
-*hardened or default*
+***hardened or default?***
 
 You want hardened. No seriously, you want hardened. When was the last time you thought to yourself "I need less security in my pen-testing environment?" In all seriousness, nearly everything works in the hardened builds, and it is vastly more stable than anything you have ever used before with the added bonus of being more secure. You only want default if you are doing exploit against yourself, or you need opengl support. OpenCL and CUDA work fine in the hardened release, but right now, opengl support still eludes us. If you cannot live without opengl acceleration pick default, otherwise, you really want hardened.
 
@@ -27,11 +26,11 @@ Run the following command, replacing /dev/sdx with your drive, e.g. /dev/sdb. (d
 dd bs=512k if=/path/to/pentoo-amd64-hardened-2015.0_RC*.iso of=/dev/sdx && sync
 ```
 
-*Creating on Windows
+*Creating on Windows*
 
 If you’re running under Windows, you’ll need to download the Win32 Disk Imager utility from https://launchpad.net/win32-image-writer.
 
-*Creating on OS X
+*Creating on OS X*
 
 Run the following command, replacing /dev/diskx with your drive, e.g. /dev/disk7.
 
