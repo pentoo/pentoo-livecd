@@ -35,7 +35,7 @@ do
 done
 #end excessive IO handling
 
-rm -rf /usr/src/pentoo/livecd/trunk/isoroot/modules/*
+rm -rf /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/*
 
 ##make the gentoo portage module
 mkdir -p /dev/shm/portage/rootfs/usr/
@@ -43,7 +43,6 @@ mkdir -p /catalyst/tmp/portage/portage/distfiles
 mkdir -p /catalyst/tmp/portage/portage/metadata
 mkdir -p /catalyst/tmp/portage/portage/packages
 rsync -aEXu --delete /catalyst/tmp/portage/portage /dev/shm/portage/rootfs/usr/
-chown portage.portage -R /dev/shm/portage/rootfs/usr/portage
 ##add the distfiles we want
 mkdir -p /dev/shm/distfiles/rootfs/usr/portage/distfiles/
 DISTDIR=/dev/shm/distfiles/ emerge -FO ati-drivers
@@ -54,9 +53,11 @@ rsync -aEXu --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs/usr/portag
 chown root.root /dev/shm/portage/rootfs/usr
 chown root.root /dev/shm/portage/rootfs
 chown root.root /dev/shm/portage
-chown portage.portage -R /dev/shm/distfiles/rootfs/usr/portage/
+chown portage.portage -R /dev/shm/portage/rootfs/usr/portage
 # make the squashfs module
-mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/portage-$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/livecd/trunk/specs/build_spec.sh).lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
+filename=$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh)
+version="${filename%.*}"
+mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage-${version%.*}.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
 rm -rf /catalyst/tmp/portage/portage/distfiles
 rm -rf /catalyst/tmp/portage/portage/metadata
 rm -rf /catalyst/tmp/portage/portage/packages
@@ -65,4 +66,7 @@ rm -rf /catalyst/tmp/portage/portage/packages
 layman -s pentoo
 mkdir -p /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo/
 rsync -aEXu --delete /var/lib/layman/pentoo/ /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo/
-mksquashfs /dev/shm/pentoo_portage/rootfs/ /usr/src/pentoo/livecd/trunk/isoroot/modules/pentoo_overlay-$(date "+%Y%m%d").lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
+mksquashfs /dev/shm/pentoo_portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/pentoo_overlay-$(date "+%Y%m%d").lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
+
+#drop the files into the mirror for the next sync
+rsync -aEuh --progress --delete --omit-dir-times /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/ /mnt/mirror/local_mirror/modules/

@@ -7,10 +7,8 @@ export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=32 --l
 export MAKEOPTS="-j8"
 #export MAKEOPTS="-j1"
 export INPUT_DEVICES="$(portageq envvar INPUT_DEVICES) synaptics"
-export clst_myfeatures="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup"
-export FEATURES="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup"
-#export clst_myfeatures="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup test test-fail-continue"
-#export FEATURES="$(portageq envvar FEATURES) parallel-install -ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup test test-fail-continue"
+export clst_myfeatures="$(portageq envvar FEATURES) parallel-install ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup binpkg-multi-instance"
+export FEATURES="$(portageq envvar FEATURES) parallel-install ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup binpkg-multi-instance"
 export ACCEPT_LICENSE="Intel-SDP NVIDIA-CUDA"
 export PORTAGE_NICENESS="15"
 #c 0-3 n 0-7 lower number is higher priority
@@ -33,3 +31,4 @@ export DEPCHECK_BIN=/etc/portage/depcheck
 #this toggles on and off various debug shells to fix issues during catalyst builds
 #export debugshell=true
 #export reckless=true
+export SHELL=/bin/bash

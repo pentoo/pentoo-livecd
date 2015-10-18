@@ -65,28 +65,6 @@ echo modules=\"\!wireless\" >> /etc/conf.d/net
 echo config_eth0=\"null\" >> /etc/conf.d/net
 echo config_wlan0=\"null\" >> /etc/conf.d/net
 
-# trigger load of modules we want to load no matter what
-# all entries must have a confirmed reason why it is
-# a module and not built in yet must still be loaded
-#microcode - module load triggers cpu microcode update, builtin doesn't
-echo 'modules="microcode"' >> /etc/conf.d/modules
-
-# Bunzip all docs since they'll be in sqlzma format
-#cd /usr/share/doc
-#for maindir in `find ./ -maxdepth 1 -type d | sed -e 's:^./::'`
-#do
-#        cd "${maindir}"
-#        for file in `ls *.bz2`
-#        do
-#                bunzip2 "${file}"
-#        done
-#        cd ..
-#done
-
-# Over 1Mb doc is too much for now, we save some space <-- not sure I care anymore
-#cd /usr/share/doc
-#du -sh * | grep M | sed -e 's/.*\t//' | xargs rm -rf
-
 # Fixes functions.sh location since baselayout-2
 ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || /bin/bash
 
@@ -117,41 +95,6 @@ eselect news read --quiet all || /bin/bash
 rm -rf /usr/local/portage/* || /bin/bash
 layman -L || /bin/bash
 layman -s pentoo || ( layman -a pentoo || /bin/bash )
-echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf || /bin/bash
-
-#echo "see what /etc/portage/make.profile looks like"
-#/bin/bash
-
-#foo=$(readlink /etc/portage/make.profile); foo="${PORTDIR}/profiles/${foo#*profiles/}; ln -snf "${foo}" /etc/portage/make.profile
-
-if gcc -v 2>&1 | grep -q Hardened
-then
-	hardening=hardened
-else
-        hardening=default
-fi
-
-arch=$(uname -m)
-if [ $arch = "i686" ]; then
-	ARCH="x86"
-	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
-elif [ $arch = "x86_64" ]; then
-	ARCH="amd64"
-	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
-else
-	echo "failed to handle arch"
-	exit
-fi
-
-# Build the metadata cache
-sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bash
-emerge --metadata || /bin/bash
-HOME=/tmp eix-update || /bin/bash
-
-# Fix /etc/portage/make.conf
-sed -i 's#USE="mmx sse sse2"##' /etc/portage/make.conf || /bin/bash
 
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
@@ -188,21 +131,43 @@ cat <<-EOF > /etc/portage/make.conf
 
 	source /var/lib/layman/make.conf
 EOF
+
+#foo=$(readlink /etc/portage/make.profile); foo="${PORTDIR}/profiles/${foo#*profiles/}; ln -snf "${foo}" /etc/portage/make.profile
+
+if gcc -v 2>&1 | grep -q Hardened
+then
+	hardening=hardened
+else
+        hardening=default
+fi
+
+arch=$(uname -m)
+if [ $arch = "i686" ]; then
+	ARCH="x86"
+	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
+elif [ $arch = "x86_64" ]; then
+	ARCH="amd64"
+	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
+else
+	echo "failed to handle arch"
+	exit
+fi
+
+#XXX fix this for the new location of the union
+sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bash
+
+# Build the metadata cache
+emerge --metadata || /bin/bash
+HOME=/tmp eix-update || /bin/bash
+
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
 portageq has_version / pentoo/tribe && echo 'USE="${USE} -bluetooth -database -exploit -footprint -forensics -forging -fuzzers -mitm -mobile -proxies -qemu -radio -rce -scanner -voip -wireless -wireless-compat"' >> /etc/portage/make.conf
 
-emerge -1kb pentoo-installer || /bin/bash
+emerge -1 pentoo-installer || /bin/bash
 
-# Fix the kernel dir & config
-
-#XXX: HACK ALERT
-if [ -d /usr/src/linux-3.9.9-pentoo ] ; then
-	rm -rf /usr/src/linux-3.9.9-pentoo
-fi
-if [ -d /lib/modules/3.9.9-pentoo ] ; then
-	rm -rf /lib/modules/3.9.9-pentoo
-fi
-#XXX: end hack alert
+# Fix the kernel config
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	if [ -d /tmp/kernel_maps ] ; then
 		rm -rf /tmp/kernel_maps
@@ -230,6 +195,7 @@ portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
 	emerge @preserved-rebuild -q || /bin/bash
 fi
+
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || /bin/bash
 portageq list_preserved_libs /
@@ -255,18 +221,15 @@ emerge -1 app-admin/genmenu || /bin/bash
 # Runs the menu generator with a specific parameters for a WM
 genmenu.py -e || /bin/bash
 genmenu.py -x || /bin/bash
-
-# Fixes icons
-#cp -af /usr/share/icons/hicolor/48x48/apps/*.png /usr/share/pixmaps/
+su pentoo -c "genmenu.py -e" || /bin/bash
+su pentoo -c "genmenu.py -x" || /bin/bash
 
 # Fixes menu
 cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
 
-#remove this after patches is gone
-rm -rf patches || /bin/bash
-
 if [ $(command -v paxctl 2> /dev/null) ]; then
 	# fixes pax for binary drivers GPGPU
+	# XXX: move this to binary-driver-handler
 	paxctl -m /usr/bin/X || /bin/bash
 	# fixes pax for metasploit/java attacks/wpscan
 	paxctl -m /usr/bin/ruby19 || /bin/bash
@@ -283,11 +246,9 @@ eselect fontconfig enable 57-dejavu-sans.conf || /bin/bash
 eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
 
 # Setup kismet & airmon-ng
-[ -e /usr/sbin/airmon-ng ] && sed -i -e 's:/kismet::' /usr/sbin/airmon-ng
 [ -e /etc/kismet.conf ] && sed -i -e '/^source=.*/d' /etc/kismet.conf
 [ -e /etc/kismet.conf ] && sed -i -e 's:configdir=.*:configdir=/root/kismet:' -e 's/your_user_here/kismet/' /etc/kismet.conf
 [ -e /etc/kismet.conf ] && useradd -g root kismet
-[ -e /etc/kismet.conf ] && cp -a /etc/kismet.conf /etc/kismet.conf~
 [ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
 
 # Setup tor-privoxy
@@ -302,10 +263,10 @@ chmod 777 -R /var/lib/ntop || /bin/bash
 ntop --set-admin-password=pentoo || /bin/bash
 
 # Configure mysql
-echo '[client]' > /root/.my.cnf
-echo 'password=pentoo' >> /root/.my.cnf
-emerge --config mysql || /bin/bash
-rm -f /root/.my.cnf || /bin/bash
+#echo '[client]' > /root/.my.cnf
+#echo 'password=pentoo' >> /root/.my.cnf
+#emerge --config mysql || /bin/bash
+#rm -f /root/.my.cnf || /bin/bash
 
 #allow this to fail for right now so builds don't randomly stop and piss me off
 smart-live-rebuild -E --timeout=60 -- --buildpkg=y
@@ -334,12 +295,14 @@ HOME=/root msfconsole -x exit || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash
 
 #configure freeradius
+#XXX: move this to freeradius init script
 emerge --config net-dialup/freeradius || /bin/bash
 
-#gtk-theme-switch segfaults
-#gtk-theme-switch /usr/share/themes/Xfce-basic || /bin/bash
+#gtk-theme-switch needs X so do it manually
 echo gtk-theme-name="Xfce-basic" >> /root/.gtkrc-2.0
 echo gtk-icon-theme-name="Tango" >> /root/.gtkrc-2.0
+su pentoo -c "echo gtk-theme-name="Xfce-basic" >> /home/pentoo/.gtkrc-2.0"
+su pentoo -c "echo gtk-icon-theme-name="Tango" >> /home/pentoo/.gtkrc-2.0"
 
 mkdir -p /root/.config/gtk-3.0/
 cat <<-EOF > /root/.config/gtk-3.0/settings.ini
@@ -349,16 +312,25 @@ cat <<-EOF > /root/.config/gtk-3.0/settings.ini
 	gtk-fallback-icon-theme = gnome
 EOF
 
-mkdir -p /root/.config/xfce4/ /home/pentoo/.config/xfce4/
-cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/
-cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/
-mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/
-cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
-cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
-#easy way to adjust wallpaper per install
+su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
+cat <<-EOF > /home/pentoo/.config/gtk-3.0/settings.ini
+	[Settings]
+	gtk-theme-name = Xfce-basic
+	gtk-icon-theme-name = Tango
+	gtk-fallback-icon-theme = gnome
+EOF
+chown pentoo.pentoo /home/pentoo/.config/gtk-3.0/settings.ini
 
-#an attempt to fix a bug, never actually worked
-#emerge --oneshot --usepkg=n --buildpkg=y media-gfx/graphviz
+#easy way to adjust wallpaper per install
+mkdir -p /root/.config/xfce4/
+cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/ || /bin/bash
+mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
+cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
+
+su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
+su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
+su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
+su pentoo -c "cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
@@ -380,7 +352,7 @@ sed -i '/include/s/# //' /etc/nanorc
 #forcibly remove binary driver files, unmerge isn't good enough it seems
 rm -rf /lib/modules/$(uname -r)/video
 
-eselect ruby set ruby20 || /bin/bash
+eselect ruby set ruby21 || /bin/bash
 
 #mossmann said do this or I'm lame
 eselect lapack set 1
@@ -404,6 +376,8 @@ if [ $? -ne 0 ]; then
 	revdep-rebuild.py -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
+
+update-ca-certificates
 
 #cleanup temp stuff in /etc/portage from catalyst build
 rm -f /etc/portage/make.conf.old
@@ -449,9 +423,32 @@ fixpackages
 #bug #477498
 ln -snf /proc/self/mounts /etc/mtab
 
+#reset profile to binary profile so users get it as default
+arch=$(uname -m)
+if [ $arch = "i686" ]; then
+	ARCH="x86"
+	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/binary || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
+elif [ $arch = "x86_64" ]; then
+	ARCH="amd64"
+	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/binary || /bin/bash
+	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
+else
+	echo "failed to handle arch"
+	exit
+fi
+
 sync
 sleep 60
 mv /root/.bashrc.bak /root/.bashrc
+
+#don't blow away portage cache to speed up first emerge run
+mkdir -p /tmp/edb
+mv /var/cache/edb/* /tmp/edb/
+rm -rf /var/cache/*
+mkdir -p /var/cache/edb
+mv /tmp/edb/* /var/cache/edb/
+
 updatedb
 sync
 sleep 60

@@ -1,8 +1,10 @@
 livecd/fstype: squashfs
 #livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
 #livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-memtest86+-cdtar.tar.bz2
-#livecd/cdtar: /usr/src/pentoo/livecd/trunk/isolinux-elilo-memtest86+-cdtar.tar.bz2
-livecd/cdtar: /usr/src/pentoo/livecd/trunk/pentoo-syslinux-5.10-memtest86plus-4.20.tar.bz2
+#livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-elilo-memtest86+-cdtar.tar.bz2
+livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/pentoo-syslinux-5.10-memtest86plus-4.20.tar.bz2
+
+livecd/verify: yup
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 
@@ -34,7 +36,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default bluetooth|default consolekit|default gpm|default dbus|default
+livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default bluetooth|default consolekit|default gpm|default dbus|default net.lo|default net.eth0|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -47,14 +49,14 @@ livecd/rcdel: mdraid|boot netmount|default
 # has been configured.  This is typically used for adding the documentation,
 # distfiles, snapshots, and stages to the official media.  These files will not 
 # be available if docache is enabled, as they are outside the loop.
-livecd/overlay: /usr/src/pentoo/livecd/trunk/isoroot
+livecd/overlay: /usr/src/pentoo/pentoo-livecd/livecd/isoroot
 
 # This overlay is dropped onto the filesystem within the loop.  This can be used
 # for such things as updating configuration files or adding anything else you
 # would want within your CD filesystem.  Files added here are available when
 # docache is used.  We do not use this on the official media, so we will leave
 # it blank below.
-livecd/root_overlay: /usr/src/pentoo/livecd/trunk/root_overlay
+livecd/root_overlay: /usr/src/pentoo/pentoo-livecd/livecd/root_overlay
 
 # This option is used to create non-root users on your CD.  It takes a space
 # separated list of user names.  These users will be added to the following
@@ -68,13 +70,6 @@ livecd/users: pentoo
 boot/kernel: pentoo
 
 boot/kernel/pentoo/sources: pentoo-sources
-
-# This option sets genkernel parameters on a per-kernel basis and applies only
-# to this kernel label.  This can be used for building options into only a
-# single kernel, where compatibility may be an issue.  Since we do not use this
-# on the official release media, it is left blank, but it follows the same
-# syntax as livecd/gk_mainargs.
-boot/kernel/pentoo/gk_kernargs: 
 
 # This option sets the USE flags used to build the kernel and also any packages
 # which are defined under this kernel label.  These USE flags are additive from
@@ -97,7 +92,7 @@ livecd/unmerge: x11-drivers/ati-drivers x11-drivers/nvidia-drivers
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
-livecd/empty: /var/empty /var/log /var/tmp /tmp /usr/local/portage/ /var/lib/layman/pentoo /usr/lib/debug
+livecd/empty: /var/empty /var/log /var/tmp /tmp /usr/local/portage/ /var/lib/layman/pentoo /usr/lib/debug /usr/portage
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

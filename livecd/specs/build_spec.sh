@@ -1,5 +1,5 @@
 #!/bin/bash
-#input arch ($1), profile ($2) and stage ($3), output working spec
+#input arch (x86 or amd64)($1), profile ($2) and stage ($3), output working spec
 
 set -e
 
@@ -13,13 +13,33 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-#RC=RC3.9_p$(date "+%Y%m%d")
-RC=RC3.9
+#RC=RC4.0_p$(date "+%Y%m%d")
+RC=RC4.0
+
+if [ "${1}" = "x86" ]; then
+	subarch="pentium-m"
+elif [ "${1}" = "amd64" ]; then
+	subarch="${1}"
+fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20150812 "
-echo "portage_overlay: /usr/src/pentoo/portage/trunk"
-echo "portage_confdir: /usr/src/pentoo/livecd/trunk/portage"
+echo "snapshot: 20151017.tar.xz "
+echo "portage_overlay: /var/lib/layman/pentoo"
+echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
+echo "compression_mode: pixz_x"
+
+#pkgcache_path
+case ${3} in
+	stage1)
+		echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap/${3}"
+		;;
+	stage2|stage3)
+		echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap"
+		;;
+	stage4|stage4-pentoo|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2)
+		echo "pkgcache_path: /catalyst/packages/${1}-${2}"
+		;;
+esac
 
 case ${3} in
 	stage1)
@@ -27,49 +47,49 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20150423"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20150423.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20150423"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20150423.tar.bz2"
 			fi
-		elif [ ${1} = i686 ]
+		elif [ ${1} = x86 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20150428"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20150428.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20150428"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20150428.tar.bz2"
 			fi
 		fi
 		;;
 	stage2)
-		echo "source_subpath: ${2}/stage1-${1}-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage1-${subarch}-${VERSION_STAMP}.tar.xz"
 		;;
 	stage3)
-		echo "source_subpath: ${2}/stage2-${1}-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage2-${subarch}-${VERSION_STAMP}.tar.xz"
 		;;
 	stage4)
-		echo "source_subpath: ${2}/stage3-${1}-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage3-${subarch}-${VERSION_STAMP}.tar.xz"
 		;;
 	stage4-pentoo)
-		echo "source_subpath: ${2}/stage4-${1}-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage4-${subarch}-${VERSION_STAMP}.tar.xz"
 		;;
 	binpkg-update-seed)
-		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
 		;;
 	binpkg-update)
 		#this might be really dangerous but to avoid remaking the same fixes over and over
 		#I'm going to seed binpkg-update with binpkg-update :-)
-		echo "source_subpath: ${2}/stage4-${1}-binpkg-update-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.tar.xz"
 		;;
 	livecd-stage1)
-		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
-		#echo "source_subpath: ${2}/stage4-${1}-binpkg-update-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
+		#echo "source_subpath: ${2}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.tar.xz"
 		;;
 	livecd-stage2)
-		#echo "source_subpath: ${2}/livecd-stage1-${1}-${VERSION_STAMP}"
-		echo "source_subpath: ${2}/stage4-${1}-pentoo-${VERSION_STAMP}"
+		#echo "source_subpath: ${2}/livecd-stage1-${subarch}-${VERSION_STAMP}"
+		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
 		echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
 		echo "livecd/volid: Pentoo Linux ${1} ${VERSION_STAMP} ${RC:0:5}"
 
@@ -77,18 +97,18 @@ case ${3} in
 		echo "# used by genkernel to compile the kernel this label applies to."
 		if [ ${1} = amd64 ] && [ ${2} = hardened ]
 		then
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/${1}/kernel/config-latest"
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
 		elif [ ${1} = amd64 ] && [ ${2} = default ]
 		then
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/${1}/kernel/config-latest-soft"
-		elif [ ${1} = i686 ] && [ ${2} = hardened ]
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest-soft"
+		elif [ ${1} = x86 ] && [ ${2} = hardened ]
 		then
-			#echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest"
+			#echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
 			#we are using the soft config right now and forcing USE=-pax_kernel due to aufs issues
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest-soft"
-		elif [ ${1} = i686 ] && [ ${2} = default ]
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest-soft"
+		elif [ ${1} = x86 ] && [ ${2} = default ]
 		then
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/livecd/trunk/x86/kernel/config-latest-soft"
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest-soft"
 		fi
 
 		echo -e "\n# This allows the optional directory containing the output packages for kernel"
@@ -102,35 +122,37 @@ case ${3} in
 		echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
 		echo "# defined in this target.  It is useful for passing arguments to genkernel that"
 		echo "# are not otherwise available via the livecd-stage2 spec file."
-		if [ ${1} = amd64 ]
+		echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --compress-initramfs-type=xz"
+		if [ ${1} = amd64 ] && [ ${2} = default ]
 		then
-			echo "livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --zfs --compress-initramfs-type=xz"
-		elif [ ${1} = i686 ]
-		then
-			echo "livecd/gk_mainargs: --disklabel --dmraid --gpg --luks --lvm --compress-initramfs-type=xz"
+			#this adds zfs to just the non-hardened 64 bit kernel
+			echo -e "\n# This option sets genkernel parameters on a per-kernel basis and applies only"
+			echo "# to this kernel label.  This can be used for building options into only a"
+			echo "# single kernel, where compatibility may be an issue.  Since we do not use this"
+			echo "# on the official release media, it is left blank, but it follows the same"
+			echo "# syntax as livecd/gk_mainargs."
+			echo "boot/kernel/pentoo/gk_kernargs: --zfs"
 		fi
 
 		echo "# This option is for merging kernel-dependent packages and external modules that"
 		echo "# are configured against this kernel label."
 		echo "boot/kernel/pentoo/packages: pentoo/pentoo"
 
-		if [ ${1} = amd64 ]
+		if [ ${1} = amd64 ] && [ ${2} = default ]
 		then
 			echo "sys-fs/zfs"
 		fi
 
 esac
 
+echo "subarch: ${subarch}"
+
 if [ ${1} = amd64 ]
 then
-	echo "subarch: amd64"
-	echo "cflags: -Os -mtune=nocona -pipe -ggdb"
-	echo "cxxflags: -Os -mtune=nocona -pipe -ggdb"
-elif [ ${1} = i686 ]
+	echo "cflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
+elif [ ${1} = x86 ]
 then
-	echo "subarch: i686"
-	echo "cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb"
-	echo "cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb"
+	echo "cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
 fi
 
 if [ "${3}" = stage4-pentoo ]
@@ -146,76 +168,33 @@ fi
 #fix profiles
 case ${3} in
 	stage1|stage2|stage3)
-		if [ ${1} = amd64 ]
-		then
-			echo "profile: --force pentoo:pentoo/${2}/linux/${1}/bootstrap"
-		elif [ ${1} = i686 ]
-		then
-			echo "profile: --force pentoo:pentoo/${2}/linux/x86/bootstrap"
-		fi
+		echo "profile: --force pentoo:pentoo/${2}/linux/${1}/bootstrap"
 		;;
 	stage4|stage4-pentoo|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2)
-		if [ ${1} = amd64 ]
-		then
-			echo "profile: pentoo:pentoo/${2}/linux/${1}"
-		elif [ ${1} = i686 ]
-		then
-			echo "profile: pentoo:pentoo/${2}/linux/x86"
-		fi
+		echo "profile: pentoo:pentoo/${2}/linux/${1}"
 		;;
 esac
 
-[ -f ${3}-common.spec ] && cat ${3}-common.spec
+[ -f /usr/src/pentoo/pentoo-livecd/livecd/specs/${3}-common.spec ] && cat /usr/src/pentoo/pentoo-livecd/livecd/specs/${3}-common.spec
 
 #kitchen sink
 case ${3} in
 	stage4)
-		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/fsscript-stage4.sh"
+		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4.sh"
 		echo "stage4/packages: dev-lang/python:2.7"
 		;;
 	stage4-pentoo)
-		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/fsscript-stage4-pentoo.sh"
+		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: aufs livecd livecd-stage1 -vaapi"
 		echo "stage4/packages: pentoo/pentoo"
 		;;
 	binpkg-update*)
 		echo "stage4/use: aufs livecd livecd-stage1 -vaapi"
 		echo "stage4/packages: pentoo/pentoo"
-		echo "stage4/fsscript: /usr/src/pentoo/livecd/trunk/specs/fsscripts/call-pentoo-updater.sh"
+		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
 		;;
 	livecd-stage1)
 		echo "livecd/use: aufs livecd livecd-stage1 -vaapi"
 		echo "livecd/packages: pentoo/pentoo"
-		;;
-esac
-
-#pkgcache_path
-case ${3} in
-	stage1)
-		if [ ${1} = amd64 ]
-		then
-			echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap/${3}"
-		elif [ ${1} = i686 ]
-		then
-			echo "pkgcache_path: /catalyst/packages/x86-${2}-bootstrap/${3}"
-		fi
-		;;
-	stage2|stage3)
-		if [ ${1} = amd64 ]
-		then
-			echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap"
-		elif [ ${1} = i686 ]
-		then
-			echo "pkgcache_path: /catalyst/packages/x86-${2}-bootstrap"
-		fi
-		;;
-	stage4|stage4-pentoo|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2)
-		if [ ${1} = amd64 ]
-		then
-			echo "pkgcache_path: /catalyst/packages/${1}-${2}"
-		elif [ ${1} = i686 ]
-		then
-			echo "pkgcache_path: /catalyst/packages/x86-${2}"
-		fi
 		;;
 esac

@@ -83,6 +83,9 @@ if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
+#add 64 bit toolchain to 32 bit iso to build dual kernel iso
+[ "$(uname -m)" = "x86" ] && crossdev -s1 -t x86_64
+
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
 

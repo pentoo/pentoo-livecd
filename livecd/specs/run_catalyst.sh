@@ -10,6 +10,15 @@ if [ -z ${1} ] || [ -z ${2} ] ; then
 	exit
 fi
 
+if [ "${1}" = "x86" ]; then
+        subarch="pentium-m"
+elif [ "${1}" = "amd64" ]; then
+        subarch="${1}"
+else
+	echo "Subarch must be x86 or amd64"
+	exit 1
+fi
+
 #first we prep directories and build all the spec files
 for arch in ${ARCH}
 do
@@ -17,7 +26,7 @@ do
 	mkdir -p /catalyst/release/Pentoo_${arch}_${PROFILE}
 	chmod 777 /catalyst/release/Pentoo_${arch}_${PROFILE}
 
-	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed binpkg-update livecd-stage1 livecd-stage2
+	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed binpkg-update livecd-stage2
 	do
 		#I have nfc why it's loosing exec all of a sudden but I can compensate
 		chmod +x build_spec.sh
@@ -28,8 +37,9 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
+	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2
 	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
-	for stage in stage4-pentoo binpkg-update-seed livecd-stage2
+	for stage in livecd-stage2
 	do
 		#building in tmpfs isn't exactly friendly on my ram usage, so let's limit to one catalyst at a time
 		#while ps aux | grep "[c]atalyst -f"
@@ -45,13 +55,13 @@ do
 			sleep 2m
 		done
 		#this is unpacking a stage
-		while ps aux | grep "[t]ar -I pixz -xpf /catalyst/"
+		while ps aux | grep "[x]pf /catalyst/"
 		do
 			echo "IO at max, sleeping 2m"
 			sleep 2m
 		done
 		#this is packing a stage
-		while ps aux | grep "[t]ar -I pixz -cpf /catalyst/"
+		while ps aux | grep "[c]pf /catalyst/"
 		do
 			echo "IO at max, sleeping 2m"
 			sleep 2m
@@ -67,20 +77,20 @@ do
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${arch}-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${subarch}-2015.0
 		fi
 		if [ "${stage}" = "stage4-pentoo" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-pentoo-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${subarch}-pentoo-2015.0
 		fi
 		if [ "${stage}" = "binpkg-update-seed" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/stage4-${arch}-binpkg-update-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${subarch}-binpkg-update-2015.0
 		fi
 		if [ "${stage}" = "livecd-stage2" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${arch}-2015.0
-			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${arch}-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${subarch}-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${subarch}-2015.0
 		fi
 	#	if [ $? -ne 0 ]; then
 	#		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
@@ -97,29 +107,29 @@ do
 	done
 done
 
-#until catalyst -f /tmp/i686-hardened-livecd-stage2.spec; do echo failed; sleep 30; done
+#until catalyst -f /tmp/x86-hardened-livecd-stage2.spec; do echo failed; sleep 30; done
 
 #sync packages
 if [ ${ARCH} = amd64 ]; then
 	rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
-elif [ ${ARCH} = i686 ]; then
+elif [ ${ARCH} = x86 ]; then
 	rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/x86-${PROFILE} /mnt/mirror/local_mirror/Packages/
 fi
 
 /mnt/mirror/mirror.sh
 
 #last generate the sig and torrent
-RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
+#RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
 #RC="${RC:0:7}$(date "+%Y%m%d")"
-for arch in ${ARCH}
-do
-	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
-	then
-		gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
-
-		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
-		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
-		mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
-	fi
-done
+#for arch in ${ARCH}
+#do
+#	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
+#	then
+#		GPG_TTY=$(tty) gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+#		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
+#
+#		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
+#		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+#		mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+#	fi
+#done
