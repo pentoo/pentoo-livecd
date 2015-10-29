@@ -20,21 +20,21 @@ emerge -1 -kb wgetpaste || /bin/bash
 #ease transition to the new use flags
 USE="-directfb" emerge -1 -kb libsdl DirectFB || /bin/bash
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb @world || /bin/bash
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
 #fix interpreted stuff
 perl-cleaner --all -- --buildpkg=y || /bin/bash
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
@@ -48,7 +48,7 @@ ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y p
 python-updater -- --buildpkg=y || /bin/bash
 
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
@@ -59,7 +59,7 @@ emerge --depclean || /bin/bash
 
 emerge -1 -kb app-portage/gentoolkit || /bin/bash
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
@@ -79,7 +79,7 @@ eselect java-vm set system icedtea-bin-7 || /bin/bash
 #eselect java-vm set system icedtea-7 || /bin/bash
 
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 

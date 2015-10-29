@@ -25,3 +25,6 @@ dev-db/mysql
 sys-apps/systemd
 
 =net-wireless/yatebts-5.0.0
+
+#x11-drivers/nvidia-drivers
+#x11-drivers/ati-drivers

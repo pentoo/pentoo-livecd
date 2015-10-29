@@ -91,10 +91,12 @@ fi
 eselect news read --quiet all || /bin/bash
 #eselect news purge || /bin/bash
 
-# Add pentoo repo
-rm -rf /usr/local/portage/* || /bin/bash
+# Add pentoo repo but use only the version we are packaging in the iso
+# this avoids corrupting timestamps in /var/cache/edb/mtimedb
 layman -L || /bin/bash
-layman -s pentoo || ( layman -a pentoo || /bin/bash )
+#layman -s pentoo || ( layman -a pentoo || /bin/bash )
+layman -a pentoo || /bin/bash
+rsync -aEXu --delete /usr/local/portage/ /var/lib/layman/pentoo/ || /bin/bash
 
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
@@ -107,7 +109,7 @@ cat <<-EOF > /etc/portage/make.conf
 	#Please adjust your CFLAGS as desired, information can be found here: https://wiki.gentoo.org/wiki/CFLAGS
 	#Do not modify these FLAGS unless you know what you are doing, always check the defaults first with "portageq envvar CFLAGS"
 	#This is the default for pentoo at the time of build:
-	#CFLAGS="$(portageq envvar CFLAGS)"
+	#CFLAGS="$(portageq envvar CFLAGS | sed 's#-ggdb##')"
 	#A safe choice would be to keep whatever Pentoo defaults are, but optimize for your specific machine:
 	#CFLAGS="\${CFLAGS} -march=native"
 	#If you do change your CFLAGS, it is best for all the compile flags to match so uncomment the following three lines:
@@ -131,6 +133,9 @@ cat <<-EOF > /etc/portage/make.conf
 
 	source /var/lib/layman/make.conf
 EOF
+
+#deleting this earlier causes the above calls to portageq to break
+rm -rf /usr/local/portage || /bin/bash
 
 #foo=$(readlink /etc/portage/make.profile); foo="${PORTDIR}/profiles/${foo#*profiles/}; ln -snf "${foo}" /etc/portage/make.profile
 
@@ -159,7 +164,8 @@ fi
 sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bash
 
 # Build the metadata cache
-emerge --metadata || /bin/bash
+rm -rf /var/cache/edb/dep || /bin/bash
+emerge --regen || /bin/bash
 HOME=/tmp eix-update || /bin/bash
 
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
@@ -188,18 +194,18 @@ emerge --deselect=y sys-fs/zfs || /bin/bash
 
 /var/lib/layman/pentoo/scripts/bug-461824.sh
 
-emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99
-layman -S
+#emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99
+#layman -S
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 || /bin/bash
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
 	emerge @preserved-rebuild -q || /bin/bash
 fi
 
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || /bin/bash
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
 fi
 
@@ -349,9 +355,6 @@ sed -i 's/livecd/pentoo/g' /etc/hosts
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
 
-#forcibly remove binary driver files, unmerge isn't good enough it seems
-rm -rf /lib/modules/$(uname -r)/video
-
 eselect ruby set ruby21 || /bin/bash
 
 #mossmann said do this or I'm lame
@@ -367,7 +370,7 @@ eselect bashcomp enable --global rmmod || /bin/bash
 eselect bashcomp enable --global modprobe || /bin/bash
 
 portageq list_preserved_libs /
-if [ $? -ne 0 ]; then
+if [ $? = 0 ]; then
 	emerge @preserved-rebuild -q || /bin/bash
 fi
 
@@ -378,6 +381,10 @@ fi
 rc-update -u || /bin/bash
 
 update-ca-certificates
+
+#XXX HACK ALERT
+emerge -1kb \=sys-apps/openrc-0.18.3 || /bin/bash
+#XXX
 
 #cleanup temp stuff in /etc/portage from catalyst build
 rm -f /etc/portage/make.conf.old
@@ -427,27 +434,23 @@ ln -snf /proc/self/mounts /etc/mtab
 arch=$(uname -m)
 if [ $arch = "i686" ]; then
 	ARCH="x86"
-	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/binary || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 elif [ $arch = "x86_64" ]; then
 	ARCH="amd64"
-	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/binary || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 else
 	echo "failed to handle arch"
-	exit
+	/bin/bash
 fi
+eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/binary || /bin/bash
+portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 
 sync
 sleep 60
 mv /root/.bashrc.bak /root/.bashrc
 
-#don't blow away portage cache to speed up first emerge run
-mkdir -p /tmp/edb
-mv /var/cache/edb/* /tmp/edb/
+rsync -aEXu --delete /var/cache/edb /tmp/
 rm -rf /var/cache/*
-mkdir -p /var/cache/edb
-mv /tmp/edb/* /var/cache/edb/
+rsync -aEXu --delete /tmp/edb /var/cache/
+FEATURES="-getbinpkg" emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
 updatedb
 sync

@@ -39,16 +39,15 @@ rm -rf /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/*
 
 ##make the gentoo portage module
 mkdir -p /dev/shm/portage/rootfs/usr/
-mkdir -p /catalyst/tmp/portage/portage/distfiles
-mkdir -p /catalyst/tmp/portage/portage/metadata
-mkdir -p /catalyst/tmp/portage/portage/packages
 rsync -aEXu --delete /catalyst/tmp/portage/portage /dev/shm/portage/rootfs/usr/
+mkdir -p /catalyst/tmp/portage/portage/distfiles
+mkdir -p /catalyst/tmp/portage/portage/packages
 ##add the distfiles we want
 mkdir -p /dev/shm/distfiles/rootfs/usr/portage/distfiles/
 DISTDIR=/dev/shm/distfiles/ emerge -FO ati-drivers
 DISTDIR=/dev/shm/distfiles/ emerge -FO nvidia-drivers
 mkdir -p /dev/shm/distfiles/tmp
-cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp
+cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/
 rsync -aEXu --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs/usr/portage/distfiles/
 chown root.root /dev/shm/portage/rootfs/usr
 chown root.root /dev/shm/portage/rootfs
@@ -59,7 +58,6 @@ filename=$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/pentoo-livecd/livecd/spe
 version="${filename%.*}"
 mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage-${version%.*}.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
 rm -rf /catalyst/tmp/portage/portage/distfiles
-rm -rf /catalyst/tmp/portage/portage/metadata
 rm -rf /catalyst/tmp/portage/portage/packages
 
 ##make the pentoo overlay module
