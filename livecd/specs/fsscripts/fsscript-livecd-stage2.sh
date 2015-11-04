@@ -310,22 +310,17 @@ echo gtk-icon-theme-name="Tango" >> /root/.gtkrc-2.0
 su pentoo -c "echo gtk-theme-name="Xfce-basic" >> /home/pentoo/.gtkrc-2.0"
 su pentoo -c "echo gtk-icon-theme-name="Tango" >> /home/pentoo/.gtkrc-2.0"
 
-mkdir -p /root/.config/gtk-3.0/
-cat <<-EOF > /root/.config/gtk-3.0/settings.ini
-	[Settings]
-	gtk-theme-name = Xfce-basic
-	gtk-icon-theme-name = Tango
-	gtk-fallback-icon-theme = gnome
-EOF
-
-su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
-cat <<-EOF > /home/pentoo/.config/gtk-3.0/settings.ini
-	[Settings]
-	gtk-theme-name = Xfce-basic
-	gtk-icon-theme-name = Tango
-	gtk-fallback-icon-theme = gnome
-EOF
-chown pentoo.pentoo /home/pentoo/.config/gtk-3.0/settings.ini
+if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /root/.config/gtk-3.0/settings.ini ]; then
+	mkdir -p /root/.config/gtk-3.0/
+	cp /etc/skel/gtk-3.0/settings.ini /root/.config/gtk-3.0/settings.ini
+	/bin/bash
+fi
+if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /home/pentoo/.config/gtk-3.0/settings.ini ]; then
+	su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
+	cp /etc/skel/gtk-3.0/settings.ini /home/pentoo/.config/gtk-3.0/settings.ini
+	chown pentoo.pentoo /home/pentoo/.config/gtk-3.0/settings.ini
+	/bin/bash
+fi
 
 #easy way to adjust wallpaper per install
 mkdir -p /root/.config/xfce4/
@@ -337,6 +332,13 @@ su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
 su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
 su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
 su pentoo -c "cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
+
+if [ -f /etc/skel/.bash_profile ] && [ ! -f /root/.bash_profile ]; then
+	cp /etc/skel/.bash_profile /root/.bash_profile || /bin/bash
+	echo "There was no /root/.bash_profile"
+	/bin/bash
+fi
+
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
