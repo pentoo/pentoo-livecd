@@ -62,8 +62,8 @@ rc-update -u || /bin/bash
 
 #default net to null
 echo modules=\"\!wireless\" >> /etc/conf.d/net
-echo config_eth0=\"null\" >> /etc/conf.d/net
 echo config_wlan0=\"null\" >> /etc/conf.d/net
+echo config_eth0=\"null\" >> /etc/conf.d/net
 
 # Fixes functions.sh location since baselayout-2
 ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || /bin/bash
@@ -341,6 +341,11 @@ su pentoo -c "cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.con
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 
+#XXX HACK ALERT
+emerge -1kb \=sys-apps/openrc-0.18.3 || /bin/bash
+emerge -1 \=app-misc/livecd-tools-9999 || /bin/bash
+#XXX
+
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
 
@@ -382,10 +387,6 @@ rc-update -u || /bin/bash
 
 update-ca-certificates
 
-#XXX HACK ALERT
-emerge -1kb \=sys-apps/openrc-0.18.3 || /bin/bash
-#XXX
-
 #cleanup temp stuff in /etc/portage from catalyst build
 rm -f /etc/portage/make.conf.old
 rm -f /etc/portage/make.conf.catalyst
@@ -413,9 +414,9 @@ rm -rf /var/tmp/portage/debug
 
 ## More with the horrible hack
 # So it seems I have picked /var/log/portage to just randomly spew stuff into
-wget https://pentoo.googlecode.com/svn/genhtml/gen_installedlist.sh
-wget https://pentoo.googlecode.com/svn/genhtml/header.inc
-wget https://pentoo.googlecode.com/svn/genhtml/footer.inc
+wget https://raw.githubusercontent.com/pentoo/pentoo-historical/master/genhtml/gen_installedlist.sh
+wget https://raw.githubusercontent.com/pentoo/pentoo-historical/master/genhtml/header.inc
+wget https://raw.githubusercontent.com/pentoo/pentoo-historical/master/genhtml/footer.inc
 mkdir -p /var/log/portage/tool-list
 sh gen_installedlist.sh > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_`date "+%Y%m%d"`.html
 if [ $? -ne 0 ]; then
@@ -450,7 +451,7 @@ mv /root/.bashrc.bak /root/.bashrc
 rsync -aEXu --delete /var/cache/edb /tmp/
 rm -rf /var/cache/*
 rsync -aEXu --delete /tmp/edb /var/cache/
-FEATURES="-getbinpkg" emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
+emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
 updatedb
 sync
