@@ -322,9 +322,13 @@ if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /home/pentoo/.config/gtk-3.0/
 	/bin/bash
 fi
 
-#easy way to adjust wallpaper per install
+#basic xfce4 setup
 mkdir -p /root/.config/xfce4/
 cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/ || /bin/bash
+#magic to autohide panel 2
+magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' default.xml)+1))
+sed "${magic_number} a\    <property name="autohide-behavior" type="uint" value="1"/>" default.xml
+#easy way to adjust wallpaper per install
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 
