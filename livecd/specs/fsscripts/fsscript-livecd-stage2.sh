@@ -468,12 +468,13 @@ portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${harde
 
 sync
 sleep 60
-mv /root/.bashrc.bak /root/.bashrc
 
 rsync -aEXu --delete /var/cache/edb /tmp/
 rm -rf /var/cache/*
 rsync -aEXu --delete /tmp/edb /var/cache/
 emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
+
+mv /root/.bashrc.bak /root/.bashrc
 
 updatedb
 sync
