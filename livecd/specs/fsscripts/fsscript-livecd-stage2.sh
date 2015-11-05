@@ -338,6 +338,22 @@ if [ -f /etc/skel/.bash_profile ] && [ ! -f /root/.bash_profile ]; then
 	echo "There was no /root/.bash_profile"
 	/bin/bash
 fi
+if [ -f /etc/skel/.bash_profile ] && [ ! -f /home/pentoo/.bash_profile ]; then
+	cp /etc/skel/.bash_profile /home/pentoo/.bash_profile || /bin/bash
+	echo "There was no /home/pentoo/.bash_profile"
+	/bin/bash
+fi
+
+if [ -f /etc/skel/.Xdefaults ] && [ ! -f /root/.Xdefaults ]; then
+	cp /etc/skel/.Xdefaults /root/.Xdefaults || /bin/bash
+	echo "There was no /root/.Xdefaults"
+	/bin/bash
+fi
+if [ -f /etc/skel/.Xdefaults ] && [ ! -f /home/pentoo/.Xdefaults ]; then
+	cp /etc/skel/.Xdefaults /home/pentoo/.Xdefaults || /bin/bash
+	echo "There was no /home/pentoo/.Xdefaults"
+	/bin/bash
+fi
 
 
 #forcibly untrounce our blacklist, caused by udev remerging
