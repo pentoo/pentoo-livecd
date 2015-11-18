@@ -1,5 +1,4 @@
 <sys-apps/portage-9999
-=net-analyzer/metasploit-9999 **
 sys-fs/squashfs-tools **
 
 =sys-devel/gcc-4.9.3

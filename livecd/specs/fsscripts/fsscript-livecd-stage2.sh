@@ -131,6 +131,9 @@ cat <<-EOF > /etc/portage/make.conf
 	#VIDEO_CARDS="vesa vga fbdev"
 	#you can check available options with "emerge -vp xorg-drivers"
 
+	#This line may be removed if you do not have an nvidia gpu
+	ACCEPT_LICENSE="NVIDIA-CUDA"
+
 	source /var/lib/layman/make.conf
 EOF
 
@@ -227,8 +230,8 @@ emerge -1 app-admin/genmenu || /bin/bash
 # Runs the menu generator with a specific parameters for a WM
 genmenu.py -e || /bin/bash
 genmenu.py -x || /bin/bash
-su pentoo -c "genmenu.py -e" || /bin/bash
-su pentoo -c "genmenu.py -x" || /bin/bash
+#su pentoo -c "genmenu.py -e" || /bin/bash
+#su pentoo -c "genmenu.py -x" || /bin/bash
 
 # Fixes menu
 cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
@@ -307,57 +310,62 @@ emerge --config net-dialup/freeradius || /bin/bash
 #gtk-theme-switch needs X so do it manually
 echo gtk-theme-name="Xfce-basic" >> /root/.gtkrc-2.0
 echo gtk-icon-theme-name="Tango" >> /root/.gtkrc-2.0
-su pentoo -c "echo gtk-theme-name="Xfce-basic" >> /home/pentoo/.gtkrc-2.0"
-su pentoo -c "echo gtk-icon-theme-name="Tango" >> /home/pentoo/.gtkrc-2.0"
+#su pentoo -c "echo gtk-theme-name="Xfce-basic" >> /home/pentoo/.gtkrc-2.0"
+#su pentoo -c "echo gtk-icon-theme-name="Tango" >> /home/pentoo/.gtkrc-2.0"
 
 if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /root/.config/gtk-3.0/settings.ini ]; then
 	mkdir -p /root/.config/gtk-3.0/
-	cp /etc/skel/gtk-3.0/settings.ini /root/.config/gtk-3.0/settings.ini
-	/bin/bash
+	cp /etc/skel/gtk-3.0/settings.ini /root/.config/gtk-3.0/settings.ini || /bin/bash
 fi
-if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /home/pentoo/.config/gtk-3.0/settings.ini ]; then
-	su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
-	cp /etc/skel/gtk-3.0/settings.ini /home/pentoo/.config/gtk-3.0/settings.ini
-	chown pentoo.pentoo /home/pentoo/.config/gtk-3.0/settings.ini
-	/bin/bash
+#if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /home/pentoo/.config/gtk-3.0/settings.ini ]; then
+#	su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
+#	cp /etc/skel/gtk-3.0/settings.ini /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
+#	chown pentoo.pentoo /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
+#fi
+if [ -f /etc/skel/.config/xfce4/terminal/terminalrc ] && [ ! -f /root/.config/xfce4/terminal/terminalrc ]; then
+	mkdir -p /root/.config/xfce4/terminal/
+	cp /etc/skel/.config/xfce4/terminal/terminalrc /root/.config/xfce4/terminal/terminalrc || /bin/bash
 fi
+#if [ -f /etc/skel/.config/xfce4/terminal/terminalrc ] && [ ! -f /home/pentoo/.config/xfce4/terminal/terminalrc ]; then
+#	su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/terminal/"
+#	cp /etc/skel/.config/xfce4/terminal/terminalrc /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
+#	chown pentoo.pentoo /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
+#fi
 
 #basic xfce4 setup
 mkdir -p /root/.config/xfce4/
 cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/ || /bin/bash
 #magic to autohide panel 2
-magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' default.xml)+1))
-sed "${magic_number} a\    <property name="autohide-behavior" type="uint" value="1"/>" default.xml
+magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /root/.config/xfce4/panel/default.xml)+1))
+sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /root/.config/xfce4/panel/default.xml
 #easy way to adjust wallpaper per install
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 
-su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
-su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
-su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
-su pentoo -c "cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
+#su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
+#su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
+#su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
+#su pentoo -c "cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
 
 if [ -f /etc/skel/.bash_profile ] && [ ! -f /root/.bash_profile ]; then
 	cp /etc/skel/.bash_profile /root/.bash_profile || /bin/bash
 	echo "There was no /root/.bash_profile"
-	/bin/bash
 fi
-if [ -f /etc/skel/.bash_profile ] && [ ! -f /home/pentoo/.bash_profile ]; then
-	cp /etc/skel/.bash_profile /home/pentoo/.bash_profile || /bin/bash
-	echo "There was no /home/pentoo/.bash_profile"
-	/bin/bash
-fi
+#if [ -f /etc/skel/.bash_profile ] && [ ! -f /home/pentoo/.bash_profile ]; then
+#	cp /etc/skel/.bash_profile /home/pentoo/.bash_profile || /bin/bash
+#	chown pentoo.pentoo /home/pentoo/.bash_profile || /bin/bash
+#	echo "There was no /home/pentoo/.bash_profile"
+#fi
 
 if [ -f /etc/skel/.Xdefaults ] && [ ! -f /root/.Xdefaults ]; then
 	cp /etc/skel/.Xdefaults /root/.Xdefaults || /bin/bash
 	echo "There was no /root/.Xdefaults"
-	/bin/bash
 fi
-if [ -f /etc/skel/.Xdefaults ] && [ ! -f /home/pentoo/.Xdefaults ]; then
-	cp /etc/skel/.Xdefaults /home/pentoo/.Xdefaults || /bin/bash
-	echo "There was no /home/pentoo/.Xdefaults"
-	/bin/bash
-fi
+#if [ -f /etc/skel/.Xdefaults ] && [ ! -f /home/pentoo/.Xdefaults ]; then
+#	cp /etc/skel/.Xdefaults /home/pentoo/.Xdefaults || /bin/bash
+#	chown pentoo.pentoo /home/pentoo/.bash_profile || /bin/bash
+#	echo "There was no /home/pentoo/.Xdefaults"
+#fi
 
 
 #forcibly untrounce our blacklist, caused by udev remerging

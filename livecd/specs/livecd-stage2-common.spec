@@ -58,13 +58,6 @@ livecd/overlay: /usr/src/pentoo/pentoo-livecd/livecd/isoroot
 # it blank below.
 livecd/root_overlay: /usr/src/pentoo/pentoo-livecd/livecd/root_overlay
 
-# This option is used to create non-root users on your CD.  It takes a space
-# separated list of user names.  These users will be added to the following
-# groups: users,wheel,audio,games,cdrom,usb
-# If this is specified in your spec file, then the first user is also the user
-# used to start X. Since this is not used on the release media, it is blank.
-livecd/users: pentoo
-
 # This option is used to specify the number of kernels to build and also the
 # labels that will be used by the CD bootloader to refer to each kernel image.
 boot/kernel: pentoo

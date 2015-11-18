@@ -14,7 +14,7 @@ else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
 #RC=RC4.0_p$(date "+%Y%m%d")
-RC=RC4.2
+RC=RC4.4
 
 if [ "${1}" = "x86" ]; then
 	subarch="pentium-m"
@@ -23,7 +23,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20151105.tar.xz "
+echo "snapshot: 20151117.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -190,6 +190,7 @@ case ${3} in
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: aufs livecd livecd-stage1 -vaapi"
 		echo "stage4/packages: pentoo/pentoo"
+		#echo "stage4/users: pentoo"
 		;;
 	binpkg-update*)
 		echo "stage4/use: aufs livecd livecd-stage1 -vaapi"
