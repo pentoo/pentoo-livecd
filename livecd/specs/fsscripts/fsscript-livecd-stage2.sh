@@ -383,9 +383,9 @@ etc-update --automode -5 || /bin/bash
 fix_locale
 
 #set the hostname properly
-sed -i 's/livecd/pentoo/' /etc/conf.d/hostname
+sed -i 's/livecd/pentoo/' /etc/conf.d/hostname || /bin/bash
 #set the hostname in /etc/hosts too (bug #236)
-sed -i 's/livecd/pentoo/g' /etc/hosts
+sed -i '/^#/!s/localhost/localhost pentoo/' /etc/hosts || /bin/bash
 
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
