@@ -30,7 +30,8 @@ do
 		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
 
 		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
-		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+                webseeds="http://pentoo.west.us.mirror.inerail.net/Pentoo_${arch}_${PROFILE}/,http://pentoo.east.us.mirror.inerail.net/Pentoo_${arch}_${PROFILE}/,http://mirror.switch.ch/ftp/mirror/pentoo/Pentoo_${arch}_${PROFILE}"
+		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent -w "${webseeds}" /catalyst/release/Pentoo_${arch}_${PROFILE}
 		mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
 	fi
 done
