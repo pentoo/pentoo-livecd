@@ -23,7 +23,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20151120.tar.xz "
+echo "snapshot: 20151204.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -188,17 +188,17 @@ case ${3} in
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
-		echo "stage4/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia"
+		echo "stage4/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: pentoo/pentoo"
 		#echo "stage4/users: pentoo"
 		;;
 	binpkg-update*)
-		echo "stage4/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia"
+		echo "stage4/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
 		;;
 	livecd-stage1)
-		echo "livecd/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia"
+		echo "livecd/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "livecd/packages: pentoo/pentoo"
 		;;
 esac
