@@ -1,6 +1,6 @@
-diff -Naur linux-4.4.2-hardened/Documentation/ABI/testing/debugfs-aufs linux-4.4.2-hardened-aufs/Documentation/ABI/testing/debugfs-aufs
+diff -Naur linux-4.4.2-hardened/Documentation/ABI/testing/debugfs-aufs Documentation/ABI/testing/debugfs-aufs
 --- linux-4.4.2-hardened/Documentation/ABI/testing/debugfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/ABI/testing/debugfs-aufs	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/ABI/testing/debugfs-aufs	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,50 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -52,9 +52,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/ABI/testing/debugfs-aufs linux-4.4
 +		be created.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur linux-4.4.2-hardened/Documentation/ABI/testing/sysfs-aufs linux-4.4.2-hardened-aufs/Documentation/ABI/testing/sysfs-aufs
+diff -Naur linux-4.4.2-hardened/Documentation/ABI/testing/sysfs-aufs Documentation/ABI/testing/sysfs-aufs
 --- linux-4.4.2-hardened/Documentation/ABI/testing/sysfs-aufs	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/ABI/testing/sysfs-aufs	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/ABI/testing/sysfs-aufs	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -87,9 +87,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/ABI/testing/sysfs-aufs linux-4.4.2
 +		even if it is the default path.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/01intro.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/01intro.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/01intro.txt Documentation/filesystems/aufs/design/01intro.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/01intro.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/01intro.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/01intro.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,170 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -261,9 +261,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/01intro.tx
 +Some people may think it is better to pass such work to user space
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/02struct.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/02struct.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/02struct.txt Documentation/filesystems/aufs/design/02struct.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/02struct.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/02struct.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/02struct.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,258 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -523,9 +523,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/02struct.t
 +- etc.
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03atomic_open.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/03atomic_open.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03atomic_open.txt Documentation/filesystems/aufs/design/03atomic_open.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03atomic_open.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/03atomic_open.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/03atomic_open.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,85 @@
 +
 +# Copyright (C) 2015-2016 Junjiro R. Okajima
@@ -612,9 +612,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03atomic_o
 +       ->atomic_open() are lost. in the ordinary case, the checks are
 +       done by VFS:do_last(), lookup_open() and atomic_open(). some can
 +       be implemented in aufs, but not all I am afraid.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03lookup.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/03lookup.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03lookup.txt Documentation/filesystems/aufs/design/03lookup.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03lookup.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/03lookup.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/03lookup.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,113 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -729,9 +729,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/03lookup.t
 +   test, and skip the revalidation in step 4. It is useful and improves
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/04branch.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/04branch.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/04branch.txt Documentation/filesystems/aufs/design/04branch.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/04branch.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/04branch.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/04branch.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,74 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -807,9 +807,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/04branch.t
 +  - a file on the branch is mmap-ed.
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/05wbr_policy.txt Documentation/filesystems/aufs/design/05wbr_policy.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/05wbr_policy.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/05wbr_policy.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/05wbr_policy.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,64 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -875,9 +875,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/05wbr_poli
 +  where the source and the target exists and selects the higher
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06fhsm.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/06fhsm.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06fhsm.txt Documentation/filesystems/aufs/design/06fhsm.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06fhsm.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/06fhsm.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/06fhsm.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,120 @@
 +
 +# Copyright (C) 2011-2016 Junjiro R. Okajima
@@ -999,9 +999,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06fhsm.txt
 +
 +And of course, in every step, an error may happen. So the operation
 +should restore the original file state after an error happens.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06mmap.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/06mmap.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06mmap.txt Documentation/filesystems/aufs/design/06mmap.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06mmap.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/06mmap.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/06mmap.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,72 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -1075,9 +1075,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06mmap.txt
 +  equivalent to vm_prfile described above.
 +
 +I have to give up this "looks-smater" approach.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06xattr.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/06xattr.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06xattr.txt Documentation/filesystems/aufs/design/06xattr.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06xattr.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/06xattr.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/06xattr.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2014-2016 Junjiro R. Okajima
@@ -1175,9 +1175,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/06xattr.tx
 +Some contradiction may happen I am afraid.
 +Do we need another attribute to stop copying XATTR? I am unsure. For
 +now, aufs implements the branch attributes to ignore the error.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/07export.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/07export.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/07export.txt Documentation/filesystems/aufs/design/07export.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/07export.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/07export.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/07export.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,58 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -1237,9 +1237,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/07export.t
 +  convert it into ESTALE for NFSD.
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/08shwh.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/08shwh.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/08shwh.txt Documentation/filesystems/aufs/design/08shwh.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/08shwh.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/08shwh.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/08shwh.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,52 @@
 +
 +# Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -1293,9 +1293,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/08shwh.txt
 +
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/10dynop.txt linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/10dynop.txt
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/10dynop.txt Documentation/filesystems/aufs/design/10dynop.txt
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/design/10dynop.txt	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/design/10dynop.txt	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/design/10dynop.txt	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -1344,9 +1344,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/design/10dynop.tx
 +XIP (DAX) mainly.
 +Currently this approach is applied to address_space_operations for
 +regular files only.
-diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/README linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/README
+diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/README Documentation/filesystems/aufs/README
 --- linux-4.4.2-hardened/Documentation/filesystems/aufs/README	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/Documentation/filesystems/aufs/README	2016-04-10 21:48:37.178464421 -0400
++++ Documentation/filesystems/aufs/README	2016-04-10 21:48:37.178464421 -0400
 @@ -0,0 +1,391 @@
 +
 +Aufs4 -- advanced multi layered unification filesystem version 4.x
@@ -1739,9 +1739,9 @@ diff -Naur linux-4.4.2-hardened/Documentation/filesystems/aufs/README linux-4.4.
 +# Local variables: ;
 +# mode: text;
 +# End: ;
-diff -Naur linux-4.4.2-hardened/fs/aufs/aufs.h linux-4.4.2-hardened-aufs/fs/aufs/aufs.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/aufs.h fs/aufs/aufs.h
 --- linux-4.4.2-hardened/fs/aufs/aufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/aufs.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/aufs.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,59 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -1802,9 +1802,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/aufs.h linux-4.4.2-hardened-aufs/fs/aufs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/branch.c linux-4.4.2-hardened-aufs/fs/aufs/branch.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/branch.c fs/aufs/branch.c
 --- linux-4.4.2-hardened/fs/aufs/branch.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/branch.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/branch.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,1407 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -3213,9 +3213,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/branch.c linux-4.4.2-hardened-aufs/fs/au
 +
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/branch.h linux-4.4.2-hardened-aufs/fs/aufs/branch.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/branch.h fs/aufs/branch.h
 --- linux-4.4.2-hardened/fs/aufs/branch.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/branch.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/branch.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,279 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -3496,9 +3496,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/branch.h linux-4.4.2-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/conf.mk linux-4.4.2-hardened-aufs/fs/aufs/conf.mk
+diff -Naur linux-4.4.2-hardened/fs/aufs/conf.mk fs/aufs/conf.mk
 --- linux-4.4.2-hardened/fs/aufs/conf.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/conf.mk	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/conf.mk	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -3538,9 +3538,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/conf.mk linux-4.4.2-hardened-aufs/fs/auf
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur linux-4.4.2-hardened/fs/aufs/cpup.c linux-4.4.2-hardened-aufs/fs/aufs/cpup.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/cpup.c fs/aufs/cpup.c
 --- linux-4.4.2-hardened/fs/aufs/cpup.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/cpup.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/cpup.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,1379 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -4921,9 +4921,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/cpup.c linux-4.4.2-hardened-aufs/fs/aufs
 +	dput(parent);
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/cpup.h linux-4.4.2-hardened-aufs/fs/aufs/cpup.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/cpup.h fs/aufs/cpup.h
 --- linux-4.4.2-hardened/fs/aufs/cpup.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/cpup.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/cpup.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -5019,9 +5019,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/cpup.h linux-4.4.2-hardened-aufs/fs/aufs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/dbgaufs.c linux-4.4.2-hardened-aufs/fs/aufs/dbgaufs.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/dbgaufs.c fs/aufs/dbgaufs.c
 --- linux-4.4.2-hardened/fs/aufs/dbgaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dbgaufs.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dbgaufs.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,432 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -5455,9 +5455,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dbgaufs.c linux-4.4.2-hardened-aufs/fs/a
 +		err = 0;
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/dbgaufs.h linux-4.4.2-hardened-aufs/fs/aufs/dbgaufs.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/dbgaufs.h fs/aufs/dbgaufs.h
 --- linux-4.4.2-hardened/fs/aufs/dbgaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dbgaufs.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dbgaufs.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,48 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -5507,9 +5507,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dbgaufs.h linux-4.4.2-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/dcsub.c linux-4.4.2-hardened-aufs/fs/aufs/dcsub.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/dcsub.c fs/aufs/dcsub.c
 --- linux-4.4.2-hardened/fs/aufs/dcsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dcsub.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dcsub.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,224 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -5735,9 +5735,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dcsub.c linux-4.4.2-hardened-aufs/fs/auf
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/dcsub.h linux-4.4.2-hardened-aufs/fs/aufs/dcsub.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/dcsub.h fs/aufs/dcsub.h
 --- linux-4.4.2-hardened/fs/aufs/dcsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dcsub.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dcsub.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,136 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -5875,9 +5875,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dcsub.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/debug.c linux-4.4.2-hardened-aufs/fs/aufs/debug.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/debug.c fs/aufs/debug.c
 --- linux-4.4.2-hardened/fs/aufs/debug.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/debug.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/debug.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,438 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -6317,9 +6317,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/debug.c linux-4.4.2-hardened-aufs/fs/auf
 +
 +	return 0;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/debug.h linux-4.4.2-hardened-aufs/fs/aufs/debug.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/debug.h fs/aufs/debug.h
 --- linux-4.4.2-hardened/fs/aufs/debug.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/debug.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/debug.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,225 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -6546,9 +6546,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/debug.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/dentry.c linux-4.4.2-hardened-aufs/fs/aufs/dentry.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/dentry.c fs/aufs/dentry.c
 --- linux-4.4.2-hardened/fs/aufs/dentry.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dentry.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dentry.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,1136 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -7686,9 +7686,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dentry.c linux-4.4.2-hardened-aufs/fs/au
 +const struct dentry_operations aufs_dop_noreval = {
 +	.d_release		= aufs_d_release
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/dentry.h linux-4.4.2-hardened-aufs/fs/aufs/dentry.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/dentry.h fs/aufs/dentry.h
 --- linux-4.4.2-hardened/fs/aufs/dentry.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dentry.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dentry.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,234 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -7924,9 +7924,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dentry.h linux-4.4.2-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/dinfo.c linux-4.4.2-hardened-aufs/fs/aufs/dinfo.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/dinfo.c fs/aufs/dinfo.c
 --- linux-4.4.2-hardened/fs/aufs/dinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dinfo.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dinfo.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,550 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -8478,9 +8478,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dinfo.c linux-4.4.2-hardened-aufs/fs/auf
 +			return bindex;
 +	return -1;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/dir.c linux-4.4.2-hardened-aufs/fs/aufs/dir.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/dir.c fs/aufs/dir.c
 --- linux-4.4.2-hardened/fs/aufs/dir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dir.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dir.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,758 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -9240,9 +9240,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dir.c linux-4.4.2-hardened-aufs/fs/aufs/
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/dir.h linux-4.4.2-hardened-aufs/fs/aufs/dir.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/dir.h fs/aufs/dir.h
 --- linux-4.4.2-hardened/fs/aufs/dir.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dir.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dir.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,131 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -9375,9 +9375,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dir.h linux-4.4.2-hardened-aufs/fs/aufs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/dynop.c linux-4.4.2-hardened-aufs/fs/aufs/dynop.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/dynop.c fs/aufs/dynop.c
 --- linux-4.4.2-hardened/fs/aufs/dynop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dynop.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dynop.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,369 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -9748,9 +9748,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dynop.c linux-4.4.2-hardened-aufs/fs/auf
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!list_empty(&dynop[i].head));
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/dynop.h linux-4.4.2-hardened-aufs/fs/aufs/dynop.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/dynop.h fs/aufs/dynop.h
 --- linux-4.4.2-hardened/fs/aufs/dynop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/dynop.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/dynop.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,74 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -9826,9 +9826,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/dynop.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/export.c linux-4.4.2-hardened-aufs/fs/aufs/export.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/export.c fs/aufs/export.c
 --- linux-4.4.2-hardened/fs/aufs/export.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/export.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/export.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,832 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -10662,9 +10662,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/export.c linux-4.4.2-hardened-aufs/fs/au
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/fhsm.c linux-4.4.2-hardened-aufs/fs/aufs/fhsm.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/fhsm.c fs/aufs/fhsm.c
 --- linux-4.4.2-hardened/fs/aufs/fhsm.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/fhsm.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/fhsm.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,426 @@
 +/*
 + * Copyright (C) 2011-2016 Junjiro R. Okajima
@@ -11092,9 +11092,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/fhsm.c linux-4.4.2-hardened-aufs/fs/aufs
 +	if (u != AUFS_FHSM_CACHE_DEF_SEC)
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/file.c linux-4.4.2-hardened-aufs/fs/aufs/file.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/file.c fs/aufs/file.c
 --- linux-4.4.2-hardened/fs/aufs/file.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/file.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/file.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,844 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -11940,9 +11940,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/file.c linux-4.4.2-hardened-aufs/fs/aufs
 +	.swap_deactivate	= aufs_swap_deactivate
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/file.h linux-4.4.2-hardened-aufs/fs/aufs/file.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/file.h fs/aufs/file.h
 --- linux-4.4.2-hardened/fs/aufs/file.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/file.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/file.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,291 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -12235,9 +12235,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/file.h linux-4.4.2-hardened-aufs/fs/aufs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/finfo.c linux-4.4.2-hardened-aufs/fs/aufs/finfo.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/finfo.c fs/aufs/finfo.c
 --- linux-4.4.2-hardened/fs/aufs/finfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/finfo.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/finfo.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,156 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -12395,9 +12395,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/finfo.c linux-4.4.2-hardened-aufs/fs/auf
 +out:
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/f_op.c linux-4.4.2-hardened-aufs/fs/aufs/f_op.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/f_op.c fs/aufs/f_op.c
 --- linux-4.4.2-hardened/fs/aufs/f_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/f_op.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/f_op.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,772 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -13171,9 +13171,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/f_op.c linux-4.4.2-hardened-aufs/fs/aufs
 +#endif
 +	.fallocate	= aufs_fallocate
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/fstype.h linux-4.4.2-hardened-aufs/fs/aufs/fstype.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/fstype.h fs/aufs/fstype.h
 --- linux-4.4.2-hardened/fs/aufs/fstype.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/fstype.h	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/fstype.h	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,400 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -13575,9 +13575,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/fstype.h linux-4.4.2-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/hfsnotify.c linux-4.4.2-hardened-aufs/fs/aufs/hfsnotify.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/hfsnotify.c fs/aufs/hfsnotify.c
 --- linux-4.4.2-hardened/fs/aufs/hfsnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/hfsnotify.c	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/hfsnotify.c	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,288 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -13867,9 +13867,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/hfsnotify.c linux-4.4.2-hardened-aufs/fs
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/hfsplus.c linux-4.4.2-hardened-aufs/fs/aufs/hfsplus.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/hfsplus.c fs/aufs/hfsplus.c
 --- linux-4.4.2-hardened/fs/aufs/hfsplus.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/hfsplus.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/hfsplus.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -13927,9 +13927,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/hfsplus.c linux-4.4.2-hardened-aufs/fs/a
 +		au_sbr_put(dentry->d_sb, bindex);
 +	}
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/hnotify.c linux-4.4.2-hardened-aufs/fs/aufs/hnotify.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/hnotify.c fs/aufs/hnotify.c
 --- linux-4.4.2-hardened/fs/aufs/hnotify.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/hnotify.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/hnotify.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,710 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -14641,9 +14641,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/hnotify.c linux-4.4.2-hardened-aufs/fs/a
 +	if (au_cachep[AuCache_HNOTIFY])
 +		au_hn_destroy_cache();
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/iinfo.c linux-4.4.2-hardened-aufs/fs/aufs/iinfo.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/iinfo.c fs/aufs/iinfo.c
 --- linux-4.4.2-hardened/fs/aufs/iinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/iinfo.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/iinfo.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,277 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -14922,9 +14922,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/iinfo.c linux-4.4.2-hardened-aufs/fs/auf
 +	iinfo->ii_hinode = NULL;
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/inode.c linux-4.4.2-hardened-aufs/fs/aufs/inode.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/inode.c fs/aufs/inode.c
 --- linux-4.4.2-hardened/fs/aufs/inode.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/inode.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/inode.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,527 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -15453,9 +15453,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/inode.c linux-4.4.2-hardened-aufs/fs/auf
 +		mask |= MAY_READ; /* force permission check */
 +	return au_test_h_perm(h_inode, mask);
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/inode.h linux-4.4.2-hardened-aufs/fs/aufs/inode.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/inode.h fs/aufs/inode.h
 --- linux-4.4.2-hardened/fs/aufs/inode.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/inode.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/inode.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,685 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -16142,9 +16142,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/inode.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/ioctl.c linux-4.4.2-hardened-aufs/fs/aufs/ioctl.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/ioctl.c fs/aufs/ioctl.c
 --- linux-4.4.2-hardened/fs/aufs/ioctl.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/ioctl.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/ioctl.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,219 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -16365,9 +16365,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/ioctl.c linux-4.4.2-hardened-aufs/fs/auf
 +	return aufs_ioctl_nondir(file, cmd, (unsigned long)compat_ptr(arg));
 +}
 +#endif
-diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_add.c linux-4.4.2-hardened-aufs/fs/aufs/i_op_add.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_add.c fs/aufs/i_op_add.c
 --- linux-4.4.2-hardened/fs/aufs/i_op_add.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/i_op_add.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/i_op_add.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,932 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -17301,9 +17301,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_add.c linux-4.4.2-hardened-aufs/fs/
 +out:
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/i_op.c linux-4.4.2-hardened-aufs/fs/aufs/i_op.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/i_op.c fs/aufs/i_op.c
 --- linux-4.4.2-hardened/fs/aufs/i_op.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/i_op.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/i_op.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,1490 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -18795,9 +18795,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/i_op.c linux-4.4.2-hardened-aufs/fs/aufs
 +		.update_time	= aufs_update_time
 +	}
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_del.c linux-4.4.2-hardened-aufs/fs/aufs/i_op_del.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_del.c fs/aufs/i_op_del.c
 --- linux-4.4.2-hardened/fs/aufs/i_op_del.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/i_op_del.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/i_op_del.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,510 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -19309,9 +19309,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_del.c linux-4.4.2-hardened-aufs/fs/
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_ren.c linux-4.4.2-hardened-aufs/fs/aufs/i_op_ren.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_ren.c fs/aufs/i_op_ren.c
 --- linux-4.4.2-hardened/fs/aufs/i_op_ren.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/i_op_ren.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/i_op_ren.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,1015 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -20328,9 +20328,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/i_op_ren.c linux-4.4.2-hardened-aufs/fs/
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/Kconfig linux-4.4.2-hardened-aufs/fs/aufs/Kconfig
+diff -Naur linux-4.4.2-hardened/fs/aufs/Kconfig fs/aufs/Kconfig
 --- linux-4.4.2-hardened/fs/aufs/Kconfig	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/Kconfig	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/Kconfig	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,185 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -20517,9 +20517,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/Kconfig linux-4.4.2-hardened-aufs/fs/auf
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur linux-4.4.2-hardened/fs/aufs/loop.c linux-4.4.2-hardened-aufs/fs/aufs/loop.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/loop.c fs/aufs/loop.c
 --- linux-4.4.2-hardened/fs/aufs/loop.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/loop.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/loop.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,146 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -20667,9 +20667,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/loop.c linux-4.4.2-hardened-aufs/fs/aufs
 +		symbol_put(loop_backing_file);
 +	kfree(au_warn_loopback_array);
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/loop.h linux-4.4.2-hardened-aufs/fs/aufs/loop.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/loop.h fs/aufs/loop.h
 --- linux-4.4.2-hardened/fs/aufs/loop.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/loop.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/loop.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -20723,9 +20723,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/loop.h linux-4.4.2-hardened-aufs/fs/aufs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/magic.mk linux-4.4.2-hardened-aufs/fs/aufs/magic.mk
+diff -Naur linux-4.4.2-hardened/fs/aufs/magic.mk fs/aufs/magic.mk
 --- linux-4.4.2-hardened/fs/aufs/magic.mk	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/magic.mk	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/magic.mk	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,30 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -20757,9 +20757,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/magic.mk linux-4.4.2-hardened-aufs/fs/au
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur linux-4.4.2-hardened/fs/aufs/Makefile linux-4.4.2-hardened-aufs/fs/aufs/Makefile
+diff -Naur linux-4.4.2-hardened/fs/aufs/Makefile fs/aufs/Makefile
 --- linux-4.4.2-hardened/fs/aufs/Makefile	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/Makefile	2016-04-10 21:48:37.179464421 -0400
++++ fs/aufs/Makefile	2016-04-10 21:48:37.179464421 -0400
 @@ -0,0 +1,44 @@
 +
 +include ${src}/magic.mk
@@ -20805,9 +20805,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/Makefile linux-4.4.2-hardened-aufs/fs/au
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur linux-4.4.2-hardened/fs/aufs/module.c linux-4.4.2-hardened-aufs/fs/aufs/module.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/module.c fs/aufs/module.c
 --- linux-4.4.2-hardened/fs/aufs/module.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/module.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/module.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,221 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -21030,9 +21030,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/module.c linux-4.4.2-hardened-aufs/fs/au
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur linux-4.4.2-hardened/fs/aufs/module.h linux-4.4.2-hardened-aufs/fs/aufs/module.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/module.h fs/aufs/module.h
 --- linux-4.4.2-hardened/fs/aufs/module.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/module.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/module.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -21139,9 +21139,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/module.h linux-4.4.2-hardened-aufs/fs/au
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/mvdown.c linux-4.4.2-hardened-aufs/fs/aufs/mvdown.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/mvdown.c fs/aufs/mvdown.c
 --- linux-4.4.2-hardened/fs/aufs/mvdown.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/mvdown.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/mvdown.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,703 @@
 +/*
 + * Copyright (C) 2011-2016 Junjiro R. Okajima
@@ -21846,9 +21846,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/mvdown.c linux-4.4.2-hardened-aufs/fs/au
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/opts.c linux-4.4.2-hardened-aufs/fs/aufs/opts.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/opts.c fs/aufs/opts.c
 --- linux-4.4.2-hardened/fs/aufs/opts.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/opts.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/opts.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,1859 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -23709,9 +23709,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/opts.c linux-4.4.2-hardened-aufs/fs/aufs
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/opts.h linux-4.4.2-hardened-aufs/fs/aufs/opts.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/opts.h fs/aufs/opts.h
 --- linux-4.4.2-hardened/fs/aufs/opts.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/opts.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/opts.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,211 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -23924,9 +23924,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/opts.h linux-4.4.2-hardened-aufs/fs/aufs
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/plink.c linux-4.4.2-hardened-aufs/fs/aufs/plink.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/plink.c fs/aufs/plink.c
 --- linux-4.4.2-hardened/fs/aufs/plink.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/plink.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/plink.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,528 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -24456,9 +24456,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/plink.c linux-4.4.2-hardened-aufs/fs/auf
 +		}
 +	}
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/poll.c linux-4.4.2-hardened-aufs/fs/aufs/poll.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/poll.c fs/aufs/poll.c
 --- linux-4.4.2-hardened/fs/aufs/poll.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/poll.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/poll.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -24512,9 +24512,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/poll.c linux-4.4.2-hardened-aufs/fs/aufs
 +	AuTraceErr((int)mask);
 +	return mask;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/posix_acl.c linux-4.4.2-hardened-aufs/fs/aufs/posix_acl.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/posix_acl.c fs/aufs/posix_acl.c
 --- linux-4.4.2-hardened/fs/aufs/posix_acl.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/posix_acl.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/posix_acl.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,98 @@
 +/*
 + * Copyright (C) 2014-2016 Junjiro R. Okajima
@@ -24614,9 +24614,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/posix_acl.c linux-4.4.2-hardened-aufs/fs
 +	mutex_unlock(&inode->i_mutex);
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/procfs.c linux-4.4.2-hardened-aufs/fs/aufs/procfs.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/procfs.c fs/aufs/procfs.c
 --- linux-4.4.2-hardened/fs/aufs/procfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/procfs.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/procfs.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,169 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -24787,9 +24787,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/procfs.c linux-4.4.2-hardened-aufs/fs/au
 +out:
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/rdu.c linux-4.4.2-hardened-aufs/fs/aufs/rdu.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/rdu.c fs/aufs/rdu.c
 --- linux-4.4.2-hardened/fs/aufs/rdu.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/rdu.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/rdu.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,388 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -25179,9 +25179,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/rdu.c linux-4.4.2-hardened-aufs/fs/aufs/
 +	return err;
 +}
 +#endif
-diff -Naur linux-4.4.2-hardened/fs/aufs/rwsem.h linux-4.4.2-hardened-aufs/fs/aufs/rwsem.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/rwsem.h fs/aufs/rwsem.h
 --- linux-4.4.2-hardened/fs/aufs/rwsem.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/rwsem.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/rwsem.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,191 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -25374,9 +25374,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/rwsem.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/sbinfo.c linux-4.4.2-hardened-aufs/fs/aufs/sbinfo.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/sbinfo.c fs/aufs/sbinfo.c
 --- linux-4.4.2-hardened/fs/aufs/sbinfo.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/sbinfo.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/sbinfo.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,354 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -25732,9 +25732,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/sbinfo.c linux-4.4.2-hardened-aufs/fs/au
 +	set_bit(bit, bitmap);
 +	/* smp_mb(); */
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/spl.h linux-4.4.2-hardened-aufs/fs/aufs/spl.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/spl.h fs/aufs/spl.h
 --- linux-4.4.2-hardened/fs/aufs/spl.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/spl.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/spl.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,111 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -25847,9 +25847,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/spl.h linux-4.4.2-hardened-aufs/fs/aufs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/super.c linux-4.4.2-hardened-aufs/fs/aufs/super.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/super.c fs/aufs/super.c
 --- linux-4.4.2-hardened/fs/aufs/super.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/super.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/super.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,1039 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -26890,9 +26890,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/super.c linux-4.4.2-hardened-aufs/fs/auf
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/super.h linux-4.4.2-hardened-aufs/fs/aufs/super.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/super.h fs/aufs/super.h
 --- linux-4.4.2-hardened/fs/aufs/super.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/super.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/super.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,635 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -27529,9 +27529,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/super.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/sysaufs.c linux-4.4.2-hardened-aufs/fs/aufs/sysaufs.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/sysaufs.c fs/aufs/sysaufs.c
 --- linux-4.4.2-hardened/fs/aufs/sysaufs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/sysaufs.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/sysaufs.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -27637,9 +27637,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/sysaufs.c linux-4.4.2-hardened-aufs/fs/a
 +out:
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/sysaufs.h linux-4.4.2-hardened-aufs/fs/aufs/sysaufs.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/sysaufs.h fs/aufs/sysaufs.h
 --- linux-4.4.2-hardened/fs/aufs/sysaufs.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/sysaufs.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/sysaufs.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,101 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -27742,9 +27742,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/sysaufs.h linux-4.4.2-hardened-aufs/fs/a
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/sysfs.c linux-4.4.2-hardened-aufs/fs/aufs/sysfs.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/sysfs.c fs/aufs/sysfs.c
 --- linux-4.4.2-hardened/fs/aufs/sysfs.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/sysfs.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/sysfs.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,376 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -28122,9 +28122,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/sysfs.c linux-4.4.2-hardened-aufs/fs/auf
 +		}
 +	}
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/sysrq.c linux-4.4.2-hardened-aufs/fs/aufs/sysrq.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/sysrq.c fs/aufs/sysrq.c
 --- linux-4.4.2-hardened/fs/aufs/sysrq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/sysrq.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/sysrq.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -28283,9 +28283,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/sysrq.c linux-4.4.2-hardened-aufs/fs/auf
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/vdir.c linux-4.4.2-hardened-aufs/fs/aufs/vdir.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/vdir.c fs/aufs/vdir.c
 --- linux-4.4.2-hardened/fs/aufs/vdir.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/vdir.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/vdir.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,888 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -29175,9 +29175,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/vdir.c linux-4.4.2-hardened-aufs/fs/aufs
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/vfsub.c linux-4.4.2-hardened-aufs/fs/aufs/vfsub.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/vfsub.c fs/aufs/vfsub.c
 --- linux-4.4.2-hardened/fs/aufs/vfsub.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/vfsub.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/vfsub.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,866 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -30045,9 +30045,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/vfsub.c linux-4.4.2-hardened-aufs/fs/auf
 +
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/vfsub.h linux-4.4.2-hardened-aufs/fs/aufs/vfsub.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/vfsub.h fs/aufs/vfsub.h
 --- linux-4.4.2-hardened/fs/aufs/vfsub.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/vfsub.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/vfsub.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,308 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -30357,9 +30357,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/vfsub.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/wbr_policy.c linux-4.4.2-hardened-aufs/fs/aufs/wbr_policy.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/wbr_policy.c fs/aufs/wbr_policy.c
 --- linux-4.4.2-hardened/fs/aufs/wbr_policy.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/wbr_policy.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/wbr_policy.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,765 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -31126,9 +31126,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/wbr_policy.c linux-4.4.2-hardened-aufs/f
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur linux-4.4.2-hardened/fs/aufs/whout.c linux-4.4.2-hardened-aufs/fs/aufs/whout.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/whout.c fs/aufs/whout.c
 --- linux-4.4.2-hardened/fs/aufs/whout.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/whout.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/whout.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,1060 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -32190,9 +32190,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/whout.c linux-4.4.2-hardened-aufs/fs/auf
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/whout.h linux-4.4.2-hardened-aufs/fs/aufs/whout.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/whout.h fs/aufs/whout.h
 --- linux-4.4.2-hardened/fs/aufs/whout.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/whout.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/whout.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,85 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -32279,9 +32279,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/whout.h linux-4.4.2-hardened-aufs/fs/auf
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/wkq.c linux-4.4.2-hardened-aufs/fs/aufs/wkq.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/wkq.c fs/aufs/wkq.c
 --- linux-4.4.2-hardened/fs/aufs/wkq.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/wkq.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/wkq.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -32496,9 +32496,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/wkq.c linux-4.4.2-hardened-aufs/fs/aufs/
 +
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/fs/aufs/wkq.h linux-4.4.2-hardened-aufs/fs/aufs/wkq.h
+diff -Naur linux-4.4.2-hardened/fs/aufs/wkq.h fs/aufs/wkq.h
 --- linux-4.4.2-hardened/fs/aufs/wkq.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/wkq.h	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/wkq.h	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,91 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -32591,9 +32591,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/wkq.h linux-4.4.2-hardened-aufs/fs/aufs/
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur linux-4.4.2-hardened/fs/aufs/xattr.c linux-4.4.2-hardened-aufs/fs/aufs/xattr.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/xattr.c fs/aufs/xattr.c
 --- linux-4.4.2-hardened/fs/aufs/xattr.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/xattr.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/xattr.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,344 @@
 +/*
 + * Copyright (C) 2014-2016 Junjiro R. Okajima
@@ -32939,9 +32939,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/xattr.c linux-4.4.2-hardened-aufs/fs/auf
 +	/* sb->s_xattr = au_xattr_handlers; */
 +}
 +#endif
-diff -Naur linux-4.4.2-hardened/fs/aufs/xino.c linux-4.4.2-hardened-aufs/fs/aufs/xino.c
+diff -Naur linux-4.4.2-hardened/fs/aufs/xino.c fs/aufs/xino.c
 --- linux-4.4.2-hardened/fs/aufs/xino.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/fs/aufs/xino.c	2016-04-10 21:48:37.180464421 -0400
++++ fs/aufs/xino.c	2016-04-10 21:48:37.180464421 -0400
 @@ -0,0 +1,1318 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -34261,9 +34261,9 @@ diff -Naur linux-4.4.2-hardened/fs/aufs/xino.c linux-4.4.2-hardened-aufs/fs/aufs
 +out:
 +	return err;
 +}
-diff -Naur linux-4.4.2-hardened/include/uapi/linux/aufs_type.h linux-4.4.2-hardened-aufs/include/uapi/linux/aufs_type.h
+diff -Naur linux-4.4.2-hardened/include/uapi/linux/aufs_type.h include/uapi/linux/aufs_type.h
 --- linux-4.4.2-hardened/include/uapi/linux/aufs_type.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux-4.4.2-hardened-aufs/include/uapi/linux/aufs_type.h	2016-04-10 21:49:23.788466506 -0400
++++ include/uapi/linux/aufs_type.h	2016-04-10 21:49:23.788466506 -0400
 @@ -0,0 +1,419 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
