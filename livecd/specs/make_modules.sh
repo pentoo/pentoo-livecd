@@ -68,3 +68,11 @@ mksquashfs /dev/shm/pentoo_portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/
 
 #drop the files into the mirror for the next sync
 rsync -aEuh --progress --delete --omit-dir-times /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/ /mnt/mirror/local_mirror/modules/
+
+#make the user mode hack module after the sync, user's don't need to download this separately
+mkdir -p /dev/shm/pentoouser/rootfs/etc/init.d/
+wget https://gitweb.gentoo.org/proj/livecd-tools.git/plain/init.d/fixinittab -O /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
+sed -i '/--autologin/s/root/pentoo/' /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
+chmod 755 /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
+chown root.root /dev/shm/pentoouser/rootfs/
+mksquashfs /dev/shm/pentoouser/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/pentoouser.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576

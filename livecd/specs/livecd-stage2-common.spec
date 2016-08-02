@@ -85,8 +85,16 @@ livecd/unmerge: x11-drivers/ati-drivers x11-drivers/nvidia-drivers
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
-livecd/empty: /var/empty /var/log /var/tmp /tmp /usr/local/portage/ /var/lib/layman/pentoo /usr/lib/debug /usr/portage
+livecd/empty: /var/empty /var/log /var/tmp /tmp /var/lib/layman/pentoo /usr/lib/debug /usr/portage
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
 livecd/rm: /etc/resolv.conf /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre*  /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline*
+
+# This option is used to create non-root users on your CD.  It takes a space
+# separated list of user names.  These users will be added to the following
+# groups: users,wheel,audio,games,cdrom,usb
+# If this is specified in your spec file, then the first user is also the user
+# used to start X. Since this is not used on the release media, it is blank.
+# example:
+livecd/users: pentoo

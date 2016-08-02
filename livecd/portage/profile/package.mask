@@ -1,3 +1,6 @@
+#known broken
+~sys-apps/portage-2.2.27
+
 #trying to troubleshoot what is pulling in old xorg-server
 <x11-base/xorg-server-1.13
 
@@ -8,7 +11,7 @@ www-client/firefox-bin
 mail-mta/nullmailer
 mail-mta/msmtp
 
-<sys-kernel/pentoo-sources-3.15.5
+<sys-kernel/pentoo-sources-4.4.8
 
 #force upgrade
 <sys-devel/libtool-2.4.3-r2:2
@@ -28,3 +31,6 @@ sys-apps/systemd
 
 #x11-drivers/nvidia-drivers
 #x11-drivers/ati-drivers
+
+#troubleshooting, what requires the failing pip
+dev-python/pip

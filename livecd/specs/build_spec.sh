@@ -13,17 +13,19 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-#RC=RC4.0_p$(date "+%Y%m%d")
-RC=RC4.6
+#RC=RC4.7_p$(date "+%Y%m%d")
+RC=RC5
 
 if [ "${1}" = "x86" ]; then
+	arch="x86"
 	subarch="pentium-m"
 elif [ "${1}" = "amd64" ]; then
+	arch="x86_64"
 	subarch="${1}"
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20151204.tar.xz "
+echo "snapshot: 20160801.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -47,19 +49,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20150423.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20160317.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20150423.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20160317.tar.bz2"
 			fi
 		elif [ ${1} = x86 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20150428.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20160322.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20150428.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20160322.tar.bz2"
 			fi
 		fi
 		;;
@@ -91,7 +93,7 @@ case ${3} in
 		#echo "source_subpath: ${2}/livecd-stage1-${subarch}-${VERSION_STAMP}"
 		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
 		echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
-		echo "livecd/volid: Pentoo Linux ${1} ${VERSION_STAMP} ${RC:0:5}"
+		echo "livecd/volid: Pentoo Linux ${arch} ${VERSION_STAMP} ${RC:0:5}"
 
 		echo -e "\n# This option is the full path and filename to a kernel .config file that is"
 		echo "# used by genkernel to compile the kernel this label applies to."

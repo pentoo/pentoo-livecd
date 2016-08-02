@@ -38,8 +38,10 @@ done
 for arch in ${ARCH}
 do
 	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2
+	#for stage in stage4 stage4-pentoo binpkg-update-seed livecd-stage2
 	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
-	for stage in livecd-stage2
+	#for stage in livecd-stage2
+	for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	do
 		#building in tmpfs isn't exactly friendly on my ram usage, so let's limit to one catalyst at a time
 		#while ps aux | grep "[c]atalyst -f"

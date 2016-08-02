@@ -9,12 +9,18 @@ fix_locale() {
 	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
 	localepurge || /bin/bash
 	locale-gen || /bin/bash
+	eselect locale set en_US.utf8 || /bin/bash
 }
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
 #somehow the default .bashrc runs X.... WTF????
 mv /root/.bashrc /root/.bashrc.bak
+
+#user gets wierd groups, fix it for us
+#defaults users,wheel,audio,plugdev,games,cdrom,disk,floppy,usb
+gpasswd -d pento games #remove from games group
+usermod -a -G video,cdrw,android,kismet,wireshark,portage
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
@@ -80,12 +86,7 @@ rm -rf /usr/lib/libGLcore.so
 eselect opengl set xorg-x11 || /bin/bash
 
 # Set default java vm
-eselect java-vm set system icedtea-bin-7 || /bin/bash
-if [ -e /usr/lib64 ] ; then
-	eselect java-nsplugin set 64bit icedtea-bin-7 || /bin/bash
-else
-	eselect java-nsplugin set icedtea-web@icedtea-bin-7 || /bin/bash
-fi
+eselect java-vm set system icedtea-8 || /bin/bash
 
 #mark all news read
 eselect news read --quiet all || /bin/bash
@@ -230,20 +231,22 @@ emerge -1 app-admin/genmenu || /bin/bash
 # Runs the menu generator with a specific parameters for a WM
 genmenu.py -e || /bin/bash
 genmenu.py -x || /bin/bash
-#su pentoo -c "genmenu.py -e" || /bin/bash
-#su pentoo -c "genmenu.py -x" || /bin/bash
+su pentoo -c "genmenu.py -e" || /bin/bash
+su pentoo -c "genmenu.py -x" || /bin/bash
 
-# Fixes menu
-cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
+# Fixes menu (may no longer be needed)
+if [ -f /etc/xdg/menus/gnome-applications.menu ]; then
+	cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
+fi
 
 if [ $(command -v paxctl 2> /dev/null) ]; then
 	# fixes pax for binary drivers GPGPU
 	# XXX: move this to binary-driver-handler
 	paxctl -m /usr/bin/X || /bin/bash
 	# fixes pax for metasploit/java attacks/wpscan
-	paxctl -m /usr/bin/ruby19 || /bin/bash
-	paxctl -m /usr/bin/ruby20 || /bin/bash
-	paxctl -m /usr/bin/ruby21 || /bin/bash
+	for i in $(ls /usr/bin/ruby2[1-9]); do
+		paxctl -m ${i} || /bin/bash
+	done
 fi
 
 # Setup fonts
@@ -254,11 +257,11 @@ eselect fontconfig enable 57-dejavu-sans-mono.conf || /bin/bash
 eselect fontconfig enable 57-dejavu-sans.conf || /bin/bash
 eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
 
-# Setup kismet & airmon-ng
+# Setup kismet
 [ -e /etc/kismet.conf ] && sed -i -e '/^source=.*/d' /etc/kismet.conf
-[ -e /etc/kismet.conf ] && sed -i -e 's:configdir=.*:configdir=/root/kismet:' -e 's/your_user_here/kismet/' /etc/kismet.conf
-[ -e /etc/kismet.conf ] && useradd -g root kismet
-[ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
+[ -e /etc/kismet.conf ] && sed -i -e 's:configdir=.*:configdir=/home/pentoo/kismet:' /etc/kismet.conf
+#[ -e /etc/kismet.conf ] && useradd -g root kismet
+#[ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
@@ -294,8 +297,7 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-eselect metasploit set metasploit9999
-emerge --config net-analyzer/metasploit:9999 || /bash/bash
+emerge --config net-analyzer/metasploit || /bash/bash
 
 #metasploit first run to create db, etc, and speed up livecd first run
 HOME=/root msfconsole -x exit || /bin/bash
@@ -304,33 +306,42 @@ HOME=/root msfconsole -x exit || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash
 
 #configure freeradius
-#XXX: move this to freeradius init script
-emerge --config net-dialup/freeradius || /bin/bash
+#freeradius does this by itself now, so we don't really need to
+#emerge --config net-dialup/freeradius || /bin/bash
 
 #gtk-theme-switch needs X so do it manually
 echo gtk-theme-name="Xfce-basic" >> /root/.gtkrc-2.0
 echo gtk-icon-theme-name="Tango" >> /root/.gtkrc-2.0
-#su pentoo -c "echo gtk-theme-name="Xfce-basic" >> /home/pentoo/.gtkrc-2.0"
-#su pentoo -c "echo gtk-icon-theme-name="Tango" >> /home/pentoo/.gtkrc-2.0"
+su pentoo -c 'echo gtk-theme-name="Xfce-basic" >> /home/pentoo/.gtkrc-2.0'
+su pentoo -c 'echo gtk-icon-theme-name="Tango" >> /home/pentoo/.gtkrc-2.0'
 
-if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /root/.config/gtk-3.0/settings.ini ]; then
+if [ -f /etc/skel/.config/gtk-3.0/settings.ini ] && [ ! -f /root/.config/gtk-3.0/settings.ini ]; then
 	mkdir -p /root/.config/gtk-3.0/
-	cp /etc/skel/gtk-3.0/settings.ini /root/.config/gtk-3.0/settings.ini || /bin/bash
+	cp /etc/skel/.config/gtk-3.0/settings.ini /root/.config/gtk-3.0/settings.ini || /bin/bash
 fi
-#if [ -f /etc/skel/gtk-3.0/settings.ini ] && [ ! -f /home/pentoo/.config/gtk-3.0/settings.ini ]; then
-#	su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
-#	cp /etc/skel/gtk-3.0/settings.ini /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
-#	chown pentoo.pentoo /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
-#fi
+if [ -f /etc/skel/.config/gtk-3.0/settings.ini ] && [ ! -f /home/pentoo/.config/gtk-3.0/settings.ini ]; then
+	#su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
+	#cp /etc/skel/.config/gtk-3.0/settings.ini /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
+	#chown pentoo.users /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
+        echo "why is /home/pentoo/.config/gtk-3.0/settings.ini missing?"
+	/bin/bash
+fi
 if [ -f /etc/skel/.config/xfce4/terminal/terminalrc ] && [ ! -f /root/.config/xfce4/terminal/terminalrc ]; then
 	mkdir -p /root/.config/xfce4/terminal/
 	cp /etc/skel/.config/xfce4/terminal/terminalrc /root/.config/xfce4/terminal/terminalrc || /bin/bash
 fi
-#if [ -f /etc/skel/.config/xfce4/terminal/terminalrc ] && [ ! -f /home/pentoo/.config/xfce4/terminal/terminalrc ]; then
-#	su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/terminal/"
-#	cp /etc/skel/.config/xfce4/terminal/terminalrc /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
-#	chown pentoo.pentoo /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
-#fi
+if [ -f /etc/skel/.config/xfce4/terminal/terminalrc ] && [ ! -f /home/pentoo/.config/xfce4/terminal/terminalrc ]; then
+	#su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/terminal/"
+	#cp /etc/skel/.config/xfce4/terminal/terminalrc /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
+	#chown pentoo.users /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
+        echo "why is /home/pentoo.config/xfce4/terminal/terminalrc missing?"
+	/bin/bash
+fi
+if [ -f /etc/skel/Desktop/pentoo-installer.desktop ] && [ ! -f /home/pentoo/Desktop/pentoo-installer.desktop ]; then
+	su pentoo -c 'mkdir -p /home/pentoo/desktop'
+	cp /home/pentoo/Desktop/pentoo-installer.deskop
+	chown pentoo.users /home/pentoo/Desktop/pentoo-installer.deskop
+fi
 
 #basic xfce4 setup
 mkdir -p /root/.config/xfce4/
@@ -340,10 +351,10 @@ magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /root/.config/xfce
 sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /root/.config/xfce4/panel/default.xml
 #easy way to adjust wallpaper per install
 mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
-cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
+cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 
-#su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
-#su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
+su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
+su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
 #su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
 #su pentoo -c "cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
 
@@ -351,30 +362,25 @@ if [ -f /etc/skel/.bash_profile ] && [ ! -f /root/.bash_profile ]; then
 	cp /etc/skel/.bash_profile /root/.bash_profile || /bin/bash
 	echo "There was no /root/.bash_profile"
 fi
-#if [ -f /etc/skel/.bash_profile ] && [ ! -f /home/pentoo/.bash_profile ]; then
-#	cp /etc/skel/.bash_profile /home/pentoo/.bash_profile || /bin/bash
-#	chown pentoo.pentoo /home/pentoo/.bash_profile || /bin/bash
-#	echo "There was no /home/pentoo/.bash_profile"
-#fi
+if [ -f /etc/skel/.bash_profile ] && [ ! -f /home/pentoo/.bash_profile ]; then
+	cp /etc/skel/.bash_profile /home/pentoo/.bash_profile || /bin/bash
+	chown pentoo.users /home/pentoo/.bash_profile || /bin/bash
+	echo "There was no /home/pentoo/.bash_profile"
+fi
 
 if [ -f /etc/skel/.Xdefaults ] && [ ! -f /root/.Xdefaults ]; then
 	cp /etc/skel/.Xdefaults /root/.Xdefaults || /bin/bash
 	echo "There was no /root/.Xdefaults"
 fi
-#if [ -f /etc/skel/.Xdefaults ] && [ ! -f /home/pentoo/.Xdefaults ]; then
-#	cp /etc/skel/.Xdefaults /home/pentoo/.Xdefaults || /bin/bash
-#	chown pentoo.pentoo /home/pentoo/.bash_profile || /bin/bash
-#	echo "There was no /home/pentoo/.Xdefaults"
-#fi
+if [ -f /etc/skel/.Xdefaults ] && [ ! -f /home/pentoo/.Xdefaults ]; then
+	cp /etc/skel/.Xdefaults /home/pentoo/.Xdefaults || /bin/bash
+	chown pentoo.users /home/pentoo/.bash_profile || /bin/bash
+	echo "There was no /home/pentoo/.Xdefaults"
+fi
 
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
-
-#XXX HACK ALERT
-emerge -1kb \=sys-apps/openrc-0.18.3 || /bin/bash
-emerge -1 \=app-misc/livecd-tools-9999 || /bin/bash
-#XXX
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
@@ -394,15 +400,6 @@ eselect ruby set ruby21 || /bin/bash
 
 #mossmann said do this or I'm lame
 eselect lapack set 1
-
-eselect bashcomp enable --global base || /bin/bash
-eselect bashcomp enable --global eselect || /bin/bash
-eselect bashcomp enable --global gentoo || /bin/bash
-eselect bashcomp enable --global screen || /bin/bash
-eselect bashcomp enable --global killall  || /bin/bash
-eselect bashcomp enable --global insmod || /bin/bash
-eselect bashcomp enable --global rmmod || /bin/bash
-eselect bashcomp enable --global modprobe || /bin/bash
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then

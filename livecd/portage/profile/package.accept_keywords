@@ -3,6 +3,6 @@ sys-fs/squashfs-tools **
 
 =sys-devel/gcc-4.9.3
 
-<sys-apps/openrc-9999
+=sys-apps/openrc-0.21*
 
-=app-misc/livecd-tools-9999 **
+=sys-kernel/pentoo-sources-4.4.8-r2

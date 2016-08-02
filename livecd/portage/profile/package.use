@@ -1,2 +1,3 @@
 media-libs/mesa pax_kernel
 sys-kernel/pentoo-sources aufs symlink
+dev-java/icedtea pax_kernel
