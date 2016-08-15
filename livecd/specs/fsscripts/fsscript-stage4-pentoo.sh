@@ -22,13 +22,15 @@ fi
 #first we set the python interpreters to match PYTHON_TARGETS
 eselect python set --python2 $(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 1 |sed 's#_#.#') || /bin/bash
 eselect python set --python3 $(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
-python-updater -- --buildpkg=y || /bin/bash
+if [ -x /usr/sbin/python-updater ]; then
+	python-updater -- --buildpkg=y || /bin/bash
+fi
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
-eselect ruby set ruby20 || /bin/bash
+eselect ruby set ruby21 || /bin/bash
 
 revdep-rebuild.py -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
 

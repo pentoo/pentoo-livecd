@@ -46,17 +46,14 @@ eselect python set --python2 ${PYTHON2} || /bin/bash
 eselect python set --python3 ${PYTHON3} || /bin/bash
 ${PYTHON2} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON2#python}
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
-python-updater -- --buildpkg=y || /bin/bash
+if [ -x /usr/sbin/python-updater ];then
+	python-updater -- --buildpkg=y || /bin/bash
+fi
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
-
-#there doesn't actually appear to be a ruby installed at this point except long dead 1.8
-#eselect ruby set ruby20 || /bin/bash
-
-emerge --depclean || /bin/bash
 
 emerge -1 -kb app-portage/gentoolkit || /bin/bash
 portageq list_preserved_libs /
@@ -73,11 +70,11 @@ USE="aufs symlink" emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #emerge -1 -kb app-crypt/johntheripper || /bin/bash
 
 #fix java circular deps in next stage
-emerge --update --oneshot -kb icedtea-bin:7 || /bin/bash
-eselect java-vm set system icedtea-bin-7 || /bin/bash
-#emerge --update --oneshot -kb icedtea:7 || /bin/bash
-#emerge -C icedtea-bin:7 || /bin/bash
-#eselect java-vm set system icedtea-7 || /bin/bash
+emerge --update --oneshot -kb icedtea-bin:8 || /bin/bash
+eselect java-vm set system icedtea-bin-8 || /bin/bash
+emerge --update --oneshot -kb icedtea:8 || /bin/bash
+emerge -C icedtea-bin:8 || /bin/bash
+eselect java-vm set system icedtea-8 || /bin/bash
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
@@ -87,7 +84,9 @@ fi
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso
 [ "$(uname -m)" = "x86" ] && crossdev -s1 -t x86_64
 
+eclean-pkg
+emerge --depclean || /bin/bash
+
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
 
-eclean-pkg

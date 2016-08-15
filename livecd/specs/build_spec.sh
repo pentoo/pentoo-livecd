@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION_STAMP=2015.0
+VERSION_STAMP=2016.0
 if [ "${3}" = stage4-pentoo ]
 then
 	echo "version_stamp: pentoo-${VERSION_STAMP}"
@@ -14,7 +14,7 @@ else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
 #RC=RC4.7_p$(date "+%Y%m%d")
-RC=RC5
+RC=RC5.1
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -25,7 +25,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20160801.tar.xz "
+echo "snapshot: 20160815.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"

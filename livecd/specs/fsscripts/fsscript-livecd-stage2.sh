@@ -220,7 +220,9 @@ fi
 
 
 eselect python set python2.7 || /bin/bash
-python-updater -- --buildpkg=y || /bin/bash
+if [ -x /usr/sbin/python-updater ]; then
+	python-updater -- --buildpkg=y || /bin/bash
+fi
 perl-cleaner --all -- --buildpkg=y || /bin/bash
 
 /var/lib/layman/pentoo/scripts/bug-461824.sh
