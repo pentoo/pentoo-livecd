@@ -380,6 +380,9 @@ if [ -f /etc/skel/.Xdefaults ] && [ ! -f /home/pentoo/.Xdefaults ]; then
 	echo "There was no /home/pentoo/.Xdefaults"
 fi
 
+#force password setting for pentoo user
+echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
+
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
