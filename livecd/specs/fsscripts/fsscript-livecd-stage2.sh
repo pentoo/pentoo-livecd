@@ -443,15 +443,16 @@ rm -rf /var/tmp/portage/debug
 
 ## More with the horrible hack
 # So it seems I have picked /var/log/portage to just randomly spew stuff into
-wget https://raw.githubusercontent.com/pentoo/pentoo-historical/master/genhtml/gen_installedlist.sh
-wget https://raw.githubusercontent.com/pentoo/pentoo-historical/master/genhtml/header.inc
-wget https://raw.githubusercontent.com/pentoo/pentoo-historical/master/genhtml/footer.inc
+pushd /root/gentoollist
 mkdir -p /var/log/portage/tool-list
-sh gen_installedlist.sh > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_`date "+%Y%m%d"`.html
+clst_rel_type=hardened
+rel_version="$(printenv | grep clst_livecd_volid | awk '{print $3,$4,$5}')"
+sh gen_installedlist.sh "${clst_rel_type} ${rel_version}" > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_`date "+%Y%m%d"`.html
 if [ $? -ne 0 ]; then
 	/bin/bash
 fi
-rm -rf gen_installedlist.sh header.inc footer.inc
+popd
+rm -rf /root/gentoollist
 
 rm -rf /var/tmp/portage/*
 eclean-pkg
