@@ -74,7 +74,7 @@ mkdir -p /dev/shm/pentoouser/rootfs/etc/init.d/
 wget https://gitweb.gentoo.org/proj/livecd-tools.git/plain/init.d/fixinittab -O /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
 sed -i '/--autologin/s/root/pentoo/' /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
 #if we are going to force the user to set a password, we shouldn't autologin so many terminals
-sed -i '/s/2 3 4 5 6//' /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
+sed -i 's/2 3 4 5 6//' /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
 chmod 755 /dev/shm/pentoouser/rootfs/etc/init.d/fixinittab
 chown root.root /dev/shm/pentoouser/rootfs/
 mksquashfs /dev/shm/pentoouser/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/pentoouser.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
