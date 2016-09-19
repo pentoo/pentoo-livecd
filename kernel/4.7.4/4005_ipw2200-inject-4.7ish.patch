@@ -1,6 +1,6 @@
 diff -urN linux-2.6.36-gentoo.orig/drivers/net/wireless/ipw2x00/ipw2200.c linux-2.6.36-gentoo/drivers/net/wireless/ipw2x00/ipw2200.c
---- linux-2.6.36-gentoo.orig/drivers/net/wireless/ipw2x00/ipw2200.c	2010-10-21 04:30:22.000000000 +0800
-+++ linux-2.6.36-gentoo/drivers/net/wireless/ipw2x00/ipw2200.c	2010-12-08 22:22:41.937999976 +0800
+--- linux-2.6.36-gentoo.orig/drivers/net/wireless/intel/ipw2x00/ipw2200.c	2010-10-21 04:30:22.000000000 +0800
++++ linux-2.6.36-gentoo/drivers/net/wireless/intel/ipw2x00/ipw2200.c	2010-12-08 22:22:41.937999976 +0800
 @@ -216,6 +216,7 @@
  static int ipw_queue_tx_hcmd(struct ipw_priv *priv, int hcmd, void *buf,
  			     int len, int sync);
@@ -103,8 +103,8 @@ diff -urN linux-2.6.36-gentoo.orig/drivers/net/wireless/ipw2x00/ipw2200.c linux-
  	NULL
  };
 diff -urN linux-2.6.36-gentoo.orig/drivers/net/wireless/ipw2x00/ipw2200.h linux-2.6.36-gentoo/drivers/net/wireless/ipw2x00/ipw2200.h
---- linux-2.6.36-gentoo.orig/drivers/net/wireless/ipw2x00/ipw2200.h	2010-10-21 04:30:22.000000000 +0800
-+++ linux-2.6.36-gentoo/drivers/net/wireless/ipw2x00/ipw2200.h	2010-12-08 22:20:01.561000000 +0800
+--- linux-2.6.36-gentoo.orig/drivers/net/wireless/intel/ipw2x00/ipw2200.h	2010-10-21 04:30:22.000000000 +0800
++++ linux-2.6.36-gentoo/drivers/net/wireless/intel/ipw2x00/ipw2200.h	2010-12-08 22:20:01.561000000 +0800
 @@ -2014,4 +2014,12 @@
  
  #define IPW_MAX_CONFIG_RETRIES 10

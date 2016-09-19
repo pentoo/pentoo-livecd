@@ -1,6 +1,6 @@
 diff -Naur linux-4.4.2-hardened/drivers/net/wireless/zd1211rw/zd_mac.c linux-4.4.2-hardened-zd/drivers/net/wireless/zd1211rw/zd_mac.c
---- linux-4.4.2-hardened/drivers/net/wireless/zd1211rw/zd_mac.c	2016-01-10 18:01:32.000000000 -0500
-+++ linux-4.4.2-hardened-zd/drivers/net/wireless/zd1211rw/zd_mac.c	2016-04-10 22:37:20.658595183 -0400
+--- linux-4.4.2-hardened/drivers/net/wireless/zydas/zd1211rw/zd_mac.c	2016-01-10 18:01:32.000000000 -0500
++++ linux-4.4.2-hardened-zd/drivers/net/wireless/zydas/zd1211rw/zd_mac.c	2016-04-10 22:37:20.658595183 -0400
 @@ -242,14 +242,19 @@
  static int set_rx_filter(struct zd_mac *mac)
  {
