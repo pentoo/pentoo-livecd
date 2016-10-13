@@ -1,0 +1,11 @@
+diff -Naur linux-4.7.4-hardened-pre/net/core/skbuff.c linux-4.7.4-hardened-pre-hate/net/core/skbuff.c
+--- linux-4.7.4-hardened-pre/net/core/skbuff.c	2016-09-19 12:11:34.456370820 -0400
++++ linux-4.7.4-hardened-pre-hate/net/core/skbuff.c	2016-10-13 14:53:19.505357636 -0400
+@@ -1048,6 +1048,7 @@
+ 	/* {transport,network,mac}_header and tail are relative to skb->head */
+ 	if (skb_transport_header_was_set(skb))
+ 		skb->transport_header += off;
++	printk("PAX: network_header:%x off:%x\n", (u32)skb->network_header, off);
+ 	skb->network_header   += off;
+ 	if (skb_mac_header_was_set(skb))
+ 		skb->mac_header += off;
