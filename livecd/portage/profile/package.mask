@@ -2,7 +2,7 @@
 ~sys-apps/portage-2.2.27
 
 #trying to troubleshoot what is pulling in old xorg-server
-<x11-base/xorg-server-1.13
+<x11-base/xorg-server-1.18
 
 #help force a preference for self-built so it actually runs on hardened
 www-client/firefox-bin
@@ -11,7 +11,7 @@ www-client/firefox-bin
 mail-mta/nullmailer
 mail-mta/msmtp
 
-<sys-kernel/pentoo-sources-4.4.8
+<sys-kernel/pentoo-sources-4.7.10
 
 #force upgrade
 <sys-devel/libtool-2.4.3-r2:2
@@ -34,3 +34,6 @@ sys-apps/systemd
 
 #troubleshooting, what requires the failing pip
 dev-python/pip
+
+#bye old perl
+=dev-lang/perl-5.20*

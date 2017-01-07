@@ -2,6 +2,7 @@
 source /etc/profile
 env-update
 source /tmp/envscript
+arch=$(uname -m)
 
 fix_locale() {
 	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
@@ -64,6 +65,15 @@ cd /etc/init.d/
 ln -s net.lo net.wlan0
 ln -s net.lo net.eth0
 sed -e '/provide net/D' -i dhcpcd || /bin/bash
+if [ -d "/lib64" ]; then
+	if [ ! -d "/lib64/rc/init.d" ]; then
+		mkdir -p /lib64/rc/init.d
+	fi
+else
+	if [ ! -d "/lib/rc/init.d" ]; then
+		mkdir -p /lib/rc/init.d
+	fi
+fi
 rc-update -u || /bin/bash
 
 #default net to null
@@ -118,8 +128,20 @@ cat <<-EOF > /etc/portage/make.conf
 	#FCFLAGS="\${CFLAGS}"
 	#FFLAGS="\${CFLAGS}"
 
-	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
-	USE="binary-drivers cuda opencl qemu -doc -examples -gtk-autostart"
+EOF
+
+if [ $arch = "i686" ]; then
+	cat <<-EOF >> /etc/portage/make.conf
+		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
+		USE="binary-drivers opencl qemu -doc -examples -gtk-autostart"
+EOF
+elif [ $arch = "x86_64" ]; then
+	cat <<-EOF >> /etc/portage/make.conf
+		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
+		USE="binary-drivers cuda opencl qemu -doc -examples -gtk-autostart"
+EOF
+fi
+cat <<-EOF >> /etc/portage/make.conf
 	USE="\${USE} aufs bindist livecd"
 
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not ne to set it.
@@ -150,7 +172,6 @@ else
         hardening=default
 fi
 
-arch=$(uname -m)
 if [ $arch = "i686" ]; then
 	ARCH="x86"
 	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
@@ -203,14 +224,14 @@ emerge --deselect=y sys-fs/zfs || /bin/bash
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-	emerge @preserved-rebuild -q || /bin/bash
+	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge @preserved-rebuild -q || echo "preserved-rebuild failed"
+        emerge --buildpkg=y @preserved-rebuild -q || echo "preserved-rebuild failed"
 fi
 
 revdep-rebuild.py -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
@@ -287,6 +308,7 @@ smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
 #configure postgres
 echo y | emerge --config dev-db/postgresql || /bin/bash
+sleep 1m
 touch /run/openrc/softlevel
 /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
 if [ $? -ne 0 ]; then
@@ -302,7 +324,9 @@ fi
 emerge --config net-analyzer/metasploit || /bash/bash
 
 #metasploit first run to create db, etc, and speed up livecd first run
-HOME=/root msfconsole -x exit || /bin/bash
+if [ -x "/usr/bin/msfconsole" ]; then
+	HOME=/root msfconsole -x exit || /bin/bash
+fi
 
 /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') stop || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash
@@ -408,7 +432,7 @@ eselect lapack set 1
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-	emerge @preserved-rebuild -q || /bin/bash
+	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 revdep-rebuild.py -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
@@ -486,6 +510,10 @@ rsync -aEXu --delete /tmp/edb /var/cache/
 emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
 mv /root/.bashrc.bak /root/.bashrc
+if [ -r /etc/issue.pentoo.logo ]; then
+  rm -f /etc/issue
+  cp -f /etc/issue.pentoo.logo /etc/issue
+fi
 
 updatedb
 sync

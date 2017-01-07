@@ -22,21 +22,21 @@ emerge -1 -kb wgetpaste || /bin/bash
 USE="-directfb" emerge -1 -kb libsdl DirectFB || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge @preserved-rebuild -q || /bin/bash
+        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb @world || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge @preserved-rebuild -q || /bin/bash
+        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 #fix interpreted stuff
 perl-cleaner --all -- --buildpkg=y || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge @preserved-rebuild -q || /bin/bash
+        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
@@ -52,13 +52,14 @@ fi
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge @preserved-rebuild -q || /bin/bash
+        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 emerge -1 -kb app-portage/gentoolkit || /bin/bash
+
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge @preserved-rebuild -q || /bin/bash
+        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 revdep-rebuild.py -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
@@ -78,7 +79,7 @@ eselect java-vm set system icedtea-8 || /bin/bash
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge @preserved-rebuild -q || /bin/bash
+        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso
@@ -89,4 +90,3 @@ emerge --depclean || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
-

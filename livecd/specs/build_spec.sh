@@ -13,8 +13,8 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-#RC=RC4.7_p$(date "+%Y%m%d")
-RC=RC5.1
+RC=RC5.1_pre$(date "+%Y%m%d")
+#RC=RC5.1
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -25,7 +25,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20160825.tar.xz "
+echo "snapshot: 20170107.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -124,7 +124,7 @@ case ${3} in
 		echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
 		echo "# defined in this target.  It is useful for passing arguments to genkernel that"
 		echo "# are not otherwise available via the livecd-stage2 spec file."
-		echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --compress-initramfs-type=xz"
+		echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
 		if [ ${1} = amd64 ] && [ ${2} = default ]
 		then
 			#this adds zfs to just the non-hardened 64 bit kernel
@@ -134,6 +134,9 @@ case ${3} in
 			echo "# on the official release media, it is left blank, but it follows the same"
 			echo "# syntax as livecd/gk_mainargs."
 			echo "boot/kernel/pentoo/gk_kernargs: --zfs"
+		else
+			echo -e "\n#This ensures zfs is turned off and not autodetected to be in use"
+			echo "boot/kernel/pentoo/gk_kernargs: --no-zfs"
 		fi
 
 		echo "# This option is for merging kernel-dependent packages and external modules that"
@@ -190,17 +193,17 @@ case ${3} in
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
-		echo "stage4/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
+		echo "stage4/use: aufs livecd livecd-stage1 -libzfs -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: pentoo/pentoo"
 		#echo "stage4/users: pentoo"
 		;;
 	binpkg-update*)
-		echo "stage4/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
+		echo "stage4/use: aufs livecd livecd-stage1 -libzfs -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
 		;;
 	livecd-stage1)
-		echo "livecd/use: aufs livecd livecd-stage1 -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
+		echo "livecd/use: aufs livecd livecd-stage1 -libzfs -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "livecd/packages: pentoo/pentoo"
 		;;
 esac
