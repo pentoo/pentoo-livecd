@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.7.7-pentoo Kernel Configuration
+# Linux/x86 4.7.10-pentoo Kernel Configuration
 #
 CONFIG_64BIT=y
 CONFIG_X86_64=y
@@ -2072,8 +2072,8 @@ CONFIG_VIRTIO_BLK=y
 # CONFIG_BLK_DEV_HD is not set
 CONFIG_BLK_DEV_RBD=m
 CONFIG_BLK_DEV_RSXX=m
-CONFIG_NVME_CORE=m
-CONFIG_BLK_DEV_NVME=m
+CONFIG_NVME_CORE=y
+CONFIG_BLK_DEV_NVME=y
 # CONFIG_BLK_DEV_NVME_SCSI is not set
 
 #
