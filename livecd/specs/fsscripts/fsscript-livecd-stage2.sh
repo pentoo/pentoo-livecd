@@ -234,9 +234,9 @@ if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || echo "preserved-rebuild failed"
 fi
 
-revdep-rebuild -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
+revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
 if [ $? -ne 0 ]; then
-	revdep-rebuild -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
+	revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
 fi
 
 
@@ -435,9 +435,9 @@ if [ $? = 0 ]; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
-revdep-rebuild -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
+revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
 if [ $? -ne 0 ]; then
-	revdep-rebuild -i --no-pretend -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
+	revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
 
