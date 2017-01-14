@@ -25,7 +25,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20170107.tar.xz "
+echo "snapshot: 20170114.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -124,7 +124,8 @@ case ${3} in
 		echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
 		echo "# defined in this target.  It is useful for passing arguments to genkernel that"
 		echo "# are not otherwise available via the livecd-stage2 spec file."
-		echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
+		echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --compress-initramfs-type=xz"
+		#echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
 		if [ ${1} = amd64 ] && [ ${2} = default ]
 		then
 			#this adds zfs to just the non-hardened 64 bit kernel
