@@ -11,6 +11,8 @@ fix_locale() {
 
 fix_locale
 
+#revdep-rebuild --library 'libstdc++.so.6' -- --buildpkg=y --usepkg=n --exclude gcc
+
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
 #merge all other desired changes into /etc

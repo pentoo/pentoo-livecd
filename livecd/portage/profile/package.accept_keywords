@@ -10,3 +10,9 @@ sys-fs/squashfs-tools **
 #yay hardened support
 ~www-client/firefox-48.0
 ~dev-libs/nss-3.26
+
+#overlayfs testing
+sys-kernel/genkernel **
+
+#liquid-dsp testing
+net-libs/liquid-dsp **

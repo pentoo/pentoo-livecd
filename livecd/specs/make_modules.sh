@@ -44,15 +44,17 @@ mkdir -p /catalyst/tmp/portage/portage/distfiles
 mkdir -p /catalyst/tmp/portage/portage/packages
 ##add the distfiles we want
 mkdir -p /dev/shm/distfiles/rootfs/usr/portage/distfiles/
-DISTDIR=/dev/shm/distfiles/ emerge -FO ati-drivers
+#DISTDIR=/dev/shm/distfiles/ emerge -FO ati-drivers
 DISTDIR=/dev/shm/distfiles/ emerge -FO nvidia-drivers
 mkdir -p /dev/shm/distfiles/tmp
-cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/
-rsync -aEXu --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs/usr/portage/distfiles/
+#cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/
+cp /dev/shm/distfiles/*[Ll]inux* /dev/shm/distfiles/tmp/
+rsync -aEXu --progress --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs/usr/portage/distfiles/
 chown root.root /dev/shm/portage/rootfs/usr
 chown root.root /dev/shm/portage/rootfs
 chown root.root /dev/shm/portage
 chown portage.portage -R /dev/shm/portage/rootfs/usr/portage
+
 # make the squashfs module
 filename=$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh)
 version="${filename%.*}"
@@ -63,7 +65,11 @@ rm -rf /catalyst/tmp/portage/portage/packages
 ##make the pentoo overlay module
 layman -s pentoo
 mkdir -p /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo/
-rsync -aEXu --delete /var/lib/layman/pentoo/ /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo/
+rsync -aEXu --progress --delete /var/lib/layman/pentoo/ /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo/
+chown root.root /dev/shm/pentoo_portage/rootfs/var/lib/layman
+chown root.root /dev/shm/pentoo_portage/rootfs/var/lib
+chown root.root /dev/shm/pentoo_portage/rootfs/var
+chown portage.portage -R /dev/shm/pentoo_portage/rootfs/var/lib/layman/pentoo
 mksquashfs /dev/shm/pentoo_portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/pentoo_overlay-$(date "+%Y%m%d").lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
 
 #drop the files into the mirror for the next sync

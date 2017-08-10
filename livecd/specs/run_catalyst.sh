@@ -37,9 +37,10 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
+	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed
+	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
-	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed
 	for stage in livecd-stage2
 	do
 		#building in tmpfs isn't exactly friendly on my ram usage, so let's limit to one catalyst at a time
@@ -111,11 +112,7 @@ done
 #until catalyst -f /tmp/x86-hardened-livecd-stage2.spec; do echo failed; sleep 30; done
 
 #sync packages
-if [ ${ARCH} = amd64 ]; then
-	rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
-elif [ ${ARCH} = x86 ]; then
-	rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/x86-${PROFILE} /mnt/mirror/local_mirror/Packages/
-fi
+rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
 
 /mnt/mirror/mirror.sh
 

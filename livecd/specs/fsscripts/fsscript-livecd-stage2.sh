@@ -144,7 +144,10 @@ fi
 cat <<-EOF >> /etc/portage/make.conf
 	USE="\${USE} aufs bindist livecd"
 
-	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not ne to set it.
+	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not need to set it.
+
+	#EMERGE_DEFAULT_OPTS is not set automatically, and the X's should be set equal to number of processors
+	#EMERGE_DEFAULT_OPTS="--jobs=X --load-average=X"
 
 	#Please set your input devices, if you are only using evdev you may completely remove this line
 	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
@@ -156,8 +159,6 @@ cat <<-EOF >> /etc/portage/make.conf
 
 	#This line may be removed if you do not have an nvidia gpu
 	ACCEPT_LICENSE="NVIDIA-CUDA"
-
-	source /var/lib/layman/make.conf
 EOF
 
 #deleting this earlier causes the above calls to portageq to break
@@ -262,13 +263,10 @@ if [ -f /etc/xdg/menus/gnome-applications.menu ]; then
 	cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
 fi
 
-if [ $(command -v paxctl 2> /dev/null) ]; then
-	# fixes pax for binary drivers GPGPU
-	# XXX: move this to binary-driver-handler
-	paxctl -m /usr/bin/X || /bin/bash
+if [ $(command -v paxctl-ng 2> /dev/null) ]; then
 	# fixes pax for metasploit/java attacks/wpscan
 	for i in $(ls /usr/bin/ruby2[1-9]); do
-		paxctl -m ${i} || /bin/bash
+		paxctl-ng -m ${i} || /bin/bash
 	done
 fi
 
@@ -425,7 +423,7 @@ sed -i '/^#/!s/localhost/localhost pentoo/' /etc/hosts || /bin/bash
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
 
-eselect ruby set ruby21 || /bin/bash
+eselect ruby set ruby23 || /bin/bash
 
 #mossmann said do this or I'm lame
 eselect lapack set 1

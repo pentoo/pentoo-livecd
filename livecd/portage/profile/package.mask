@@ -36,4 +36,13 @@ sys-apps/systemd
 dev-python/pip
 
 #bye old perl
-=dev-lang/perl-5.20*
+<dev-lang/perl-5.24
+
+#genkernel
+<sys-kernel/genkernel-3.5.0.8
+
+#no old gcc either
+<sys-devel/gcc-5.4.0
+
+#no old binutils either
+<sys-devel/binutils-2.26.1

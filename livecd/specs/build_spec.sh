@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION_STAMP=2016.0
+VERSION_STAMP=2017.0
 if [ "${3}" = stage4-pentoo ]
 then
 	echo "version_stamp: pentoo-${VERSION_STAMP}"
@@ -13,8 +13,8 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-RC=RC5.1_pre$(date "+%Y%m%d")
-#RC=RC5.1
+RC=RC5.2_pre$(date "+%Y%m%d")
+#RC=RC5.2
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -25,7 +25,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20170114.tar.xz "
+echo "snapshot: 20170809.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -49,19 +49,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20160317.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20170504.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20160317.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20170504.tar.bz2"
 			fi
 		elif [ ${1} = x86 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20160322.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20170509.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20160322.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20170509.tar.bz2"
 			fi
 		fi
 		;;
@@ -124,9 +124,9 @@ case ${3} in
 		echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
 		echo "# defined in this target.  It is useful for passing arguments to genkernel that"
 		echo "# are not otherwise available via the livecd-stage2 spec file."
-		echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --compress-initramfs-type=xz"
+		echo "livecd/gk_mainargs: --disklabel --no-dmraid --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
 		#echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
-		if [ ${1} = amd64 ] && [ ${2} = default ]
+		if [ ${1} = amd64 ]
 		then
 			#this adds zfs to just the non-hardened 64 bit kernel
 			echo -e "\n# This option sets genkernel parameters on a per-kernel basis and applies only"
@@ -144,7 +144,7 @@ case ${3} in
 		echo "# are configured against this kernel label."
 		echo "boot/kernel/pentoo/packages: pentoo/pentoo"
 
-		if [ ${1} = amd64 ] && [ ${2} = default ]
+		if [ ${1} = amd64 ]
 		then
 			echo "sys-fs/zfs"
 		fi
