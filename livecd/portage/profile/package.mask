@@ -22,8 +22,8 @@ mail-mta/msmtp
 sys-apps/paludis
 
 #we don't really want mysql if we can avoid it, try to avoid it
-virtual/mysql
 dev-db/mysql
+dev-db/mysql-cluster
 
 sys-apps/systemd
 

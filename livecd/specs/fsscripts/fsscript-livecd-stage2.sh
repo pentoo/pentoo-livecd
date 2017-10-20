@@ -291,10 +291,6 @@ mkdir /var/log/tor || /bin/bash
 chown tor:tor /var/lib/tor || /bin/bash
 chown tor:tor /var/log/tor || /bin/bash
 
-# Setup ntop
-chmod 777 -R /var/lib/ntop || /bin/bash
-ntop --set-admin-password=pentoo || /bin/bash
-
 # Configure mysql
 #echo '[client]' > /root/.my.cnf
 #echo 'password=pentoo' >> /root/.my.cnf

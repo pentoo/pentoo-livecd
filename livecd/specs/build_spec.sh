@@ -13,8 +13,8 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-RC=RC5.2_pre$(date "+%Y%m%d")
-#RC=RC5.2
+RC=RC5.5_pre$(date "+%Y%m%d")
+#RC=RC5.5
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -25,7 +25,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20170809.tar.xz "
+echo "snapshot: 20171020.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
