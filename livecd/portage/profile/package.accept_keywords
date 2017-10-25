@@ -13,6 +13,3 @@ sys-fs/squashfs-tools **
 
 #overlayfs testing
 sys-kernel/genkernel **
-
-#liquid-dsp testing
-net-libs/liquid-dsp **
