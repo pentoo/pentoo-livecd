@@ -20,8 +20,8 @@ mv /root/.bashrc /root/.bashrc.bak
 
 #user gets wierd groups, fix it for us
 #defaults users,wheel,audio,plugdev,games,cdrom,disk,floppy,usb
-gpasswd -d pento games #remove from games group
-usermod -a -G video,cdrw,android,kismet,wireshark,portage
+gpasswd -d pentoo games #remove from games group
+usermod -a -G video,cdrw,android,kismet,wireshark,portage pentoo
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
