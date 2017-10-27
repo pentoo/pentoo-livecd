@@ -43,7 +43,7 @@ livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default b
 # this option.  It can follow the same syntax as livcd/rcadd, or you can leave
 # the runlevel off to remove the script from any runlevels detected.  We do not
 # use this on the official media, so it is left blank.
-livecd/rcdel: bluetooth|default mdraid|boot netmount|default
+livecd/rcdel: netmount|default bluetooth|default mdraid|boot
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,

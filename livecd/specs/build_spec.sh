@@ -49,19 +49,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20170504.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20171019.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20170504.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20171019.tar.bz2"
 			fi
 		elif [ ${1} = x86 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20170509.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20171024.tar.bz2"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20170509.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20171024.tar.bz2"
 			fi
 		fi
 		;;
