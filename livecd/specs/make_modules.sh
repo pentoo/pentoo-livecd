@@ -39,9 +39,9 @@ rm -rf /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/*
 
 ##make the gentoo portage module
 mkdir -p /dev/shm/portage/rootfs/usr/
-rsync -aEXu --delete /catalyst/tmp/portage/portage /dev/shm/portage/rootfs/usr/
-mkdir -p /catalyst/tmp/portage/portage/distfiles
-mkdir -p /catalyst/tmp/portage/portage/packages
+rsync -aEXu --delete /catalyst/tmp/repos/portage /dev/shm/portage/rootfs/usr/
+mkdir -p /catalyst/tmp/repos/portage/distfiles
+mkdir -p /catalyst/tmp/repos/portage/packages
 ##add the distfiles we want
 mkdir -p /dev/shm/distfiles/rootfs/usr/portage/distfiles/
 #DISTDIR=/dev/shm/distfiles/ emerge -FO ati-drivers
@@ -59,8 +59,8 @@ chown portage.portage -R /dev/shm/portage/rootfs/usr/portage
 filename=$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh)
 version="${filename%.*}"
 mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage-${version%.*}.lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
-rm -rf /catalyst/tmp/portage/portage/distfiles
-rm -rf /catalyst/tmp/portage/portage/packages
+rm -rf /catalyst/tmp/repos/portage/distfiles
+rm -rf /catalyst/tmp/repos/portage/packages
 
 ##make the pentoo overlay module
 layman -s pentoo

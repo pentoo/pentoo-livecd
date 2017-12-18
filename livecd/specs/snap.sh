@@ -10,6 +10,6 @@ do
 done
 emerge --sync
 sed "s#$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh)#$(date "+%Y%m%d").tar.xz#" /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh > /tmp/build_spec.sh
-catalyst -s $(date "+%Y%m%d") -C compression_mode=pixz_x
+catalyst -s $(date "+%Y%m%d") -C options=keepwork compression_mode=pixz_x
 mv /tmp/build_spec.sh /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh
 /usr/src/pentoo/pentoo-livecd/livecd/specs/make_modules.sh
