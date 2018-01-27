@@ -13,6 +13,10 @@ fix_locale() {
 	eselect locale set en_US.utf8 || /bin/bash
 }
 
+#just in case, this seems to keep getting messed up
+chown -R portage.portage /usr/portage
+chown -R portage.portage /var/lib/layman/pentoo
+
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
 #somehow the default .bashrc runs X.... WTF????
@@ -107,7 +111,7 @@ eselect news read --quiet all || /bin/bash
 layman -L || /bin/bash
 #layman -s pentoo || ( layman -a pentoo || /bin/bash )
 layman -a pentoo || /bin/bash
-rsync -aEXu --delete /usr/local/portage/ /var/lib/layman/pentoo/ || /bin/bash
+rsync -aEXu --delete /var/gentoo/repos/local/ /var/lib/layman/pentoo/ || /bin/bash
 
 #WARNING WARNING WARING
 #DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
@@ -154,7 +158,7 @@ cat <<-EOF >> /etc/portage/make.conf
 
 	#Default VIDEO_CARDS setting enables nearly everything, you can enable fewer here if you like:
 	#At a minimum you should have these PLUS your specific videocard
-	#VIDEO_CARDS="vesa vga fbdev"
+	#VIDEO_CARDS="vga fbdev"
 	#you can check available options with "emerge -vp xorg-drivers"
 
 	#This line may be removed if you do not have an nvidia gpu

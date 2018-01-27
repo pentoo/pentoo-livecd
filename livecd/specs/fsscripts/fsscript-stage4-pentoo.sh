@@ -35,7 +35,8 @@ eselect ruby set ruby23 || /bin/bash
 
 revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
 
-/usr/local/portage/scripts/bug-461824.sh
+[ -x /usr/local/portage/scripts/bug-461824.sh ] && /usr/local/portage/scripts/bug-461824.sh
+[ -x /var/gentoo/repos/local/scripts/bug-461824.sh ] && /var/gentoo/repos/local/scripts/bug-461824.sh
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash

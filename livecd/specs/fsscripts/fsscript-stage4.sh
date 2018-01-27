@@ -21,6 +21,11 @@ etc-update --automode -5 || /bin/bash
 emerge -1 -kb wgetpaste || /bin/bash
 
 #ease transition to the new use flags
+USE="-qt5" emerge -1 -kb cmake || /bin/bash
+portageq list_preserved_libs /
+if [ $? = 0 ]; then
+        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
+fi
 USE="-directfb" emerge -1 -kb libsdl DirectFB || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
@@ -66,7 +71,8 @@ fi
 
 revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
 
-/usr/local/portage/scripts/bug-461824.sh
+[ -x /usr/local/portage/scripts/bug-461824.sh ] && /usr/local/portage/scripts/bug-461824.sh
+[ -x /var/gentoo/repos/local/scripts/bug-461824.sh ] && /var/gentoo/repos/local/scripts/bug-461824.sh
 
 #some things fail in livecd-stage1 but work here, nfc why
 USE="aufs symlink" emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
@@ -75,9 +81,10 @@ USE="aufs symlink" emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #fix java circular deps in next stage
 emerge --update --oneshot -kb icedtea-bin:8 || /bin/bash
 eselect java-vm set system icedtea-bin-8 || /bin/bash
-emerge --update --oneshot -kb icedtea:8 || /bin/bash
-emerge -C icedtea-bin:8 || /bin/bash
-eselect java-vm set system icedtea-8 || /bin/bash
+## Unable to make this build today
+#emerge --update --oneshot -kb icedtea:8 || /bin/bash
+#emerge -C icedtea-bin:8 || /bin/bash
+#eselect java-vm set system icedtea-8 || /bin/bash
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then

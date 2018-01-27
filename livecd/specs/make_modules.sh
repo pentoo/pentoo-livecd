@@ -44,11 +44,14 @@ mkdir -p /catalyst/tmp/repos/portage/distfiles
 mkdir -p /catalyst/tmp/repos/portage/packages
 ##add the distfiles we want
 mkdir -p /dev/shm/distfiles/rootfs/usr/portage/distfiles/
+##if we don't clean this out it gets big.  this box doesn't reboot much
+rm -rf /dev/shm/distfiles/*
 #DISTDIR=/dev/shm/distfiles/ emerge -FO ati-drivers
 DISTDIR=/dev/shm/distfiles/ emerge -FO nvidia-drivers
+rm -rf /dev/shm/distfiles/tmp
 mkdir -p /dev/shm/distfiles/tmp
 #cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/
-cp /dev/shm/distfiles/*[Ll]inux* /dev/shm/distfiles/tmp/
+cp /dev/shm/distfiles/*[Ll]inux-x86* /dev/shm/distfiles/tmp/
 rsync -aEXu --progress --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs/usr/portage/distfiles/
 chown root.root /dev/shm/portage/rootfs/usr
 chown root.root /dev/shm/portage/rootfs
