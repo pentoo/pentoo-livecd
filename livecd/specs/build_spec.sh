@@ -13,8 +13,8 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-#RC=RC5.7_pre$(date "+%Y%m%d")
-RC=RC5.6
+RC=RC5.8_pre$(date "+%Y%m%d")
+#RC=RC5.8
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -25,7 +25,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20180126.tar.xz "
+echo "snapshot: 20180207.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -49,19 +49,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20171019.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20180206T214502Z.tar.xz"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20171019.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20180206T214502Z.tar.xz"
 			fi
 		elif [ ${1} = x86 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20171024.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20180117T214502Z.tar.xz"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20171024.tar.bz2"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20180117T214502Z.tar.xz"
 			fi
 		fi
 		;;
@@ -126,28 +126,28 @@ case ${3} in
 		echo "# are not otherwise available via the livecd-stage2 spec file."
 		echo "livecd/gk_mainargs: --disklabel --no-dmraid --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
 		#echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
-		if [ ${1} = amd64 ]
-		then
+		#if [ ${1} = amd64 ]
+		#then
 			#this adds zfs to just the non-hardened 64 bit kernel
-			echo -e "\n# This option sets genkernel parameters on a per-kernel basis and applies only"
-			echo "# to this kernel label.  This can be used for building options into only a"
-			echo "# single kernel, where compatibility may be an issue.  Since we do not use this"
-			echo "# on the official release media, it is left blank, but it follows the same"
-			echo "# syntax as livecd/gk_mainargs."
-			echo "boot/kernel/pentoo/gk_kernargs: --zfs"
-		else
+		#	echo -e "\n# This option sets genkernel parameters on a per-kernel basis and applies only"
+		#	echo "# to this kernel label.  This can be used for building options into only a"
+		#	echo "# single kernel, where compatibility may be an issue.  Since we do not use this"
+		#	echo "# on the official release media, it is left blank, but it follows the same"
+		#	echo "# syntax as livecd/gk_mainargs."
+		#	echo "boot/kernel/pentoo/gk_kernargs: --zfs"
+		#else
 			echo -e "\n#This ensures zfs is turned off and not autodetected to be in use"
 			echo "boot/kernel/pentoo/gk_kernargs: --no-zfs"
-		fi
+		#fi
 
 		echo "# This option is for merging kernel-dependent packages and external modules that"
 		echo "# are configured against this kernel label."
 		echo "boot/kernel/pentoo/packages: pentoo/pentoo"
 
-		if [ ${1} = amd64 ]
-		then
-			echo "sys-fs/zfs"
-		fi
+		#if [ ${1} = amd64 ]
+		#then
+		#	echo "sys-fs/zfs"
+		#fi
 
 esac
 

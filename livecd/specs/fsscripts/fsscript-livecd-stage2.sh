@@ -283,10 +283,11 @@ eselect fontconfig enable 57-dejavu-sans.conf || /bin/bash
 eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
 
 # Setup kismet
-[ -e /etc/kismet.conf ] && sed -i -e '/^source=.*/d' /etc/kismet.conf
-[ -e /etc/kismet.conf ] && sed -i -e 's:configdir=.*:configdir=/home/pentoo/kismet:' /etc/kismet.conf
-#[ -e /etc/kismet.conf ] && useradd -g root kismet
-#[ -e /etc/kismet.conf ] && mkdir /root/kismet && chown kismet /root/kismet
+if [ -e /etc/kismet.conf ]; then
+  sed -i -e '/^source=.*/d' /etc/kismet.conf
+  sed -i -e 's#.kismet#kismet#' /etc/kismet.conf
+  useradd -g pentoo kismet
+fi
 
 # Setup tor-privoxy
 echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
@@ -294,12 +295,6 @@ mv -f /etc/tor/torrc.sample /etc/tor/torrc || /bin/bash
 mkdir /var/log/tor || /bin/bash
 chown tor:tor /var/lib/tor || /bin/bash
 chown tor:tor /var/log/tor || /bin/bash
-
-# Configure mysql
-#echo '[client]' > /root/.my.cnf
-#echo 'password=pentoo' >> /root/.my.cnf
-#emerge --config mysql || /bin/bash
-#rm -f /root/.my.cnf || /bin/bash
 
 #allow this to fail for right now so builds don't randomly stop and piss me off
 smart-live-rebuild -E --timeout=60 -- --buildpkg=y
@@ -310,13 +305,13 @@ sleep 1m
 touch /run/openrc/softlevel
 /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
 if [ $? -ne 0 ]; then
-	sleep 5m
-	/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
-	if [ $? -ne 0 ]; then
-		sleep 5m
-		killall postgres
-		/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start || /bin/bash
-	fi
+  sleep 5m
+  /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
+  if [ $? -ne 0 ]; then
+    sleep 5m
+    killall postgres
+    /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start || /bin/bash
+  fi
 fi
 
 emerge --config net-analyzer/metasploit || /bash/bash
@@ -329,38 +324,6 @@ fi
 /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') stop || /bin/bash
 rm -rf /run/openrc/softlevel || /bin/bash
 
-#configure freeradius
-#freeradius does this by itself now, so we don't really need to
-#emerge --config net-dialup/freeradius || /bin/bash
-
-#gtk-theme-switch needs X so do it manually
-echo gtk-theme-name="Xfce-basic" >> /root/.gtkrc-2.0
-echo gtk-icon-theme-name="Tango" >> /root/.gtkrc-2.0
-su pentoo -c 'echo gtk-theme-name="Xfce-basic" >> /home/pentoo/.gtkrc-2.0'
-su pentoo -c 'echo gtk-icon-theme-name="Tango" >> /home/pentoo/.gtkrc-2.0'
-
-if [ -f /etc/skel/.config/gtk-3.0/settings.ini ] && [ ! -f /root/.config/gtk-3.0/settings.ini ]; then
-	mkdir -p /root/.config/gtk-3.0/
-	cp /etc/skel/.config/gtk-3.0/settings.ini /root/.config/gtk-3.0/settings.ini || /bin/bash
-fi
-if [ -f /etc/skel/.config/gtk-3.0/settings.ini ] && [ ! -f /home/pentoo/.config/gtk-3.0/settings.ini ]; then
-	#su pentoo -c "mkdir -p /home/pentoo/.config/gtk-3.0/"
-	#cp /etc/skel/.config/gtk-3.0/settings.ini /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
-	#chown pentoo.users /home/pentoo/.config/gtk-3.0/settings.ini || /bin/bash
-        echo "why is /home/pentoo/.config/gtk-3.0/settings.ini missing?"
-	/bin/bash
-fi
-if [ -f /etc/skel/.config/xfce4/terminal/terminalrc ] && [ ! -f /root/.config/xfce4/terminal/terminalrc ]; then
-	mkdir -p /root/.config/xfce4/terminal/
-	cp /etc/skel/.config/xfce4/terminal/terminalrc /root/.config/xfce4/terminal/terminalrc || /bin/bash
-fi
-if [ -f /etc/skel/.config/xfce4/terminal/terminalrc ] && [ ! -f /home/pentoo/.config/xfce4/terminal/terminalrc ]; then
-	#su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/terminal/"
-	#cp /etc/skel/.config/xfce4/terminal/terminalrc /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
-	#chown pentoo.users /home/pentoo/.config/xfce4/terminal/terminalrc || /bin/bash
-        echo "why is /home/pentoo.config/xfce4/terminal/terminalrc missing?"
-	/bin/bash
-fi
 if [ -f /etc/skel/Desktop/pentoo-installer.desktop ] && [ ! -f /home/pentoo/Desktop/pentoo-installer.desktop ]; then
 	su pentoo -c 'mkdir -p /home/pentoo/desktop'
 	cp /home/pentoo/Desktop/pentoo-installer.deskop
@@ -368,43 +331,22 @@ if [ -f /etc/skel/Desktop/pentoo-installer.desktop ] && [ ! -f /home/pentoo/Desk
 fi
 
 #basic xfce4 setup
-mkdir -p /root/.config/xfce4/
-cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/ || /bin/bash
+#mkdir -p /root/.config/xfce4/
+#cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/ || /bin/bash
 #magic to autohide panel 2
-magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /root/.config/xfce4/panel/default.xml)+1))
-sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /root/.config/xfce4/panel/default.xml
+#magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /root/.config/xfce4/panel/default.xml)+1))
+#sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /root/.config/xfce4/panel/default.xml
 #easy way to adjust wallpaper per install
-mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
-cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
+#mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
+#cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 
 su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
 su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
-#su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
-#su pentoo -c "cp /usr/share/pentoo/wallpaper/xfce4-desktop.xml /home/pentoo/.config/xfce4/xfconf/xfce-perchannel-xml/" || /bin/bash
-
-if [ -f /etc/skel/.bash_profile ] && [ ! -f /root/.bash_profile ]; then
-	cp /etc/skel/.bash_profile /root/.bash_profile || /bin/bash
-	echo "There was no /root/.bash_profile"
-fi
-if [ -f /etc/skel/.bash_profile ] && [ ! -f /home/pentoo/.bash_profile ]; then
-	cp /etc/skel/.bash_profile /home/pentoo/.bash_profile || /bin/bash
-	chown pentoo.users /home/pentoo/.bash_profile || /bin/bash
-	echo "There was no /home/pentoo/.bash_profile"
-fi
-
-if [ -f /etc/skel/.Xdefaults ] && [ ! -f /root/.Xdefaults ]; then
-	cp /etc/skel/.Xdefaults /root/.Xdefaults || /bin/bash
-	echo "There was no /root/.Xdefaults"
-fi
-if [ -f /etc/skel/.Xdefaults ] && [ ! -f /home/pentoo/.Xdefaults ]; then
-	cp /etc/skel/.Xdefaults /home/pentoo/.Xdefaults || /bin/bash
-	chown pentoo.users /home/pentoo/.bash_profile || /bin/bash
-	echo "There was no /home/pentoo/.Xdefaults"
-fi
+magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.config/xfce4/panel/default.xml)+1))
+sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
 
 #force password setting for pentoo user
 echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
-
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
