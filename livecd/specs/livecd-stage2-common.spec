@@ -2,7 +2,8 @@ livecd/fstype: squashfs
 #livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/grub-memtest86+-cdtar.tar.bz2
 #livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-memtest86+-cdtar.tar.bz2
 #livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-elilo-memtest86+-cdtar.tar.bz2
-livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/pentoo-syslinux-5.10-memtest86plus-4.20.tar.bz2
+#livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/pentoo-syslinux-5.10-memtest86plus-4.20.tar.bz2
+livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-memtest86+-grub2efi-cdtar.tar.bz2
 
 livecd/verify: yup
 
