@@ -2,6 +2,11 @@
 
 set -e
 
+sleepy() {
+  printf "IO at max, sleeping...\n"
+  sleep 15
+}
+
 ARCH="$1"
 PROFILE="$2"
 
@@ -37,62 +42,65 @@ done
 #then the actual builds
 for arch in ${ARCH}
 do
+	#This is a "full" livecd run
+	#for stage in stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2
+
 	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	#for stage in binpkg-update-seed livecd-stage2
-	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
-	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
-	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2
+	case ${3:-missing} in
+	  livecd-all)    targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
+	  livecd-full)   targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
+	  livecd)        targets="stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage1)        targets="stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage2)        targets="stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage3)        targets="stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage4)        targets="stage4 stage4-pentoo livecd-stage2" ;;
+	  stage4-pentoo) targets="stage4-pentoo livecd-stage2" ;;
+	  livecd-stage2) targets="livecd-stage2" ;;
+	  *) printf "Requested build invalid\n"; exit 1 ;;
+	esac
+	for stage in ${targets}
 	do
-		#building in tmpfs isn't exactly friendly on my ram usage, so let's limit to one catalyst at a time
-		#while ps aux | grep "[c]atalyst -f"
-		#do
-		#	echo "Catalyst already running, sleeping 2m"
-		#	sleep 2m
-		#done
 		#IO load is CRUSHING my build system, so if a heavy IO operation is running, hold off on starting the next one
 		#rsync is used to copy from livecd-stage1 to livecd-stage2
 		while ps aux | grep "[r]sync -a --delete /catalyst/"
 		do
-			echo "IO at max, sleeping 2m"
-			sleep 2m
+			sleepy
 		done
 		#this is unpacking a stage
 		while ps aux | grep "[x]pf /catalyst/"
 		do
-			echo "IO at max, sleeping 2m"
-			sleep 2m
+			sleepy
 		done
 		#this is packing a stage
 		while ps aux | grep "[c]pf /catalyst/"
 		do
-			echo "IO at max, sleeping 2m"
-			sleep 2m
+			sleepy
 		done
 		#removing tempfiles when complete
 		while ps aux | grep "[r]m -rf /catalyst/tmp/"
 		do
-			echo "IO at max, sleeping 2m"
-			sleep 2m
+			sleepy
 		done
 		#end excessive IO handling
 
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${subarch}-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${subarch}-*
 		fi
 		if [ "${stage}" = "stage4-pentoo" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/stage4-${subarch}-pentoo-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${subarch}-pentoo-*
 		fi
 		if [ "${stage}" = "binpkg-update-seed" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/stage4-${subarch}-binpkg-update-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/stage4-${subarch}-binpkg-update-*
 		fi
 		if [ "${stage}" = "livecd-stage2" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${subarch}-2015.0
-			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${subarch}-2015.0
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${subarch}-*
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${subarch}-*
 		fi
 	#	if [ $? -ne 0 ]; then
 	#		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
@@ -117,17 +125,17 @@ rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${P
 /mnt/mirror/mirror.sh
 
 #last generate the sig and torrent
-#RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
-#RC="${RC:0:7}$(date "+%Y%m%d")"
-#for arch in ${ARCH}
-#do
-#	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
-#	then
+RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
+RC="${RC:0:7}$(date "+%Y%m%d")"
+for arch in ${ARCH}
+do
+	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
+	then
 #		GPG_TTY=$(tty) gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
 #		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
-#
-#		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
-#		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
-#		mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
-#	fi
-#done
+
+		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
+		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+		mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+	fi
+done

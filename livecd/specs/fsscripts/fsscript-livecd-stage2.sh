@@ -212,7 +212,8 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	cp -a /usr/src/linux/?odule* /tmp/kernel_maps/
 	cp -a /usr/src/linux/System.map /tmp/kernel_maps/
 	cd /usr/src/linux
-	make -j mrproper
+	#mrproper wipes the random seed and means we cannot build modules, be careful here
+	make -j clean
 	cp -a /var/tmp/pentoo.config /usr/src/linux/.config
 	cp -a /tmp/kernel_maps/* /usr/src/linux
 	make -j prepare
