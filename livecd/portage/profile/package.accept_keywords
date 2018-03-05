@@ -1,11 +1,7 @@
 <sys-apps/portage-9999
-sys-fs/squashfs-tools **
-
-=sys-devel/gcc-4.9.3
-
+#sys-fs/squashfs-tools **
+#
 =sys-apps/openrc-0.21*
-
-=sys-kernel/pentoo-sources-4.4.8-r2
 
 #yay hardened support
 ~www-client/firefox-48.0

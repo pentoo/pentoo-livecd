@@ -137,12 +137,12 @@ EOF
 if [ $arch = "i686" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
 		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-		USE="binary-drivers opencl qemu -doc -examples -gtk-autostart"
+		USE="binary-drivers opencl -doc -examples -gtk-autostart"
 EOF
 elif [ $arch = "x86_64" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
 		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
-		USE="binary-drivers cuda opencl qemu -doc -examples -gtk-autostart"
+		USE="binary-drivers cuda opencl -doc -examples -gtk-autostart"
 EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
@@ -209,13 +209,13 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 		rm -rf /tmp/kernel_maps
 	fi
 	mkdir /tmp/kernel_maps
-	cp -a /usr/src/linux/?odule* /tmp/kernel_maps/
-	cp -a /usr/src/linux/System.map /tmp/kernel_maps/
+	#cp -a /usr/src/linux/?odule* /tmp/kernel_maps/
+	#cp -a /usr/src/linux/System.map /tmp/kernel_maps/
 	cd /usr/src/linux
 	#mrproper wipes the random seed and means we cannot build modules, be careful here
 	make -j clean
-	cp -a /var/tmp/pentoo.config /usr/src/linux/.config
-	cp -a /tmp/kernel_maps/* /usr/src/linux
+	#cp -a /var/tmp/pentoo.config /usr/src/linux/.config
+	#cp -a /tmp/kernel_maps/* /usr/src/linux
 	make -j prepare
 	make -j modules_prepare
 done

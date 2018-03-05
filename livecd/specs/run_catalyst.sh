@@ -7,6 +7,31 @@ sleepy() {
   sleep 15
 }
 
+check_io() {
+  #IO load is CRUSHING my build system, so if a heavy IO operation is running, hold off on starting the next one
+  #rsync is used to copy from livecd-stage1 to livecd-stage2
+  while pgrep  -f "[r]sync .* /catalyst/"
+  do
+    sleepy
+  done
+  #this is unpacking a stage
+  while pgrep -f "[x]pf /catalyst/"
+  do
+    sleepy
+  done
+  #this is packing a stage
+  while pgrep -f "[c]pf /catalyst/"
+  do
+    sleepy
+  done
+  #removing tempfiles when complete
+  while pgrep -f "[r]m -rf /catalyst/tmp/"
+  do
+    sleepy
+  done
+  #end excessive IO handling
+}
+
 ARCH="$1"
 PROFILE="$2"
 
@@ -48,6 +73,7 @@ do
 	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	#for stage in binpkg-update-seed livecd-stage2
 	case ${3:-missing} in
+	  all)           targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
 	  livecd-all)    targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
 	  livecd-full)   targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
 	  livecd)        targets="stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
@@ -61,30 +87,12 @@ do
 	esac
 	for stage in ${targets}
 	do
-		#IO load is CRUSHING my build system, so if a heavy IO operation is running, hold off on starting the next one
-		#rsync is used to copy from livecd-stage1 to livecd-stage2
-		while ps aux | grep "[r]sync -a --delete /catalyst/"
-		do
-			sleepy
-		done
-		#this is unpacking a stage
-		while ps aux | grep "[x]pf /catalyst/"
-		do
-			sleepy
-		done
-		#this is packing a stage
-		while ps aux | grep "[c]pf /catalyst/"
-		do
-			sleepy
-		done
-		#removing tempfiles when complete
-		while ps aux | grep "[r]m -rf /catalyst/tmp/"
-		do
-			sleepy
-		done
-		#end excessive IO handling
+		check_io
 
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
+
+		check_io
+
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]
 		then
 			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${subarch}-*
@@ -120,8 +128,9 @@ done
 #until catalyst -f /tmp/x86-hardened-livecd-stage2.spec; do echo failed; sleep 30; done
 
 #sync packages
+check_io
 rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
-
+check_io
 /mnt/mirror/mirror.sh
 
 #last generate the sig and torrent
