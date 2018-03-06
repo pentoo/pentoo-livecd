@@ -137,12 +137,12 @@ EOF
 if [ $arch = "i686" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
 		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-		USE="binary-drivers opencl -doc -examples -gtk-autostart"
+		USE="binary-drivers opencl"
 EOF
 elif [ $arch = "x86_64" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
 		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
-		USE="binary-drivers cuda opencl -doc -examples -gtk-autostart"
+		USE="binary-drivers cuda opencl"
 EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
