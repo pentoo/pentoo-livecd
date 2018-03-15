@@ -100,7 +100,9 @@ rm -rf /usr/lib/libGLcore.so
 eselect opengl set xorg-x11 || /bin/bash
 
 # Set default java vm
-eselect java-vm set system icedtea-8 || /bin/bash
+if eselect java-vm list | grep icedtea-8; then
+  eselect java-vm set system icedtea-8 || /bin/bash
+fi
 
 #mark all news read
 eselect news read --quiet all || /bin/bash
@@ -149,9 +151,6 @@ cat <<-EOF >> /etc/portage/make.conf
 	USE="\${USE} aufs bindist livecd"
 
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not need to set it.
-
-	#EMERGE_DEFAULT_OPTS is not set automatically, and the X's should be set equal to number of processors
-	#EMERGE_DEFAULT_OPTS="--jobs=X --load-average=X"
 
 	#Please set your input devices, if you are only using evdev you may completely remove this line
 	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
@@ -216,12 +215,13 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	make -j clean
 	#cp -a /var/tmp/pentoo.config /usr/src/linux/.config
 	#cp -a /tmp/kernel_maps/* /usr/src/linux
-	make -j prepare
-	make -j modules_prepare
+	#make -j prepare
+	#make -j modules_prepare
 done
 
 emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
+emerge --deselect=y sys-kernel/pentoo-sources || /bin/bash
 
 /var/lib/layman/pentoo/scripts/bug-461824.sh
 

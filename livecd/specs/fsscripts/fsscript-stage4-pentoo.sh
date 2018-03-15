@@ -2,6 +2,7 @@
 source /tmp/envscript
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
+emerge --deselect=y dev-lang/python:2.7 || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash

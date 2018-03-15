@@ -9,3 +9,6 @@
 
 #overlayfs testing
 sys-kernel/genkernel **
+
+#fancy livecd-tools
+=app-misc/livecd-tools-9999 **

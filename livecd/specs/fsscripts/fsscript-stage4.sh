@@ -82,9 +82,9 @@ USE="aufs symlink" emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 emerge --update --oneshot -kb icedtea-bin:8 || /bin/bash
 eselect java-vm set system icedtea-bin-8 || /bin/bash
 ## Unable to make this build today
-#emerge --update --oneshot -kb icedtea:8 || /bin/bash
-#emerge -C icedtea-bin:8 || /bin/bash
-#eselect java-vm set system icedtea-8 || /bin/bash
+emerge --update --oneshot -kb icedtea:8 || /bin/bash
+emerge -C icedtea-bin:8 || /bin/bash
+eselect java-vm set system icedtea-8 || /bin/bash
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
