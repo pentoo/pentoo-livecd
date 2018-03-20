@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.14.15-gentoo Kernel Configuration
+# Linux/x86 4.14.15-pentoo Kernel Configuration
 #
 
 #
@@ -6312,7 +6312,7 @@ CONFIG_USB_STORAGE_ONETOUCH=y
 CONFIG_USB_STORAGE_KARMA=y
 CONFIG_USB_STORAGE_CYPRESS_ATACB=y
 CONFIG_USB_STORAGE_ENE_UB6250=y
-CONFIG_USB_UAS=m
+CONFIG_USB_UAS=y
 
 #
 # USB Imaging devices
