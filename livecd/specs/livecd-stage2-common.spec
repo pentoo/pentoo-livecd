@@ -19,7 +19,7 @@ livecd/fsscript: fsscripts/fsscript-livecd-stage2.sh
 
 # This is a set of arguments that get passed to the bootloader for your CD.  It
 # is used on the x86/amd64 release media to enable keymap selection.
-livecd/bootargs: nox nodhcp secureconsole overlayfs max_loop=256 dokeymap video=uvesafb:mtrr:3,ywrap,1024x768-16 usbcore.autosuspend=1 console=tty0 net.ifnames=0 scsi_mod.use_blk_mq=1 ipv6.autoconf=0 verify
+livecd/bootargs: nox nodhcp secureconsole overlayfs max_loop=256 dokeymap video=uvesafb:mtrr:3,ywrap,1024x768-16 console=tty0 net.ifnames=0 scsi_mod.use_blk_mq=1 ipv6.autoconf=0 verify
 
 # This option controls quite a bit of catalyst internals and sets up several
 # defaults.  Each type behaves slightly differently and is explained below.

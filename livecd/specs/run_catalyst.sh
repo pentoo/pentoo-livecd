@@ -52,10 +52,6 @@ fi
 #first we prep directories and build all the spec files
 for arch in ${ARCH}
 do
-	rm -rf /catalyst/release/Pentoo_${arch}_${PROFILE} /catalyst/release/Pentoo_Linux_${arch}_${PROFILE}*.torrent
-	mkdir -p /catalyst/release/Pentoo_${arch}_${PROFILE}
-	chmod 777 /catalyst/release/Pentoo_${arch}_${PROFILE}
-
 	for stage in stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed binpkg-update livecd-stage2
 	do
 		#I have nfc why it's loosing exec all of a sudden but I can compensate
@@ -73,20 +69,31 @@ do
 	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	#for stage in binpkg-update-seed livecd-stage2
 	case ${3:-missing} in
-	  all)           targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
-	  livecd-all)    targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
-	  livecd-full)   targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
-	  livecd)        targets="stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
-	  stage1)        targets="stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
-	  stage2)        targets="stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
-	  stage3)        targets="stage3 stage4 stage4-pentoo livecd-stage2" ;;
-	  stage4)        targets="stage4 stage4-pentoo livecd-stage2" ;;
-	  stage4-pentoo) targets="stage4-pentoo livecd-stage2" ;;
-	  livecd-stage2) targets="livecd-stage2" ;;
+	  all)                targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
+	  livecd-all)         targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
+	  livecd-full)        targets="stage1 stage2 stage3 stage4 stage4-pentoo binpkg-update-seed livecd-stage2" ;;
+	  livecd)             targets="stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage1)             targets="stage1 stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage2)             targets="stage2 stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage3)             targets="stage3 stage4 stage4-pentoo livecd-stage2" ;;
+	  stage4)             targets="stage4 stage4-pentoo livecd-stage2" ;;
+	  stage4-pentoo)      targets="stage4-pentoo livecd-stage2" ;;
+	  livecd-stage2)      targets="livecd-stage2" ;;
+	  binpkg-update-seed) targets="binpkg-update-seed" ;;
+	  none)               targets="" ;;
 	  *) printf "Requested build invalid\n"; exit 1 ;;
 	esac
 	for stage in ${targets}
 	do
+		check_io
+
+		if [ "${stage}" = "livecd-stage2" ]
+		then
+			rm -rf /catalyst/release/Pentoo_${arch}_${PROFILE}
+			mkdir -p /catalyst/release/Pentoo_${arch}_${PROFILE}
+			chmod 777 /catalyst/release/Pentoo_${arch}_${PROFILE}
+		fi
+
 		check_io
 
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
@@ -127,24 +134,29 @@ done
 
 #until catalyst -f /tmp/x86-hardened-livecd-stage2.spec; do echo failed; sleep 30; done
 
-#sync packages
-check_io
-rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
-check_io
-/mnt/mirror/mirror.sh
+if [ -n "${TARGETS}" ]; then
+  #sync packages
+  check_io
+  rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
+  check_io
+  /mnt/mirror/mirror.sh
+fi
 
 #last generate the sig and torrent
 RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
-RC="${RC:0:7}$(date "+%Y%m%d")"
+#RC="${RC:0:7}$(date "+%Y%m%d")"
 for arch in ${ARCH}
 do
-	if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]
-	then
-#		GPG_TTY=$(tty) gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-#		/catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
+  if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]; then
+    if [ ! -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS.asc ]; then
+      GPG_TTY=$(tty) gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+      /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
+    fi
 
-		volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
-		mktorrent -a http://tracker.cryptohaze.com/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
-		mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
-	fi
+    volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
+    if [ ! -f "/catalyst/release/Pentoo_${arch}_${PROFILE}/${volid}.torrent" ]; then
+      mktorrent -a udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.open-internet.nl:6969/announce,udp://tracker.skyts.net:6969/announce,udp://tracker.opentrackr.org:1337/announce,udp://inferno.demonoid.pw:3418/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+      mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
+    fi
+  fi
 done
