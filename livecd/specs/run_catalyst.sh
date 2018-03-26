@@ -81,6 +81,7 @@ do
 	  livecd-stage2)      targets="livecd-stage2" ;;
 	  binpkg-update-seed) targets="binpkg-update-seed" ;;
 	  none)               targets="" ;;
+	  release)            targets="" ;;
 	  *) printf "Requested build invalid\n"; exit 1 ;;
 	esac
 	for stage in ${targets}
@@ -149,7 +150,7 @@ for arch in ${ARCH}
 do
   if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]; then
     if [ ! -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS.asc ]; then
-      GPG_TTY=$(tty) gpg --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+      GPG_TTY=$(tty) gpg --verbose --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
       /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
     fi
 
