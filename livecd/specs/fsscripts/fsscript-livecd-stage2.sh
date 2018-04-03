@@ -116,7 +116,7 @@ layman -a pentoo || /bin/bash
 rsync -aEXu --delete /var/gentoo/repos/local/ /var/lib/layman/pentoo/ || /bin/bash
 
 #WARNING WARNING WARING
-#DO NOT edit the line "aufs bindist livecd" without also adjusting pentoo-installer
+#DO NOT edit the line "bindist livecd" without also adjusting pentoo-installer
 #We need to amend pentoo-installer to optionally toggle on and off these use flags, some of may be non-desirable for an installed system
 cat <<-EOF > /etc/portage/make.conf
 	#This is the default Pentoo make.conf file, it controls many basic system settings.
@@ -139,16 +139,16 @@ EOF
 if [ $arch = "i686" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
 		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-		USE="binary-drivers opencl"
+		USE="opencl"
 EOF
 elif [ $arch = "x86_64" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
 		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
-		USE="binary-drivers cuda opencl"
+		USE="cuda opencl"
 EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
-	USE="\${USE} aufs bindist livecd"
+	USE="\${USE} bindist livecd"
 
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not need to set it.
 
@@ -345,8 +345,11 @@ su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
 su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
 magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.config/xfce4/panel/default.xml)+1))
 sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
+#slim dm is much nicer than default xdm
+sed -i 's/"xdm"/"slim"/' /etc/conf.d/xdm
 
 #force password setting for pentoo user
+#todo take the livecd .bashrc and insert this before startx with tty check
 echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
 
 #forcibly untrounce our blacklist, caused by udev remerging
@@ -450,6 +453,7 @@ rm -rf /var/cache/*
 rsync -aEXu --delete /tmp/edb /var/cache/
 emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
+#todo when we no longer need this stub for testing, replace with default
 mv /root/.bashrc.bak /root/.bashrc
 if [ -r /etc/issue.pentoo.logo ]; then
   rm -f /etc/issue
