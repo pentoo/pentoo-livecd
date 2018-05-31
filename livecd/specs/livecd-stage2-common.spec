@@ -37,7 +37,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default bluetooth|default consolekit|default dbus|default gpm|default net.lo|default pwgen|default
+livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default bluetooth|default consolekit|default dbus|default gpm|default net.lo|default pwgen|default pentoo-zram|default pentoo-linux-symlinks|default thermald|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
@@ -77,6 +77,8 @@ boot/kernel/pentoo/use: aufs livecd
 # is left blank.
 # example:
 # boot/kernel/gentoo/extraversion:
+
+livecd/depclean: no
 
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you

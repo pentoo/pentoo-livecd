@@ -8,7 +8,7 @@ fix_locale() {
 	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
 	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
 	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
-	localepurge || /bin/bash
+	#localepurge || /bin/bash
 	locale-gen || /bin/bash
 	eselect locale set en_US.utf8 || /bin/bash
 }
@@ -354,6 +354,8 @@ echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
+
+emerge --depclean --with-bdeps=y
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash

@@ -135,26 +135,27 @@ done
 
 #until catalyst -f /tmp/x86-hardened-livecd-stage2.spec; do echo failed; sleep 30; done
 
-if [ -n "${TARGETS}" ]; then
+#if [ -n "${targets}" ]; then
   #sync packages
   check_io
   rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
   check_io
   /mnt/mirror/mirror.sh
-fi
+#fi
 
 #last generate the sig and torrent
-RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
+source ./build_spec.sh > /dev/null
+#RC="$(grep ^RC= build_spec.sh |cut -d'=' -f2)"
 #RC="${RC:0:7}$(date "+%Y%m%d")"
 for arch in ${ARCH}
 do
-  if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS ]; then
-    if [ ! -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS.asc ]; then
+  if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS ]; then
+    if [ ! -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS.asc ]; then
       GPG_TTY=$(tty) gpg --verbose --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-      /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}.iso.DIGESTS
+      /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS
     fi
 
-    volid="Pentoo_Linux_${arch}_${PROFILE}_$(grep VERSION_STAMP= build_spec.sh | cut -d'=' -f2)_${RC}"
+    volid="Pentoo_Linux_${arch}_${PROFILE}_${VERSION_STAMP}_${RC}"
     if [ ! -f "/catalyst/release/Pentoo_${arch}_${PROFILE}/${volid}.torrent" ]; then
       mktorrent -a udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.open-internet.nl:6969/announce,udp://tracker.skyts.net:6969/announce,udp://tracker.opentrackr.org:1337/announce,udp://inferno.demonoid.pw:3418/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
       mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}

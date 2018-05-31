@@ -81,21 +81,27 @@ USE="aufs symlink" emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #fix java circular deps in next stage
 emerge --update --oneshot -kb icedtea-bin:8 || /bin/bash
 eselect java-vm set system icedtea-bin-8 || /bin/bash
-## Unable to make this build today
-emerge --update --oneshot -kb icedtea:8 || /bin/bash
-emerge -C icedtea-bin:8 || /bin/bash
-eselect java-vm set system icedtea-8 || /bin/bash
+if [ "$(uname -m)" = "x86_64" ]; then
+	## Unable to make this build on x86
+	emerge --update --oneshot -kb icedtea:8 || /bin/bash
+	emerge -C icedtea-bin:8 || /bin/bash
+	eselect java-vm set system icedtea-8 || /bin/bash
+else
+	emerge --update --oneshot -kb dev-lang/rust-bin dev-util/cargo || /bin/bash
+fi
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
-#add 64 bit toolchain to 32 bit iso to build dual kernel iso
-[ "$(uname -m)" = "x86" ] && crossdev -s1 -t x86_64
+#add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
+#[ "$(uname -m)" = "x86" ] && crossdev -s1 -t x86_64
 
 eclean-pkg
-emerge --depclean || /bin/bash
+emerge --depclean --exclude dev-java/icedtea --exclude dev-java/icedtea-bin --exclude sys-kernel/pentoo-sources \
+	--exclude dev-lang/rust-bin --exclude dev-util/cargo --exclude app-text/wgetpaste \
+	--exclude media-libs/libsdl --exclude dev-libs/DirectFB --exclude app-portage/gentoolkit || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
