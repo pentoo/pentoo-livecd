@@ -75,7 +75,7 @@ revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --bui
 [ -x /var/gentoo/repos/local/scripts/bug-461824.sh ] && /var/gentoo/repos/local/scripts/bug-461824.sh
 
 #some things fail in livecd-stage1 but work here, nfc why
-USE="aufs symlink" emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
+emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #emerge -1 -kb app-crypt/johntheripper || /bin/bash
 
 #fix java circular deps in next stage
