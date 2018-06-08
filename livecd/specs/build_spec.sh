@@ -14,8 +14,8 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-#RC=RC6.6_pre$(date "+%Y%m%d")
-RC=RC6.6
+#RC=RC6.8_pre$(date "+%Y%m%d")
+RC=RC6.8
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -26,7 +26,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20180531.tar.xz "
+echo "snapshot: 20180607.tar.xz "
 echo "portage_overlay: /var/lib/layman/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz_x"
@@ -103,15 +103,13 @@ case ${3} in
 			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
 		elif [ ${1} = amd64 ] && [ ${2} = default ]
 		then
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest-soft"
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
 		elif [ ${1} = x86 ] && [ ${2} = hardened ]
 		then
-			#echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
-			#we are using the soft config right now and forcing USE=-pax_kernel due to aufs issues
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest-soft"
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
 		elif [ ${1} = x86 ] && [ ${2} = default ]
 		then
-			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest-soft"
+			echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
 		fi
 
 		echo -e "\n# This allows the optional directory containing the output packages for kernel"
@@ -194,17 +192,17 @@ case ${3} in
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
-		echo "stage4/use: aufs livecd livecd-stage1 -libzfs -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
+		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: pentoo/pentoo"
 		#echo "stage4/users: pentoo"
 		;;
 	binpkg-update*)
-		echo "stage4/use: aufs livecd livecd-stage1 -libzfs -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
+		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
 		;;
 	livecd-stage1)
-		echo "livecd/use: aufs livecd livecd-stage1 -libzfs -vaapi -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
+		echo "livecd/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "livecd/packages: pentoo/pentoo"
 		;;
 esac

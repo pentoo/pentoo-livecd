@@ -15,7 +15,7 @@ fix_locale() {
 
 #just in case, this seems to keep getting messed up
 chown -R portage.portage /usr/portage
-chown -R portage.portage /var/lib/layman/pentoo
+chown -R /var/gentoo/repos/local/
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
@@ -65,10 +65,11 @@ then
 fi
 
 # Fix provide rc-script annoyance
-cd /etc/init.d/
+pushd /etc/init.d/
 ln -s net.lo net.wlan0
 ln -s net.lo net.eth0
 sed -e '/provide net/D' -i dhcpcd || /bin/bash
+popd
 if [ -d "/lib64" ]; then
 	if [ ! -d "/lib64/rc/init.d" ]; then
 		mkdir -p /lib64/rc/init.d
@@ -114,6 +115,7 @@ layman -L || /bin/bash
 #layman -s pentoo || ( layman -a pentoo || /bin/bash )
 layman -a pentoo || /bin/bash
 rsync -aEXu --delete /var/gentoo/repos/local/ /var/lib/layman/pentoo/ || /bin/bash
+chown -R portage.portage /var/lib/layman/pentoo
 
 #WARNING WARNING WARING
 #DO NOT edit the line "bindist livecd" without also adjusting pentoo-installer
@@ -143,8 +145,8 @@ if [ $arch = "i686" ]; then
 EOF
 elif [ $arch = "x86_64" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
-		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove cuda and opencl
-		USE="cuda opencl"
+		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
+		USE="opencl"
 EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
@@ -159,9 +161,6 @@ cat <<-EOF >> /etc/portage/make.conf
 	#At a minimum you should have these PLUS your specific videocard
 	#VIDEO_CARDS="vga fbdev"
 	#you can check available options with "emerge -vp xorg-drivers"
-
-	#This line may be removed if you do not have an nvidia gpu
-	ACCEPT_LICENSE="NVIDIA-CUDA"
 EOF
 
 #deleting this earlier causes the above calls to portageq to break
@@ -210,13 +209,14 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	mkdir /tmp/kernel_maps
 	#cp -a /usr/src/linux/?odule* /tmp/kernel_maps/
 	#cp -a /usr/src/linux/System.map /tmp/kernel_maps/
-	cd /usr/src/linux
+	pushd /usr/src/linux
 	#mrproper wipes the random seed and means we cannot build modules, be careful here
 	make -j clean
 	#cp -a /var/tmp/pentoo.config /usr/src/linux/.config
 	#cp -a /tmp/kernel_maps/* /usr/src/linux
 	#make -j prepare
 	#make -j modules_prepare
+  popd
 done
 
 emerge --deselect=y livecd-tools || /bin/bash
@@ -268,16 +268,17 @@ if [ -f /etc/xdg/menus/gnome-applications.menu ]; then
 	cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || /bin/bash
 fi
 
-if [ $(command -v paxctl-ng 2> /dev/null) ]; then
-	# fixes pax for metasploit/java attacks/wpscan
-	for i in $(ls /usr/bin/ruby2[1-9]); do
-		paxctl-ng -m ${i} || /bin/bash
-	done
-fi
+#if [ $(command -v paxctl-ng 2> /dev/null) ]; then
+#	# fixes pax for metasploit/java attacks/wpscan
+#	for i in $(ls /usr/bin/ruby2[1-9]); do
+#		paxctl-ng -m ${i} || /bin/bash
+#	done
+#fi
 
 # Setup fonts
-cd /usr/share/fonts
+pushd /usr/share/fonts
 mkfontdir * || /bin/bash
+popd
 eselect fontconfig enable 10-sub-pixel-rgb.conf || /bin/bash
 eselect fontconfig enable 57-dejavu-sans-mono.conf || /bin/bash
 eselect fontconfig enable 57-dejavu-sans.conf || /bin/bash
@@ -388,6 +389,8 @@ fi
 rc-update -u || /bin/bash
 
 update-ca-certificates
+
+sed -i 's/ebegin/set -x\nebegin/' /etc/init.d/pentoo-zram
 
 #cleanup temp stuff in /etc/portage from catalyst build
 rm -f /etc/portage/make.conf.old
