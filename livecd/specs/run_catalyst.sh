@@ -93,6 +93,7 @@ do
 			rm -rf /catalyst/release/Pentoo_${arch}_${PROFILE}
 			mkdir -p /catalyst/release/Pentoo_${arch}_${PROFILE}
 			chmod 777 /catalyst/release/Pentoo_${arch}_${PROFILE}
+      rm -rf /catalyst/builds/${PROFILE}/livecd-stage2-${subarch}-2018.0/*
 		fi
 
 		check_io
@@ -151,8 +152,8 @@ for arch in ${ARCH}
 do
   if [ -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS ]; then
     if [ ! -f /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS.asc ]; then
-      GPG_TTY=$(tty) gpg --verbose --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
-      /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS
+      su zero -c "GPG_TTY=$(tty) gpg --verbose --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
+      /catalyst/release/Pentoo_${arch}_${PROFILE}/pentoo-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS"
     fi
 
     volid="Pentoo_Linux_${arch}_${PROFILE}_${VERSION_STAMP}_${RC}"

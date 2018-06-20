@@ -390,8 +390,6 @@ rc-update -u || /bin/bash
 
 update-ca-certificates
 
-sed -i 's/ebegin/set -x\nebegin/' /etc/init.d/pentoo-zram
-
 #cleanup temp stuff in /etc/portage from catalyst build
 rm -f /etc/portage/make.conf.old
 rm -f /etc/portage/make.conf.catalyst
