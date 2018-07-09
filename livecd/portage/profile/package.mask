@@ -28,3 +28,14 @@ sys-kernel/genkernel-next
 <sys-libs/ncurses-6.1-r2
 
 <app-misc/livecd-tools-2.4
+
+<sys-devel/gcc-7
+
+#this gets removed after livecd is built, wtf pulls it in?
+virtual/w3m
+
+#older metasploit
+<net-analyzer/metasploit-4.16.0
+
+#older gnuradio
+#<net-wireless/gnuradio-3.7.13.0

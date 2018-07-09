@@ -1,6 +1,6 @@
 livecd/fstype: squashfs
 #livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-memtest86+-grub2efi-splash-signed-cdtar.tar.bz2
-livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-memtest86+-grub2efi-splash-signed-dual-cdtar.tar.bz2
+#livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-memtest86+-grub2efi-splash-signed-dual-cdtar.tar.bz2
 
 livecd/verify: yup
 

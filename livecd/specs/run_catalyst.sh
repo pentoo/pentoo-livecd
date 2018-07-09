@@ -117,7 +117,7 @@ do
 		if [ "${stage}" = "livecd-stage2" ]
 		then
 			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage1-${subarch}-*
-			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${subarch}-*
+			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${subarch}-*/*
 		fi
 	#	if [ $? -ne 0 ]; then
 	#		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec

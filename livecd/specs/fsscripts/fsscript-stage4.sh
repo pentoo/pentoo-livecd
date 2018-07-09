@@ -26,11 +26,6 @@ portageq list_preserved_libs /
 if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
-USE="-directfb" emerge -1 -kb libsdl DirectFB || /bin/bash
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
-        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
-fi
 
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb @world || /bin/bash
@@ -101,7 +96,7 @@ fi
 eclean-pkg
 emerge --depclean --exclude dev-java/icedtea --exclude dev-java/icedtea-bin --exclude sys-kernel/pentoo-sources \
 	--exclude dev-lang/rust-bin --exclude dev-util/cargo --exclude app-text/wgetpaste \
-	--exclude media-libs/libsdl --exclude dev-libs/DirectFB --exclude app-portage/gentoolkit || /bin/bash
+	--exclude app-portage/gentoolkit || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash

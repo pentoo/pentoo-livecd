@@ -1,1 +1,2 @@
 dev-libs/glib livecd
+x11-base/xorg-server -doc
