@@ -5,8 +5,6 @@ www-client/firefox-bin
 mail-mta/nullmailer
 mail-mta/msmtp
 
-<sys-kernel/pentoo-sources-4.16.11
-
 ##should go without saying but we want portage by default
 sys-apps/paludis
 
@@ -18,8 +16,8 @@ dev-db/mysql-cluster
 dev-python/pip
 
 #gpd pocket needs 1.1.5 and 1.1.6 has a different dep structure so just force over the hurdle
-#<media-libs/alsa-lib-1.1.6
-<media-libs/alsa-lib-1.1.5
+<media-libs/alsa-lib-1.1.6
+#<media-libs/alsa-lib-1.1.5
 
 sys-kernel/genkernel-next
 
@@ -34,8 +32,7 @@ sys-kernel/genkernel-next
 #this gets removed after livecd is built, wtf pulls it in?
 virtual/w3m
 
-#older metasploit
+#old stuff
 <net-analyzer/metasploit-4.16.0
-
-#older gnuradio
-#<net-wireless/gnuradio-3.7.13.0
+<net-wireless/gnuradio-3.7.13.0
+<sys-kernel/pentoo-sources-4.16.11
