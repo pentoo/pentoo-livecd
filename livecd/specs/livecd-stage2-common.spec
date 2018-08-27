@@ -26,7 +26,7 @@ livecd/type: generic-livecd
 # This is for blacklisting modules from being hotplugged that are known to cause
 # problems.  Putting a module name here will keep it from being auto-loaded,
 # even if it is detected by hotplug.
-livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394 ar9170usb radeon radeonsi amdgpu nouveau nvidia fglrx
+livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394 ar9170usb radeon radeonsi nouveau nvidia fglrx
 
 # This is for adding init scripts to runlevels.  The syntax for the init script
 # is the script name, followed by a pipe, followed by the runlevel in which you
@@ -34,14 +34,14 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default bluetooth|default consolekit|default dbus|default gpm|default net.lo|default pwgen|default pentoo-zram|default pentoo-linux-symlinks|default thermald|default
+livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default consolekit|default dbus|default gpm|default net.lo|default pwgen|default pentoo-zram|default pentoo-linux-symlinks|default thermald|default
 
 # This is for removing init script from runlevels.  It is executed after the
 # defaults shipped with catalyst, so it is possible to remove the defaults using
 # this option.  It can follow the same syntax as livcd/rcadd, or you can leave
 # the runlevel off to remove the script from any runlevels detected.  We do not
 # use this on the official media, so it is left blank.
-livecd/rcdel: netmount|default bluetooth|default mdraid|boot
+#livecd/rcdel: netmount|default bluetooth|default mdraid|boot
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,
@@ -65,7 +65,7 @@ boot/kernel/pentoo/sources: pentoo-sources
 # This option sets the USE flags used to build the kernel and also any packages
 # which are defined under this kernel label.  These USE flags are additive from
 # the default USE for the specified profile.
-boot/kernel/pentoo/use: aufs livecd
+boot/kernel/pentoo/use: livecd
 
 # This option appends an extension to the name of your kernel, as viewed by a
 # uname -r/  This also affects any modules built under this kernel label.  This
@@ -75,8 +75,6 @@ boot/kernel/pentoo/use: aufs livecd
 # example:
 # boot/kernel/gentoo/extraversion:
 
-livecd/depclean: no
-
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you
 # add here.  They can potentially break your CD.
@@ -85,7 +83,7 @@ livecd/unmerge: x11-drivers/ati-drivers x11-drivers/nvidia-drivers
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
-livecd/empty: /var/empty /var/log /var/tmp /tmp /var/lib/layman/pentoo /usr/lib/debug /usr/portage
+livecd/empty: /var/empty /var/log /var/tmp /tmp /var/db/repos/pentoo /usr/lib/debug /usr/portage
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

@@ -18,8 +18,6 @@ emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
 
-emerge -1 -kb wgetpaste || /bin/bash
-
 #ease transition to the new use flags
 USE="-qt5" emerge -1 -kb cmake || /bin/bash
 portageq list_preserved_libs /
@@ -95,8 +93,7 @@ fi
 
 eclean-pkg
 emerge --depclean --exclude dev-java/icedtea --exclude dev-java/icedtea-bin --exclude sys-kernel/pentoo-sources \
-	--exclude dev-lang/rust-bin --exclude dev-util/cargo --exclude app-text/wgetpaste \
-	--exclude app-portage/gentoolkit || /bin/bash
+	--exclude dev-lang/rust-bin --exclude dev-util/cargo --exclude app-portage/gentoolkit || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash

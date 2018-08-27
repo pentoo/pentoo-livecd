@@ -15,7 +15,7 @@ fix_locale() {
 
 #just in case, this seems to keep getting messed up
 chown -R portage.portage /usr/portage
-chown -R /var/gentoo/repos/local/
+chown -R portage.portage /var/gentoo/repos/local/
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
@@ -111,11 +111,17 @@ eselect news read --quiet all || /bin/bash
 
 # Add pentoo repo but use only the version we are packaging in the iso
 # this avoids corrupting timestamps in /var/cache/edb/mtimedb
-layman -L || /bin/bash
-#layman -s pentoo || ( layman -a pentoo || /bin/bash )
-layman -a pentoo || /bin/bash
-rsync -aEXu --delete /var/gentoo/repos/local/ /var/lib/layman/pentoo/ || /bin/bash
-chown -R portage.portage /var/lib/layman/pentoo
+mkdir -p /var/db/repos/pentoo || /bin/bash
+rsync -aEXu --delete /var/gentoo/repos/local/ /var/db/repos/pentoo/ || /bin/bash
+chown -R portage.portage /var/db/repos || /bin/bash
+
+detected_use=""
+if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
+  detected_use="-office -pentoo-full"
+fi
+if [ "${clst_version_stamp/kde}" != "${clst_version_stamp}" ]; then
+  detected_use="${detected_use} -xfce kde"
+fi
 
 #WARNING WARNING WARING
 #DO NOT edit the line "bindist livecd" without also adjusting pentoo-installer
@@ -136,30 +142,23 @@ cat <<-EOF > /etc/portage/make.conf
 	#FCFLAGS="\${CFLAGS}"
 	#FFLAGS="\${CFLAGS}"
 
+	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
+  #Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
+	USE="opencl"
 EOF
-
-if [ $arch = "i686" ]; then
-	cat <<-EOF >> /etc/portage/make.conf
-		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-		USE="opencl"
-EOF
-elif [ $arch = "x86_64" ]; then
-	cat <<-EOF >> /etc/portage/make.conf
-		#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-		USE="opencl"
-EOF
+if [ -n "${detected_use}" ]; then
+  cat <<-EOF >> /etc/portage/make.conf
+    USE="${detected_use}"
+  EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
 	USE="\${USE} bindist livecd"
 
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not need to set it.
 
-	#Please set your input devices, if you are only using evdev you may completely remove this line
-	INPUT_DEVICES="${INPUT_DEVICES} synaptics"
-
 	#Default VIDEO_CARDS setting enables nearly everything, you can enable fewer here if you like:
-	#At a minimum you should have these PLUS your specific videocard
-	#VIDEO_CARDS="vga fbdev"
+	#VIDEO_CARDS="nvidia nouveau amdgpu radeon"
+  #Intel gpu should use modesetting driver which isn't optional but the recommended setting is: VIDEO_CARDS="intel i965"
 	#you can check available options with "emerge -vp xorg-drivers"
 EOF
 
@@ -199,7 +198,9 @@ HOME=/tmp eix-update || /bin/bash
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
 portageq has_version / pentoo/tribe && echo 'USE="${USE} -bluetooth -database -exploit -footprint -forensics -forging -fuzzers -mitm -mobile -proxies -qemu -radio -rce -scanner -voip -wireless -wireless-compat"' >> /etc/portage/make.conf
 
-emerge -1 pentoo-installer || /bin/bash
+if [ "$(equery --quiet list pentoo/pentoo-installer 2> /dev/null)" = "pentoo/pentoo-installer-99999999" ]; then
+  emerge -1 pentoo-installer || /bin/bash
+fi
 
 # Fix the kernel config
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
@@ -223,7 +224,7 @@ emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 emerge --deselect=y sys-kernel/pentoo-sources || /bin/bash
 
-/var/lib/layman/pentoo/scripts/bug-461824.sh
+/var/db/repos/pentoo/scripts/bug-461824.sh
 
 #emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99
 #layman -S
@@ -250,9 +251,11 @@ eselect python set python2.7 || /bin/bash
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || /bin/bash
 fi
-perl-cleaner --all -- --buildpkg=y || /bin/bash
+perl-cleaner --ph-clean --modules -- --usepkg=n --buildpkg=y || safe_exit
+#the above line should always be enough
+#perl-cleaner --all -- --usepkg=n --buildpkg=y || /bin/bash
 
-/var/lib/layman/pentoo/scripts/bug-461824.sh
+/var/db/repos/pentoo/scripts/bug-461824.sh
 
 # This makes sure we have the latest and greatest genmenu!
 emerge -1 app-admin/genmenu || /bin/bash
@@ -288,15 +291,18 @@ eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
 if [ -e /etc/kismet.conf ]; then
   sed -i -e '/^source=.*/d' /etc/kismet.conf
   sed -i -e 's#.kismet#kismet#' /etc/kismet.conf
-  useradd -g pentoo kismet
 fi
 
 # Setup tor-privoxy
-echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
-mv -f /etc/tor/torrc.sample /etc/tor/torrc || /bin/bash
-mkdir /var/log/tor || /bin/bash
-chown tor:tor /var/lib/tor || /bin/bash
-chown tor:tor /var/log/tor || /bin/bash
+if [ -d /etc/privoxy ]; then
+  echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
+fi
+if [ -f /etc/tor/torrc.sample ]; then
+  mv -f /etc/tor/torrc.sample /etc/tor/torrc || /bin/bash
+  mkdir /var/log/tor || /bin/bash
+  chown tor:tor /var/lib/tor || /bin/bash
+  chown tor:tor /var/log/tor || /bin/bash
+fi
 
 #allow this to fail for right now so builds don't randomly stop and piss me off
 smart-live-rebuild -E --timeout=60 -- --buildpkg=y
@@ -348,6 +354,8 @@ magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.conf
 sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
 #slim dm is much nicer than default xdm
 sed -i 's/"xdm"/"slim"/' /etc/conf.d/xdm
+#blueman doesn't create this but needs it
+su pentoo -c "mkdir -p /home/pentoo/Downloads"
 
 #force password setting for pentoo user
 #todo take the livecd .bashrc and insert this before startx with tty check
@@ -389,6 +397,9 @@ fi
 rc-update -u || /bin/bash
 
 update-ca-certificates
+
+#setup pinentry to a sane default
+eselect pinentry set pinentry-gtk-2 || eselect pinentry set pinentry-curses
 
 #cleanup temp stuff in /etc/portage from catalyst build
 rm -f /etc/portage/make.conf.old
@@ -452,8 +463,14 @@ sync
 sleep 60
 
 rsync -aEXu --delete /var/cache/edb /tmp/
+rsync -aEXu --delete /var/cache/eix /tmp/
 rm -rf /var/cache/*
 rsync -aEXu --delete /tmp/edb /var/cache/
+rsync -aEXu --delete /tmp/eix /var/cache/
+chown root.portage -R /var/cache/edb
+chown root.portage -R /var/cache/eix
+rm -rf /tmp/edb
+rm -rf /tmp/eix
 emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
 #todo when we no longer need this stub for testing, replace with default

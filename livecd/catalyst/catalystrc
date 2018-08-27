@@ -6,7 +6,6 @@ export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=32 --l
 #export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=1 --quiet --backtrack=99"
 export MAKEOPTS="-j8"
 #export MAKEOPTS="-j1"
-export INPUT_DEVICES="$(portageq envvar INPUT_DEVICES) synaptics"
 export clst_myfeatures="$(portageq envvar FEATURES) parallel-install ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup binpkg-multi-instance"
 export FEATURES="$(portageq envvar FEATURES) parallel-install ebuild-locks -preserve-libs -clean-logs -news splitdebug cgroup binpkg-multi-instance"
 export ACCEPT_LICENSE="Intel-SDP NVIDIA-CUDA"
