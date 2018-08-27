@@ -289,7 +289,6 @@ eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
 
 # Setup kismet
 if [ -e /etc/kismet.conf ]; then
-  sed -i -e '/^source=.*/d' /etc/kismet.conf
   sed -i -e 's#.kismet#kismet#' /etc/kismet.conf
 fi
 
