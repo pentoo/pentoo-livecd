@@ -50,13 +50,8 @@ rm -rf /dev/shm/distfiles/*
 ACCEPT_LICENSE="Broadcom" DISTDIR="/dev/shm/distfiles/" emerge -FO b43-firmware b43legacy-firmware
 ACCEPT_LICENSE="Broadcom" DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* amd64" emerge -fO nvidia-drivers
 DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* x86" linux32 emerge -FO nvidia-drivers
-if [ -e /dev/shm/distfiles/NVIDIA-Linux-x86_64-390.67.run ]; then
-  #remove the older version of 64 bit driver
-  rm -f /dev/shm/distfiles/NVIDIA-Linux-x86_64-390.67.run
-else
-  printf "stop hacking nvidia\n"
-  exit 1
-fi
+#remove the older version of 64 bit driver
+rm -f /dev/shm/distfiles/NVIDIA-Linux-x86_64-390.??.run
 rm -rf /dev/shm/distfiles/tmp
 mkdir -p /dev/shm/distfiles/tmp
 #cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/

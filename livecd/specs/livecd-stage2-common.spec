@@ -83,7 +83,7 @@ livecd/unmerge: x11-drivers/ati-drivers x11-drivers/nvidia-drivers
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
-livecd/empty: /var/empty /var/log /var/tmp /tmp /var/db/repos/pentoo /usr/lib/debug /usr/portage
+livecd/empty: /var/empty /var/log /var/tmp /tmp /var/db/repos/pentoo /usr/lib/debug /usr/portage /etc/portage/patches
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.

@@ -149,7 +149,7 @@ EOF
 if [ -n "${detected_use}" ]; then
   cat <<-EOF >> /etc/portage/make.conf
     USE="${detected_use}"
-  EOF
+EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
 	USE="\${USE} bindist livecd"
@@ -208,15 +208,17 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 		rm -rf /tmp/kernel_maps
 	fi
 	mkdir /tmp/kernel_maps
-	#cp -a /usr/src/linux/?odule* /tmp/kernel_maps/
-	#cp -a /usr/src/linux/System.map /tmp/kernel_maps/
+	cp -a /usr/src/linux/?odule* /tmp/kernel_maps/
+  #make clean doesn't remove this
+  rm -f /tmp/kernel_maps/Module.symvers
+	cp -a /usr/src/linux/System.map /tmp/kernel_maps/
 	pushd /usr/src/linux
 	#mrproper wipes the random seed and means we cannot build modules, be careful here
 	make -j clean
 	#cp -a /var/tmp/pentoo.config /usr/src/linux/.config
-	#cp -a /tmp/kernel_maps/* /usr/src/linux
-	#make -j prepare
-	#make -j modules_prepare
+	cp -a /tmp/kernel_maps/* /usr/src/linux
+	make -j prepare
+	make -j modules_prepare
   popd
 done
 
@@ -261,8 +263,6 @@ perl-cleaner --ph-clean --modules -- --usepkg=n --buildpkg=y || safe_exit
 emerge -1 app-admin/genmenu || /bin/bash
 
 # Runs the menu generator with a specific parameters for a WM
-genmenu.py -e || /bin/bash
-genmenu.py -x || /bin/bash
 su pentoo -c "genmenu.py -e" || /bin/bash
 su pentoo -c "genmenu.py -x" || /bin/bash
 
@@ -288,9 +288,9 @@ eselect fontconfig enable 57-dejavu-sans.conf || /bin/bash
 eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
 
 # Setup kismet
-if [ -e /etc/kismet.conf ]; then
-  sed -i -e 's#.kismet#kismet#' /etc/kismet.conf
-fi
+#if [ -e /etc/kismet.conf ]; then
+#  sed -i -e 's#.kismet#kismet#' /etc/kismet.conf
+#fi
 
 # Setup tor-privoxy
 if [ -d /etc/privoxy ]; then
@@ -333,7 +333,7 @@ rm -rf /run/openrc/softlevel || /bin/bash
 
 if [ -f /etc/skel/Desktop/pentoo-installer.desktop ] && [ ! -f /home/pentoo/Desktop/pentoo-installer.desktop ]; then
 	su pentoo -c 'mkdir -p /home/pentoo/desktop'
-	cp /home/pentoo/Desktop/pentoo-installer.deskop
+	cp /etc/skel/Desktop/pentoo-installer.desktop /home/pentoo/Desktop/pentoo-installer.deskop
 	chown pentoo.users /home/pentoo/Desktop/pentoo-installer.deskop
 fi
 
@@ -478,6 +478,8 @@ if [ -r /etc/issue.pentoo.logo ]; then
   rm -f /etc/issue
   cp -f /etc/issue.pentoo.logo /etc/issue
 fi
+find /root -uid 1001 -exec chown -h root.root {} \;
+find /etc -uid 1001 -exec chown -h root.root {} \;
 
 updatedb
 sync
