@@ -228,7 +228,9 @@ emerge --deselect=y sys-kernel/pentoo-sources || /bin/bash
 
 /var/db/repos/pentoo/scripts/bug-461824.sh
 
-#emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99
+emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99
+emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt
+emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt || /bin/bash
 #layman -S
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 || /bin/bash
 portageq list_preserved_libs /
