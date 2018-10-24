@@ -35,5 +35,5 @@ virtual/w3m
 #old stuff
 <net-analyzer/metasploit-4.16.0
 <net-wireless/gnuradio-3.7.13.0
-<sys-kernel/pentoo-sources-4.17.19
+<sys-kernel/pentoo-sources-4.19.0
 <x11-drivers/nvidia-drivers-390.67

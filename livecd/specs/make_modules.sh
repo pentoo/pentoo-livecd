@@ -46,13 +46,13 @@ mkdir -p /catalyst/tmp/repos/portage/packages
 mkdir -p /dev/shm/distfiles/rootfs/usr/portage/distfiles/
 #make sure it's all in the local store too
 ACCEPT_LICENSE="Broadcom" emerge -FO b43-firmware b43legacy-firmware
-ACCEPT_LICENSE="Broadcom" ACCEPT_KEYWORDS="-* amd64" emerge -fO nvidia-drivers
+ACCEPT_KEYWORDS="-* ~amd64" emerge -fO nvidia-drivers
 ACCEPT_KEYWORDS="-* x86" linux32 emerge -FO nvidia-drivers
 
 ##if we don't clean this out it gets big.  this box doesn't reboot much
 rm -rf /dev/shm/distfiles/*
 ACCEPT_LICENSE="Broadcom" DISTDIR="/dev/shm/distfiles/" emerge -FO b43-firmware b43legacy-firmware
-ACCEPT_LICENSE="Broadcom" DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* amd64" emerge -fO nvidia-drivers
+DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* ~amd64" emerge -fO nvidia-drivers
 DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* x86" linux32 emerge -FO nvidia-drivers
 #remove the older version of 64 bit driver
 rm -f /dev/shm/distfiles/NVIDIA-Linux-x86_64-390.??.run

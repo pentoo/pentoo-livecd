@@ -99,6 +99,7 @@ rm -rf /usr/lib/libGLcore.so
 [ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
 [ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
 eselect opengl set xorg-x11 || /bin/bash
+eselect opencl set ocl-icd || /bin/bash
 
 # Set default java vm
 if eselect java-vm list | grep icedtea-8; then
@@ -193,6 +194,11 @@ sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bas
 # Build the metadata cache
 rm -rf /var/cache/edb/dep || /bin/bash
 emerge --regen || /bin/bash
+
+#this file isn't created but eix needs it
+touch /var/cache/eix/portage.eix
+chown root.portage /var/cache/eix/portage.eix
+chmod 664 /var/cache/eix/portage.eix
 HOME=/tmp eix-update || /bin/bash
 
 portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf

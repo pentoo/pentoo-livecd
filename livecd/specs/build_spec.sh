@@ -20,8 +20,7 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-#RC=RC8_p$(date "+%Y%m%d")
-RC=RC8_p20180906
+RC=RC8_p$(date "+%Y%m%d")
 #RC=RC8
 
 if [ "${1}" = "x86" ]; then

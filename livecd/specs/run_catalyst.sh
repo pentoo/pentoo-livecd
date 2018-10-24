@@ -183,7 +183,9 @@ do
       mktorrent -a udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.open-internet.nl:6969/announce,udp://tracker.skyts.net:6969/announce,udp://tracker.opentrackr.org:1337/announce,udp://inferno.demonoid.pw:3418/announce -n "${volid}" -o /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
       mv /catalyst/release/"${volid}".torrent /catalyst/release/Pentoo_${arch}_${PROFILE}
     fi
+  fi
 
+  if [ -f /catalyst/release/Pentoo_Full_${arch}_${PROFILE}/pentoo-full-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS ]; then
     if [ ! -f /catalyst/release/Pentoo_Full_${arch}_${PROFILE}/pentoo-full-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS.asc ]; then
       su zero -c "GPG_TTY=$(tty) gpg --verbose --sign --clearsign --yes --digest-algo SHA512 --default-key DD11F94A --homedir /home/zero/.gnupg \
       /catalyst/release/Pentoo_Full_${arch}_${PROFILE}/pentoo-full-${arch}-${PROFILE}-${VERSION_STAMP}_${RC}.iso.DIGESTS"
