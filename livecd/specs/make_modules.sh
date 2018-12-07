@@ -60,9 +60,12 @@ rm -rf /dev/shm/distfiles/tmp
 mkdir -p /dev/shm/distfiles/tmp
 #cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/
 cp /dev/shm/distfiles/*[Ll]inux-x86* /dev/shm/distfiles/tmp/
+cp /dev/shm/distfiles/nvidia-settings-*.tar.bz2 /dev/shm/distfiles/tmp/
 cp /dev/shm/distfiles/broadcom-wl* /dev/shm/distfiles/tmp/
 cp /dev/shm/distfiles/wl_apsta-3.130.20.0.o /dev/shm/distfiles/tmp
 rsync -aEXu --progress --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs/usr/portage/distfiles/
+#double check that we have what we expect in here so I don't mess up again
+DISTDIR=/dev/shm/portage/rootfs/usr/portage/distfiles/ emerge -fO nvidia-drivers
 chown root.root /dev/shm/portage/rootfs/usr
 chown root.root /dev/shm/portage/rootfs
 chown root.root /dev/shm/portage

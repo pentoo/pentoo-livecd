@@ -62,7 +62,7 @@ if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
-revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
+revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 
 [ -x /usr/local/portage/scripts/bug-461824.sh ] && /usr/local/portage/scripts/bug-461824.sh
 [ -x /var/gentoo/repos/local/scripts/bug-461824.sh ] && /var/gentoo/repos/local/scripts/bug-461824.sh
@@ -80,7 +80,7 @@ if [ "$(uname -m)" = "x86_64" ]; then
 	emerge -C icedtea-bin:8 || /bin/bash
 	eselect java-vm set system icedtea-8 || /bin/bash
 else
-	emerge --update --oneshot -kb dev-lang/rust-bin dev-util/cargo || /bin/bash
+	emerge --update --oneshot -kb dev-lang/rust-bin || /bin/bash
 fi
 
 portageq list_preserved_libs /
@@ -93,7 +93,7 @@ fi
 
 eclean-pkg
 emerge --depclean --exclude dev-java/icedtea --exclude dev-java/icedtea-bin --exclude sys-kernel/pentoo-sources \
-	--exclude dev-lang/rust-bin --exclude dev-util/cargo --exclude app-portage/gentoolkit || /bin/bash
+	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash

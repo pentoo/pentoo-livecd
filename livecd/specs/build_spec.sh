@@ -21,7 +21,8 @@ else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
 RC=RC8_p$(date "+%Y%m%d")
-#RC=RC8
+RC=RC8_p20181117
+#RC=RC9
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -32,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20181023.tar.xz "
+echo "snapshot: 20181207.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -163,9 +164,17 @@ echo "subarch: ${subarch}"
 if [ ${1} = amd64 ]
 then
 	echo "cflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
+	echo "cxxflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
+	echo "fflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
+	echo "fcflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
+	echo "common_flags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
 elif [ ${1} = x86 ]
 then
 	echo "cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "fflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "fcflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "common_flags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
 fi
 
 if [ "${3}" = stage4-pentoo ] || [ "${3}" = "stage4-pentoo-full" ]

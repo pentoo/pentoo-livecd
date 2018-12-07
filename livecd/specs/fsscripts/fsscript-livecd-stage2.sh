@@ -8,7 +8,6 @@ fix_locale() {
 	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
 	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
 	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
-	#localepurge || /bin/bash
 	locale-gen || /bin/bash
 	eselect locale set en_US.utf8 || /bin/bash
 }
@@ -99,7 +98,6 @@ rm -rf /usr/lib/libGLcore.so
 [ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
 [ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
 eselect opengl set xorg-x11 || /bin/bash
-eselect opencl set ocl-icd || /bin/bash
 
 # Set default java vm
 if eselect java-vm list | grep icedtea-8; then
@@ -144,12 +142,12 @@ cat <<-EOF > /etc/portage/make.conf
 	#FFLAGS="\${CFLAGS}"
 
 	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-  #Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
+	#Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
 	USE="opencl"
 EOF
 if [ -n "${detected_use}" ]; then
-  cat <<-EOF >> /etc/portage/make.conf
-    USE="${detected_use}"
+	cat <<-EOF >> /etc/portage/make.conf
+	USE="${detected_use}"
 EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
@@ -159,7 +157,7 @@ cat <<-EOF >> /etc/portage/make.conf
 
 	#Default VIDEO_CARDS setting enables nearly everything, you can enable fewer here if you like:
 	#VIDEO_CARDS="nvidia nouveau amdgpu radeon"
-  #Intel gpu should use modesetting driver which isn't optional but the recommended setting is: VIDEO_CARDS="intel i965"
+	#Intel gpu should use modesetting driver which isn't optional but the recommended setting is: VIDEO_CARDS="intel i965"
 	#you can check available options with "emerge -vp xorg-drivers"
 EOF
 
@@ -234,26 +232,35 @@ emerge --deselect=y sys-kernel/pentoo-sources || /bin/bash
 
 /var/db/repos/pentoo/scripts/bug-461824.sh
 
-emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99
-emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt
-emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt || /bin/bash
+emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update
+emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update
+emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update || /bin/bash
 #layman -S
-emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 || /bin/bash
+emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
+find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
+find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
+
+#ocl-icd/opencl is only on "full"
+if [ "${clst_version_stamp/full}" != "${clst_version_stamp}" ]; then
+  #USE=opencl doesn't actually matter until the above updates, so we set here
+  eselect opencl set ocl-icd || /bin/bash
+fi
 
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || /bin/bash
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
+if portageq list_preserved_libs /; then
         emerge --buildpkg=y @preserved-rebuild -q || echo "preserved-rebuild failed"
 fi
 
-revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
-if [ $? -ne 0 ]; then
-	revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
+#if ! revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y; then
+#	revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
+#fi
+if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
+	revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 fi
 
 
@@ -392,14 +399,12 @@ eselect ruby set ruby23 || /bin/bash
 #mossmann said do this or I'm lame
 eselect lapack set 1
 
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
+if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
-revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y
-if [ $? -ne 0 ]; then
-	revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || /bin/bash
+if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
+	revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 fi
 rc-update -u || /bin/bash
 
