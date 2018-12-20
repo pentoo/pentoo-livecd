@@ -33,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20181207.tar.xz "
+echo "snapshot: 20181220.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
