@@ -32,7 +32,7 @@ if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || /bin/bash
 fi
 
-eselect ruby set ruby23 || /bin/bash
+eselect ruby set ruby24 || /bin/bash
 
 revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 

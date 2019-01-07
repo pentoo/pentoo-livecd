@@ -394,7 +394,7 @@ sed -i '/^#/!s/localhost/localhost pentoo/' /etc/hosts || /bin/bash
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
 
-eselect ruby set ruby23 || /bin/bash
+eselect ruby set ruby24 || /bin/bash
 
 #mossmann said do this or I'm lame
 eselect lapack set 1

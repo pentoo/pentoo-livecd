@@ -33,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20181220.tar.xz "
+echo "snapshot: 20190107.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -57,19 +57,19 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20180812T214502Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20181218T214503Z.tar.xz"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20180506T214502Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-20181218T214503Z.tar.xz"
 			fi
 		elif [ ${1} = x86 ]
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20180820T214503Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20181207T214502Z.tar.xz"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20180820T214503Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20181207T214502Z.tar.xz"
 			fi
 		fi
 		;;

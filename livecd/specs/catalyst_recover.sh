@@ -5,10 +5,12 @@ pkgcache_path=$(grep "pkgcache_path:" "${1}" | awk '{print $2}')
 
 mount --bind /proc "${stagepath}"/proc
 mount --bind /dev "${stagepath}"/dev
+mount --bind /dev/pts "${stagepath}"/dev/pts
 mount --bind /usr/portage "${stagepath}"/usr/portage
 mount --bind "${pkgcache_path}" "${stagepath}"/usr/portage/packages
 PS1="chroot ${PS1}" linux32 chroot "${stagepath}" /bin/bash
 umount "${stagepath}"/proc
+umount -l "${stagepath}"/dev/pts
 umount -l "${stagepath}"/dev
 umount "${stagepath}"/usr/portage/packages
 umount "${stagepath}"/usr/portage
