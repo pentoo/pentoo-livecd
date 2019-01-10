@@ -1,2 +1,4 @@
 dev-libs/glib livecd
 x11-base/xorg-server -doc
+dev-libs/openssl -bindist
+net-misc/openssh -bindist

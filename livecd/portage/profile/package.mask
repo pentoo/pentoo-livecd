@@ -37,3 +37,4 @@ virtual/w3m
 <net-wireless/gnuradio-3.7.13.0
 <sys-kernel/pentoo-sources-4.17.0
 <x11-drivers/nvidia-drivers-390.67
+<dev-lang/perl-5.26

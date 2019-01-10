@@ -155,7 +155,6 @@ do
 	#	fi
   if [ "${FAILURE}" = "1" ]; then
     printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
-		./catalyst_recover.sh /tmp/${arch}-${PROFILE}-${stage}.spec
     exit 1
   fi
 	done
