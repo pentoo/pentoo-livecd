@@ -20,8 +20,8 @@ then
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
-RC=RC8_p$(date "+%Y%m%d")
-RC=RC8_p20181117
+#RC=RC8_p$(date "+%Y%m%d")
+#RC=RC8_p20181117
 #RC=RC9
 
 if [ "${1}" = "x86" ]; then
@@ -33,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20190110.tar.xz "
+echo "snapshot: 20190114.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -100,14 +100,23 @@ case ${3} in
 	livecd-stage2)
 		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
 		echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
-		echo "livecd/volid: Pentoo Linux ${arch} ${VERSION_STAMP} ${RC:0:5}"
-    ;;
+		if [ -n "${RC}" ]; then
+			echo "livecd/volid: Pentoo Linux ${arch} ${VERSION_STAMP} ${RC:0:5}"
+		else
+			echo "livecd/volid: Pentoo Linux ${arch} ${VERSION_STAMP}"
+		fi
+		;;
 	livecd-stage2-full)
 		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-full-${VERSION_STAMP}.tar.xz"
-		echo "livecd/iso: /catalyst/release/Pentoo_Full_${1}_${2}/pentoo-full-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
-		echo "livecd/volid: Pentoo Linux Full ${arch} ${VERSION_STAMP} ${RC:0:5}"
-    echo "livecd/depclean: no"
-    ;;
+		if [ -n "${RC}" ]; then
+			echo "livecd/iso: /catalyst/release/Pentoo_Full_${1}_${2}/pentoo-full-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
+			echo "livecd/volid: Pentoo Linux Full ${arch} ${VERSION_STAMP} ${RC:0:5}"
+		else
+			echo "livecd/iso: /catalyst/release/Pentoo_Full_${1}_${2}/pentoo-full-${1}-${2}-${VERSION_STAMP}.iso"
+			echo "livecd/volid: Pentoo Linux Full ${arch} ${VERSION_STAMP}"
+		fi
+		echo "livecd/depclean: no"
+		;;
 esac
 
 if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ]

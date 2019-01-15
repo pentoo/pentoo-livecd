@@ -78,7 +78,7 @@ boot/kernel/pentoo/use: livecd
 # This is a list of packages that will be unmerged after all the kernels have
 # been built.  There are no checks on these packages, so be careful what you
 # add here.  They can potentially break your CD.
-livecd/unmerge: x11-drivers/ati-drivers x11-drivers/nvidia-drivers
+#livecd/unmerge: x11-drivers/ati-drivers x11-drivers/nvidia-drivers
 
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from

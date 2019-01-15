@@ -92,11 +92,11 @@ ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || /bin/bash
 sed -i -e 's/^root:\*:/root::/' /etc/shadow || /bin/bash
 
 # Remove useless opengl setup <--remove or fix this right
-rm -rf /etc/init.d/x-setup
-eselect opengl set xorg-x11 --dst-prefix=/etc/opengl/ || /bin/bash
-rm -rf /usr/lib/libGLcore.so
-[ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
-[ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
+#rm -rf /etc/init.d/x-setup
+#eselect opengl set xorg-x11 --dst-prefix=/etc/opengl/ || /bin/bash
+#rm -rf /usr/lib/libGLcore.so
+#[ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
+#[ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
 eselect opengl set xorg-x11 || /bin/bash
 
 # Set default java vm
@@ -121,6 +121,9 @@ fi
 if [ "${clst_version_stamp/kde}" != "${clst_version_stamp}" ]; then
   detected_use="${detected_use} -xfce kde"
 fi
+if [ $arch = "x86_64" ]; then
+  detected_use="opencl ${detected_use}"
+fi
 
 #WARNING WARNING WARING
 #DO NOT edit the line "bindist livecd" without also adjusting pentoo-installer
@@ -141,13 +144,16 @@ cat <<-EOF > /etc/portage/make.conf
 	#FCFLAGS="\${CFLAGS}"
 	#FFLAGS="\${CFLAGS}"
 
-	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-	#Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
-	USE="opencl"
 EOF
+if [ $arch = "x86_64" ]; then
+  cat <<-EOF > /etc/portage/make.conf
+  #Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
+  #Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
+EOF
+fi
 if [ -n "${detected_use}" ]; then
 	cat <<-EOF >> /etc/portage/make.conf
-	USE="${detected_use}"
+	USE="\${USE} ${detected_use}"
 EOF
 fi
 cat <<-EOF >> /etc/portage/make.conf
@@ -244,8 +250,8 @@ fi
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
 
-#ocl-icd/opencl is only on "full"
-if [ "${clst_version_stamp/full}" != "${clst_version_stamp}" ]; then
+#opencl is only on amd64 now
+if [ $arch = "x86_64" ]; then
   #USE=opencl doesn't actually matter until the above updates, so we set here
   eselect opencl set ocl-icd || /bin/bash
 fi
@@ -420,7 +426,10 @@ rm -f /etc/portage/depcheck
 rm -rf /etc/portage/profile
 
 #cleanup binary drivers
-rm -f /lib/modules/*/video/*
+if [ $arch = "x86_64" ]; then
+  emerge -C nvidia-drivers || /bin/bash
+  rm -f /lib/modules/*/video/*
+fi
 
 ## XXX: THIS IS A HORRIBLE IDEA!!!!
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
@@ -459,7 +468,6 @@ fixpackages
 ln -snf /proc/self/mounts /etc/mtab
 
 #reset profile to binary profile so users get it as default
-arch=$(uname -m)
 if [ $arch = "i686" ]; then
 	ARCH="x86"
 elif [ $arch = "x86_64" ]; then
