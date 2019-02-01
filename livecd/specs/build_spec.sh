@@ -22,7 +22,7 @@ else
 fi
 #RC=RC8_p$(date "+%Y%m%d")
 #RC=RC8_p20181117
-#RC=RC9
+RC=-r1
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -33,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20190114.tar.xz "
+echo "snapshot: 20190131.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -57,7 +57,7 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20181218T214503Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20190122T214501Z.tar.xz"
 			elif [ ${2} = default ]
 			then
 				echo "source_subpath: ${2}/seeds/stage3-amd64-20181218T214503Z.tar.xz"
@@ -66,10 +66,10 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20181207T214502Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20190103T151155Z.tar.xz"
 			elif [ ${2} = default ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20181207T214502Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-i686-20190103T151155Z.tar.xz"
 			fi
 		fi
 		;;
@@ -99,10 +99,11 @@ case ${3} in
 		;;
 	livecd-stage2)
 		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
-		echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
 		if [ -n "${RC}" ]; then
+      echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
 			echo "livecd/volid: Pentoo Linux ${arch} ${VERSION_STAMP} ${RC:0:5}"
 		else
+      echo "livecd/iso: /catalyst/release/Pentoo_${1}_${2}/pentoo-${1}-${2}-${VERSION_STAMP}.iso"
 			echo "livecd/volid: Pentoo Linux ${arch} ${VERSION_STAMP}"
 		fi
 		;;

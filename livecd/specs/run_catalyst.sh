@@ -113,8 +113,8 @@ do
 		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || FAILURE="1"
 
   if [ "${FAILURE}" = "1" ]; then
-    printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
-		#./catalyst_recover.sh /tmp/${arch}-${PROFILE}-${stage}.spec
+    #printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
+		./catalyst_recover.sh /tmp/${arch}-${PROFILE}-${stage}.spec
   fi
 		check_io
 
