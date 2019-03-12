@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-
+find /catalyst/log -type f ! -name "summary.log*" -mtime +7 -delete
 #sometimes snap.sh gets run by user and cron at the same time and badness results. prevent badness.
 while ps aux | grep "[c]atalyst -s"
 do

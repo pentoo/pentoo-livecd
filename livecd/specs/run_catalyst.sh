@@ -100,12 +100,12 @@ do
 			rm -rf /catalyst/release/Pentoo_${arch}_${PROFILE}
 			mkdir -p /catalyst/release/Pentoo_${arch}_${PROFILE}
 			chmod 777 /catalyst/release/Pentoo_${arch}_${PROFILE}
-      rm -rf /catalyst/builds/${PROFILE}/livecd-stage2-${subarch}-2018.0/*
+      rm -rf /catalyst/builds/${PROFILE}/livecd-stage2-${subarch}-2019.0/*
     elif [ "${stage}" = "livecd-stage2-full" ]; then
 			rm -rf /catalyst/release/Pentoo_Full_${arch}_${PROFILE}
 			mkdir -p /catalyst/release/Pentoo_Full_${arch}_${PROFILE}
 			chmod 777 /catalyst/release/Pentoo_Full_${arch}_${PROFILE}
-      rm -rf /catalyst/builds/${PROFILE}/livecd-stage2-${subarch}-full-2018.0/*
+      rm -rf /catalyst/builds/${PROFILE}/livecd-stage2-${subarch}-full-2019.0/*
 		fi
 
 		check_io

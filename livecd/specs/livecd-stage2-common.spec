@@ -12,7 +12,7 @@ livecd/verify: yup
 # there will not be one listed below.  The syntax is simply the full path and
 # filename to the shell script that you wish to execute.  The script is copied
 # into the chroot by catalyst automatically.
-livecd/fsscript: fsscripts/fsscript-livecd-stage2.sh
+livecd/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-livecd-stage2.sh
 
 # This is a set of arguments that get passed to the bootloader for your CD.  It
 # is used on the x86/amd64 release media to enable keymap selection.
