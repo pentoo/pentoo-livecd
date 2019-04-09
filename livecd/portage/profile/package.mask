@@ -27,7 +27,7 @@ sys-kernel/genkernel-next
 
 <app-misc/livecd-tools-2.4
 
-<sys-devel/gcc-7
+<sys-devel/gcc-8.2.0-r6
 
 #this gets removed after livecd is built, wtf pulls it in?
 virtual/w3m
@@ -38,3 +38,4 @@ virtual/w3m
 <sys-kernel/pentoo-sources-4.17.0
 <x11-drivers/nvidia-drivers-390.67
 <dev-lang/perl-5.26
+<dev-python/ipython-7

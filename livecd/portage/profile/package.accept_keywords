@@ -1,1 +1,3 @@
 <sys-apps/portage-9999
+~dev-python/numpy-1.16.1
+~sci-libs/scipy-1.1.0

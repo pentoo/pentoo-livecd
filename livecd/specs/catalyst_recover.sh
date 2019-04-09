@@ -8,7 +8,7 @@ mount --bind /dev "${stagepath}"/dev
 mount --bind /dev/pts "${stagepath}"/dev/pts
 mount --bind /usr/portage "${stagepath}"/usr/portage
 mount --bind "${pkgcache_path}" "${stagepath}"/usr/portage/packages
-PS1="chroot ${PS1}" linux32 chroot "${stagepath}" /bin/bash
+PS1="catalyst chroot ${PS1}" chroot "${stagepath}" /bin/bash || PS1="chroot failed ${PS1}" /bin/bash
 umount "${stagepath}"/proc
 umount -l "${stagepath}"/dev/pts
 umount -l "${stagepath}"/dev
