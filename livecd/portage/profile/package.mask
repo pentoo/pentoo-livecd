@@ -28,6 +28,7 @@ sys-kernel/genkernel-next
 #something is wonky, do not allow downgrade
 <media-libs/freetype-2.9.1-r3
 <sys-libs/ncurses-6.1-r2
+sys-libs/ncurses:5
 
 <app-misc/livecd-tools-2.4
 
@@ -39,7 +40,7 @@ virtual/w3m
 #old stuff
 <net-analyzer/metasploit-4.16.0
 <net-wireless/gnuradio-3.7.13.0
-<sys-kernel/pentoo-sources-4.17.0
+<sys-kernel/pentoo-sources-5.1.0
 <x11-drivers/nvidia-drivers-390.67
-<dev-lang/perl-5.26
+<dev-lang/perl-5.28
 <dev-python/ipython-7

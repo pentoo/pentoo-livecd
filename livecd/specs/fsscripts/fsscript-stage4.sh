@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 source /tmp/envscript
 
 fix_locale() {
@@ -91,7 +91,8 @@ fi
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
 #[ "$(uname -m)" = "x86" ] && crossdev -s1 -t x86_64
 
-eclean-pkg
+fixpackages
+eclean-pkg -t 3m
 emerge --depclean --exclude dev-java/icedtea --exclude dev-java/icedtea-bin --exclude sys-kernel/pentoo-sources \
 	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit || /bin/bash
 

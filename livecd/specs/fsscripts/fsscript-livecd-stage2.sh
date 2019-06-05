@@ -461,8 +461,8 @@ popd
 rm -rf /root/gentoollist
 
 rm -rf /var/tmp/portage/*
-eclean-pkg
 fixpackages
+eclean-pkg -t 3m
 
 #bug #477498
 ln -snf /proc/self/mounts /etc/mtab
@@ -482,15 +482,22 @@ portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${harde
 sync
 sleep 60
 
-rsync -aEXu --delete /var/cache/edb /tmp/
-rsync -aEXu --delete /var/cache/eix /tmp/
-rm -rf /var/cache/*
-rsync -aEXu --delete /tmp/edb /var/cache/
-rsync -aEXu --delete /tmp/eix /var/cache/
+#rsync -aEXu --delete /var/cache/edb /tmp/
+#rsync -aEXu --delete /var/cache/eix /tmp/
+#rm -rf --one-file-system /var/cache/*
+#rsync -aEXu /tmp/edb /var/cache/
+#rsync -aEXu /tmp/eix /var/cache/
+for i in ls /var/cache; do
+  [ "${i}" = "edb" ] && continue
+  [ "${i}" = "eix" ] && continue
+  [ "${i}" = "distfiles" ] && continue
+  [ "${i}" = "binpkgs" ] && continue
+  rm -rf "/var/cache/${i}"
+done
 chown root.portage -R /var/cache/edb
 chown root.portage -R /var/cache/eix
-rm -rf /tmp/edb
-rm -rf /tmp/eix
+#rm -rf /tmp/edb
+#rm -rf /tmp/eix
 emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
 #todo when we no longer need this stub for testing, replace with default

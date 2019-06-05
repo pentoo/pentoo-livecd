@@ -15,7 +15,7 @@ source /tmp/envscript
 #  fi
 #fi
 
-[ -x /usr/local/portage/scripts/pentoo-updater.sh ] && /usr/local/portage/scripts/pentoo-updater.sh
+[ -x /usr/local/portage/scripts/pentoo-updater.sh ] && /bin/bash -x /usr/local/portage/scripts/pentoo-updater.sh
 
-[ -x /var/gentoo/repos/local/scripts/pentoo-updater.sh ] && /var/gentoo/repos/local/scripts/pentoo-updater.sh
+[ -x /var/gentoo/repos/local/scripts/pentoo-updater.sh ] && /bin/bash -x /var/gentoo/repos/local/scripts/pentoo-updater.sh
 

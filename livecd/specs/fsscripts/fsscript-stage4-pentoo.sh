@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 source /tmp/envscript
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
@@ -42,4 +42,5 @@ revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
 
-eclean-pkg
+fixpackages
+eclean-pkg -t 3m

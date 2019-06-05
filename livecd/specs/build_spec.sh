@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION_STAMP=$(date +%Y.0)
+VERSION_STAMP=$(date +%Y.1)
 #could change .0 to %q
 if [ "${3}" = stage4-pentoo ]
 then
@@ -32,7 +32,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20190418.tar.xz "
+echo "snapshot: 20190604.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -228,20 +228,20 @@ case ${3} in
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -office -pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
-		echo "stage4/packages: pentoo/pentoo"
+		echo "stage4/packages: --update pentoo/pentoo"
 		;;
 	stage4-pentoo-full)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
-		echo "stage4/packages: pentoo/pentoo"
+		echo "stage4/packages: --update pentoo/pentoo"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
-		echo "stage4/packages: pentoo/pentoo"
+		echo "stage4/packages: --update pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
 		;;
 	livecd-stage1)
 		echo "livecd/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
-		echo "livecd/packages: pentoo/pentoo"
+		echo "livecd/packages: --update pentoo/pentoo"
 		;;
 esac
