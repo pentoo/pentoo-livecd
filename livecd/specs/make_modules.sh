@@ -78,6 +78,7 @@ chown root.root /dev/shm/portage/rootfs/var/db/repos
 chown root.root /dev/shm/portage/rootfs/var/db
 chown root.root /dev/shm/portage/rootfs/var
 chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/pentoo
+chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/gentoo
 # make the unified squashfs module
 mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
 

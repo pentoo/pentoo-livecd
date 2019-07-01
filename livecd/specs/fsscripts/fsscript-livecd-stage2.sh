@@ -128,10 +128,13 @@ fi
 #WARNING WARNING WARING
 #DO NOT edit the line "bindist livecd" without also adjusting pentoo-installer
 #We need to amend pentoo-installer to optionally toggle on and off these use flags, some of may be non-desirable for an installed system
-cat <<-EOF > /etc/portage/make.conf
+cat <<-EOF > /etc/portage/make.conf.new
 	#This is the default Pentoo make.conf file, it controls many basic system settings.
 	#You can find information on how to edit this file in "man make.conf" as well as
-	#on the web at https://wiki.gentoo.org/wiki//etc/portage/make.conf
+	#on the web at https://wiki.gentoo.org/wiki/etc/portage/make.conf
+
+  DISTDIR="$(portageq envvar DISTDIR)"
+  PKGDIR="$(portageq envvar PKGDIR)"
 
 	#Please adjust your CFLAGS as desired, information can be found here: https://wiki.gentoo.org/wiki/CFLAGS
 	#Do not modify these FLAGS unless you know what you are doing, always check the defaults first with "portageq envvar CFLAGS"
@@ -146,17 +149,17 @@ cat <<-EOF > /etc/portage/make.conf
 
 EOF
 if [ $arch = "x86_64" ]; then
-  cat <<-EOF > /etc/portage/make.conf
-  #Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
-  #Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
+cat <<-EOF >> /etc/portage/make.conf.new
+	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
+	#Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
 EOF
 fi
 if [ -n "${detected_use}" ]; then
-	cat <<-EOF >> /etc/portage/make.conf
+	cat <<-EOF >> /etc/portage/make.conf.new
 	USE="\${USE} ${detected_use}"
 EOF
 fi
-cat <<-EOF >> /etc/portage/make.conf
+cat <<-EOF >> /etc/portage/make.conf.new
 	USE="\${USE} bindist livecd"
 
 	#MAKEOPTS is set automatically by the profile to jobs equal to processors, you do not need to set it.

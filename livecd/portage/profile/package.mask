@@ -2,7 +2,6 @@
 www-client/firefox-bin
 
 #we prefer to build these from sources
-dev-java/icedtea-bin
 dev-java/openjdk-bin
 
 ##we want ssmtp by default
