@@ -100,8 +100,8 @@ sed -i -e 's/^root:\*:/root::/' /etc/shadow || /bin/bash
 eselect opengl set xorg-x11 || /bin/bash
 
 # Set default java vm
-if eselect java-vm list | grep icedtea-8; then
-  eselect java-vm set system icedtea-8 || /bin/bash
+if eselect java-vm list | grep openjdk-11; then
+  eselect java-vm set system openjdk-11 || /bin/bash
 fi
 
 #mark all news read
@@ -169,6 +169,7 @@ cat <<-EOF >> /etc/portage/make.conf.new
 	#Intel gpu should use modesetting driver which isn't optional but the recommended setting is: VIDEO_CARDS="intel i965"
 	#you can check available options with "emerge -vp xorg-drivers"
 EOF
+mv -f /etc/portage/make.conf.new /etc/portage/make.conf || /bin/bash
 
 #deleting this earlier causes the above calls to portageq to break
 rm -rf /usr/local/portage || /bin/bash

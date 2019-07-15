@@ -72,14 +72,9 @@ emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #emerge -1 -kb app-crypt/johntheripper || /bin/bash
 
 #fix java circular deps in next stage
-emerge --update --oneshot -kb icedtea-bin:8 || /bin/bash
-eselect java-vm set system icedtea-bin-8 || /bin/bash
-if [ "$(uname -m)" = "x86_64" ]; then
-	## Unable to make this build on x86
-	emerge --update --oneshot -kb icedtea:8 || /bin/bash
-	emerge -C icedtea-bin:8 || /bin/bash
-	eselect java-vm set system icedtea-8 || /bin/bash
-else
+emerge --update --oneshot -kb openjdk:11 || /bin/bash
+eselect java-vm set system openjdk-11 || /bin/bash
+if [ "$(uname -m)" = "x86" ]; then
 	emerge --update --oneshot -kb dev-lang/rust-bin || /bin/bash
 fi
 
@@ -93,7 +88,7 @@ fi
 
 fixpackages
 eclean-pkg -t 3m
-emerge --depclean --exclude dev-java/icedtea --exclude dev-java/icedtea-bin --exclude sys-kernel/pentoo-sources \
+emerge --depclean --exclude dev-java/openjdk  --exclude sys-kernel/pentoo-sources \
 	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit || /bin/bash
 
 #merge all other desired changes into /etc

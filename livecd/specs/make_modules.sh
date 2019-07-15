@@ -40,7 +40,7 @@ rm -rf /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/*
 ##make the gentoo portage module
 rm -rf /dev/shm/portage/rootfs/var/db/repos/gentoo
 mkdir -p /dev/shm/portage/rootfs/var/db/repos/gentoo
-rsync -aEXu --delete /catalyst/tmp/repos/portage/* /dev/shm/portage/rootfs/var/db/repos/gentoo
+rsync -aEXu --delete /catalyst/tmp/repos/gentoo/* /dev/shm/portage/rootfs/var/db/repos/gentoo
 ##add the distfiles we want
 mkdir -p /dev/shm/distfiles/rootfs/var/cache/distfiles/
 #make sure it's all in the local store too
