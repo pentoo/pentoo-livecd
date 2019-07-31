@@ -72,8 +72,12 @@ emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #emerge -1 -kb app-crypt/johntheripper || /bin/bash
 
 #fix java circular deps in next stage
-emerge --update --oneshot -kb openjdk:11 || /bin/bash
-eselect java-vm set system openjdk-11 || /bin/bash
+emerge --update --oneshot -kb dev-java/icedtea-bin || /bin/bash
+#oh, and f**king tomcat can't build against openjdk:11
+eselect java-vm set system icedtea-8 || /bin/bash
+emerge --update --oneshot -kb dev-java/tomcat-servlet-api:2.4 || /bin/bash
+emerge --update --oneshot -kb openjdk-bin:11 || /bin/bash
+eselect java-vm set system openjdk-bin-11 || /bin/bash
 if [ "$(uname -m)" = "x86" ]; then
 	emerge --update --oneshot -kb dev-lang/rust-bin || /bin/bash
 fi
@@ -88,8 +92,9 @@ fi
 
 fixpackages
 eclean-pkg -t 3m
-emerge --depclean --exclude dev-java/openjdk  --exclude sys-kernel/pentoo-sources \
-	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit || /bin/bash
+emerge --depclean --exclude dev-java/openjdk-bin  --exclude sys-kernel/pentoo-sources \
+	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit --exclude dev-java/icedtea-bin \
+  --exclude dev-java/tomcat-servlet-api || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash

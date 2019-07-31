@@ -491,7 +491,7 @@ sleep 60
 #rm -rf --one-file-system /var/cache/*
 #rsync -aEXu /tmp/edb /var/cache/
 #rsync -aEXu /tmp/eix /var/cache/
-for i in ls /var/cache; do
+for i in $(ls /var/cache); do
   [ "${i}" = "edb" ] && continue
   [ "${i}" = "eix" ] && continue
   [ "${i}" = "distfiles" ] && continue

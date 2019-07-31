@@ -1,9 +1,6 @@
 #help force a preference for self-built so it actually runs on hardened
 www-client/firefox-bin
 
-#we prefer to build these from sources
-dev-java/openjdk-bin
-
 ##we want ssmtp by default
 mail-mta/nullmailer
 mail-mta/msmtp
