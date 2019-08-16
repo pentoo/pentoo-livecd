@@ -243,19 +243,19 @@ emerge --deselect=y sys-kernel/pentoo-sources || /bin/bash
 /var/db/repos/pentoo/scripts/bug-461824.sh
 
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update
-emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update
-emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update || /bin/bash
+if ! emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update; then
+  emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update || /bin/bash
+fi
 #layman -S
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update || /bin/bash
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
+if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
 
 #opencl is only on amd64 now
-if [ $arch = "x86_64" ]; then
+if [ "${arch}" = "x86_64" ]; then
   #USE=opencl doesn't actually matter until the above updates, so we set here
   eselect opencl set ocl-icd || /bin/bash
 fi
@@ -388,7 +388,14 @@ echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 
-emerge --depclean --with-bdeps=y
+if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
+  #non-full iso means we expect things like builddeps sacrificed for size
+  emerge --depclean --with-bdeps=n
+else
+  emerge --depclean --with-bdeps=y
+  #full expects most things present, but this shit is huge and bdep only
+  emerge --depclean --with-bdeps=n 'dev-go/*' go virtual/rust virtual/cargo dev-lang/rust
+fi
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
