@@ -394,7 +394,7 @@ if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
 else
   emerge --depclean --with-bdeps=y
   #full expects most things present, but this shit is huge and bdep only
-  emerge --depclean --with-bdeps=n 'dev-go/*' go virtual/rust virtual/cargo dev-lang/rust
+  emerge --depclean --with-bdeps=n 'dev-go/*' go virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi
 fi
 
 #merge all other desired changes into /etc

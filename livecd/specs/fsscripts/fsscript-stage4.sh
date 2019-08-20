@@ -25,6 +25,8 @@ if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
+#merge in the profile set since we have no @system set
+emerge -1kb --newuse --update @profile || /bin/bash
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb @world || /bin/bash
 portageq list_preserved_libs /
@@ -74,10 +76,12 @@ emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 #fix java circular deps in next stage
 emerge --update --oneshot -kb dev-java/icedtea-bin || /bin/bash
 #oh, and f**king tomcat can't build against openjdk:11
-eselect java-vm set system icedtea-8 || /bin/bash
-emerge --update --oneshot -kb dev-java/tomcat-servlet-api:2.4 || /bin/bash
-emerge --update --oneshot -kb openjdk-bin:11 || /bin/bash
-eselect java-vm set system openjdk-bin-11 || /bin/bash
+eselect java-vm set system icedtea-bin-8 || /bin/bash
+if [ "$(uname -m)" = "x86_64" ]; then
+  emerge --update --oneshot -kb dev-java/tomcat-servlet-api:2.4 || /bin/bash
+  emerge --update --oneshot -kb openjdk-bin:11 || /bin/bash
+  eselect java-vm set system openjdk-bin-11 || /bin/bash
+fi
 if [ "$(uname -m)" = "x86" ]; then
 	emerge --update --oneshot -kb dev-lang/rust-bin || /bin/bash
 fi
@@ -94,7 +98,7 @@ fixpackages
 eclean-pkg -t 3m
 emerge --depclean --exclude dev-java/openjdk-bin  --exclude sys-kernel/pentoo-sources \
 	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit --exclude dev-java/icedtea-bin \
-  --exclude dev-java/tomcat-servlet-api || /bin/bash
+  --exclude dev-java/tomcat-servlet-api --exclude dev-java/icedtea || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
