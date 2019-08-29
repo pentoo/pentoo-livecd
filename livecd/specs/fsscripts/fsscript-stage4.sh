@@ -81,6 +81,9 @@ if [ "$(uname -m)" = "x86_64" ]; then
   emerge --update --oneshot -kb dev-java/tomcat-servlet-api:2.4 || /bin/bash
   emerge --update --oneshot -kb openjdk-bin:11 || /bin/bash
   eselect java-vm set system openjdk-bin-11 || /bin/bash
+  emerge --update --oneshot -kb openjdk:11 || /bin/bash
+  eselect java-vm set system openjdk-11 || /bin/bash
+  emerge -C openjdk-bin:11 || /bin/bash
 fi
 if [ "$(uname -m)" = "x86" ]; then
 	emerge --update --oneshot -kb dev-lang/rust-bin || /bin/bash
