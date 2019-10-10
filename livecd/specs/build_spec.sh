@@ -32,7 +32,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20190823.tar.xz "
+echo "snapshot: 20191001.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -56,7 +56,7 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20190630T214502Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20190929T214502Z.tar.xz"
 			elif [ ${2} = default ]
 			then
 				echo "source_subpath: ${2}/seeds/stage3-amd64-20181218T214503Z.tar.xz"
@@ -65,7 +65,7 @@ case ${3} in
 		then
 			if [ ${2} = hardened ]
 			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20190628T214502Z.tar.xz"
+				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20190927T214501Z.tar.xz"
 			elif [ ${2} = default ]
 			then
 				echo "source_subpath: ${2}/seeds/stage3-i686-20190103T151155Z.tar.xz"
@@ -172,18 +172,18 @@ echo "subarch: ${subarch}"
 
 if [ ${1} = amd64 ]
 then
-	echo "cflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
-	echo "cxxflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
-	echo "fflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
-	echo "fcflags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
-	echo "common_flags: -Os -mtune=nocona -pipe -ggdb -frecord-gcc-switches"
+	echo "cflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
+	echo "cxxflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
+	echo "fflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
+	echo "fcflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
+	echo "common_flags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
 elif [ ${1} = x86 ]
 then
-	echo "cflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "cxxflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "fflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "fcflags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "common_flags: -Os -march=pentium-m -mtune=nocona -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "cflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "cxxflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "fflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "fcflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "common_flags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
 fi
 
 if [ "${3}" = stage4-pentoo ] || [ "${3}" = "stage4-pentoo-full" ]

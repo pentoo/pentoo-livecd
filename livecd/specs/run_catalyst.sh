@@ -120,7 +120,8 @@ do
 
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]
 		then
-			rm -rf /catalyst/tmp/${PROFILE}/${stage}-${subarch}-*
+			#rm -rf /catalyst/tmp/${PROFILE}/${stage}-${subarch}-*
+      true
 		fi
 		if [ "${stage}" = "stage4-pentoo" ] || [ "${stage}" = "stage4-pentoo-full" ]
 		then
@@ -141,18 +142,6 @@ do
 			rm -rf /catalyst/tmp/${PROFILE}/livecd-stage2-${subarch}-full-2*/*
 		fi
 
-	#	if [ $? -ne 0 ]; then
-	#		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
-	#		if [ $? -ne 0 ]; then
-	#			catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
-	#			if [ $? -ne 0 ]; then
-	#				catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec
-	#			fi
-	#				if [ $? -ne 0 ]; then
-	#					break
-	#				fi
-	#		fi
-	#	fi
   if [ "${FAILURE}" = "1" ]; then
     printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
     exit 1

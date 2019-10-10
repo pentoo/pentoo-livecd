@@ -133,8 +133,8 @@ cat <<-EOF > /etc/portage/make.conf.new
 	#You can find information on how to edit this file in "man make.conf" as well as
 	#on the web at https://wiki.gentoo.org/wiki/etc/portage/make.conf
 
-  DISTDIR="$(portageq envvar DISTDIR)"
-  PKGDIR="$(portageq envvar PKGDIR)"
+	DISTDIR="$(portageq envvar DISTDIR)"
+	PKGDIR="$(portageq envvar PKGDIR)"
 
 	#Please adjust your CFLAGS as desired, information can be found here: https://wiki.gentoo.org/wiki/CFLAGS
 	#Do not modify these FLAGS unless you know what you are doing, always check the defaults first with "portageq envvar CFLAGS"
