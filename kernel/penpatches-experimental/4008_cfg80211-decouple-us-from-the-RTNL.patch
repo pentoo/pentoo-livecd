@@ -1,10 +1,12 @@
-diff -Naur linux-5.2.5-pentoo-orig/include/net/cfg80211.h linux-5.2.5-pentoo/include/net/cfg80211.h
---- linux-5.2.5-pentoo-orig/include/net/cfg80211.h	2019-08-02 13:22:23.062878434 -0400
-+++ linux-5.2.5-pentoo/include/net/cfg80211.h	2019-08-02 13:33:25.848894868 -0400
-@@ -4683,13 +4683,35 @@
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 35ec1f0a2bf9..2ac6cb79f67d 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -4726,6 +4726,25 @@ struct cfg80211_internal_bss;
+ struct cfg80211_cached_keys;
  struct cfg80211_cqm_config;
  
- /**
++/**
 + * wiphy_lock - lock the wiphy
 + * @wiphy: the wiphy to lock
 + *
@@ -23,10 +25,10 @@ diff -Naur linux-5.2.5-pentoo-orig/include/net/cfg80211.h linux-5.2.5-pentoo/inc
 + */
 +void wiphy_unlock(struct wiphy *wiphy);
 +
-+/**
+ /**
   * struct wireless_dev - wireless device state
   *
-  * For netdevs, this structure must be allocated by the driver
+@@ -4733,7 +4752,10 @@ struct cfg80211_cqm_config;
   * that uses the ieee80211_ptr field in struct net_device (this
   * is intentional so it can be allocated along with the netdev.)
   * It need not be registered then as netdev registration will
@@ -38,10 +40,11 @@ diff -Naur linux-5.2.5-pentoo-orig/include/net/cfg80211.h linux-5.2.5-pentoo/inc
   *
   * For non-netdev uses, it must also be allocated by the driver
   * in response to the cfg80211 callbacks that require it, as
-diff -Naur linux-5.2.5-pentoo-orig/net/mac80211/main.c linux-5.2.5-pentoo/net/mac80211/main.c
---- linux-5.2.5-pentoo-orig/net/mac80211/main.c	2019-08-02 13:22:23.188878437 -0400
-+++ linux-5.2.5-pentoo/net/mac80211/main.c	2019-08-02 13:33:25.848894868 -0400
-@@ -1258,8 +1258,10 @@
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 29b9d57df1a3..03fc52587bff 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1252,8 +1252,10 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
  	    !ieee80211_hw_check(hw, NO_AUTO_VIF)) {
  		struct vif_params params = {0};
  
@@ -52,10 +55,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/mac80211/main.c linux-5.2.5-pentoo/net/ma
  		if (result)
  			wiphy_warn(local->hw.wiphy,
  				   "Failed to add default virtual iface\n");
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/chan.c linux-5.2.5-pentoo/net/wireless/chan.c
---- linux-5.2.5-pentoo-orig/net/wireless/chan.c	2019-08-02 13:22:23.211878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/chan.c	2019-08-02 13:33:25.848894868 -0400
-@@ -839,7 +839,7 @@
+diff --git a/net/wireless/chan.c b/net/wireless/chan.c
+index 7dc1bbd0888f..ac83c9030c17 100644
+--- a/net/wireless/chan.c
++++ b/net/wireless/chan.c
+@@ -839,7 +839,7 @@ static bool cfg80211_ir_permissive_chan(struct wiphy *wiphy,
  	struct wireless_dev *wdev;
  	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
  
@@ -64,7 +68,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/chan.c linux-5.2.5-pentoo/net/wi
  
  	if (!IS_ENABLED(CONFIG_CFG80211_REG_RELAX_NO_IR) ||
  	    !(wiphy->regulatory_flags & REGULATORY_ENABLE_RELAX_NO_IR))
-@@ -961,9 +961,10 @@
+@@ -961,9 +961,10 @@ bool cfg80211_reg_can_beacon_relax(struct wiphy *wiphy,
  				   struct cfg80211_chan_def *chandef,
  				   enum nl80211_iftype iftype)
  {
@@ -76,10 +80,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/chan.c linux-5.2.5-pentoo/net/wi
  
  	/*
  	 * Under certain conditions suggested by some regulatory bodies a
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wireless/core.c
---- linux-5.2.5-pentoo-orig/net/wireless/core.c	2019-08-02 13:22:23.211878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/core.c	2019-08-02 13:33:25.849894868 -0400
-@@ -39,7 +39,7 @@
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 742986c73490..2d5bd07ae11f 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -39,7 +39,7 @@ MODULE_LICENSE("GPL");
  MODULE_DESCRIPTION("wireless configuration support");
  MODULE_ALIAS_GENL_FAMILY(NL80211_GENL_NAME);
  
@@ -88,7 +93,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  LIST_HEAD(cfg80211_rdev_list);
  int cfg80211_rdev_list_generation;
  
-@@ -224,7 +224,7 @@
+@@ -222,7 +222,7 @@ static void cfg80211_rfkill_poll(struct rfkill *rfkill, void *data)
  void cfg80211_stop_p2p_device(struct cfg80211_registered_device *rdev,
  			      struct wireless_dev *wdev)
  {
@@ -97,7 +102,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  
  	if (WARN_ON(wdev->iftype != NL80211_IFTYPE_P2P_DEVICE))
  		return;
-@@ -247,7 +247,7 @@
+@@ -245,7 +245,7 @@ void cfg80211_stop_p2p_device(struct cfg80211_registered_device *rdev,
  void cfg80211_stop_nan(struct cfg80211_registered_device *rdev,
  		       struct wireless_dev *wdev)
  {
@@ -106,7 +111,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  
  	if (WARN_ON(wdev->iftype != NL80211_IFTYPE_NAN))
  		return;
-@@ -474,6 +474,7 @@
+@@ -472,6 +472,7 @@ struct wiphy *wiphy_new_nm(const struct cfg80211_ops *ops, int sizeof_priv,
  		}
  	}
  
@@ -114,7 +119,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  	INIT_LIST_HEAD(&rdev->wiphy.wdev_list);
  	INIT_LIST_HEAD(&rdev->beacon_registrations);
  	spin_lock_init(&rdev->beacon_registrations_lock);
-@@ -970,21 +971,38 @@
+@@ -978,21 +979,38 @@ void wiphy_rfkill_stop_polling(struct wiphy *wiphy)
  }
  EXPORT_SYMBOL(wiphy_rfkill_stop_polling);
  
@@ -155,7 +160,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  	nl80211_notify_wiphy(rdev, NL80211_CMD_DEL_WIPHY);
  	rdev->wiphy.registered = false;
  
-@@ -1007,6 +1025,7 @@
+@@ -1015,6 +1033,7 @@ void wiphy_unregister(struct wiphy *wiphy)
  	cfg80211_rdev_list_generation++;
  	device_del(&rdev->wiphy.dev);
  
@@ -163,7 +168,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  	rtnl_unlock();
  
  	flush_work(&rdev->scan_done_wk);
-@@ -1039,6 +1058,7 @@
+@@ -1047,6 +1066,7 @@ void cfg80211_dev_free(struct cfg80211_registered_device *rdev)
  	}
  	list_for_each_entry_safe(scan, tmp, &rdev->bss_list, list)
  		cfg80211_put_bss(&rdev->wiphy, &scan->pub);
@@ -171,7 +176,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  	kfree(rdev);
  }
  
-@@ -1117,7 +1137,7 @@
+@@ -1125,7 +1145,7 @@ static const struct device_type wiphy_type = {
  void cfg80211_update_iface_num(struct cfg80211_registered_device *rdev,
  			       enum nl80211_iftype iftype, int num)
  {
@@ -180,7 +185,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  
  	rdev->num_running_ifaces += num;
  	if (iftype == NL80211_IFTYPE_MONITOR)
-@@ -1130,7 +1150,7 @@
+@@ -1138,7 +1158,7 @@ void __cfg80211_leave(struct cfg80211_registered_device *rdev,
  	struct net_device *dev = wdev->netdev;
  	struct cfg80211_sched_scan_request *pos, *tmp;
  
@@ -189,7 +194,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  	ASSERT_WDEV_LOCK(wdev);
  
  	cfg80211_pmsr_wdev_down(wdev);
-@@ -1226,6 +1246,9 @@
+@@ -1234,6 +1254,9 @@ void cfg80211_init_wdev(struct cfg80211_registered_device *rdev,
  	spin_lock_init(&wdev->pmsr_lock);
  	INIT_WORK(&wdev->pmsr_free_wk, cfg80211_pmsr_free_wk);
  
@@ -199,7 +204,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  	/*
  	 * We get here also when the interface changes network namespaces,
  	 * as it's registered into the new one, but we don't want it to
-@@ -1261,6 +1284,7 @@
+@@ -1269,6 +1292,7 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
  		SET_NETDEV_DEVTYPE(dev, &wiphy_type);
  		break;
  	case NETDEV_REGISTER:
@@ -207,7 +212,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  		/*
  		 * NB: cannot take rdev->mtx here because this may be
  		 * called within code protected by it when interfaces
-@@ -1297,9 +1321,12 @@
+@@ -1305,9 +1329,12 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
  		cfg80211_init_wdev(rdev, wdev);
  		break;
  	case NETDEV_GOING_DOWN:
@@ -220,7 +225,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  		cfg80211_update_iface_num(rdev, wdev->iftype, -1);
  		if (rdev->scan_req && rdev->scan_req->wdev == wdev) {
  			if (WARN_ON(!rdev->scan_req->notified))
-@@ -1314,9 +1341,11 @@
+@@ -1322,9 +1349,11 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
  		}
  
  		rdev->opencount--;
@@ -232,7 +237,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  		cfg80211_update_iface_num(rdev, wdev->iftype, 1);
  		wdev_lock(wdev);
  		switch (wdev->iftype) {
-@@ -1363,8 +1392,10 @@
+@@ -1371,8 +1400,10 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
  			/* assume this means it's off */
  			wdev->ps = false;
  		}
@@ -243,10 +248,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.c linux-5.2.5-pentoo/net/wi
  		/*
  		 * It is possible to get NETDEV_UNREGISTER
  		 * multiple times. To detect that, check
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.h linux-5.2.5-pentoo/net/wireless/core.h
---- linux-5.2.5-pentoo-orig/net/wireless/core.h	2019-08-02 13:22:23.211878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/core.h	2019-08-02 13:33:25.849894868 -0400
-@@ -25,6 +25,8 @@
+diff --git a/net/wireless/core.h b/net/wireless/core.h
+index 77556c58d9ac..9ad586fd7939 100644
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -25,6 +25,8 @@ struct cfg80211_registered_device {
  	const struct cfg80211_ops *ops;
  	struct list_head list;
  
@@ -255,7 +261,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.h linux-5.2.5-pentoo/net/wi
  	/* rfkill support */
  	struct rfkill_ops rfkill_ops;
  	struct rfkill *rfkill;
-@@ -231,7 +233,7 @@
+@@ -231,7 +233,7 @@ static inline void wdev_unlock(struct wireless_dev *wdev)
  
  static inline bool cfg80211_has_monitors_only(struct cfg80211_registered_device *rdev)
  {
@@ -264,10 +270,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/core.h linux-5.2.5-pentoo/net/wi
  
  	return rdev->num_running_ifaces == rdev->num_running_monitor_ifaces &&
  	       rdev->num_running_ifaces > 0;
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/ibss.c linux-5.2.5-pentoo/net/wireless/ibss.c
---- linux-5.2.5-pentoo-orig/net/wireless/ibss.c	2019-08-02 13:22:23.211878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/ibss.c	2019-08-02 13:33:25.849894868 -0400
-@@ -92,7 +92,7 @@
+diff --git a/net/wireless/ibss.c b/net/wireless/ibss.c
+index d1743e6abc34..e8d9162f9010 100644
+--- a/net/wireless/ibss.c
++++ b/net/wireless/ibss.c
+@@ -92,7 +92,7 @@ int __cfg80211_join_ibss(struct cfg80211_registered_device *rdev,
  	struct wireless_dev *wdev = dev->ieee80211_ptr;
  	int err;
  
@@ -276,10 +283,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/ibss.c linux-5.2.5-pentoo/net/wi
  	ASSERT_WDEV_LOCK(wdev);
  
  	if (wdev->ssid_len)
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/mlme.c linux-5.2.5-pentoo/net/wireless/mlme.c
---- linux-5.2.5-pentoo-orig/net/wireless/mlme.c	2019-08-02 13:22:23.211878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/mlme.c	2019-08-02 13:33:25.849894868 -0400
-@@ -433,7 +433,7 @@
+diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
+index f9462010575f..808821d521f9 100644
+--- a/net/wireless/mlme.c
++++ b/net/wireless/mlme.c
+@@ -433,7 +433,7 @@ cfg80211_process_mlme_unregistrations(struct cfg80211_registered_device *rdev)
  {
  	struct cfg80211_mgmt_registration *reg;
  
@@ -288,7 +296,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/mlme.c linux-5.2.5-pentoo/net/wi
  
  	spin_lock_bh(&rdev->mlme_unreg_lock);
  	while ((reg = list_first_entry_or_null(&rdev->mlme_unreg,
-@@ -463,9 +463,9 @@
+@@ -463,9 +463,9 @@ void cfg80211_mlme_unreg_wk(struct work_struct *wk)
  	rdev = container_of(wk, struct cfg80211_registered_device,
  			    mlme_unreg_wk);
  
@@ -300,10 +308,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/mlme.c linux-5.2.5-pentoo/net/wi
  }
  
  int cfg80211_mlme_register_mgmt(struct wireless_dev *wdev, u32 snd_portid,
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net/wireless/nl80211.c
---- linux-5.2.5-pentoo-orig/net/wireless/nl80211.c	2019-08-02 13:22:23.212878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/nl80211.c	2019-08-02 13:33:25.851894868 -0400
-@@ -63,9 +63,9 @@
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 1a107f29016b..b79ab55f1f53 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -63,9 +63,9 @@ static const struct genl_multicast_group nl80211_mcgrps[] = {
  
  /* returns ERR_PTR values */
  static struct wireless_dev *
@@ -315,7 +324,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	struct wireless_dev *result = NULL;
  	bool have_ifidx = attrs[NL80211_ATTR_IFINDEX];
  	bool have_wdev_id = attrs[NL80211_ATTR_WDEV];
-@@ -73,8 +73,6 @@
+@@ -73,8 +73,6 @@ __cfg80211_wdev_from_attrs(struct net *netns, struct nlattr **attrs)
  	int wiphy_idx = -1;
  	int ifidx = -1;
  
@@ -324,7 +333,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	if (!have_ifidx && !have_wdev_id)
  		return ERR_PTR(-EINVAL);
  
-@@ -85,6 +83,28 @@
+@@ -85,6 +83,28 @@ __cfg80211_wdev_from_attrs(struct net *netns, struct nlattr **attrs)
  		wiphy_idx = wdev_id >> 32;
  	}
  
@@ -353,37 +362,16 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	list_for_each_entry(rdev, &cfg80211_rdev_list, list) {
  		struct wireless_dev *wdev;
  
-@@ -746,30 +766,47 @@
- 	int err;
- 
- 	if (!cb->args[0]) {
-+		struct nlattr **attrbuf;
-+
-+		attrbuf = kcalloc(NUM_NL80211_ATTR, sizeof(*attrbuf),
-+				  GFP_KERNEL);
-+		if (!attrbuf)
-+			return -ENOMEM;
-+
- 		err = nlmsg_parse_deprecated(cb->nlh,
- 					     GENL_HDRLEN + nl80211_fam.hdrsize,
--					     genl_family_attrbuf(&nl80211_fam),
--					     nl80211_fam.maxattr,
-+					     attrbuf, nl80211_fam.maxattr,
- 					     nl80211_policy, NULL);
--		if (err)
-+		if (err) {
-+			kfree(attrbuf);
+@@ -775,22 +795,31 @@ int nl80211_prepare_wdev_dump(struct netlink_callback *cb,
  			return err;
-+		}
+ 		}
  
--		*wdev = __cfg80211_wdev_from_attrs(
--					sock_net(cb->skb->sk),
--					genl_family_attrbuf(&nl80211_fam));
--		if (IS_ERR(*wdev))
+-		*wdev = __cfg80211_wdev_from_attrs(sock_net(cb->skb->sk),
 +		rtnl_lock();
 +		*wdev = __cfg80211_wdev_from_attrs(NULL, sock_net(cb->skb->sk),
-+						   attrbuf);
-+		kfree(attrbuf);
+ 						   attrbuf);
+ 		kfree(attrbuf);
+-		if (IS_ERR(*wdev))
 +		if (IS_ERR(*wdev)) {
 +			rtnl_unlock();
  			return PTR_ERR(*wdev);
@@ -410,7 +398,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  		*rdev = wiphy_to_rdev(wiphy);
  		*wdev = NULL;
  
-@@ -780,8 +817,12 @@
+@@ -801,8 +830,12 @@ int nl80211_prepare_wdev_dump(struct netlink_callback *cb,
  			}
  		}
  
@@ -424,61 +412,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	}
  
  	return 0;
-@@ -2363,14 +2404,21 @@
- 				    struct netlink_callback *cb,
- 				    struct nl80211_dump_wiphy_state *state)
- {
--	struct nlattr **tb = genl_family_attrbuf(&nl80211_fam);
--	int ret = nlmsg_parse_deprecated(cb->nlh,
--					 GENL_HDRLEN + nl80211_fam.hdrsize,
--					 tb, nl80211_fam.maxattr,
--					 nl80211_policy, NULL);
-+	struct nlattr **tb = kcalloc(NUM_NL80211_ATTR, sizeof(*tb), GFP_KERNEL);
-+	int ret;
-+
-+	if (!tb)
-+		return -ENOMEM;
-+
-+	ret = nlmsg_parse_deprecated(cb->nlh,
-+				     GENL_HDRLEN + nl80211_fam.hdrsize,
-+				     tb, nl80211_fam.maxattr,
-+				     nl80211_policy, NULL);
- 	/* ignore parse errors for backward compatibility */
--	if (ret)
--		return 0;
-+	if (ret) {
-+		ret = 0;
-+		goto out;
-+	}
- 
- 	state->split = tb[NL80211_ATTR_SPLIT_WIPHY_DUMP];
- 	if (tb[NL80211_ATTR_WIPHY])
-@@ -2383,8 +2431,10 @@
- 		int ifidx = nla_get_u32(tb[NL80211_ATTR_IFINDEX]);
- 
- 		netdev = __dev_get_by_index(sock_net(skb->sk), ifidx);
--		if (!netdev)
--			return -ENODEV;
-+		if (!netdev) {
-+			ret = -ENODEV;
-+			goto out;
-+		}
- 		if (netdev->ieee80211_ptr) {
- 			rdev = wiphy_to_rdev(
- 				netdev->ieee80211_ptr->wiphy);
-@@ -2392,7 +2442,10 @@
- 		}
- 	}
- 
--	return 0;
-+	ret = 0;
-+out:
-+	kfree(tb);
-+	return ret;
- }
- 
- static int nl80211_dump_wiphy(struct sk_buff *skb, struct netlink_callback *cb)
-@@ -2734,7 +2787,7 @@
+@@ -2791,7 +2824,7 @@ static int nl80211_set_wds_peer(struct sk_buff *skb, struct genl_info *info)
  
  static int nl80211_set_wiphy(struct sk_buff *skb, struct genl_info *info)
  {
@@ -487,7 +421,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	struct net_device *netdev = NULL;
  	struct wireless_dev *wdev;
  	int result = 0, rem_txq_params = 0;
-@@ -2745,8 +2798,7 @@
+@@ -2802,8 +2835,7 @@ static int nl80211_set_wiphy(struct sk_buff *skb, struct genl_info *info)
  	u8 coverage_class = 0;
  	u32 txq_limit = 0, txq_memory_limit = 0, txq_quantum = 0;
  
@@ -497,7 +431,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	/*
  	 * Try to find the wiphy and netdev. Normally this
  	 * function shouldn't need the netdev, but this is
-@@ -2770,14 +2822,20 @@
+@@ -2827,14 +2859,20 @@ static int nl80211_set_wiphy(struct sk_buff *skb, struct genl_info *info)
  	if (!netdev) {
  		rdev = __cfg80211_rdev_from_attrs(genl_info_net(info),
  						  info->attrs);
@@ -519,7 +453,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	/*
  	 * end workaround code, by now the rdev is available
  	 * and locked, and wdev may or may not be NULL.
-@@ -2787,6 +2845,10 @@
+@@ -2844,6 +2882,10 @@ static int nl80211_set_wiphy(struct sk_buff *skb, struct genl_info *info)
  		result = cfg80211_dev_rename(
  			rdev, nla_data(info->attrs[NL80211_ATTR_WIPHY_NAME]));
  
@@ -530,10 +464,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	if (result)
  		return result;
  
-@@ -3551,6 +3613,17 @@
+@@ -3607,6 +3649,17 @@ static int nl80211_del_interface(struct sk_buff *skb, struct genl_info *info)
+ 	if (!rdev->ops->del_virtual_intf)
  		return -EOPNOTSUPP;
  
- 	/*
++	/*
 +	 * We hold RTNL, so this is safe, without RTNL opencount cannot
 +	 * reach 0, and thus the rdev cannot be deleted.
 +	 *
@@ -544,11 +479,10 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
 +	 */
 +	mutex_unlock(&rdev->mtx);
 +
-+	/*
+ 	/*
  	 * If we remove a wireless device without a netdev then clear
  	 * user_ptr[1] so that nl80211_post_doit won't dereference it
- 	 * to check if it needs to do dev_put(). Otherwise it crashes
-@@ -3559,6 +3632,10 @@
+@@ -3616,6 +3669,10 @@ static int nl80211_del_interface(struct sk_buff *skb, struct genl_info *info)
  	 */
  	if (!wdev->netdev)
  		info->user_ptr[1] = NULL;
@@ -559,7 +493,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	return rdev_del_virtual_intf(rdev, wdev);
  }
-@@ -5118,10 +5195,9 @@
+@@ -5216,10 +5273,9 @@ static int nl80211_dump_station(struct sk_buff *skb,
  	int sta_idx = cb->args[2];
  	int err;
  
@@ -571,7 +505,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	if (!wdev->netdev) {
  		err = -EINVAL;
-@@ -5156,7 +5232,7 @@
+@@ -5254,7 +5310,7 @@ static int nl80211_dump_station(struct sk_buff *skb,
  	cb->args[2] = sta_idx;
  	err = skb->len;
   out_err:
@@ -580,7 +514,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	return err;
  }
-@@ -6001,10 +6077,9 @@
+@@ -6099,10 +6155,9 @@ static int nl80211_dump_mpath(struct sk_buff *skb,
  	int path_idx = cb->args[2];
  	int err;
  
@@ -592,7 +526,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	if (!rdev->ops->dump_mpath) {
  		err = -EOPNOTSUPP;
-@@ -6037,7 +6112,7 @@
+@@ -6135,7 +6190,7 @@ static int nl80211_dump_mpath(struct sk_buff *skb,
  	cb->args[2] = path_idx;
  	err = skb->len;
   out_err:
@@ -601,7 +535,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	return err;
  }
  
-@@ -6197,10 +6272,9 @@
+@@ -6295,10 +6350,9 @@ static int nl80211_dump_mpp(struct sk_buff *skb,
  	int path_idx = cb->args[2];
  	int err;
  
@@ -613,7 +547,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	if (!rdev->ops->dump_mpp) {
  		err = -EOPNOTSUPP;
-@@ -6233,7 +6307,7 @@
+@@ -6331,7 +6385,7 @@ static int nl80211_dump_mpp(struct sk_buff *skb,
  	cb->args[2] = path_idx;
  	err = skb->len;
   out_err:
@@ -622,7 +556,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	return err;
  }
  
-@@ -6841,12 +6915,15 @@
+@@ -6939,12 +6993,15 @@ static int nl80211_get_reg_do(struct sk_buff *skb, struct genl_info *info)
  	if (!hdr)
  		goto put_failure;
  
@@ -638,7 +572,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  			return PTR_ERR(rdev);
  		}
  
-@@ -6855,9 +6932,11 @@
+@@ -6953,9 +7010,11 @@ static int nl80211_get_reg_do(struct sk_buff *skb, struct genl_info *info)
  			       REGULATORY_WIPHY_SELF_MANAGED;
  		regdom = get_wiphy_regdom(wiphy);
  
@@ -650,7 +584,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  			return -EINVAL;
  		}
  
-@@ -6882,11 +6961,13 @@
+@@ -6980,11 +7039,13 @@ static int nl80211_get_reg_do(struct sk_buff *skb, struct genl_info *info)
  	rcu_read_unlock();
  
  	genlmsg_end(msg, hdr);
@@ -664,7 +598,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  put_failure:
  	nlmsg_free(msg);
  	return -EMSGSIZE;
-@@ -7049,12 +7130,17 @@
+@@ -7147,12 +7208,17 @@ static int nl80211_set_reg(struct sk_buff *skb, struct genl_info *info)
  			return -EINVAL;
  	}
  
@@ -686,7 +620,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	rd->n_reg_rules = num_rules;
  	rd->alpha2[0] = alpha2[0];
-@@ -7086,10 +7172,13 @@
+@@ -7184,10 +7250,13 @@ static int nl80211_set_reg(struct sk_buff *skb, struct genl_info *info)
  		}
  	}
  
@@ -701,7 +635,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	return r;
  }
  #endif /* CONFIG_CFG80211_CRDA_SUPPORT */
-@@ -8269,10 +8358,7 @@
+@@ -8367,10 +8436,7 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
  	struct net_device *dev = info->user_ptr[1];
  	struct wireless_dev *wdev = dev->ieee80211_ptr;
  	struct cfg80211_csa_settings params;
@@ -713,7 +647,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	int err;
  	bool need_new_beacon = false;
  	bool need_handle_dfs_flag = true;
-@@ -8337,28 +8423,39 @@
+@@ -8435,28 +8501,39 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
  	if (err)
  		return err;
  
@@ -761,7 +695,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	params.counter_offsets_beacon =
  		nla_data(csa_attrs[NL80211_ATTR_CSA_C_OFF_BEACON]);
-@@ -8367,23 +8464,31 @@
+@@ -8465,23 +8542,31 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
  	for (i = 0; i < params.n_counter_offsets_beacon; i++) {
  		u16 offset = params.counter_offsets_beacon[i];
  
@@ -801,7 +735,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  		params.counter_offsets_presp =
  			nla_data(csa_attrs[NL80211_ATTR_CSA_C_OFF_PRESP]);
-@@ -8392,35 +8497,42 @@
+@@ -8490,35 +8575,42 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
  		for (i = 0; i < params.n_counter_offsets_presp; i++) {
  			u16 offset = params.counter_offsets_presp[i];
  
@@ -853,7 +787,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  		}
  	}
  
-@@ -8431,6 +8543,8 @@
+@@ -8529,6 +8621,8 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
  	err = rdev_channel_switch(rdev, dev, &params);
  	wdev_unlock(wdev);
  
@@ -862,7 +796,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	return err;
  }
  
-@@ -8579,12 +8693,9 @@
+@@ -8677,12 +8771,9 @@ static int nl80211_dump_scan(struct sk_buff *skb, struct netlink_callback *cb)
  	int start = cb->args[2], idx = 0;
  	int err;
  
@@ -876,7 +810,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	wdev_lock(wdev);
  	spin_lock_bh(&rdev->bss_lock);
-@@ -8615,7 +8726,7 @@
+@@ -8713,7 +8804,7 @@ static int nl80211_dump_scan(struct sk_buff *skb, struct netlink_callback *cb)
  	wdev_unlock(wdev);
  
  	cb->args[2] = idx;
@@ -885,24 +819,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	return skb->len;
  }
-@@ -8692,7 +8803,7 @@
- 
- static int nl80211_dump_survey(struct sk_buff *skb, struct netlink_callback *cb)
- {
--	struct nlattr **attrbuf = genl_family_attrbuf(&nl80211_fam);
-+	struct nlattr **attrbuf;
- 	struct survey_info survey;
- 	struct cfg80211_registered_device *rdev;
- 	struct wireless_dev *wdev;
-@@ -8700,10 +8811,15 @@
- 	int res;
- 	bool radio_stats;
+@@ -8802,10 +8893,11 @@ static int nl80211_dump_survey(struct sk_buff *skb, struct netlink_callback *cb)
+ 	if (!attrbuf)
+ 		return -ENOMEM;
  
 -	rtnl_lock();
-+	attrbuf = kcalloc(NUM_NL80211_ATTR, sizeof(*attrbuf), GFP_KERNEL);
-+	if (!attrbuf)
-+		return -ENOMEM;
-+
  	res = nl80211_prepare_wdev_dump(cb, &rdev, &wdev);
 -	if (res)
 -		goto out_err;
@@ -913,17 +834,16 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  
  	/* prepare_wdev_dump parsed the attributes */
  	radio_stats = attrbuf[NL80211_ATTR_SURVEY_RADIO_STATS];
-@@ -8744,7 +8860,8 @@
- 	cb->args[2] = survey_idx;
+@@ -8847,7 +8939,7 @@ static int nl80211_dump_survey(struct sk_buff *skb, struct netlink_callback *cb)
  	res = skb->len;
   out_err:
+ 	kfree(attrbuf);
 -	rtnl_unlock();
-+	kfree(attrbuf);
 +	mutex_unlock(&rdev->mtx);
  	return res;
  }
  
-@@ -9560,10 +9677,14 @@
+@@ -9674,10 +9766,14 @@ EXPORT_SYMBOL(__cfg80211_send_event_skb);
  static int nl80211_testmode_do(struct sk_buff *skb, struct genl_info *info)
  {
  	struct cfg80211_registered_device *rdev = info->user_ptr[0];
@@ -940,37 +860,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	if (!rdev->ops->testmode_cmd)
  		return -EOPNOTSUPP;
  
-@@ -9592,6 +9713,7 @@
- 				 struct netlink_callback *cb)
- {
- 	struct cfg80211_registered_device *rdev;
-+	struct nlattr **attrbuf = NULL;
- 	int err;
- 	long phy_idx;
- 	void *data = NULL;
-@@ -9612,7 +9734,12 @@
- 			goto out_err;
- 		}
- 	} else {
--		struct nlattr **attrbuf = genl_family_attrbuf(&nl80211_fam);
-+		attrbuf = kcalloc(NUM_NL80211_ATTR, sizeof(*attrbuf),
-+				  GFP_KERNEL);
-+		if (!attrbuf) {
-+			err = -ENOMEM;
-+			goto out_err;
-+		}
- 
- 		err = nlmsg_parse_deprecated(cb->nlh,
- 					     GENL_HDRLEN + nl80211_fam.hdrsize,
-@@ -9679,6 +9806,7 @@
- 	/* see above */
- 	cb->args[0] = phy_idx + 1;
-  out_err:
-+	kfree(attrbuf);
- 	rtnl_unlock();
- 	return err;
- }
-@@ -12673,7 +12801,8 @@
+@@ -12817,7 +12913,8 @@ static int nl80211_vendor_cmd(struct sk_buff *skb, struct genl_info *info)
  {
  	struct cfg80211_registered_device *rdev = info->user_ptr[0];
  	struct wireless_dev *wdev =
@@ -980,91 +870,16 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	int i, err;
  	u32 vid, subcmd;
  
-@@ -12744,7 +12873,7 @@
- 				       struct cfg80211_registered_device **rdev,
- 				       struct wireless_dev **wdev)
- {
--	struct nlattr **attrbuf = genl_family_attrbuf(&nl80211_fam);
-+	struct nlattr **attrbuf;
- 	u32 vid, subcmd;
- 	unsigned int i;
- 	int vcmd_idx = -1;
-@@ -12775,24 +12904,32 @@
- 		return 0;
+@@ -12941,7 +13038,7 @@ static int nl80211_prepare_vendor_dump(struct sk_buff *skb,
+ 		goto out;
  	}
- 
-+	attrbuf = kcalloc(NUM_NL80211_ATTR, sizeof(*attrbuf), GFP_KERNEL);
-+	if (!attrbuf)
-+		return -ENOMEM;
-+
- 	err = nlmsg_parse_deprecated(cb->nlh,
- 				     GENL_HDRLEN + nl80211_fam.hdrsize,
- 				     attrbuf, nl80211_fam.maxattr,
- 				     nl80211_policy, NULL);
- 	if (err)
--		return err;
-+		goto out;
- 
- 	if (!attrbuf[NL80211_ATTR_VENDOR_ID] ||
--	    !attrbuf[NL80211_ATTR_VENDOR_SUBCMD])
--		return -EINVAL;
-+	    !attrbuf[NL80211_ATTR_VENDOR_SUBCMD]) {
-+		err = -EINVAL;
-+		goto out;
-+	}
  
 -	*wdev = __cfg80211_wdev_from_attrs(sock_net(skb->sk), attrbuf);
 +	*wdev = __cfg80211_wdev_from_attrs(NULL, sock_net(skb->sk), attrbuf);
  	if (IS_ERR(*wdev))
  		*wdev = NULL;
  
- 	*rdev = __cfg80211_rdev_from_attrs(sock_net(skb->sk), attrbuf);
--	if (IS_ERR(*rdev))
--		return PTR_ERR(*rdev);
-+	if (IS_ERR(*rdev)) {
-+		err = PTR_ERR(*rdev);
-+		goto out;
-+	}
- 
- 	vid = nla_get_u32(attrbuf[NL80211_ATTR_VENDOR_ID]);
- 	subcmd = nla_get_u32(attrbuf[NL80211_ATTR_VENDOR_SUBCMD]);
-@@ -12805,15 +12942,19 @@
- 		if (vcmd->info.vendor_id != vid || vcmd->info.subcmd != subcmd)
- 			continue;
- 
--		if (!vcmd->dumpit)
--			return -EOPNOTSUPP;
-+		if (!vcmd->dumpit) {
-+			err = -EOPNOTSUPP;
-+			goto out;
-+		}
- 
- 		vcmd_idx = i;
- 		break;
- 	}
- 
--	if (vcmd_idx < 0)
--		return -EOPNOTSUPP;
-+	if (vcmd_idx < 0) {
-+		err = -EOPNOTSUPP;
-+		goto out;
-+	}
- 
- 	if (attrbuf[NL80211_ATTR_VENDOR_DATA]) {
- 		data = nla_data(attrbuf[NL80211_ATTR_VENDOR_DATA]);
-@@ -12829,7 +12970,10 @@
- 	cb->args[4] = data_len;
- 
- 	/* keep rtnl locked in successful case */
--	return 0;
-+	err = 0;
-+out:
-+	kfree(attrbuf);
-+	return err;
- }
- 
- static int nl80211_vendor_cmd_dump(struct sk_buff *skb,
-@@ -13552,31 +13696,24 @@
+@@ -13723,31 +13820,24 @@ static int nl80211_probe_mesh_link(struct sk_buff *skb, struct genl_info *info)
  static int nl80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
  			    struct genl_info *info)
  {
@@ -1101,7 +916,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  			return PTR_ERR(wdev);
  		}
  
-@@ -13585,8 +13722,7 @@
+@@ -13756,8 +13846,7 @@ static int nl80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
  
  		if (ops->internal_flags & NL80211_FLAG_NEED_NETDEV) {
  			if (!dev) {
@@ -1111,7 +926,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				return -EINVAL;
  			}
  
-@@ -13597,8 +13733,7 @@
+@@ -13768,8 +13857,7 @@ static int nl80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
  
  		if (ops->internal_flags & NL80211_FLAG_CHECK_NETDEV_UP &&
  		    !wdev_running(wdev)) {
@@ -1121,7 +936,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  			return -ENETDOWN;
  		}
  
-@@ -13608,6 +13743,11 @@
+@@ -13779,6 +13867,11 @@ static int nl80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
  		info->user_ptr[0] = rdev;
  	}
  
@@ -1133,7 +948,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	return 0;
  }
  
-@@ -13625,6 +13765,12 @@
+@@ -13796,6 +13889,12 @@ static void nl80211_post_doit(const struct genl_ops *ops, struct sk_buff *skb,
  		}
  	}
  
@@ -1146,7 +961,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	if (ops->internal_flags & NL80211_FLAG_NEED_RTNL)
  		rtnl_unlock();
  
-@@ -13648,15 +13794,13 @@
+@@ -13819,15 +13918,13 @@ static const struct genl_ops nl80211_ops[] = {
  		.dumpit = nl80211_dump_wiphy,
  		.done = nl80211_dump_wiphy_done,
  		/* can be retrieved by unprivileged users */
@@ -1163,7 +978,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_GET_INTERFACE,
-@@ -13664,8 +13808,7 @@
+@@ -13835,8 +13932,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_get_interface,
  		.dumpit = nl80211_dump_interface,
  		/* can be retrieved by unprivileged users */
@@ -1173,7 +988,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_SET_INTERFACE,
-@@ -13696,8 +13839,7 @@
+@@ -13867,8 +13963,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_get_key,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1183,7 +998,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_SET_KEY,
-@@ -13705,7 +13847,6 @@
+@@ -13876,7 +13971,6 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_set_key,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1191,7 +1006,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -13714,7 +13855,6 @@
+@@ -13885,7 +13979,6 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_new_key,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1199,7 +1014,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -13722,64 +13862,56 @@
+@@ -13893,64 +13986,56 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_del_key,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1272,7 +1087,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_GET_MPATH,
-@@ -13787,8 +13919,7 @@
+@@ -13958,8 +14043,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_get_mpath,
  		.dumpit = nl80211_dump_mpath,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1282,7 +1097,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_GET_MPP,
-@@ -13796,47 +13927,42 @@
+@@ -13967,47 +14051,42 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_get_mpp,
  		.dumpit = nl80211_dump_mpp,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1336,7 +1151,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  		/* can be retrieved by unprivileged users */
  	},
  #ifdef CONFIG_CFG80211_CRDA_SUPPORT
-@@ -13845,7 +13971,7 @@
+@@ -14016,7 +14095,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_set_reg,
  		.flags = GENL_ADMIN_PERM,
@@ -1345,7 +1160,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  #endif
  	{
-@@ -13865,32 +13991,28 @@
+@@ -14036,32 +14115,28 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_get_mesh_config,
  		/* can be retrieved by unprivileged users */
@@ -1382,7 +1197,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_GET_SCAN,
-@@ -13902,16 +14024,14 @@
+@@ -14073,16 +14148,14 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_start_sched_scan,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1401,7 +1216,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_AUTHENTICATE,
-@@ -13919,7 +14039,7 @@
+@@ -14090,7 +14163,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_authenticate,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1410,7 +1225,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -13928,7 +14048,7 @@
+@@ -14099,7 +14172,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_associate,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1419,7 +1234,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -13936,32 +14056,28 @@
+@@ -14107,32 +14180,28 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_deauthenticate,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1456,7 +1271,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  #ifdef CONFIG_NL80211_TESTMODE
  	{
-@@ -13970,8 +14086,7 @@
+@@ -14141,8 +14210,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_testmode_do,
  		.dumpit = nl80211_testmode_dump,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1466,7 +1281,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  #endif
  	{
-@@ -13980,7 +14095,7 @@
+@@ -14151,7 +14219,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_connect,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1475,7 +1290,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -13989,7 +14104,7 @@
+@@ -14160,7 +14228,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_update_connect_params,
  		.flags = GENL_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1484,7 +1299,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -13997,16 +14112,14 @@
+@@ -14168,16 +14236,14 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_disconnect,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1503,7 +1318,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_GET_SURVEY,
-@@ -14019,7 +14132,7 @@
+@@ -14190,7 +14256,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_setdel_pmksa,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1512,7 +1327,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -14027,136 +14140,119 @@
+@@ -14198,136 +14264,119 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_setdel_pmksa,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1666,7 +1481,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  #ifdef CONFIG_PM
  	{
-@@ -14164,16 +14260,14 @@
+@@ -14335,16 +14384,14 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_get_wowlan,
  		/* can be retrieved by unprivileged users */
@@ -1685,7 +1500,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  #endif
  	{
-@@ -14182,7 +14276,7 @@
+@@ -14353,7 +14400,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.doit = nl80211_set_rekey_data,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
@@ -1694,7 +1509,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -14190,128 +14284,112 @@
+@@ -14361,128 +14408,112 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_tdls_mgmt,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1839,7 +1654,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_GET_PROTOCOL_FEATURES,
-@@ -14323,47 +14401,41 @@
+@@ -14494,47 +14525,41 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_update_ft_ies,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -1893,7 +1708,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  	{
  		.cmd = NL80211_CMD_VENDOR,
-@@ -14372,7 +14444,7 @@
+@@ -14543,7 +14568,7 @@ static const struct genl_ops nl80211_ops[] = {
  		.dumpit = nl80211_vendor_cmd_dump,
  		.flags = GENL_UNS_ADMIN_PERM,
  		.internal_flags = NL80211_FLAG_NEED_WIPHY |
@@ -1902,7 +1717,7 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  				  NL80211_FLAG_CLEAR_SKB,
  	},
  	{
-@@ -14380,116 +14452,102 @@
+@@ -14551,116 +14576,102 @@ static const struct genl_ops nl80211_ops[] = {
  		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
  		.doit = nl80211_set_qos_map,
  		.flags = GENL_UNS_ADMIN_PERM,
@@ -2034,18 +1849,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/nl80211.c linux-5.2.5-pentoo/net
  	},
  };
  
-@@ -14507,6 +14565,7 @@
- 	.n_ops = ARRAY_SIZE(nl80211_ops),
- 	.mcgrps = nl80211_mcgrps,
- 	.n_mcgrps = ARRAY_SIZE(nl80211_mcgrps),
-+	.parallel_ops = true,
- };
- 
- /* notification functions */
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/sme.c linux-5.2.5-pentoo/net/wireless/sme.c
---- linux-5.2.5-pentoo-orig/net/wireless/sme.c	2019-08-02 13:22:23.212878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/sme.c	2019-08-02 13:33:25.851894868 -0400
-@@ -67,7 +67,6 @@
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index 7a6c38ddc65a..f6b68685189f 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -67,7 +67,6 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
  	struct cfg80211_scan_request *request;
  	int n_channels, err;
  
@@ -2053,10 +1861,11 @@ diff -Naur linux-5.2.5-pentoo-orig/net/wireless/sme.c linux-5.2.5-pentoo/net/wir
  	ASSERT_WDEV_LOCK(wdev);
  
  	if (rdev->scan_req || rdev->scan_msg)
-diff -Naur linux-5.2.5-pentoo-orig/net/wireless/util.c linux-5.2.5-pentoo/net/wireless/util.c
---- linux-5.2.5-pentoo-orig/net/wireless/util.c	2019-08-02 13:22:23.212878438 -0400
-+++ linux-5.2.5-pentoo/net/wireless/util.c	2019-08-02 13:33:25.851894868 -0400
-@@ -891,7 +891,7 @@
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 1c39d6a2e850..39587ad2fb48 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -891,7 +891,7 @@ void cfg80211_process_rdev_events(struct cfg80211_registered_device *rdev)
  {
  	struct wireless_dev *wdev;
  
