@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION_STAMP=$(date +%Y.2)
+VERSION_STAMP=$(date +%Y.3)
 #could change .0 to %q
 if [ "${3}" = stage4-pentoo ]
 then
@@ -22,6 +22,7 @@ else
 fi
 
 #RC=p$(date "+%Y%m%d")
+RC="r1"
 
 if [ "${1}" = "x86" ]; then
 	arch="x86"
@@ -32,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20191001.tar.xz "
+echo "snapshot: 20191111.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -52,25 +53,29 @@ esac
 
 case ${3} in
 	stage1)
-		if [ ${1} = amd64 ]
-		then
-			if [ ${2} = hardened ]
-			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20190929T214502Z.tar.xz"
-			elif [ ${2} = default ]
-			then
-				echo "source_subpath: ${2}/seeds/stage3-amd64-20181218T214503Z.tar.xz"
-			fi
-		elif [ ${1} = x86 ]
-		then
-			if [ ${2} = hardened ]
-			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20190927T214501Z.tar.xz"
-			elif [ ${2} = default ]
-			then
-				echo "source_subpath: ${2}/seeds/stage3-i686-20190103T151155Z.tar.xz"
-			fi
-		fi
+    ## this is how we use gentoo's stages, but 17.1 broke us
+		#if [ ${1} = amd64 ]
+		#then
+		#	if [ ${2} = hardened ]
+		#	then
+		#		echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20190929T214502Z.tar.xz"
+		#	elif [ ${2} = default ]
+		#	then
+		#		echo "source_subpath: ${2}/seeds/stage3-amd64-20181218T214503Z.tar.xz"
+		#	fi
+		#elif [ ${1} = x86 ]
+		#then
+		#	if [ ${2} = hardened ]
+		#	then
+		#		echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20190927T214501Z.tar.xz"
+		#	elif [ ${2} = default ]
+		#	then
+		#		echo "source_subpath: ${2}/seeds/stage3-i686-20190103T151155Z.tar.xz"
+		#	fi
+		#fi
+    ## so let's run in circles
+    #echo "source_subpath: ${2}/stage3-${subarch}-${VERSION_STAMP}.tar.xz"
+    echo "source_subpath: ${2}/stage4-${subarch}-2019.3.tar.xz"
 		;;
 	stage2)
 		echo "source_subpath: ${2}/stage1-${subarch}-${VERSION_STAMP}.tar.xz"

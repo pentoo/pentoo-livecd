@@ -29,6 +29,8 @@ fi
 emerge -1kb --newuse --update @profile || /bin/bash
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb @world || /bin/bash
+#do what stage1 update seed is going to do
+emerge --quiet --update --newuse --changed-deps --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/    glibc app-arch/lbzip2 sys-devel/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || /bin/bash
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || /bin/bash

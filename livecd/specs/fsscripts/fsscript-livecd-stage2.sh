@@ -413,9 +413,6 @@ sed -i '/include/s/# //' /etc/nanorc
 
 eselect ruby set ruby24 || /bin/bash
 
-#mossmann said do this or I'm lame
-eselect lapack set 1
-
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
