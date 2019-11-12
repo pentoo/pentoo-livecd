@@ -374,10 +374,22 @@ fi
 
 su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
 su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
+
+#magic to autohide panel 2
 magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.config/xfce4/panel/default.xml)+1))
 sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
+
+#magic to enable gnome-keyring, this file gets pulled when xfce4 starts for the first time
+head -n-1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml > /tmp/xfce4-session.xml
+echo '  <property name="compat" type="empty">' >> /tmp/xfce4-session.xml
+echo '    <property name="LaunchGNOME" type="bool" value="false"/>' >> /tmp/xfce4-session.xml
+echo '  </property>' >> /tmp/xfce4-session.xml
+tail -n1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml >> /tmp/xfce4-session.xml
+mv /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
+
 #slim dm is much nicer than default xdm
 sed -i 's/"xdm"/"slim"/' /etc/conf.d/xdm
+
 #blueman doesn't create this but needs it
 su pentoo -c "mkdir -p /home/pentoo/Downloads"
 
