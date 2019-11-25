@@ -274,7 +274,7 @@ if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
 fi
 
 
-eselect python set python2.7 || /bin/bash
+eselect python set $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || /bin/bash
 fi
@@ -382,10 +382,10 @@ sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\"
 #magic to enable gnome-keyring, this file gets pulled when xfce4 starts for the first time
 head -n-1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml > /tmp/xfce4-session.xml
 echo '  <property name="compat" type="empty">' >> /tmp/xfce4-session.xml
-echo '    <property name="LaunchGNOME" type="bool" value="false"/>' >> /tmp/xfce4-session.xml
+echo '    <property name="LaunchGNOME" type="bool" value="true"/>' >> /tmp/xfce4-session.xml
 echo '  </property>' >> /tmp/xfce4-session.xml
 tail -n1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml >> /tmp/xfce4-session.xml
-mv /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
+mv -f /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
 
 #slim dm is much nicer than default xdm
 sed -i 's/"xdm"/"slim"/' /etc/conf.d/xdm
