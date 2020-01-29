@@ -90,7 +90,6 @@ fi
 if [ "$(uname -m)" = "x86" ]; then
 	emerge --update --oneshot -kb dev-lang/rust-bin || /bin/bash
 fi
-
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || /bin/bash

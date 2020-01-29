@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION_STAMP=$(date +%Y.3)
+VERSION_STAMP=$(date +%Y.0)
 #could change .0 to %q
 if [ "${3}" = stage4-pentoo ]
 then
@@ -33,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20200109.tar.xz "
+echo "snapshot: 20200129.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"

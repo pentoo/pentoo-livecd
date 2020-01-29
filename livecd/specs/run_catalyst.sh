@@ -74,10 +74,10 @@ do
 	#for stage in stage4-pentoo binpkg-update-seed livecd-stage2
 	#for stage in binpkg-update-seed livecd-stage2
 	case ${3:-missing} in
-	  all)                targets="stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo binpkg-update-seed livecd-stage2-full livecd-stage2" ;;
-	  livecd-all)         targets="stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo binpkg-update-seed livecd-stage2-full livecd-stage2" ;;
-	  livecd-full)        targets="stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo binpkg-update-seed livecd-stage2-full livecd-stage2" ;;
-	  livecd)             targets="stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo livecd-stage2-full livecd-stage2" ;;
+	  all)                targets="stage4 stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo binpkg-update-seed livecd-stage2-full livecd-stage2" ;;
+	  livecd-all)         targets="stage4 stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo binpkg-update-seed livecd-stage2-full livecd-stage2" ;;
+	  livecd-full)        targets="stage4 stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo binpkg-update-seed livecd-stage2-full livecd-stage2" ;;
+	  livecd)             targets="stage4 stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo livecd-stage2-full livecd-stage2" ;;
 	  stage1)             targets="stage1 stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo livecd-stage2-full livecd-stage2" ;;
 	  stage2)             targets="stage2 stage3 stage4 stage4-pentoo-full stage4-pentoo livecd-stage2-full livecd-stage2" ;;
 	  stage3)             targets="stage3 stage4 stage4-pentoo-full stage4-pentoo livecd-stage2-full livecd-stage2" ;;
@@ -110,7 +110,8 @@ do
 
 		check_io
 
-		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || FAILURE="1"
+		#catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec --log-level debug || FAILURE="1"
+		eatmydata catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || FAILURE="1"
 
   if [ "${FAILURE}" = "1" ]; then
     #printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
