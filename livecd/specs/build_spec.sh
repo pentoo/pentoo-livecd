@@ -33,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20200129.tar.xz "
+echo "snapshot: 20200211.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -74,8 +74,8 @@ case ${3} in
 		#	fi
 		#fi
     ## so let's run in circles
-    #echo "source_subpath: ${2}/stage3-${subarch}-${VERSION_STAMP}.tar.xz"
-    echo "source_subpath: ${2}/stage4-${subarch}-2019.3.tar.xz"
+    echo "source_subpath: ${2}/stage4-${subarch}-${VERSION_STAMP}.tar.xz"
+    #echo "source_subpath: ${2}/stage4-${subarch}-2019.3.tar.xz"
 		;;
 	stage2)
 		echo "source_subpath: ${2}/stage1-${subarch}-${VERSION_STAMP}.tar.xz"
@@ -153,7 +153,7 @@ then
   echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
   echo "# defined in this target.  It is useful for passing arguments to genkernel that"
   echo "# are not otherwise available via the livecd-stage2 spec file."
-  echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --compress-initramfs-type=xz"
+  echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --microcode-initramfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz"
   #if [ ${1} = amd64 ]
   #then
   #this adds zfs to just the non-hardened 64 bit kernel

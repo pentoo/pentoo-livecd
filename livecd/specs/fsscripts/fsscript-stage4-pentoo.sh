@@ -24,7 +24,7 @@ fi
 eselect python set --python2 $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 1 |sed 's#_#.#') || /bin/bash
 eselect python set --python3 $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
 #python 3 by default now
-eselect python set $(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
+eselect python set $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || /bin/bash
 fi

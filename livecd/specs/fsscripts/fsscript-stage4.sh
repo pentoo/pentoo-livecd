@@ -44,12 +44,14 @@ if [ $? = 0 ]; then
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
-PYTHON2=$(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 1 |sed 's#_#.#')
-PYTHON3=$(emerge --info | grep ^PYTHON_TARGETS | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#')
+PYTHON2=$(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 1 |sed 's#_#.#')
+PYTHON3=$(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#')
 eselect python set --python2 ${PYTHON2} || /bin/bash
 eselect python set --python3 ${PYTHON3} || /bin/bash
 ${PYTHON2} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON2#python}
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
+#python 3 by default now
+eselect python set $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
 if [ -x /usr/sbin/python-updater ];then
 	python-updater -- --buildpkg=y || /bin/bash
 fi

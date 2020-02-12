@@ -110,8 +110,8 @@ do
 
 		check_io
 
-		#catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec --log-level debug || FAILURE="1"
-		eatmydata catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || FAILURE="1"
+		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec --log-level debug || FAILURE="1"
+		#eatmydata catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || FAILURE="1"
 
   if [ "${FAILURE}" = "1" ]; then
     #printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
