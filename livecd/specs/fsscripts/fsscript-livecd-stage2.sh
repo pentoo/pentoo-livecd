@@ -475,10 +475,10 @@ pushd /root/gentoollist
 mkdir -p /var/log/portage/tool-list
 if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
   #non-full
-  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${arch}-${hardening}_.json || /bin/bash
+  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${arch}-${hardening}.json || /bin/bash
 else
   #full
-  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_.json || /bin/bash
+  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${arch}-${hardening}.json || /bin/bash
 fi
 popd
 rm -rf /root/gentoollist

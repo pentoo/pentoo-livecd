@@ -1,8 +1,6 @@
 livecd/fstype: squashfs
-#livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-memtest86+-grub2efi-splash-signed-cdtar.tar.bz2
-#livecd/cdtar: /usr/src/pentoo/pentoo-livecd/livecd/isolinux-memtest86+-grub2efi-splash-signed-dual-cdtar.tar.bz2
 
-livecd/verify: yup
+livecd/verify: blake2
 
 # A fsscript is simply a shell script that is copied into the chroot of the CD
 # after the kernel(s) and any external modules have been compiled and is 

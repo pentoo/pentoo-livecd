@@ -1,4 +1,4 @@
 <sys-apps/portage-9999
 ~app-portage/gentoolkit-0.4.6
 ~dev-python/numpy-1.16.1
-sys-kernel/genkernel **
+~sys-kernel/genkernel-4.0.3

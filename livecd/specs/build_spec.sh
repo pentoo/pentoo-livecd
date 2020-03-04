@@ -153,7 +153,7 @@ then
   echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
   echo "# defined in this target.  It is useful for passing arguments to genkernel that"
   echo "# are not otherwise available via the livecd-stage2 spec file."
-  echo "livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --microcode-initramfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz --b2sum"
+  echo livecd/gk_mainargs: --makeopts="-j32 -l64" --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --microcode-initramfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz --b2sum
   #if [ ${1} = amd64 ]
   #then
   #this adds zfs to just the non-hardened 64 bit kernel
