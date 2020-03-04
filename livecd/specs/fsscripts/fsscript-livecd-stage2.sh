@@ -471,11 +471,12 @@ rm -rf /var/tmp/portage/debug
 # So it seems I have picked /var/log/portage to just randomly spew stuff into
 pushd /root/gentoollist
 mkdir -p /var/log/portage/tool-list
-clst_rel_type=hardened
-rel_version="$(printenv | grep clst_livecd_volid | awk '{print $3,$4,$5}')"
-sh gen_installedlist.sh "${clst_rel_type} ${rel_version}" > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_`date "+%Y%m%d"`.html
-if [ $? -ne 0 ]; then
-	/bin/bash
+if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
+  #non-full
+  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${arch}-${hardening}_.json || /bin/bash
+else
+  #full
+  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${arch}-${hardening}_.json || /bin/bash
 fi
 popd
 rm -rf /root/gentoollist
