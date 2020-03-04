@@ -40,3 +40,4 @@ virtual/w3m
 <x11-drivers/nvidia-drivers-390.67
 <dev-lang/perl-5.28
 <dev-python/ipython-7
+<sys-boot/grub-2.04

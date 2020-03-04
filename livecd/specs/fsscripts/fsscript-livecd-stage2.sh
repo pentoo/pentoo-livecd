@@ -113,6 +113,8 @@ eselect news read --quiet all || /bin/bash
 mkdir -p /var/db/repos/pentoo || /bin/bash
 rsync -aEXu --delete /var/gentoo/repos/local/ /var/db/repos/pentoo/ || /bin/bash
 chown -R portage.portage /var/db/repos || /bin/bash
+mkdir -p /var/cache/distfiles || /bin/bash
+chown -R portage.portage /var/cache/distfiles || /bin/bash
 
 detected_use=""
 if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
