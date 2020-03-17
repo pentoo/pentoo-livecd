@@ -17,10 +17,9 @@ dev-python/pip
 
 #gpd pocket needs 1.1.5 and 1.1.6 has a different dep structure so just force over the hurdle
 <media-libs/alsa-lib-1.1.6
-#<media-libs/alsa-lib-1.1.5
 
 sys-kernel/genkernel-next
-<sys-kernel/genkernel-4.0.3
+<sys-kernel/genkernel-4.0.4
 
 #something is wonky, do not allow downgrade
 <media-libs/freetype-2.9.1-r3
