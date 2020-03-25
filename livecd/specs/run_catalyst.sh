@@ -110,13 +110,13 @@ do
 
 		check_io
 
-		catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec --log-level debug || FAILURE="1"
-		#eatmydata catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || FAILURE="1"
+		#catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec --log-level debug || FAILURE="1"
+		eatmydata catalyst -f /tmp/${arch}-${PROFILE}-${stage}.spec || FAILURE="1"
 
-    if [ "${FAILURE}" = "1" ]; then
+    #if [ "${FAILURE}" = "1" ]; then
       #printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
-      ./catalyst_recover.sh /tmp/${arch}-${PROFILE}-${stage}.spec
-    fi
+      #./catalyst_recover.sh /tmp/${arch}-${PROFILE}-${stage}.spec
+    #fi
 		check_io
 
 		if [ "${stage}" != "livecd-stage1" -a "${stage}" != "livecd-stage2"  -a "${stage}" != "stage4-pentoo" -a "${stage}" != "binpkg-update-seed" ]

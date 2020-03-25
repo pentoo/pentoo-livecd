@@ -41,3 +41,4 @@ virtual/w3m
 <dev-lang/perl-5.28
 <dev-python/ipython-7
 <sys-boot/grub-2.04
+<sys-apps/portage-2.3.95

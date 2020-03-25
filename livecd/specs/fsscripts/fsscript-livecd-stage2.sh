@@ -425,7 +425,7 @@ sed -i '/^#/!s/localhost/localhost pentoo/' /etc/hosts || /bin/bash
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
 
-eselect ruby set ruby24 || /bin/bash
+eselect ruby set ruby25 || /bin/bash
 
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
