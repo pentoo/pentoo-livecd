@@ -4,9 +4,11 @@ source /tmp/envscript
 fix_locale() {
 	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
 	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
+	grep -q "C.UTF-8 UTF-8" /etc/locale.nopurge || echo C.UTF-8 UTF-8 >> /etc/locale.nopurge
 	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
 	locale-gen || /bin/bash
-	eselect locale set en_US.utf8 || /bin/bash
+	#eselect locale set en_US.utf8 || /bin/bash
+	eselect locale set C.utf8 || /bin/bash
 }
 
 fix_locale

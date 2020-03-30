@@ -7,9 +7,11 @@ arch=$(uname -m)
 fix_locale() {
 	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
 	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
+	grep -q "C.UTF-8 UTF-8" /etc/locale.nopurge || echo C.UTF-8 UTF-8 >> /etc/locale.nopurge
 	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
 	locale-gen || /bin/bash
-	eselect locale set en_US.utf8 || /bin/bash
+	#eselect locale set en_US.utf8 || /bin/bash
+	eselect locale set C.utf8 || /bin/bash
 }
 
 #just in case, this seems to keep getting messed up
@@ -90,14 +92,6 @@ ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || /bin/bash
 
 # Fix the root login by emptying the root password. No ssh will be allowed until 'passwd root'
 sed -i -e 's/^root:\*:/root::/' /etc/shadow || /bin/bash
-
-# Remove useless opengl setup <--remove or fix this right
-#rm -rf /etc/init.d/x-setup
-#eselect opengl set xorg-x11 --dst-prefix=/etc/opengl/ || /bin/bash
-#rm -rf /usr/lib/libGLcore.so
-#[ -e /usr/lib64 ] && ln -s /etc/opengl/lib64 /etc/opengl/lib
-#[ -e /usr/lib32 ] && rm -f /usr/lib32/libGLcore.so
-eselect opengl set xorg-x11 || /bin/bash
 
 # Set default java vm
 if eselect java-vm list | grep openjdk-11; then
@@ -475,10 +469,10 @@ pushd /root/gentoollist
 mkdir -p /var/log/portage/tool-list
 if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
   #non-full
-  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${arch}-${hardening}.json || /bin/bash
+  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${arch}-${hardening}.json || /bin/bash
 else
   #full
-  gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${arch}-${hardening}.json || /bin/bash
+  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${arch}-${hardening}.json || /bin/bash
 fi
 popd
 rm -rf /root/gentoollist

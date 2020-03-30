@@ -58,7 +58,7 @@ livecd/root_overlay: /usr/src/pentoo/pentoo-livecd/livecd/root_overlay
 # labels that will be used by the CD bootloader to refer to each kernel image.
 boot/kernel: pentoo
 
-boot/kernel/pentoo/sources: --update pentoo-sources
+boot/kernel/pentoo/sources: pentoo-sources
 
 # This option sets the USE flags used to build the kernel and also any packages
 # which are defined under this kernel label.  These USE flags are additive from
