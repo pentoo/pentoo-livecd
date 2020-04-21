@@ -1,5 +1,6 @@
 #help force a preference for self-built so it actually runs on hardened
 www-client/firefox-bin
+<www-client/firefox-75.0
 
 ##we want ssmtp by default
 mail-mta/nullmailer
@@ -41,4 +42,4 @@ virtual/w3m
 <dev-lang/perl-5.28
 <dev-python/ipython-7
 <sys-boot/grub-2.04
-<sys-apps/portage-2.3.95
+<sys-apps/portage-2.3.98-r1

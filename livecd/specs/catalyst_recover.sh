@@ -6,7 +6,7 @@ pkgcache_path=$(grep "pkgcache_path:" "${1}" | awk '{print $2}')
 mount --bind /proc "${stagepath}"/proc
 mount --bind /dev "${stagepath}"/dev
 mount --bind /dev/pts "${stagepath}"/dev/pts
-#mount --bind /usr/portage "${stagepath}"/usr/portage
+mount --bind /usr/portage "${stagepath}"/usr/portage
 #mount --bind "${pkgcache_path}" "${stagepath}"/usr/portage/packages
 chroot "${stagepath}" /bin/env -i TERM=$TERM /bin/bash || PS1="chroot failed ${PS1}" /bin/bash
 umount "${stagepath}"/proc

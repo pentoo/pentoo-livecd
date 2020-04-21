@@ -5,13 +5,15 @@ source /tmp/envscript
 arch=$(uname -m)
 
 fix_locale() {
-	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
-	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
-	grep -q "C.UTF-8 UTF-8" /etc/locale.nopurge || echo C.UTF-8 UTF-8 >> /etc/locale.nopurge
-	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
-	locale-gen || /bin/bash
-	#eselect locale set en_US.utf8 || /bin/bash
+  for i in /etc/locale.nopurge /etc/locale.gen; do
+  	echo C.UTF-8 UTF-8 > "${i}"
+  	echo en_US ISO-8859-1 >> "${i}"
+  	echo en_US.UTF-8 UTF-8 >> "${i}"
+  done
 	eselect locale set C.utf8 || /bin/bash
+  env-update
+  . /etc/profile
+	locale-gen || /bin/bash
 }
 
 #just in case, this seems to keep getting messed up
@@ -327,30 +329,35 @@ fi
 #allow this to fail for right now so builds don't randomly stop and piss me off
 smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
-#configure postgres
-echo y | emerge --config dev-db/postgresql || /bin/bash
-sleep 1m
-touch /run/openrc/softlevel
-/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
-if [ $? -ne 0 ]; then
-  sleep 5m
-  /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start
+if portageq has_version / postgres; then
+  #configure postgres
+  echo y | emerge --config dev-db/postgresql || /bin/bash
+  sleep 1m
+  touch /run/openrc/softlevel
+  /etc/init.d/postgresql-"$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}')" start
   if [ $? -ne 0 ]; then
     sleep 5m
-    killall postgres
-    /etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') start || /bin/bash
+    /etc/init.d/postgresql-"$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}')" start
+    if [ $? -ne 0 ]; then
+      sleep 5m
+      killall postgres
+      /etc/init.d/postgresql-"$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}')" start || /bin/bash
+    fi
   fi
+
+  if portageq has_version / metasploit; then
+    emerge --config net-analyzer/metasploit || /bash/bash
+
+    #metasploit first run to create db, etc, and speed up livecd first run
+    if [ -x "/usr/bin/msfconsole" ]; then
+      HOME=/root msfconsole -x exit || /bin/bash
+    fi
+  fi
+
+  /etc/init.d/postgresql-"$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}')" stop || /bin/bash
+  rm -rf /run/openrc/softlevel || /bin/bash
 fi
 
-emerge --config net-analyzer/metasploit || /bash/bash
-
-#metasploit first run to create db, etc, and speed up livecd first run
-if [ -x "/usr/bin/msfconsole" ]; then
-	HOME=/root msfconsole -x exit || /bin/bash
-fi
-
-/etc/init.d/postgresql-$(qlist -SC dev-db/postgresql | awk -F':' '{print $2}') stop || /bin/bash
-rm -rf /run/openrc/softlevel || /bin/bash
 
 if [ -f /etc/skel/Desktop/pentoo-installer.desktop ] && [ ! -f /home/pentoo/Desktop/pentoo-installer.desktop ]; then
 	su pentoo -c 'mkdir -p /home/pentoo/desktop'

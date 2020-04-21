@@ -2,16 +2,20 @@
 source /tmp/envscript
 
 fix_locale() {
-	grep -q "en_US ISO-8859-1" /etc/locale.nopurge || echo en_US ISO-8859-1 >> /etc/locale.nopurge
-	grep -q "en_US.UTF-8 UTF-8" /etc/locale.nopurge || echo en_US.UTF-8 UTF-8 >> /etc/locale.nopurge
-	grep -q "C.UTF-8 UTF-8" /etc/locale.nopurge || echo C.UTF-8 UTF-8 >> /etc/locale.nopurge
-	sed -i -e '/en_US ISO-8859-1/s/^# *//' -e '/en_US.UTF-8 UTF-8/s/^# *//' /etc/locale.gen || /bin/bash
-	locale-gen || /bin/bash
-	#eselect locale set en_US.utf8 || /bin/bash
+  for i in /etc/locale.nopurge /etc/locale.gen; do
+  	echo C.UTF-8 UTF-8 > "${i}"
+  	echo en_US ISO-8859-1 >> "${i}"
+  	echo en_US.UTF-8 UTF-8 >> "${i}"
+  done
 	eselect locale set C.utf8 || /bin/bash
+  env-update
+  . /etc/profile
+	locale-gen || /bin/bash
 }
 
 fix_locale
+printf "fuck\n"
+/bin/bash
 
 #revdep-rebuild --library 'libstdc++.so.6' -- --buildpkg=y --usepkg=n --exclude gcc
 
