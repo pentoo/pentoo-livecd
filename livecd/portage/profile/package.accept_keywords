@@ -5,3 +5,7 @@
 =www-client/firefox-75*
 ~media-libs/libvpx-1.8.2
 ~media-libs/libwebp-1.1.0
+
+#x86 testing
+=dev-python/dbus-python-1.2.14
+=dev-python/twisted-19.10.0

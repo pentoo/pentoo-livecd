@@ -21,7 +21,7 @@ else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
 
-RC=r1_p$(date "+%Y%m%d")
+RC=p$(date "+%Y%m%d")
 #RC="r1"
 
 if [ "${1}" = "x86" ]; then
@@ -33,7 +33,7 @@ elif [ "${1}" = "amd64" ]; then
 fi
 
 echo "rel_type: ${2}"
-echo "snapshot: 20200421.tar.xz "
+echo "snapshot: latest.tar.xz "
 echo "portage_overlay: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
 echo "compression_mode: pixz"
@@ -165,7 +165,7 @@ then
   #	echo "boot/kernel/pentoo/gk_kernargs: --zfs"
   #else
   echo -e "\n#This ensures zfs is turned off and not autodetected to be in use"
-  echo "boot/kernel/pentoo/gk_kernargs: --no-zfs"
+  echo "boot/kernel/pentoo/gk_kernargs: --no-zfs --b2sums"
   #fi
 
   echo "# This option is for merging kernel-dependent packages and external modules that"
@@ -228,7 +228,7 @@ fi
 case ${3} in
 	stage4)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4.sh"
-		echo "stage4/packages: dev-lang/python:2.7"
+		echo "stage4/packages: --update @system"
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"

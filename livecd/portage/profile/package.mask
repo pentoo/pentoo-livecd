@@ -43,3 +43,4 @@ virtual/w3m
 <dev-python/ipython-7
 <sys-boot/grub-2.04
 <sys-apps/portage-2.3.98-r1
+<app-portage/gemato-14.3

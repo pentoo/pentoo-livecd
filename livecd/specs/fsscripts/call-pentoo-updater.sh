@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 source /tmp/envscript
 
 #emerge --usepkg=n --buildpkg=y --quiet --update --newuse --rebuild-if-new-ver sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 sys-devel/libtool
@@ -15,7 +15,8 @@ source /tmp/envscript
 #  fi
 #fi
 
-[ -x /usr/local/portage/scripts/pentoo-updater.sh ] && /bin/bash -x /usr/local/portage/scripts/pentoo-updater.sh
-
-[ -x /var/gentoo/repos/local/scripts/pentoo-updater.sh ] && /bin/bash -x /var/gentoo/repos/local/scripts/pentoo-updater.sh
-
+for i in /var/gentoo/repos/local /var/db/repos/local; do
+  if [ -x ${i}/scripts/pentoo-updater.sh ]; then
+    /bin/bash -x ${i}/scripts/pentoo-updater.sh
+  fi
+done

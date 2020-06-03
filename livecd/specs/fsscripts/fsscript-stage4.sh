@@ -14,8 +14,6 @@ fix_locale() {
 }
 
 fix_locale
-printf "fuck\n"
-/bin/bash
 
 #revdep-rebuild --library 'libstdc++.so.6' -- --buildpkg=y --usepkg=n --exclude gcc
 
@@ -76,8 +74,9 @@ fi
 
 revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 
-[ -x /usr/local/portage/scripts/bug-461824.sh ] && /usr/local/portage/scripts/bug-461824.sh
-[ -x /var/gentoo/repos/local/scripts/bug-461824.sh ] && /var/gentoo/repos/local/scripts/bug-461824.sh
+for i in /var/gentoo/repos/local /var/db/repos/local; do
+  [ -x ${i}/scripts/bug-461824.sh ] && ${i}/scripts/bug-461824.sh
+done
 
 #some things fail in livecd-stage1 but work here, nfc why
 emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
@@ -87,24 +86,23 @@ emerge -1 -kb sys-kernel/pentoo-sources || /bin/bash
 emerge --update --oneshot -kb dev-java/icedtea-bin || /bin/bash
 #oh, and f**king tomcat can't build against openjdk:11
 eselect java-vm set system icedtea-bin-8 || /bin/bash
-if [ "$(uname -m)" = "x86_64" ]; then
+if [ "${clst_subarch}" = "amd64" ]; then
   emerge --update --oneshot -kb dev-java/tomcat-servlet-api:2.4 || /bin/bash
   emerge --update --oneshot -kb openjdk-bin:11 || /bin/bash
   eselect java-vm set system openjdk-bin-11 || /bin/bash
   emerge --update --oneshot -kb openjdk:11 || /bin/bash
   eselect java-vm set system openjdk-11 || /bin/bash
   emerge -C openjdk-bin:11 || /bin/bash
-fi
-if [ "$(uname -m)" = "x86" ]; then
+elif [ "${clst_subarch}" = "pentium-m" ]; then
 	emerge --update --oneshot -kb dev-lang/rust-bin || /bin/bash
 fi
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
-        emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
+  emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
-#[ "$(uname -m)" = "x86" ] && crossdev -s1 -t x86_64
+#[ "${clst_subarch}" = "pentium-m" ] && crossdev -s1 -t x86_64
 
 fixpackages
 eclean-pkg -t 3m

@@ -2,7 +2,6 @@
 source /etc/profile
 env-update
 source /tmp/envscript
-arch=$(uname -m)
 
 fix_locale() {
   for i in /etc/locale.nopurge /etc/locale.gen; do
@@ -16,9 +15,20 @@ fix_locale() {
 	locale-gen || /bin/bash
 }
 
+if [ "${clst_subarch}" = "pentium-m" ]; then
+	ARCH="x86"
+elif [ "${clst_subarch}" = "amd64" ]; then
+	ARCH="amd64"
+else
+	echo "failed to handle arch"
+	/bin/bash
+fi
+
 #just in case, this seems to keep getting messed up
 chown -R portage.portage /usr/portage
-chown -R portage.portage /var/gentoo/repos/local/
+chown -R portage.portage /var/gentoo/repos/local
+chown -R portage.portage /var/db/repos/gentoo
+chown -R portage.portage /var/db/repos/local
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
@@ -108,6 +118,7 @@ eselect news read --quiet all || /bin/bash
 # this avoids corrupting timestamps in /var/cache/edb/mtimedb
 mkdir -p /var/db/repos/pentoo || /bin/bash
 rsync -aEXu --delete /var/gentoo/repos/local/ /var/db/repos/pentoo/ || /bin/bash
+rm -rf /var/gentoo/repos/local
 chown -R portage.portage /var/db/repos || /bin/bash
 mkdir -p /var/cache/distfiles || /bin/bash
 chown -R portage.portage /var/cache/distfiles || /bin/bash
@@ -119,7 +130,7 @@ fi
 if [ "${clst_version_stamp/kde}" != "${clst_version_stamp}" ]; then
   detected_use="${detected_use} -xfce kde"
 fi
-if [ $arch = "x86_64" ]; then
+if [ "${clst_subarch}" = "amd64" ]; then
   detected_use="opencl ${detected_use}"
 fi
 
@@ -146,7 +157,7 @@ cat <<-EOF > /etc/portage/make.conf.new
 	#FFLAGS="\${CFLAGS}"
 
 EOF
-if [ $arch = "x86_64" ]; then
+if [ "${clst_subarch}" = "amd64" ]; then
 cat <<-EOF >> /etc/portage/make.conf.new
 	#Please adjust your use flags, if you don't use gpu cracking, it is probably safe to remove opencl
 	#Currently opencl is only supported on nvidia gpu, so if you drop nvidia from VIDEO_CARDS, drop opencl
@@ -178,24 +189,11 @@ if gcc -v 2>&1 | grep -q Hardened
 then
 	hardening=hardened
 else
-        hardening=default
+  hardening=default
 fi
 
-if [ $arch = "i686" ]; then
-	ARCH="x86"
-	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
-elif [ $arch = "x86_64" ]; then
-	ARCH="amd64"
-	eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
-	portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
-else
-	echo "failed to handle arch"
-	exit
-fi
-
-#XXX fix this for the new location of the union
-sed -i -e 's:ccache:ccache /mnt/livecd /.unions:' /etc/updatedb.conf || /bin/bash
+eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH} || /bin/bash
+portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 
 # Build the metadata cache
 rm -rf /var/cache/edb/dep || /bin/bash
@@ -238,7 +236,9 @@ emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 emerge --deselect=y sys-kernel/pentoo-sources || /bin/bash
 
-/var/db/repos/pentoo/scripts/bug-461824.sh
+for i in /var/gentoo/repos/local /var/db/repos/local; do
+  [ -x ${i}/scripts/bug-461824.sh ] && ${i}/scripts/bug-461824.sh
+done
 
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update
 if ! emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update; then
@@ -251,12 +251,6 @@ if portageq list_preserved_libs /; then
 fi
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
-
-#opencl is only on amd64 now
-if [ "${arch}" = "x86_64" ]; then
-  #USE=opencl doesn't actually matter until the above updates, so we set here
-  eselect opencl set ocl-icd || /bin/bash
-fi
 
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || /bin/bash
@@ -449,7 +443,7 @@ rm -f /etc/portage/depcheck
 rm -rf /etc/portage/profile
 
 #cleanup binary drivers
-if [ $arch = "x86_64" ]; then
+if [ "${clst_subarch}" = "amd64" ]; then
   emerge -C nvidia-drivers || /bin/bash
   rm -f /lib/modules/*/video/*
 fi
@@ -476,11 +470,12 @@ pushd /root/gentoollist
 mkdir -p /var/log/portage/tool-list
 if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
   #non-full
-  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${arch}-${hardening}.json || /bin/bash
+  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${ARCH}-${hardening}.json || /bin/bash
 else
   #full
-  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${arch}-${hardening}.json || /bin/bash
+  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json || /bin/bash
 fi
+sync
 popd
 rm -rf /root/gentoollist
 
@@ -492,25 +487,12 @@ eclean-pkg -t 3m
 ln -snf /proc/self/mounts /etc/mtab
 
 #reset profile to binary profile so users get it as default
-if [ $arch = "i686" ]; then
-	ARCH="x86"
-elif [ $arch = "x86_64" ]; then
-	ARCH="amd64"
-else
-	echo "failed to handle arch"
-	/bin/bash
-fi
 eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/binary || /bin/bash
 portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 
 sync
 sleep 60
 
-#rsync -aEXu --delete /var/cache/edb /tmp/
-#rsync -aEXu --delete /var/cache/eix /tmp/
-#rm -rf --one-file-system /var/cache/*
-#rsync -aEXu /tmp/edb /var/cache/
-#rsync -aEXu /tmp/eix /var/cache/
 for i in $(ls /var/cache); do
   [ "${i}" = "edb" ] && continue
   [ "${i}" = "eix" ] && continue
@@ -520,8 +502,6 @@ for i in $(ls /var/cache); do
 done
 chown root.portage -R /var/cache/edb
 chown root.portage -R /var/cache/eix
-#rm -rf /tmp/edb
-#rm -rf /tmp/eix
 emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
 #todo when we no longer need this stub for testing, replace with default
@@ -534,6 +514,7 @@ find /root -uid 1001 -exec chown -h root.root {} \;
 find /etc -uid 1001 -exec chown -h root.root {} \;
 
 updatedb
+equery check -o '*' || /bin/bash
 sync
 sleep 60
 rm -f /root/.bash_history

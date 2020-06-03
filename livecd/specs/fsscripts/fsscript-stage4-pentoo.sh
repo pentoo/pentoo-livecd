@@ -2,7 +2,6 @@
 source /tmp/envscript
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
-emerge --deselect=y dev-lang/python:2.7 || /bin/bash
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
@@ -38,8 +37,7 @@ eselect ruby set ruby25 || /bin/bash
 
 revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 
-[ -x /usr/local/portage/scripts/bug-461824.sh ] && /usr/local/portage/scripts/bug-461824.sh
-[ -x /var/gentoo/repos/local/scripts/bug-461824.sh ] && /var/gentoo/repos/local/scripts/bug-461824.sh
+[ -x /var/db/repos/local/scripts/bug-461824.sh ] && /var/db/repos/local/scripts/bug-461824.sh
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
