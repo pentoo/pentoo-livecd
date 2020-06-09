@@ -4,3 +4,4 @@ dev-libs/openssl -bindist
 net-misc/openssh -bindist
 www-client/firefox clang
 sys-devel/llvm gold
+dev-libs/boost -mpi

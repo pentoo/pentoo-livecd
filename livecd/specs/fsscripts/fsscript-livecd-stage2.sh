@@ -148,7 +148,7 @@ cat <<-EOF > /etc/portage/make.conf.new
 	#Please adjust your CFLAGS as desired, information can be found here: https://wiki.gentoo.org/wiki/CFLAGS
 	#Do not modify these FLAGS unless you know what you are doing, always check the defaults first with "portageq envvar CFLAGS"
 	#This is the default for pentoo at the time of build:
-	#CFLAGS="$(portageq envvar CFLAGS | sed 's#-ggdb##')"
+	#CFLAGS="$(portageq envvar CFLAGS)"
 	#A safe choice would be to keep whatever Pentoo defaults are, but optimize for your specific machine:
 	#CFLAGS="\${CFLAGS} -march=native"
 	#If you do change your CFLAGS, it is best for all the compile flags to match so uncomment the following three lines:
@@ -452,17 +452,17 @@ fi
 # So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
 # The issue is it isn't really possible (nor desirable) to have all this extra debug info on the iso so here is what we do...
 #We make a dir with full path for where the debug info goes abusing the fancy /var/tmp/portage tmpfs mount
-mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+#mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 
 #then we rsync all the debug info into a rootfs for building a module
-rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
+#rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
 
 # last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
-mkdir -p /var/log/portage/debug/
-mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug/debug-info-${ARCH}-${hardening}-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
+#mkdir -p /var/log/portage/debug/
+#mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug/debug-info-${ARCH}-${hardening}-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
 
 # and we add /usr/lib/debug to cleanables in livecd-stage2.spec
-rm -rf /var/tmp/portage/debug
+#rm -rf /var/tmp/portage/debug
 
 ## More with the horrible hack
 # So it seems I have picked /var/log/portage to just randomly spew stuff into

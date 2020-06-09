@@ -165,7 +165,7 @@ then
   #	echo "boot/kernel/pentoo/gk_kernargs: --zfs"
   #else
   echo -e "\n#This ensures zfs is turned off and not autodetected to be in use"
-  echo "boot/kernel/pentoo/gk_kernargs: --no-zfs --b2sums"
+  echo "boot/kernel/pentoo/gk_kernargs: --no-zfs --b2sum"
   #fi
 
   echo "# This option is for merging kernel-dependent packages and external modules that"
@@ -177,18 +177,18 @@ echo "subarch: ${subarch}"
 
 if [ ${1} = amd64 ]
 then
-	echo "cflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
-	echo "cxxflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
-	echo "fflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
-	echo "fcflags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
-	echo "common_flags: -Os -mtune=core2 -pipe -ggdb -frecord-gcc-switches"
+	echo "cflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "cxxflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "fflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "fcflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "common_flags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
 elif [ ${1} = x86 ]
 then
-	echo "cflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "cxxflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "fflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "fcflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
-	echo "common_flags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -ggdb -frecord-gcc-switches"
+	echo "cflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "cxxflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "fflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "fcflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "common_flags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
 fi
 
 if [ "${3}" = stage4-pentoo ] || [ "${3}" = "stage4-pentoo-full" ]
