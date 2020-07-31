@@ -20,6 +20,9 @@ then
 elif [ "${3}" = "livecd-stage2-full" ]
 then
 	echo "version_stamp: full-${VERSION_STAMP}"
+elif [ "${3}" = "livecd-stage2-core" ]
+then
+	echo "version_stamp: core-${VERSION_STAMP}"
 else
 	echo "version_stamp: ${VERSION_STAMP}"
 fi
@@ -49,7 +52,7 @@ case ${3} in
 	stage2|stage3)
 		echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap"
 		;;
-	stage4|stage4-pentoo|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2|livecd-stage2-full)
+	stage4|stage4-pentoo|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2-core|livecd-stage2|livecd-stage2-full)
 		echo "pkgcache_path: /catalyst/packages/${1}-${2}"
 		;;
 esac
@@ -107,6 +110,17 @@ case ${3} in
 		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
 		#echo "source_subpath: ${2}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.tar.xz"
 		;;
+	livecd-stage2-core)
+		echo "source_subpath: ${2}/stage4-${subarch}-${VERSION_STAMP}.tar.xz"
+		if [ -n "${RC}" ]; then
+			echo "livecd/iso: /catalyst/release/Pentoo_Core_${1}_${2}/pentoo-core-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
+			echo "livecd/volid: Pentoo Linux Core ${arch} ${VERSION_STAMP} ${RC:0:5}"
+		else
+			echo "livecd/iso: /catalyst/release/Pentoo_Core_${1}_${2}/pentoo-core-${1}-${2}-${VERSION_STAMP}.iso"
+			echo "livecd/volid: Pentoo Linux Core ${arch} ${VERSION_STAMP}"
+		fi
+		echo "livecd/depclean: no"
+		;;
 	livecd-stage2)
 		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
 		if [ -n "${RC}" ]; then
@@ -130,7 +144,7 @@ case ${3} in
 		;;
 esac
 
-if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ]
+if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ] || [ "${3}" = "livecd-stage2-core" ]
 then
   echo -e "\n# This option is the full path and filename to a kernel .config file that is"
   echo "# used by genkernel to compile the kernel this label applies to."
@@ -173,10 +187,17 @@ then
   echo -e "\n#This ensures zfs is turned off and not autodetected to be in use"
   echo "boot/kernel/pentoo/gk_kernargs: --no-zfs --b2sum"
   #fi
+fi
 
+if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ];
+then
   echo "# This option is for merging kernel-dependent packages and external modules that"
   echo "# are configured against this kernel label."
   echo "boot/kernel/pentoo/packages: pentoo/pentoo"
+elif [ "${3}" = "livecd-stage2-core" ]; then
+  echo "# This option is for merging kernel-dependent packages and external modules that"
+  echo "# are configured against this kernel label."
+  echo "boot/kernel/pentoo/packages: pentoo/pentoo-livecd"
 fi
 
 echo "subarch: ${subarch}"
@@ -203,6 +224,9 @@ then
 elif [[ ${3} = binpkg-update* ]]
 then
 	echo "target: stage4"
+elif [ "${3}" = "livecd-stage2-core" ]
+then
+  echo "target: livecd-stage2"
 elif [ "${3}" = "livecd-stage2-full" ]
 then
   echo "target: livecd-stage2"
@@ -218,14 +242,14 @@ case ${3} in
 	stage4|stage4-pentoo|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage1)
 		echo "profile: pentoo:pentoo/${2}/linux/${1}"
 		;;
-	livecd-stage2|livecd-stage2-full)
+	livecd-stage2-core|livecd-stage2|livecd-stage2-full)
 		echo "profile: pentoo:pentoo/${2}/linux/${1}/binary"
 		;;
 esac
 
 [ "${3}" = "stage1" ] && cat /usr/src/pentoo/pentoo-livecd/livecd/specs/stage1-common.spec
 
-if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ]
+if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ] || [ "${3}" = "livecd-stage-core" ]
 then
   cat /usr/src/pentoo/pentoo-livecd/livecd/specs/livecd-stage2-common.spec
 fi
