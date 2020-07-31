@@ -8,7 +8,7 @@ fi
 
 arch="$1"
 
-. /usr/src/pentoo/pentoo-livecd/automation/pentoo_functions.sh
+. /usr/src/pentoo/pentoo-livecd/livecd/automation/pentoo_functions.sh
 
 for stage in stage1 stage2 stage3 stage4 stage4-pentoo stage4-pentoo-full binpkg-update-seed livecd-stage2 livecd-stage2-full
 do

@@ -57,7 +57,7 @@ mirror_sync() {
     if [ "${stage}" != "${stage/livecd/}" ] || [ "${stage}" != "${stage/full/}" ]; then
       #sync packages for anything called livecd or full.  These are the stages which run eclean-pkg and fixpackages
       wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/packages/${arch}-hardened" /mnt/mirror/local_mirror/Packages/
-      /mnt/mirror/mirror.sh &
+      #/mnt/mirror/mirror.sh &
     fi
   else
     echo "hardened ${arch} ${stage} build FAILED" 1>&2
