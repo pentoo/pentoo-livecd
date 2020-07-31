@@ -11,6 +11,9 @@ then
 elif [ "${3}" = stage4-pentoo-full ]
 then
 	echo "version_stamp: pentoo-full-${VERSION_STAMP}"
+elif [ "${3}" = stage4-wctf-client ]
+then
+	echo "version_stamp: wctf-client-${VERSION_STAMP}"
 elif [[ ${3} = binpkg-update* ]]
 then
 	echo "version_stamp: binpkg-update-${VERSION_STAMP}"
@@ -46,7 +49,7 @@ case ${3} in
 	stage2|stage3)
 		echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap"
 		;;
-	stage4|stage4-pentoo|stage4-pentoo-full|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2|livecd-stage2-full)
+	stage4|stage4-pentoo|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2|livecd-stage2-full)
 		echo "pkgcache_path: /catalyst/packages/${1}-${2}"
 		;;
 esac
@@ -87,6 +90,9 @@ case ${3} in
 		echo "source_subpath: ${2}/stage3-${subarch}-${VERSION_STAMP}.tar.xz"
 		;;
 	stage4-pentoo*)
+		echo "source_subpath: ${2}/stage4-${subarch}-${VERSION_STAMP}.tar.xz"
+		;;
+	stage4-wctf-client)
 		echo "source_subpath: ${2}/stage4-${subarch}-${VERSION_STAMP}.tar.xz"
 		;;
 	binpkg-update-seed)
@@ -191,7 +197,7 @@ then
 	echo "common_flags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
 fi
 
-if [ "${3}" = stage4-pentoo ] || [ "${3}" = "stage4-pentoo-full" ]
+if [ "${3}" = stage4-pentoo ] || [ "${3}" = "stage4-pentoo-full" ] || [ "${3}" = "stage4-wctf-client" ]
 then
 	echo "target: stage4"
 elif [[ ${3} = binpkg-update* ]]
@@ -209,7 +215,7 @@ case ${3} in
 	stage1|stage2|stage3)
 		echo "profile: --force pentoo:pentoo/${2}/linux/${1}/bootstrap"
 		;;
-	stage4|stage4-pentoo|stage4-pentoo-full|binpkg-update-seed|binpkg-update|livecd-stage1)
+	stage4|stage4-pentoo|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage1)
 		echo "profile: pentoo:pentoo/${2}/linux/${1}"
 		;;
 	livecd-stage2|livecd-stage2-full)
@@ -239,6 +245,13 @@ case ${3} in
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
+		;;
+	stage4-wctf-client)
+		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/depclean-hard.sh"
+		echo "stage4/use: livecd minimal wifi"
+		echo "stage4/packages: --update pentoo/wctf-client"
+    echo "stage4/unmerge: sys-devel/llvm sys-devel/llvm-common"
+    echo "stage4/rm: /usr/lib64/debug /catalyst /usr/share/doc /usr/share/man /var/db/repos"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"

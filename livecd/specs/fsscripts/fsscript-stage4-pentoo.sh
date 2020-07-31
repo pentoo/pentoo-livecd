@@ -20,10 +20,11 @@ if [ $? -ne 0 ]; then
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
-eselect python set --python2 $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 1 |sed 's#_#.#') || /bin/bash
-eselect python set --python3 $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
+PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#')
+eselect python set --python3 ${PYTHON3} || /bin/bash
+${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
 #python 3 by default now
-eselect python set $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
+eselect python set "${PYTHON3}"
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || /bin/bash
 fi

@@ -11,6 +11,9 @@ do
 	echo snap.sh already running, sleeping 5 minutes
 	sleep 5m
 done
+pushd /var/db/repos/pentoo
+git pull
+popd
 emerge --sync || exit 1
 #sed "s#$(awk '/snapshot:/ {print $3}' /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh)#$(date "+%Y%m%d").tar.xz#" /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh > /tmp/build_spec.sh
 catalyst -s latest -C options=keepwork compression_mode=pixz_x

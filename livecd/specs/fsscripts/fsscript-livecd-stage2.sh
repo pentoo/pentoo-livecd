@@ -106,8 +106,8 @@ ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || /bin/bash
 sed -i -e 's/^root:\*:/root::/' /etc/shadow || /bin/bash
 
 # Set default java vm
-if eselect java-vm list | grep openjdk-11; then
-  eselect java-vm set system openjdk-11 || /bin/bash
+if eselect java-vm list | grep openjdk-8; then
+  eselect java-vm set system openjdk-8 || /bin/bash
 fi
 
 #mark all news read
@@ -266,7 +266,7 @@ if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
 fi
 
 
-eselect python set $(emerge --info | grep '^PYTHON_TARGETS' | cut -d\" -f2 | cut -d" " -f 2 |sed 's#_#.#') || /bin/bash
+eselect python set $(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#') || /bin/bash
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || /bin/bash
 fi
@@ -500,6 +500,8 @@ for i in $(ls /var/cache); do
   [ "${i}" = "binpkgs" ] && continue
   rm -rf "/var/cache/${i}"
 done
+#once more, with feeling
+chown -R portage.portage /var/cache/distfiles || /bin/bash
 chown root.portage -R /var/cache/edb
 chown root.portage -R /var/cache/eix
 emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash

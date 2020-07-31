@@ -43,9 +43,14 @@ virtual/w3m
 <dev-lang/perl-5.28
 <dev-python/ipython-7
 <sys-boot/grub-2.04
-<sys-apps/portage-2.3.98-r1
 <app-portage/gemato-14.3
 <dev-python/matplotlib-3.1.2
 <dev-libs/libevent-2.1.11
 <sys-libs/readline-8.0_p4
 <dev-libs/icu-67.1
+
+#async issues for sure
+<sys-apps/portage-2.3.101-r2
+
+#python2 only
+<net-analyzer/net-snmp-5.8.1_rc1

@@ -1,8 +1,5 @@
-<sys-apps/portage-9999
-~app-portage/gentoolkit-0.4.6
-~dev-python/numpy-1.16.1
+sys-apps/portage
 
-=www-client/firefox-75*
 ~media-libs/libvpx-1.8.2
 ~media-libs/libwebp-1.1.0
 
