@@ -235,28 +235,32 @@ case ${3} in
 	stage4)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4.sh"
 		echo "stage4/packages: --update @system"
+    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -office -pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
+    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
 		;;
 	stage4-pentoo-full)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
+    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
 		;;
 	stage4-wctf-client)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/depclean-hard.sh"
 		echo "stage4/use: livecd minimal wifi"
 		echo "stage4/packages: --update pentoo/wctf-client"
     echo "stage4/unmerge: sys-devel/llvm sys-devel/llvm-common"
-    echo "stage4/rm: /usr/lib64/debug /catalyst /usr/share/doc /usr/share/man /var/db/repos"
+    echo "stage4/rm: /usr/lib/debug /catalyst /usr/share/doc /usr/share/man /var/db/repos"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
+    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
 		;;
 	livecd-stage1)
 		echo "livecd/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
