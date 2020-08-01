@@ -111,7 +111,7 @@ case ${3} in
 		#echo "source_subpath: ${2}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.tar.xz"
 		;;
 	livecd-stage2-core)
-		echo "source_subpath: ${2}/stage4-${subarch}-${VERSION_STAMP}.tar.xz"
+		echo "source_subpath: ${2}/stage3-${subarch}-${VERSION_STAMP}.tar.xz"
 		if [ -n "${RC}" ]; then
 			echo "livecd/iso: /catalyst/release/Pentoo_Core_${1}_${2}/pentoo-core-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
 			echo "livecd/volid: Pentoo Linux Core ${arch} ${VERSION_STAMP} ${RC:0:5}"
@@ -150,16 +150,16 @@ then
   echo "# used by genkernel to compile the kernel this label applies to."
   if [ ${1} = amd64 ] && [ ${2} = hardened ]
   then
-    echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
+    echo "boot/kernel/pentoo/config: /var/db/repos/pentoo/sys-kernel/pentoo-sources/files/config-${1}-latest"
   elif [ ${1} = amd64 ] && [ ${2} = default ]
   then
-    echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
+    echo "boot/kernel/pentoo/config: /var/db/repos/pentoo/sys-kernel/pentoo-sources/files/config-${1}-latest"
   elif [ ${1} = x86 ] && [ ${2} = hardened ]
   then
-    echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
+    echo "boot/kernel/pentoo/config: /var/db/repos/pentoo/sys-kernel/pentoo-sources/files/config-${1}-latest"
   elif [ ${1} = x86 ] && [ ${2} = default ]
   then
-    echo "boot/kernel/pentoo/config: /usr/src/pentoo/pentoo-livecd/livecd/${1}/kernel/config-latest"
+    echo "boot/kernel/pentoo/config: /var/db/repos/pentoo/sys-kernel/pentoo-sources/files/config-${1}latest"
   fi
 
   echo -e "\n# This allows the optional directory containing the output packages for kernel"
@@ -249,7 +249,7 @@ esac
 
 [ "${3}" = "stage1" ] && cat /usr/src/pentoo/pentoo-livecd/livecd/specs/stage1-common.spec
 
-if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ] || [ "${3}" = "livecd-stage-core" ]
+if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ] || [ "${3}" = "livecd-stage2-core" ]
 then
   cat /usr/src/pentoo/pentoo-livecd/livecd/specs/livecd-stage2-common.spec
 fi
@@ -259,32 +259,32 @@ case ${3} in
 	stage4)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4.sh"
 		echo "stage4/packages: --update @system"
-    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
+    echo "stage4/rm: /usr/lib/debug /catalyst"
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -office -pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
-    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
+    echo "stage4/rm: /usr/lib/debug /catalyst"
 		;;
 	stage4-pentoo-full)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
-    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
+    echo "stage4/rm: /usr/lib/debug /catalyst"
 		;;
 	stage4-wctf-client)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/depclean-hard.sh"
 		echo "stage4/use: livecd minimal wifi"
 		echo "stage4/packages: --update pentoo/wctf-client"
     echo "stage4/unmerge: sys-devel/llvm sys-devel/llvm-common"
-    echo "stage4/rm: /usr/lib/debug /catalyst /usr/share/doc /usr/share/man /var/db/repos"
+    echo "stage4/rm: /usr/lib/debug /catalyst /usr/share/doc /usr/share/man"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
-    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos"
+    echo "stage4/rm: /usr/lib/debug /catalyst"
 		;;
 	livecd-stage1)
 		echo "livecd/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"

@@ -20,7 +20,7 @@ chmod 755 /usr/src/pentoo/pentoo-livecd/livecd/specs/build_spec.sh
 sleep 1
 sync
 sleep 1
-pkgcache_path="$(grep pkgcache_path /tmp/amd64-hardened-stage1.spec | awk -F' ' '{print $2}')"
+pkgcache_path="$(grep pkgcache_path "/tmp/${arch}-hardened-${stage}.spec" | awk -F' ' '{print $2}')"
 PKGDIR="${pkgcache_path}" eclean-pkg --changed-deps || PKGDIR="${pkgcache_path}" eclean-pkg
 wait_for_it eatmydata catalyst -f "/tmp/${arch}-hardened-${stage}.spec" || FAILED=1
 PKGDIR="${pkgcache_path}" eclean-pkg --changed-deps || PKGDIR="${pkgcache_path}" eclean-pkg

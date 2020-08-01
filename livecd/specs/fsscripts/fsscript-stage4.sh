@@ -71,7 +71,7 @@ fi
 
 revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 
-for i in /var/gentoo/repos/local /var/db/repos/local; do
+for i in /var/gentoo/repos/local /var/db/repos/local /var/db/repos/pentoo; do
   [ -x ${i}/scripts/bug-461824.sh ] && ${i}/scripts/bug-461824.sh
 done
 
@@ -87,7 +87,7 @@ eselect java-vm set system openjdk-11 || /bin/bash
 emerge -C openjdk-bin:11 || /bin/bash
 
 #fix PyQt5->qtmultimedia->pulseaudio->PyQt5 circular deps in the next stage
-USE="-pulseaudio" emerge -1 dev-qt/qtmultimedia
+USE="-pulseaudio" emerge -1kb dev-qt/qtmultimedia
 
 #fix cups/avahi circular deps in next stage
 USE=-zeroconf emerge --update --oneshot -kb net-print/cups || /bin/bash
@@ -100,12 +100,15 @@ if [ $? = 0 ]; then
   emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
 
+#short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
+emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
 #[ "${clst_subarch}" = "pentium-m" ] && crossdev -s1 -t x86_64
 
 fixpackages
 eclean-pkg -t 3m
-emerge --depclean --exclude dev-java/openjdk-bin  --exclude sys-kernel/pentoo-sources \
+emerge --depclean --exclude dev-java/openjdk  --exclude sys-kernel/pentoo-sources \
 	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit --exclude net-print/cups  --exclude dev-qt/qtmultimedia || /bin/bash
 
 #merge all other desired changes into /etc

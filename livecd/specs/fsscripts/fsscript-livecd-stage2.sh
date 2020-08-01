@@ -28,6 +28,7 @@ fi
 chown -R portage.portage /usr/portage
 chown -R portage.portage /var/gentoo/repos/local
 chown -R portage.portage /var/db/repos/gentoo
+chown -R portage.portage /var/db/repos/pentoo
 chown -R portage.portage /var/db/repos/local
 
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
@@ -116,9 +117,9 @@ eselect news read --quiet all || /bin/bash
 
 # Add pentoo repo but use only the version we are packaging in the iso
 # this avoids corrupting timestamps in /var/cache/edb/mtimedb
-mkdir -p /var/db/repos/pentoo || /bin/bash
-rsync -aEXu --delete /var/gentoo/repos/local/ /var/db/repos/pentoo/ || /bin/bash
-rm -rf /var/gentoo/repos/local
+#mkdir -p /var/db/repos/pentoo || /bin/bash
+#rsync -aEXu --delete /var/gentoo/repos/local/ /var/db/repos/pentoo/ || /bin/bash
+#rm -rf /var/gentoo/repos/local
 chown -R portage.portage /var/db/repos || /bin/bash
 mkdir -p /var/cache/distfiles || /bin/bash
 chown -R portage.portage /var/cache/distfiles || /bin/bash
@@ -236,7 +237,7 @@ emerge --deselect=y livecd-tools || /bin/bash
 emerge --deselect=y sys-fs/zfs || /bin/bash
 emerge --deselect=y sys-kernel/pentoo-sources || /bin/bash
 
-for i in /var/gentoo/repos/local /var/db/repos/local; do
+for i in /var/gentoo/repos/local /var/db/repos/local /var/db/repos/pentoo; do
   [ -x ${i}/scripts/bug-461824.sh ] && ${i}/scripts/bug-461824.sh
 done
 
@@ -274,6 +275,7 @@ perl-cleaner --ph-clean --modules -- --usepkg=n --buildpkg=y || safe_exit
 #the above line should always be enough
 #perl-cleaner --all -- --usepkg=n --buildpkg=y || /bin/bash
 
+/var/db/repos/local/scripts/bug-461824.sh
 /var/db/repos/pentoo/scripts/bug-461824.sh
 
 # This makes sure we have the latest and greatest genmenu!
@@ -397,7 +399,7 @@ echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
 
-if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
+if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ] || [ "${clst_version_stamp/core}" = "${clst_version_stamp}" ]; then
   #non-full iso means we expect things like builddeps sacrificed for size
   emerge --depclean --with-bdeps=n
 else
@@ -491,7 +493,7 @@ eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/binary || /bin/bash
 portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${ARCH}/bleeding_edge
 
 sync
-sleep 60
+sleep 20
 
 for i in $(ls /var/cache); do
   [ "${i}" = "edb" ] && continue

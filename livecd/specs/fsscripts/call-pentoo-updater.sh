@@ -15,8 +15,11 @@ source /tmp/envscript
 #  fi
 #fi
 
-for i in /var/gentoo/repos/local /var/db/repos/local; do
+for i in /var/gentoo/repos/local /var/db/repos/local /var/db/repos/pentoo; do
   if [ -x ${i}/scripts/pentoo-updater.sh ]; then
     /bin/bash -x ${i}/scripts/pentoo-updater.sh
   fi
 done
+
+#short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
+emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')

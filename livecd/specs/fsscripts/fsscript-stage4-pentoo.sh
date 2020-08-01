@@ -36,9 +36,13 @@ fi
 
 eselect ruby set ruby25 || /bin/bash
 
+#short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
+emerge --usepkg=n --buildpkg=y --oneshot $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+
 revdep-rebuild -i -- --usepkg=n --buildpkg=y || /bin/bash
 
 [ -x /var/db/repos/local/scripts/bug-461824.sh ] && /var/db/repos/local/scripts/bug-461824.sh
+[ -x /var/db/repos/pentoo/scripts/bug-461824.sh ] && /var/db/repos/pentoo/scripts/bug-461824.sh
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
