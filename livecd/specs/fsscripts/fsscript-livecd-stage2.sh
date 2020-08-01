@@ -180,6 +180,13 @@ cat <<-EOF >> /etc/portage/make.conf.new
 	#you can check available options with "emerge -vp xorg-drivers"
 EOF
 mv -f /etc/portage/make.conf.new /etc/portage/make.conf || /bin/bash
+if [ ! -f "/etc/portage/repos.conf/pentoo.conf" ]; then
+  #XXX for the incredibly tiny, make sure we have pentoo defined
+  #XXX remove this hack when we have a super tiny metapackage to handle such things, which needs to be soon
+  mkdir /etc/portage/repos.conf
+  cp /var/db/repos/pentoo/pentoo/pentoo-system/files/pentoo-r2.conf /etc/portage/repos.conf/pentoo.conf
+  #XXX the above is shit, make a tiny metapackage
+fi
 
 #deleting this earlier causes the above calls to portageq to break
 rm -rf /usr/local/portage || /bin/bash
@@ -242,16 +249,16 @@ for i in /var/gentoo/repos/local /var/db/repos/local /var/db/repos/pentoo; do
 done
 
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update
-if ! emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update; then
-  emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update || /bin/bash
+if portageq has_version / pentoo/pentoo; then
+  if ! emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update; then
+    emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update || /bin/bash
+  fi
 fi
 #layman -S
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update || /bin/bash
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
 fi
-find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
-find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
 
 #dropping usepkg on x11-modules-rebuild, doesn't make sense to use
 emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || /bin/bash
@@ -278,12 +285,14 @@ perl-cleaner --ph-clean --modules -- --usepkg=n --buildpkg=y || safe_exit
 /var/db/repos/local/scripts/bug-461824.sh
 /var/db/repos/pentoo/scripts/bug-461824.sh
 
-# This makes sure we have the latest and greatest genmenu!
-emerge -1 app-admin/genmenu || /bin/bash
+if portageq has_version / pentoo/pentoo; then
+  # This makes sure we have the latest and greatest genmenu!
+  emerge -1 app-admin/genmenu || /bin/bash
 
-# Runs the menu generator with a specific parameters for a WM
-su pentoo -c "genmenu.py -e" || /bin/bash
-su pentoo -c "genmenu.py -x" || /bin/bash
+  # Runs the menu generator with a specific parameters for a WM
+  su pentoo -c "genmenu.py -e" || /bin/bash
+  su pentoo -c "genmenu.py -x" || /bin/bash
+fi
 
 # Fixes menu (may no longer be needed)
 if [ -f /etc/xdg/menus/gnome-applications.menu ]; then
@@ -301,10 +310,12 @@ fi
 pushd /usr/share/fonts
 mkfontdir * || /bin/bash
 popd
-eselect fontconfig enable 10-sub-pixel-rgb.conf || /bin/bash
-eselect fontconfig enable 57-dejavu-sans-mono.conf || /bin/bash
-eselect fontconfig enable 57-dejavu-sans.conf || /bin/bash
-eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
+if portageq has_version / pentoo/pentoo; then
+  eselect fontconfig enable 10-sub-pixel-rgb.conf || /bin/bash
+  eselect fontconfig enable 57-dejavu-sans-mono.conf || /bin/bash
+  eselect fontconfig enable 57-dejavu-sans.conf || /bin/bash
+  eselect fontconfig enable 57-dejavu-serif.conf || /bin/bash
+fi
 
 # Setup kismet
 #if [ -e /etc/kismet.conf ]; then
@@ -371,26 +382,28 @@ fi
 #mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 
-su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
-su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
+if portageq has_version / pentoo/pentoo; then
+  su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
+  su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
 
-#magic to autohide panel 2
-magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.config/xfce4/panel/default.xml)+1))
-sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
+  #magic to autohide panel 2
+  magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.config/xfce4/panel/default.xml)+1))
+  sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
 
-#magic to enable gnome-keyring, this file gets pulled when xfce4 starts for the first time
-head -n-1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml > /tmp/xfce4-session.xml
-echo '  <property name="compat" type="empty">' >> /tmp/xfce4-session.xml
-echo '    <property name="LaunchGNOME" type="bool" value="true"/>' >> /tmp/xfce4-session.xml
-echo '  </property>' >> /tmp/xfce4-session.xml
-tail -n1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml >> /tmp/xfce4-session.xml
-mv -f /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
+  #magic to enable gnome-keyring, this file gets pulled when xfce4 starts for the first time
+  head -n-1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml > /tmp/xfce4-session.xml
+  echo '  <property name="compat" type="empty">' >> /tmp/xfce4-session.xml
+  echo '    <property name="LaunchGNOME" type="bool" value="true"/>' >> /tmp/xfce4-session.xml
+  echo '  </property>' >> /tmp/xfce4-session.xml
+  tail -n1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml >> /tmp/xfce4-session.xml
+  mv -f /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
 
-#slim dm is much nicer than default xdm
-sed -i 's/"xdm"/"slim"/' /etc/conf.d/xdm
+  #slim dm is much nicer than default xdm
+  sed -i 's/"xdm"/"slim"/' /etc/conf.d/xdm
 
-#blueman doesn't create this but needs it
-su pentoo -c "mkdir -p /home/pentoo/Downloads"
+  #blueman doesn't create this but needs it
+  su pentoo -c "mkdir -p /home/pentoo/Downloads"
+fi
 
 #force password setting for pentoo user
 #todo take the livecd .bashrc and insert this before startx with tty check
@@ -398,15 +411,6 @@ echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
-
-if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ] || [ "${clst_version_stamp/core}" = "${clst_version_stamp}" ]; then
-  #non-full iso means we expect things like builddeps sacrificed for size
-  emerge --depclean --with-bdeps=n
-else
-  emerge --depclean --with-bdeps=y
-  #full expects most things present, but this shit is huge and bdep only
-  emerge --depclean --with-bdeps=n 'dev-go/*' go virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi
-fi
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || /bin/bash
@@ -422,7 +426,15 @@ sed -i '/^#/!s/localhost/localhost pentoo/' /etc/hosts || /bin/bash
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
 
-eselect ruby set ruby25 || /bin/bash
+if portageq has_version / dev-lang/ruby; then
+  eselect ruby set ruby25 || /bin/bash
+fi
+
+find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
+find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
+
+#short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
+emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
 
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
@@ -444,8 +456,18 @@ rm -f /etc/portage/make.conf.catalyst
 rm -f /etc/portage/depcheck
 rm -rf /etc/portage/profile
 
+emerge -1kb portage || /bin/bash
+if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ] || [ "${clst_version_stamp/core}" = "${clst_version_stamp}" ]; then
+  #non-full iso means we expect things like builddeps sacrificed for size
+  emerge --depclean --with-bdeps=n
+else
+  emerge --depclean --with-bdeps=y
+  #full expects most things present, but this shit is huge and bdep only
+  emerge --depclean --with-bdeps=n 'dev-go/*' go virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi
+fi
+
 #cleanup binary drivers
-if [ "${clst_subarch}" = "amd64" ]; then
+if portageq has_version / x11-drivers/nvidia-drivers; then
   emerge -C nvidia-drivers || /bin/bash
   rm -f /lib/modules/*/video/*
 fi
@@ -468,17 +490,19 @@ fi
 
 ## More with the horrible hack
 # So it seems I have picked /var/log/portage to just randomly spew stuff into
-pushd /root/gentoollist
-mkdir -p /var/log/portage/tool-list
-if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
-  #non-full
-  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${ARCH}-${hardening}.json || /bin/bash
-else
-  #full
-  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json || /bin/bash
+if portageq has_version / dev-lang/ruby; then
+  pushd /root/gentoollist
+  mkdir -p /var/log/portage/tool-list
+  if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
+    #non-full
+    ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${ARCH}-${hardening}.json || /bin/bash
+  else
+    #full
+    ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json || /bin/bash
+  fi
+  sync
+  popd
 fi
-sync
-popd
 rm -rf /root/gentoollist
 
 rm -rf /var/tmp/portage/*
@@ -506,7 +530,6 @@ done
 chown -R portage.portage /var/cache/distfiles || /bin/bash
 chown root.portage -R /var/cache/edb
 chown root.portage -R /var/cache/eix
-emerge --usepkg=n --buildpkg=y -1 portage || /bin/bash
 
 #todo when we no longer need this stub for testing, replace with default
 mv /root/.bashrc.bak /root/.bashrc
