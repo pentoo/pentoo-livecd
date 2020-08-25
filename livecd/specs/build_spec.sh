@@ -153,7 +153,7 @@ then
   echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
   echo "# defined in this target.  It is useful for passing arguments to genkernel that"
   echo "# are not otherwise available via the livecd-stage2 spec file."
-  echo livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz --no-microcode-initramfsa --b2sum --no-zfs
+  echo livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz --no-microcode-initramfs --b2sum --no-zfs
 fi
 
 if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ];
