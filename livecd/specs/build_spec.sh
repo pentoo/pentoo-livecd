@@ -153,20 +153,7 @@ then
   echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
   echo "# defined in this target.  It is useful for passing arguments to genkernel that"
   echo "# are not otherwise available via the livecd-stage2 spec file."
-  echo livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode-initramfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz
-  #if [ ${1} = amd64 ]
-  #then
-  #this adds zfs to just the non-hardened 64 bit kernel
-  #	echo -e "\n# This option sets genkernel parameters on a per-kernel basis and applies only"
-  #	echo "# to this kernel label.  This can be used for building options into only a"
-  #	echo "# single kernel, where compatibility may be an issue.  Since we do not use this"
-  #	echo "# on the official release media, it is left blank, but it follows the same"
-  #	echo "# syntax as livecd/gk_mainargs."
-  #	echo "boot/kernel/pentoo/gk_kernargs: --zfs"
-  #else
-  echo -e "\n#This ensures zfs is turned off and not autodetected to be in use"
-  echo "boot/kernel/pentoo/gk_kernargs: --no-zfs --b2sum"
-  #fi
+  echo livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz --no-microcode-initramfsa --b2sum --no-zfs
 fi
 
 if [ "${3}" = "livecd-stage2" ] || [ "${3}" = "livecd-stage2-full" ];

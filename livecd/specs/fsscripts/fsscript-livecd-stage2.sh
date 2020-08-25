@@ -34,12 +34,18 @@ chown -R portage.portage /var/db/repos/local
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
 #somehow the default .bashrc runs X.... WTF????
-cp /etc/skel/.bashrc /root/.bashrc
+cp -f /etc/skel/.bashrc /root/.bashrc || /bin/bash
 
 #user gets wierd groups, fix it for us
 #defaults users,wheel,audio,plugdev,games,cdrom,disk,floppy,usb
 gpasswd -d pentoo games || /bin/bash #remove from games group
-usermod -a -G audio,cdrom,cdrw,kismet,pcscd,plugdev,portage,usb,users,uucp,video,wheel,wireshark pentoo || /bin/bash
+if portageq has_version / pentoo/pentoo; then
+  #default and full isos have these groups
+  usermod -a -G audio,cdrom,cdrw,kismet,pcscd,plugdev,portage,usb,users,uucp,video,wheel,wireshark pentoo || /bin/bash
+else
+  #pentoo-core is missing kismet and wireshark
+  usermod -a -G audio,cdrom,cdrw,pcscd,plugdev,portage,usb,users,uucp,video,wheel pentoo || /bin/bash
+fi
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
@@ -405,9 +411,8 @@ if portageq has_version / pentoo/pentoo-desktop; then
   su pentoo -c "mkdir -p /home/pentoo/Downloads"
 fi
 
-#force password setting for pentoo user
-#todo take the livecd .bashrc and insert this before startx with tty check
-echo "/usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
+#force password setting for pentoo user then prompt for starting X
+echo "exec /usr/sbin/livecd-setpass" >> /home/pentoo/.bashrc
 
 #forcibly untrounce our blacklist, caused by udev remerging
 rm -f /etc/modprobe.d/._cfg0000_blacklist.conf
@@ -475,33 +480,11 @@ if portageq has_version / x11-drivers/nvidia-drivers; then
 fi
 
 ## XXX: THIS IS A HORRIBLE IDEA!!!!
-# So here is what is happening, we are building the iso with -ggdb and splitdebug so we can figure out wtf is wrong when things are wrong
-# The issue is it isn't really possible (nor desirable) to have all this extra debug info on the iso so here is what we do...
-#We make a dir with full path for where the debug info goes abusing the fancy /var/tmp/portage tmpfs mount
-#mkdir -p /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
-
-#then we rsync all the debug info into a rootfs for building a module
-#rsync -aEXu /usr/lib/debug/ /var/tmp/portage/debug/rootfs/usr/lib/debug/ || /bin/bash
-
-# last we build the module and stash it in PORT_LOGDIR as it is definately on the host system but not the chroot
-#mkdir -p /var/log/portage/debug/
-#mksquashfs /var/tmp/portage/debug/rootfs/ /var/log/portage/debug/debug-info-${ARCH}-${hardening}-`date "+%Y%m%d"`.lzm -comp xz -Xbcj x86 -b 1048576 -Xdict-size 1048576 -no-recovery -noappend || /bin/bash
-
-# and we add /usr/lib/debug to cleanables in livecd-stage2.spec
-#rm -rf /var/tmp/portage/debug
-
-## More with the horrible hack
 # So it seems I have picked /var/log/portage to just randomly spew stuff into
 if portageq has_version / dev-lang/ruby; then
   pushd /root/gentoollist
   mkdir -p /var/log/portage/tool-list
-  if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ]; then
-    #non-full
-    ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_full_${ARCH}-${hardening}.json || /bin/bash
-  else
-    #full
-    ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json || /bin/bash
-  fi
+  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json || /bin/bash
   sync
   popd
 fi
