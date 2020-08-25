@@ -11,6 +11,9 @@ then
 elif [ "${3}" = stage4-pentoo-full ]
 then
 	echo "version_stamp: pentoo-full-${VERSION_STAMP}"
+elif [ "${3}" = stage4-pentoo-core ]
+then
+	echo "version_stamp: pentoo-core-${VERSION_STAMP}"
 elif [ "${3}" = stage4-wctf-client ]
 then
 	echo "version_stamp: wctf-client-${VERSION_STAMP}"
@@ -52,35 +55,16 @@ case ${3} in
 	stage2|stage3)
 		echo "pkgcache_path: /catalyst/packages/${1}-${2}-bootstrap"
 		;;
-	stage4|stage4-pentoo|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage1|livecd-stage2-core|livecd-stage2|livecd-stage2-full)
+	stage4|stage4-pentoo|stage4-pentoo-core|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage2-core|livecd-stage2|livecd-stage2-full)
 		echo "pkgcache_path: /catalyst/packages/${1}-${2}"
 		;;
 esac
 
 case ${3} in
 	stage1)
-    ## this is how we use gentoo's stages, but 17.1 broke us
-		#if [ ${1} = amd64 ]
-		#then
-		#	if [ ${2} = hardened ]
-		#	then
-		#		echo "source_subpath: ${2}/seeds/stage3-amd64-${2}-20190929T214502Z.tar.xz"
-		#	elif [ ${2} = default ]
-		#	then
-		#		echo "source_subpath: ${2}/seeds/stage3-amd64-20181218T214503Z.tar.xz"
-		#	fi
-		#elif [ ${1} = x86 ]
-		#then
-		#	if [ ${2} = hardened ]
-		#	then
-		#		echo "source_subpath: ${2}/seeds/stage3-i686-${2}-20190927T214501Z.tar.xz"
-		#	elif [ ${2} = default ]
-		#	then
-		#		echo "source_subpath: ${2}/seeds/stage3-i686-20190103T151155Z.tar.xz"
-		#	fi
-		#fi
-    ## so let's run in circles
+    ## let's run in circles
     echo "source_subpath: ${2}/stage4-${subarch}-${VERSION_STAMP}.tar.xz"
+    #migrate to new version stamp by using a static version stamp
     #echo "source_subpath: ${2}/stage4-${subarch}-2019.3.tar.xz"
 		;;
 	stage2)
@@ -106,12 +90,8 @@ case ${3} in
 		#I'm going to seed binpkg-update with binpkg-update :-)
 		echo "source_subpath: ${2}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.tar.xz"
 		;;
-	livecd-stage1)
-		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-${VERSION_STAMP}.tar.xz"
-		#echo "source_subpath: ${2}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.tar.xz"
-		;;
 	livecd-stage2-core)
-		echo "source_subpath: ${2}/stage3-${subarch}-${VERSION_STAMP}.tar.xz"
+		echo "source_subpath: ${2}/stage4-${subarch}-pentoo-core-${VERSION_STAMP}.tar.xz"
 		if [ -n "${RC}" ]; then
 			echo "livecd/iso: /catalyst/release/Pentoo_Core_${1}_${2}/pentoo-core-${1}-${2}-${VERSION_STAMP}_${RC}.iso"
 			echo "livecd/volid: Pentoo Linux Core ${arch} ${VERSION_STAMP} ${RC:0:5}"
@@ -173,7 +153,7 @@ then
   echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
   echo "# defined in this target.  It is useful for passing arguments to genkernel that"
   echo "# are not otherwise available via the livecd-stage2 spec file."
-  echo livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode --microcode-initramfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz
+  echo livecd/gk_mainargs: --disklabel --no-dmraid --gpg --luks --lvm --mdadm --btrfs --microcode-initramfs --no-module-rebuild --kernel-localversion=UNSET --compress-initramfs-type=xz
   #if [ ${1} = amd64 ]
   #then
   #this adds zfs to just the non-hardened 64 bit kernel
@@ -197,7 +177,7 @@ then
 elif [ "${3}" = "livecd-stage2-core" ]; then
   echo "# This option is for merging kernel-dependent packages and external modules that"
   echo "# are configured against this kernel label."
-  echo "boot/kernel/pentoo/packages: pentoo/pentoo-livecd"
+  echo "boot/kernel/pentoo/packages: pentoo/pentoo-core"
 fi
 
 echo "subarch: ${subarch}"
@@ -218,7 +198,7 @@ then
 	echo "common_flags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
 fi
 
-if [ "${3}" = stage4-pentoo ] || [ "${3}" = "stage4-pentoo-full" ] || [ "${3}" = "stage4-wctf-client" ]
+if [ "${3}" = stage4-pentoo ] || [ "${3}" = "stage4-pentoo-core" ] || [ "${3}" = "stage4-pentoo-full" ] || [ "${3}" = "stage4-pentoo-full" ] || [ "${3}" = "stage4-wctf-client" ]
 then
 	echo "target: stage4"
 elif [[ ${3} = binpkg-update* ]]
@@ -239,7 +219,7 @@ case ${3} in
 	stage1|stage2|stage3)
 		echo "profile: --force pentoo:pentoo/${2}/linux/${1}/bootstrap"
 		;;
-	stage4|stage4-pentoo|stage4-pentoo-full|stage4-wctf-client|binpkg-update-seed|binpkg-update|livecd-stage1)
+	stage4|stage4-pentoo|stage4-pentoo-full|stage4-pentoo-core|stage4-wctf-client|binpkg-update-seed|binpkg-update)
 		echo "profile: pentoo:pentoo/${2}/linux/${1}"
 		;;
 	livecd-stage2-core|livecd-stage2|livecd-stage2-full)
@@ -273,10 +253,16 @@ case ${3} in
 		echo "stage4/packages: --update pentoo/pentoo"
     echo "stage4/rm: /usr/lib/debug /catalyst"
 		;;
+	stage4-pentoo-core)
+		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
+		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
+		echo "stage4/packages: --update pentoo/pentoo-core"
+    echo "stage4/rm: /usr/lib/debug /catalyst"
+		;;
 	stage4-wctf-client)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/depclean-hard.sh"
-		echo "stage4/use: livecd minimal wifi"
-		echo "stage4/packages: --update pentoo/wctf-client"
+		echo "stage4/use: -livecd pentoo-minimal pentoo-in-a-container wctf-wifi wctf-minimal"
+		echo "stage4/packages: --update --deep --verbose --tree pentoo/wctf-client"
     echo "stage4/unmerge: sys-devel/llvm sys-devel/llvm-common"
     echo "stage4/rm: /usr/lib/debug /catalyst /usr/share/doc /usr/share/man"
 		;;
@@ -285,9 +271,5 @@ case ${3} in
 		echo "stage4/packages: --update pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
     echo "stage4/rm: /usr/lib/debug /catalyst"
-		;;
-	livecd-stage1)
-		echo "livecd/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
-		echo "livecd/packages: --update pentoo/pentoo"
 		;;
 esac

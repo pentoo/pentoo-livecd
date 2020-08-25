@@ -63,6 +63,11 @@ if [ $? = 0 ]; then
 fi
 
 emerge -1 -kb app-portage/gentoolkit || /bin/bash
+#things are broken, I have no clue why or how, but this is the earliest point to fix it
+broken_packages=$(qfile -q $(equery -C -N check -o '*' 2>&1 | grep --color=never 'does not exist' | awk '{print $2}' | grep -Ev '\.cache') 2>&1 | grep -v 'qfile' | awk -F: '{print $1}' | sort -u | tr '\n' ' ')
+if [ -n "${broken_packages}" ]; then
+  emerge -1 --buildpkg=y --usepkg=n ${broken_packages} || /bin/bash
+fi
 
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
@@ -101,7 +106,7 @@ if [ $? = 0 ]; then
 fi
 
 #short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
-emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+#emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
 
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
 #[ "${clst_subarch}" = "pentium-m" ] && crossdev -s1 -t x86_64

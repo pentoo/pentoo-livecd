@@ -1,2 +1,3 @@
 #unmask livecd-stage1 only during catalyst builds
 -livecd-stage1
+python_targets_python3_6

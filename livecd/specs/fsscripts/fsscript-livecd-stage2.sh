@@ -34,12 +34,12 @@ chown -R portage.portage /var/db/repos/local
 emerge -1kb --newuse --update sys-apps/portage || /bin/bash
 
 #somehow the default .bashrc runs X.... WTF????
-mv /root/.bashrc /root/.bashrc.bak
+cp /etc/skel/.bashrc /root/.bashrc
 
 #user gets wierd groups, fix it for us
 #defaults users,wheel,audio,plugdev,games,cdrom,disk,floppy,usb
-gpasswd -d pentoo games #remove from games group
-usermod -a -G android,audio,cdrom,cdrw,kismet,pcscd,plugdev,portage,usb,users,uucp,video,wheel,wireshark pentoo
+gpasswd -d pentoo games || /bin/bash #remove from games group
+usermod -a -G audio,cdrom,cdrw,kismet,pcscd,plugdev,portage,usb,users,uucp,video,wheel,wireshark pentoo || /bin/bash
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
 rm -rf /etc/make.conf /etc/make.profile || /bin/bash
@@ -285,7 +285,7 @@ perl-cleaner --ph-clean --modules -- --usepkg=n --buildpkg=y || safe_exit
 /var/db/repos/local/scripts/bug-461824.sh
 /var/db/repos/pentoo/scripts/bug-461824.sh
 
-if portageq has_version / pentoo/pentoo; then
+if portageq has_version / pentoo/pentoo-desktop; then
   # This makes sure we have the latest and greatest genmenu!
   emerge -1 app-admin/genmenu || /bin/bash
 
@@ -382,7 +382,7 @@ fi
 #mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 #cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || /bin/bash
 
-if portageq has_version / pentoo/pentoo; then
+if portageq has_version / pentoo/pentoo-desktop; then
   su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || /bin/bash
   su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || /bin/bash
 
@@ -417,6 +417,8 @@ etc-update --automode -5 || /bin/bash
 
 #etc-update looks like it sometimes crushes our locale settings
 fix_locale
+#set sudoers after etc-update as well
+sed -i 's/# %wheel ALL=(ALL) NOPASSWD/%wheel ALL=(ALL) NOPASSWD/' /etc/sudoers
 
 #set the hostname properly
 sed -i 's/livecd/pentoo/' /etc/conf.d/hostname || /bin/bash
@@ -434,7 +436,7 @@ find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {}
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
 
 #short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
-emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+#emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
 
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || /bin/bash
@@ -532,7 +534,6 @@ chown root.portage -R /var/cache/edb
 chown root.portage -R /var/cache/eix
 
 #todo when we no longer need this stub for testing, replace with default
-mv /root/.bashrc.bak /root/.bashrc
 if [ -r /etc/issue.pentoo.logo ]; then
   rm -f /etc/issue
   cp -f /etc/issue.pentoo.logo /etc/issue

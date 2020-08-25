@@ -1,3 +1,7 @@
+#squashfs is broken and the livecd needs it
+~sys-kernel/pentoo-sources-5.8.1
+~sys-kernel/pentoo-sources-5.8.2
+
 #help force a preference for self-built so it actually runs on hardened
 www-client/firefox-bin
 <www-client/firefox-75.0
@@ -48,9 +52,11 @@ virtual/w3m
 <dev-libs/libevent-2.1.11
 <sys-libs/readline-8.0_p4
 <dev-libs/icu-67.1
+dev-lang/python:3.6
 
 #async issues for sure
 <sys-apps/portage-2.3.101-r2
 
 #python2 only
 <net-analyzer/net-snmp-5.8.1_rc1
+<net-analyzer/recon-ng-5.1.1

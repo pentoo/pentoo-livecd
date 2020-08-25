@@ -22,4 +22,4 @@ for i in /var/gentoo/repos/local /var/db/repos/local /var/db/repos/pentoo; do
 done
 
 #short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
-emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+#emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')

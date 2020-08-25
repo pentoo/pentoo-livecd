@@ -55,10 +55,16 @@ mirror_sync() {
     echo "hardened ${arch} build successful" 1>&2
     if [ "${stage}" != "${stage/livecd/}" ]; then
       if [ "${stage}" != "${stage/full/}" ]; then
+        #full iso
         mv "/catalyst/log/tool-list/tools_list_full_${arch}-hardened.json" /catalyst/release/Pentoo_Full_${arch}_hardened/
         wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Full_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
       else
         if [ "${stage}" != "${stage/core/}" ]; then
+          #core iso
+          mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_Core_${arch}_hardened/
+          wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Core_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
+        else
+          #normal iso
           mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_${arch}_hardened/
           wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
         fi
