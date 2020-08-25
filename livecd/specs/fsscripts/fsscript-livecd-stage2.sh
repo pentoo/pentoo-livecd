@@ -324,7 +324,7 @@ fi
 
 # Setup tor-privoxy
 if [ -d /etc/privoxy ]; then
-  echo 'forward-socks4a / 127.0.0.1:9050' >> /etc/privoxy/config
+  echo 'forward-socks4a / 127.0.0.1:9050 .' >> /etc/privoxy/config
 fi
 if [ -f /etc/tor/torrc.sample ]; then
   mv -f /etc/tor/torrc.sample /etc/tor/torrc || /bin/bash
