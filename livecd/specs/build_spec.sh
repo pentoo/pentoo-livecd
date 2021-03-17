@@ -254,9 +254,9 @@ case ${target} in
     echo "stage4/rm: /usr/lib/debug /catalyst"
 		;;
 	stage4-docker)
-		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/depclean-hard.sh"
+		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/docker-prep.sh"
 		echo "stage4/use: -livecd pentoo-minimal pentoo-in-a-container"
-		echo "stage4/packages: --update --deep --verbose --tree pentoo/pentoo-core"
+		echo "stage4/packages: pentoo/pentoo-core"
     echo "stage4/unmerge: sys-devel/llvm sys-devel/llvm-common"
     echo "stage4/rm: /usr/lib/debug /catalyst /usr/share/doc /usr/share/man"
 		;;
