@@ -1,7 +1,9 @@
 if [ "${arch}" = "amd64" ]; then
   subarch="amd64"
+  profile_arch="amd64_r1"
 elif [ "${arch}" = "x86" ]; then
   subarch="pentium-m"
+  profile_arch="x86"
 else
   printf "Unknown arch\n"
   exit 1
@@ -27,24 +29,24 @@ catalyst_clean() {
       mkdir -p "/catalyst/release/Pentoo_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-2020.0"
-    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-2020.0/*
+    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-2021.0"
+    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-2021.0/*
   elif [ "${stage}" = "livecd-stage2-core" ]; then
     if [ "${1}" = "pre" ]; then
       rm -rf "/catalyst/release/Pentoo_Core_${arch}_hardened"
       mkdir -p "/catalyst/release/Pentoo_Core_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Core_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-2020.0"
-    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-core-2020.0/*
+    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-2021.0"
+    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-core-2021.0/*
   elif [ "${stage}" = "livecd-stage2-full" ]; then
     if [ "${1}" = "pre" ]; then
       rm -rf "/catalyst/release/Pentoo_Full_${arch}_hardened"
       mkdir -p "/catalyst/release/Pentoo_Full_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Full_${arch}_hardened"
     fi
-    rm -rf /catalyst/tmp/hardened/livecd-stage2-${subarch}-full-2020.0
-    rm -rf /catalyst/builds/hardened/livecd-stage2-${subarch}-full-2020.0/*
+    rm -rf /catalyst/tmp/hardened/livecd-stage2-${subarch}-full-2021.0
+    rm -rf /catalyst/builds/hardened/livecd-stage2-${subarch}-full-2021.0/*
   else
     rm -rf /catalyst/tmp/hardened/"${stage}-${subarch}-"*
   fi
@@ -70,7 +72,7 @@ mirror_sync() {
     fi
     if [ "${stage}" != "${stage/livecd/}" ] || [ "${stage}" != "${stage/full/}" ]; then
       #sync packages for anything called livecd or full.  These are the stages which run eclean-pkg and fixpackages
-      wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/packages/${arch}-hardened" /mnt/mirror/local_mirror/Packages/
+      wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/packages/${profile_arch}-hardened" /mnt/mirror/local_mirror/Packages/
       #/mnt/mirror/mirror.sh &
     fi
   else

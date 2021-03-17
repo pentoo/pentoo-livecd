@@ -66,21 +66,20 @@ mkdir -p /dev/shm/portage/rootfs/var/cache/distfiles
 rsync -aEXu --progress --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs/var/cache/distfiles/
 #double check that we have what we expect in here so I don't mess up again
 DISTDIR=/dev/shm/portage/rootfs/var/cache/distfiles/ emerge -fO nvidia-drivers
-chown root.root /dev/shm/portage/rootfs/var/cache
-chown root.root /dev/shm/portage/rootfs/var
-chown root.root /dev/shm/portage/rootfs
-chown root.root /dev/shm/portage
-chown portage.portage -R /dev/shm/portage/rootfs/var/cache/distfiles
 ## add the pentoo overlay
 mkdir -p /dev/shm/portage/rootfs/var/db/repos/pentoo/
 rsync -aEXu --progress --delete /var/db/repos/pentoo/ /dev/shm/portage/rootfs/var/db/repos/pentoo/
 chown root.root /dev/shm/portage/rootfs/var/db/repos
 chown root.root /dev/shm/portage/rootfs/var/db
+chown root.root /dev/shm/portage/rootfs/var/cache
 chown root.root /dev/shm/portage/rootfs/var
+chown root.root /dev/shm/portage/rootfs
+chown root.root /dev/shm/portage
+chown portage.portage -R /dev/shm/portage/rootfs/var/cache/distfiles
 chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/pentoo
 chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/gentoo
 # make the unified squashfs module
-mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576
+mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -comp zstd -Xcompression-level 22 -b 1048576 -no-recovery -noappend
 
 #drop the files into the mirror for the next sync
 rsync -aEuh --progress --delete --omit-dir-times /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/ /mnt/mirror/local_mirror/modules/
