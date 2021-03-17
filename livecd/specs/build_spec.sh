@@ -97,7 +97,7 @@ case ${target} in
 		echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
 		;;
 	stage4-docker)
-		echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-core-${VERSION_STAMP}.squashfs"
 		;;
 	binpkg-update-seed)
 		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-full-${VERSION_STAMP}.squashfs"
