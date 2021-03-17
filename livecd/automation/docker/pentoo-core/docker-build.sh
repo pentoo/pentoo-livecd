@@ -19,6 +19,6 @@ docker build --pull -t "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" \
     --build-arg VERSION=${VERSION} \
     .
 
-docker tag ${CI_REGISTRY_IMAGE}/${IMAGE}:$VERSION ${CI_REGISTRY_IMAGE}/${IMAGE}:latest
-#docker push ${CI_REGISTRY_IMAGE}/${IMAGE}:$VERSION
+docker tag "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" "${CI_REGISTRY_IMAGE}/${IMAGE}:latest"
+docker push "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}"
 rm "${TARBALL}"
