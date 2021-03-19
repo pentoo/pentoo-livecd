@@ -258,7 +258,7 @@ case ${target} in
 		echo "stage4/use: -livecd pentoo-minimal pentoo-in-a-container"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo-core"
     echo "stage4/unmerge: sys-devel/llvm sys-devel/llvm-common"
-    echo "stage4/rm: /usr/lib/debug /catalyst /usr/share/doc /usr/share/man"
+    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos/* /usr/share/doc /usr/share/man"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"

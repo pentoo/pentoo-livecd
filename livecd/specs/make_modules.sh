@@ -80,6 +80,7 @@ chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/pentoo
 chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/gentoo
 # make the unified squashfs module
 mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -comp zstd -Xcompression-level 22 -b 1048576 -no-recovery -noappend
+#sqfs2tar /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm | xz -9 > /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-core/portage_and_overlay.tar.xz
 
 #drop the files into the mirror for the next sync
 rsync -aEuh --progress --delete --omit-dir-times /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/ /mnt/mirror/local_mirror/modules/

@@ -14,6 +14,7 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.url='https://www.pentoo.org' \
       org.opencontainers.image.authors="Zero_Chaos"
 
+#here we pull in the rootfs from catalyst
 ADD $TARBALL /
 
-CMD ["bash"]
+CMD ["/bin/bash"]
