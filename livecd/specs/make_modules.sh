@@ -45,13 +45,13 @@ rsync -aEXu --delete /catalyst/tmp/repos/gentoo/* /dev/shm/portage/rootfs/var/db
 mkdir -p /dev/shm/distfiles/rootfs/var/cache/distfiles/
 #make sure it's all in the local store too
 ACCEPT_LICENSE="Broadcom" emerge -FO b43-firmware b43legacy-firmware
-ACCEPT_KEYWORDS="-* amd64" emerge -fO nvidia-drivers
+ACCEPT_KEYWORDS="-* amd64" USE="tools" emerge -fO nvidia-drivers
 #ACCEPT_KEYWORDS="-* x86" linux32 emerge -FO nvidia-drivers
 
 ##if we don't clean this out it gets big.  this box doesn't reboot much
 rm -rf /dev/shm/distfiles/*
 ACCEPT_LICENSE="Broadcom" DISTDIR="/dev/shm/distfiles/" emerge -FO b43-firmware b43legacy-firmware
-DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* amd64" emerge -fO nvidia-drivers
+DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* amd64" USE="tools" emerge -fO nvidia-drivers
 #DISTDIR="/dev/shm/distfiles/" ACCEPT_KEYWORDS="-* x86" linux32 emerge -FO nvidia-drivers
 #remove the older version of 64 bit driver
 rm -f /dev/shm/distfiles/NVIDIA-Linux-x86_64-390.??.run
@@ -59,7 +59,8 @@ rm -rf /dev/shm/distfiles/tmp
 mkdir -p /dev/shm/distfiles/tmp
 #cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/
 cp /dev/shm/distfiles/*[Ll]inux-x86* /dev/shm/distfiles/tmp/
-cp /dev/shm/distfiles/nvidia-settings-*.tar.bz2 /dev/shm/distfiles/tmp/
+cp /dev/shm/distfiles/nvidia-*.tar.bz2 /dev/shm/distfiles/tmp/
+rm /dev/shm/distfiles/tmp/nvidia-installer*
 cp /dev/shm/distfiles/broadcom-wl* /dev/shm/distfiles/tmp/
 cp /dev/shm/distfiles/wl_apsta-3.130.20.0.o /dev/shm/distfiles/tmp
 mkdir -p /dev/shm/portage/rootfs/var/cache/distfiles
@@ -80,7 +81,13 @@ chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/pentoo
 chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/gentoo
 # make the unified squashfs module
 mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -comp zstd -Xcompression-level 22 -b 1048576 -no-recovery -noappend
-#sqfs2tar /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm | xz -9 > /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-core/portage_and_overlay.tar.xz
+sqfs2tar /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -c xz > /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-core/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-gui/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-full/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-full-gui/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/rfhs/rfctf-container/contestant_containers/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/rfhs/rfctf-container/infrastructure_containers/client_server/portage_and_overlay.tar.xz
 
 #drop the files into the mirror for the next sync
 rsync -aEuh --progress --delete --omit-dir-times /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/ /mnt/mirror/local_mirror/modules/

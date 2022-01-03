@@ -62,7 +62,7 @@ dev-lang/python:3.6
 <net-analyzer/net-snmp-5.8.1_rc1
 <net-analyzer/recon-ng-5.1.1
 
-#help find what is pulling this
->dev-ruby/activesupport-6
->dev-ruby/activerecord-6
->dev-ruby/activemodel-6
+#wierdly broken, probably
+~www-client/firefox-91.3.0
+=www-client/firefox-91.3*
+<www-client/firefox-91.4.0

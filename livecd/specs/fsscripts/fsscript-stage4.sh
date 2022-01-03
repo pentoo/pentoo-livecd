@@ -39,12 +39,28 @@ if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
-#merge in the profile set since we have no @system set
-emerge -1kb --newuse --update @profile || error_handler
+emerge --newuse -1kb --rebuild-if-new-rev sys-libs/glibc
+USE="openmp" emerge --newuse --oneshot --buildpkg=y --usepkg=n --rebuild-if-new-rev sys-devel/gcc
+emerge -1kb --newuse --update --changed-deps --onlydeps --onlydeps-with-rdeps media-gfx/graphite2
+emerge -1kb --newuse --update --changed-deps media-gfx/graphite2
+#perl update sucks
+emerge --update -1kb perl --nodeps
+perl-cleaner --modules -- --buildpkg=y
+#bust some circular deps
+USE="-harfbuzz" emerge -1kb --newuse --update --changed-deps media-libs/freetype
+if [ "${clst_subarch}" = "pentium-m" ]; then
+  USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps x11-libs/libva
+else
+  USE="-opengl -cups" emerge -1kb --newuse --update --changed-deps x11-libs/libva
+fi
+USE="-cups -lm-sensors -bluetooth" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
+emerge -1kb --newuse --update --changed-deps net-print/cups
+#merge in the profile set since we have no @system set, but ignore failures because @world might catch it
+emerge -1kb --newuse --update --changed-deps @profile || true
 #finish transition to the new use flags
-emerge --deep --update --newuse -kb @world || error_handler
+emerge --deep --update --newuse -kb --changed-deps @world || error_handler
 #do what stage1 update seed is going to do
-emerge --quiet --update --newuse --changed-deps --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 sys-devel/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || error_handler
+emerge --verbose --update --newuse --changed-deps --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 sys-devel/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || error_handler
 portageq list_preserved_libs /
 if [ $? = 0 ]; then
         emerge --buildpkg=y @preserved-rebuild -q || error_handler
@@ -59,10 +75,10 @@ fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
 PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#')
-eselect python set --python3 ${PYTHON3} || error_handler
+#eselect python set --python3 ${PYTHON3} || error_handler
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
 #python 3 by default now
-eselect python set "${PYTHON3}"
+#eselect python set "${PYTHON3}"
 if [ -x /usr/sbin/python-updater ];then
 	python-updater -- --buildpkg=y || error_handler
 fi
@@ -126,7 +142,8 @@ fi
 fixpackages
 eclean-pkg -t 3m
 emerge --depclean --exclude dev-java/openjdk  --exclude sys-kernel/pentoo-sources \
-	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit --exclude net-print/cups  --exclude dev-qt/qtmultimedia || error_handler
+	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit --exclude net-print/cups \
+  --exclude dev-qt/qtmultimedia --exclude media-libs/harfbuzz --exclude media-libs/freetype || error_handler
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler

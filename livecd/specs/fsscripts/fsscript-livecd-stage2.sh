@@ -286,7 +286,7 @@ if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
 fi
 
 
-eselect python set $(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#') || error_handler
+#eselect python set $(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#') || error_handler
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || error_handler
 fi
@@ -413,7 +413,7 @@ if portageq has_version / pentoo/pentoo-desktop; then
   mv -f /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
 
   #slim dm is much nicer than default xdm
-  sed -i 's/"xdm"/"slim"/' /etc/conf.d/xdm
+  sed -i 's/"xdm"/"slim"/' /etc/conf.d/display-manager
 
   #blueman doesn't create this but needs it
   su pentoo -c "mkdir -p /home/pentoo/Downloads"
@@ -459,6 +459,9 @@ if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
 	revdep-rebuild -i -- --usepkg=n --buildpkg=y || error_handler
 fi
 rc-update -u || error_handler
+
+#last let's make sure we have all the binpkgs we expect
+quickpkg --include-config=y $($(portageq get_repo_path / pentoo)/scripts/binpkgs-missing-rebuild)
 
 update-ca-certificates
 

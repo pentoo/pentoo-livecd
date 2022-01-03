@@ -16,5 +16,12 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
 
 #here we pull in the rootfs from catalyst
 ADD $TARBALL /
+RUN mkdir -p /etc/portage/profile/package.use && \
+  echo 'pentoo/pentoo-wireless -drivers' >> /etc/portage/profile/package.use/pentoo && \
+  # mark news read
+  eselect news read && \
+  # make openrc work
+  if ! grep -- '-containers' /etc/init.d/udev; then echo 'rc_keyword="-containers"' >> /etc/conf.d/udev; fi && \
+  openrc sysinit
 
 CMD ["/bin/bash"]

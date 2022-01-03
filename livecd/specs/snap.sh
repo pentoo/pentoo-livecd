@@ -14,7 +14,7 @@ done
 pushd /var/db/repos/pentoo
 git pull
 popd
-emerge --sync || emerge --sync || exit 1
+#emerge --sync || emerge --sync || exit 1
 catalyst -s latest -C options=keepwork compression_mode=pixz
 xzcat /catalyst/snapshots/gentoo-latest.tar.xz | tar2sqfs /catalyst/snapshots/gentoo-latest.squashfs -j $(nproc) -f --compressor zstd -X level=19 -s
 /usr/src/pentoo/pentoo-livecd/livecd/specs/make_modules.sh

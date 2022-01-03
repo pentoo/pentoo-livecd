@@ -24,6 +24,10 @@ live_mount() {
   if [ ! -e "${DESTDIR}/dev" ]; then
     mkdir "${DESTDIR}/dev" || return $?
   fi
+  if [ ! -e "${DESTDIR}/run" ]; then
+    mkdir "${DESTDIR}/run" || return $?
+  fi
+  mount -t tmpfs none "${DESTDIR}/run" || return $?
   for i in dev proc sys; do
     mount --make-shared /${i} || return $?
     mount --rbind --make-rslave /${i} "${DESTDIR}/${i}" || return $?
@@ -40,6 +44,9 @@ live_umount() {
   fi
   if mount | grep -q "${DESTDIR}/dev "; then
     umount -R ${DESTDIR}/dev || return $?
+  fi
+  if mount | grep -q "${DESTDIR}/run "; then
+    umount -R "${DESTDIR}/run" || return $?
   fi
   if mount | grep -q "${DESTDIR}/mnt/cdrom"; then
     umount -R ${DESTDIR}/mnt/cdrom || return $?

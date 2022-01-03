@@ -5,6 +5,7 @@ env-update
 echo 'VIDEO_CARDS=""' >> /etc/portage/make.conf
 emerge --deep --update --newuse @world
 emerge --depclean --with-bdeps=n
+emerge --buildpkg=y --usepkg=n @preserved-rebuild
 
 if [ "${clst_subarch}" = "pentium-m" ]; then
   PROFILE_ARCH="x86"
@@ -21,3 +22,4 @@ else
   hardening=default
 fi
 eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/binary
+eselect news read

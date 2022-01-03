@@ -31,10 +31,10 @@ fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
 PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#')
-eselect python set --python3 ${PYTHON3} || error_handler
+#eselect python set --python3 ${PYTHON3} || error_handler
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
 #python 3 by default now
-eselect python set "${PYTHON3}"
+#eselect python set "${PYTHON3}"
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || error_handler
 fi
