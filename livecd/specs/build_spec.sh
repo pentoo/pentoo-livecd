@@ -80,9 +80,8 @@ case ${target} in
 	stage1)
     ## let's run in circles
     echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
-    #echo "source_subpath: ${profile}/stage4-${subarch}-2021.0.squashfs"
     #migrate to new version stamp by using a static version stamp
-    #echo "source_subpath: ${profile}/stage4-${subarch}-2019.3.tar.squashfs"
+    #echo "source_subpath: ${profile}/stage4-${subarch}-2019.3.squashfs"
 		;;
 	stage2)
 		echo "source_subpath: ${profile}/stage1-${subarch}-${VERSION_STAMP}.squashfs"

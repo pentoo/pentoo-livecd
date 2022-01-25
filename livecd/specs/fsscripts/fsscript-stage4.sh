@@ -55,6 +55,7 @@ else
 fi
 USE="-cups -lm-sensors -bluetooth" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
 emerge -1kb --newuse --update --changed-deps net-print/cups
+USE="-verify-sig" emerge -1kb --newuse --update --changed-deps dev-libs/libsodium
 #merge in the profile set since we have no @system set, but ignore failures because @world might catch it
 emerge -1kb --newuse --update --changed-deps @profile || true
 #finish transition to the new use flags
@@ -143,7 +144,8 @@ fixpackages
 eclean-pkg -t 3m
 emerge --depclean --exclude dev-java/openjdk  --exclude sys-kernel/pentoo-sources \
 	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit --exclude net-print/cups \
-  --exclude dev-qt/qtmultimedia --exclude media-libs/harfbuzz --exclude media-libs/freetype || error_handler
+  --exclude dev-qt/qtmultimedia --exclude media-libs/harfbuzz --exclude media-libs/freetype \
+  --exclude dev-libs/libsodium || error_handler
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler

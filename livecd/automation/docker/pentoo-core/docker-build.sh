@@ -3,7 +3,7 @@
 set -e
 
 DISTRO=pentoo
-TARBALL=stage4-amd64-docker-2021.0.tar.xz
+TARBALL=stage4-amd64-docker-2022.0.tar.xz
 cp "/catalyst/builds/hardened/${TARBALL}" .
 
 CI_REGISTRY_IMAGE=pentoolinux
