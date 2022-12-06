@@ -48,14 +48,12 @@ emerge --update -1kb perl --nodeps
 perl-cleaner --modules -- --buildpkg=y
 #bust some circular deps
 USE="-harfbuzz" emerge -1kb --newuse --update --changed-deps media-libs/freetype
-if [ "${clst_subarch}" = "pentium-m" ]; then
-  USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps x11-libs/libva
-else
-  USE="-opengl -cups" emerge -1kb --newuse --update --changed-deps x11-libs/libva
-fi
-USE="-cups -lm-sensors -bluetooth" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
+USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps media-libs/libva
+USE="-cups -lm-sensors -bluetooth -vaapi" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
 emerge -1kb --newuse --update --changed-deps net-print/cups
 USE="-verify-sig" emerge -1kb --newuse --update --changed-deps dev-libs/libsodium
+#help udev update
+emerge -1kb --newuse --update --changed-deps sys-fs/udev
 #merge in the profile set since we have no @system set, but ignore failures because @world might catch it
 emerge -1kb --newuse --update --changed-deps @profile || true
 #finish transition to the new use flags
@@ -75,7 +73,7 @@ if [ $? = 0 ]; then
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
-PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#')
+PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\=".*(python3_[0-9]+\s*)+"' | grep -oE 'python3_[0-9]+' | cut -d\" -f2 | sed 's#_#.#')
 #eselect python set --python3 ${PYTHON3} || error_handler
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
 #python 3 by default now
@@ -149,3 +147,4 @@ emerge --depclean --exclude dev-java/openjdk  --exclude sys-kernel/pentoo-source
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler
+true

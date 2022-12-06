@@ -14,9 +14,12 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.authors="Zero_Chaos"
 
 ADD portage_and_overlay.tar.xz /
-RUN sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full -drivers#' /etc/portage/make.conf && \
+# --security=insecure is only needed for go
+RUN --security=insecure sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full -drivers#' /etc/portage/make.conf && \
   #disable minimal
   sed -i 's# pentoo-minimal##' /etc/portage/make.conf && \
+  #install libsndfile minimal to break circular deps
+  USE=minimal FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse media-libs/libsndfile && \
   #install pentoo/pentoo
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse pentoo/pentoo && \
   #deselect pentoo-core as pentoo/pentoo deps on it

@@ -29,24 +29,25 @@ catalyst_clean() {
       mkdir -p "/catalyst/release/Pentoo_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-2021.0"
-    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-2021.0/*
+    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-2022.0"
+    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-2022.0/*
   elif [ "${stage}" = "livecd-stage2-core" ]; then
     if [ "${1}" = "pre" ]; then
       rm -rf "/catalyst/release/Pentoo_Core_${arch}_hardened"
       mkdir -p "/catalyst/release/Pentoo_Core_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Core_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-2021.0"
-    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-core-2021.0/*
+    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-2022.0"
+    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-core-2022.0/*
   elif [ "${stage}" = "livecd-stage2-full" ]; then
     if [ "${1}" = "pre" ]; then
       rm -rf "/catalyst/release/Pentoo_Full_${arch}_hardened"
       mkdir -p "/catalyst/release/Pentoo_Full_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Full_${arch}_hardened"
     fi
-    rm -rf /catalyst/tmp/hardened/livecd-stage2-${subarch}-full-2021.0
-    rm -rf /catalyst/builds/hardened/livecd-stage2-${subarch}-full-2021.0/*
+    ls -alh /catalyst/builds/hardened/livecd-stage2-amd64-full-2022.0/image.squashfs
+    rm -rf /catalyst/tmp/hardened/livecd-stage2-${subarch}-full-2022.0
+    rm -rf /catalyst/builds/hardened/livecd-stage2-${subarch}-full-2022.0/*
   else
     rm -rf /catalyst/tmp/hardened/"${stage}-${subarch}-"*
   fi

@@ -59,7 +59,7 @@ rm -rf /dev/shm/distfiles/tmp
 mkdir -p /dev/shm/distfiles/tmp
 #cp /dev/shm/distfiles/{*[Ll]inux*,xvba*} /dev/shm/distfiles/tmp/
 cp /dev/shm/distfiles/*[Ll]inux-x86* /dev/shm/distfiles/tmp/
-cp /dev/shm/distfiles/nvidia-*.tar.bz2 /dev/shm/distfiles/tmp/
+cp /dev/shm/distfiles/nvidia-*.tar.*z* /dev/shm/distfiles/tmp/
 rm /dev/shm/distfiles/tmp/nvidia-installer*
 cp /dev/shm/distfiles/broadcom-wl* /dev/shm/distfiles/tmp/
 cp /dev/shm/distfiles/wl_apsta-3.130.20.0.o /dev/shm/distfiles/tmp
@@ -87,7 +87,7 @@ cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_ove
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-full/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-full-gui/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/rfhs/rfctf-container/contestant_containers/portage_and_overlay.tar.xz
-cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/rfhs/rfctf-container/infrastructure_containers/client_server/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/rfhs/rfctf-container/infrastructure_containers/portage_and_overlay.tar.xz
 
 #drop the files into the mirror for the next sync
 rsync -aEuh --progress --delete --omit-dir-times /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/ /mnt/mirror/local_mirror/modules/

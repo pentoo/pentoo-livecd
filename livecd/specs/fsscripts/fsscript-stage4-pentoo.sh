@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
-PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#')
+PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\=".*(python3_[0-9]+\s*)+"' | grep -oE 'python3_[0-9]+' | cut -d\" -f2 | sed 's#_#.#')
 #eselect python set --python3 ${PYTHON3} || error_handler
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
 #python 3 by default now
@@ -44,7 +44,7 @@ if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || error_handler
 fi
 
-eselect ruby set ruby26 || error_handler
+eselect ruby set ruby27 || error_handler
 
 #short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
 #emerge --usepkg=n --buildpkg=y --oneshot $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
@@ -59,3 +59,4 @@ etc-update --automode -5 || error_handler
 
 fixpackages
 eclean-pkg -t 3m
+true

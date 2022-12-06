@@ -1,4 +1,6 @@
 #!/bin/sh
+set -ex
+HOME=/tmp
 . /etc/profile
 env-update
 . /tmp/envscript
@@ -13,7 +15,7 @@ elif [ "${clst_subarch}" = "amd64" ]; then
   PROFILE_ARCH="amd64_r1"
 else
 	echo "failed to handle arch"
-	/bin/bash
+  exit 1
 fi
 if gcc -v 2>&1 | grep -q Hardened
 then
@@ -23,3 +25,4 @@ else
 fi
 eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/binary
 eselect news read
+true

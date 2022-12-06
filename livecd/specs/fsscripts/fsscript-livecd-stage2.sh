@@ -286,7 +286,6 @@ if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
 fi
 
 
-#eselect python set $(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\="(python3*_[0-9]\s*)+"' | cut -d\" -f2 | sed 's#_#.#') || error_handler
 if [ -x /usr/sbin/python-updater ]; then
 	python-updater -- --buildpkg=y || error_handler
 fi
@@ -442,7 +441,7 @@ sed -i "/#/! s#localhost\(.*\)#localhost pentoo#" /etc/hosts || error_handler
 sed -i '/include/s/# //' /etc/nanorc
 
 if portageq has_version / dev-lang/ruby; then
-  eselect ruby set ruby26 || error_handler
+  eselect ruby set ruby27 || error_handler
 fi
 
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
@@ -477,11 +476,11 @@ rm -rf /etc/portage/profile
 emerge -1kb portage || error_handler
 if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ] || [ "${clst_version_stamp/core}" = "${clst_version_stamp}" ]; then
   #non-full iso means we expect things like builddeps sacrificed for size
-  emerge --depclean --with-bdeps=n
+  emerge --depclean --with-bdeps=n sys-kernel/genkernel --exclude sys-kernel/pentoo-sources
 else
-  emerge --depclean --with-bdeps=y
+  emerge --depclean --with-bdeps=y --exclude sys-kernel/pentoo-sources
   #full expects most things present, but this shit is huge and bdep only
-  emerge --depclean --with-bdeps=n 'dev-go/*' go virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi
+  emerge --depclean --with-bdeps=n 'dev-go/*' dev-lang/go dev-lang/go-bootstrap dev-java/gradle-bin virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi sys-kernel/genkernel --exclude sys-kernel/pentoo-sources
 fi
 
 #cleanup binary drivers
@@ -540,3 +539,4 @@ updatedb
 sync
 sleep 60
 rm -f /root/.bash_history
+true

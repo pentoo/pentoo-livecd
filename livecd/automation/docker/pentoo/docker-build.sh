@@ -11,7 +11,7 @@ BUILD_VERSION=$(date -u +"%Y-%m-%d")
 IMAGE=$DISTRO
 VERSION=$BUILD_VERSION
 
-docker build --pull -t "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" \
+docker buildx build --allow security.insecure --pull -t "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" \
     --build-arg BUILD_DATE=${BUILD_DATE} \
     --build-arg VERSION=${VERSION} \
     .
