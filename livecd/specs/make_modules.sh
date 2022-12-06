@@ -70,18 +70,18 @@ DISTDIR=/dev/shm/portage/rootfs/var/cache/distfiles/ emerge -fO nvidia-drivers
 ## add the pentoo overlay
 mkdir -p /dev/shm/portage/rootfs/var/db/repos/pentoo/
 rsync -aEXu --progress --delete /var/db/repos/pentoo/ /dev/shm/portage/rootfs/var/db/repos/pentoo/
-chown root.root /dev/shm/portage/rootfs/var/db/repos
-chown root.root /dev/shm/portage/rootfs/var/db
-chown root.root /dev/shm/portage/rootfs/var/cache
-chown root.root /dev/shm/portage/rootfs/var
-chown root.root /dev/shm/portage/rootfs
-chown root.root /dev/shm/portage
-chown portage.portage -R /dev/shm/portage/rootfs/var/cache/distfiles
-chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/pentoo
-chown portage.portage -R /dev/shm/portage/rootfs/var/db/repos/gentoo
+chown root:root /dev/shm/portage/rootfs/var/db/repos
+chown root:root /dev/shm/portage/rootfs/var/db
+chown root:root /dev/shm/portage/rootfs/var/cache
+chown root:root /dev/shm/portage/rootfs/var
+chown root:root /dev/shm/portage/rootfs
+chown root:root /dev/shm/portage
+chown portage:portage -R /dev/shm/portage/rootfs/var/cache/distfiles
+chown portage:portage -R /dev/shm/portage/rootfs/var/db/repos/pentoo
+chown portage:portage -R /dev/shm/portage/rootfs/var/db/repos/gentoo
 # make the unified squashfs module
-mksquashfs /dev/shm/portage/rootfs/ /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -comp zstd -Xcompression-level 22 -b 1048576 -no-recovery -noappend
-sqfs2tar /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm -c xz > /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz
+mksquashfs /dev/shm/portage/rootfs/ "/usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm" -comp zstd -Xcompression-level 22 -b 1048576 -no-recovery -noappend
+sqfs2tar "/usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm" -c xz > /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-core/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-gui/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-full/portage_and_overlay.tar.xz

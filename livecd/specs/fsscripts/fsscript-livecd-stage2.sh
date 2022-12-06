@@ -38,11 +38,11 @@ else
 fi
 
 #just in case, this seems to keep getting messed up
-chown -R portage.portage /usr/portage
-chown -R portage.portage /var/gentoo/repos/local
-chown -R portage.portage /var/db/repos/gentoo
-chown -R portage.portage /var/db/repos/pentoo
-chown -R portage.portage /var/db/repos/local
+chown -R portage:portage /usr/portage
+chown -R portage:portage /var/gentoo/repos/local
+chown -R portage:portage /var/db/repos/gentoo
+chown -R portage:portage /var/db/repos/pentoo
+chown -R portage:portage /var/db/repos/local
 
 emerge -1kb --newuse --update sys-apps/portage || error_handler
 
@@ -127,9 +127,9 @@ eselect news read --quiet all || error_handler
 #mkdir -p /var/db/repos/pentoo || error_handler
 #rsync -aEXu --delete /var/gentoo/repos/local/ /var/db/repos/pentoo/ || error_handler
 #rm -rf /var/gentoo/repos/local
-chown -R portage.portage /var/db/repos || error_handler
+chown -R portage:portage /var/db/repos || error_handler
 mkdir -p /var/cache/distfiles || error_handler
-chown portage.portage /var/cache/distfiles || error_handler
+chown portage:portage /var/cache/distfiles || error_handler
 
 if [ "${clst_version_stamp/full}" != "${clst_version_stamp}" ]; then
   #full is the profile default
@@ -221,7 +221,7 @@ emerge --regen || error_handler
 
 #this file isn't created but eix needs it
 touch /var/cache/eix/portage.eix
-chown root.portage /var/cache/eix/portage.eix
+chown root:portage /var/cache/eix/portage.eix
 chmod 664 /var/cache/eix/portage.eix
 HOME=/tmp eix-update || error_handler
 
@@ -382,7 +382,7 @@ fi
 if [ -f /etc/skel/Desktop/pentoo-installer.desktop ] && [ ! -f /home/pentoo/Desktop/pentoo-installer.desktop ]; then
 	su pentoo -c 'mkdir -p /home/pentoo/desktop'
 	cp /etc/skel/Desktop/pentoo-installer.desktop /home/pentoo/Desktop/pentoo-installer.deskop
-	chown pentoo.users /home/pentoo/Desktop/pentoo-installer.deskop
+	chown pentoo:users /home/pentoo/Desktop/pentoo-installer.deskop
 fi
 
 #basic xfce4 setup
@@ -522,17 +522,17 @@ for i in $(ls /var/cache); do
   rm -rf "/var/cache/${i}"
 done
 #once more, with feeling
-chown -R portage.portage /var/cache/distfiles || error_handler
-chown root.portage -R /var/cache/edb
-chown root.portage -R /var/cache/eix
+chown -R portage:portage /var/cache/distfiles || error_handler
+chown root:portage -R /var/cache/edb
+chown root:portage -R /var/cache/eix
 
 #todo when we no longer need this stub for testing, replace with default
 if [ -r /etc/issue.pentoo.logo ]; then
   rm -f /etc/issue
   cp -f /etc/issue.pentoo.logo /etc/issue
 fi
-find /root -uid 1001 -exec chown -h root.root {} \;
-find /etc -uid 1001 -exec chown -h root.root {} \;
+find /root -uid 1001 -exec chown -h root:root {} \;
+find /etc -uid 1001 -exec chown -h root:root {} \;
 
 updatedb
 #equery check -o '*' || error_handler
