@@ -33,7 +33,7 @@ emerge -1kb --newuse --update sys-apps/portage || error_handler
 etc-update --automode -5 || error_handler
 
 # cmake dep loop unless lz4 exists first
-emerge -1 -kb app-arch/lz4
+emerge -1 -kb app-arch/lz4 || error_handler
 #ease transition to the new use flags
 USE="-qt5" emerge -1 -kb cmake || error_handler
 portageq list_preserved_libs /
