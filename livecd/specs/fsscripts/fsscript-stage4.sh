@@ -51,6 +51,8 @@ emerge --update -1kb perl --nodeps
 perl-cleaner --modules -- --buildpkg=y
 #bust some circular deps
 USE="-harfbuzz" emerge -1kb --newuse --update --changed-deps media-libs/freetype
+USE="-icu" emerge -1kb --newuse --update --changed-deps dev-db/sqlite
+USE="-tk" emerge -1kb --newuse --update --changed-deps dev-lang/python
 USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps media-libs/libva
 USE="-cups -lm-sensors -bluetooth -vaapi" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
 emerge -1kb --newuse --update --changed-deps net-print/cups
