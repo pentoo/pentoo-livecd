@@ -1,4 +1,5 @@
-#!/bin/bash -x
+#!/bin/bash
+set -x
 source /etc/profile
 env-update
 source /tmp/envscript
@@ -38,11 +39,8 @@ else
 fi
 
 #just in case, this seems to keep getting messed up
-chown -R portage:portage /usr/portage
-chown -R portage:portage /var/gentoo/repos/local
-chown -R portage:portage /var/db/repos/gentoo
-chown -R portage:portage /var/db/repos/pentoo
-chown -R portage:portage /var/db/repos/local
+chown -R portage:portage "$(portageq get_repo_path / gentoo)"
+chown -R portage:portage "$(portageq get_repo_path / pentoo)"
 
 emerge -1kb --newuse --update sys-apps/portage || error_handler
 
@@ -61,16 +59,17 @@ else
 fi
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
-rm -rf /etc/make.conf /etc/make.profile || error_handler
+if [ -f /etc/make.conf ]; then
+  printf "found /etc/make.conf which should not exist\n"
+  exit 1
+fi
+if [ -f /etc/make.profile ]; then
+  printf "found /etc/make.profile which should not exist\n"
+  exit 1
+fi
 
 # Purge the uneeded locale, should keeps only en and utf8
 fix_locale
-
-# Set the timezone
-if [[ -e /etc/conf.d/clock ]]
-then
-	sed -i -e 's/#TIMEZONE="Factory"/TIMEZONE="UTC"/' /etc/conf.d/clock || error_handler
-fi
 
 # Parallel_startup and net hotplug
 if [[ -e /etc/rc.conf ]]
@@ -91,15 +90,6 @@ ln -s net.lo net.wlan0
 ln -s net.lo net.eth0
 sed -e '/provide net/D' -i dhcpcd || error_handler
 popd
-if [ -d "/lib64" ]; then
-	if [ ! -d "/lib64/rc/init.d" ]; then
-		mkdir -p /lib64/rc/init.d
-	fi
-else
-	if [ ! -d "/lib/rc/init.d" ]; then
-		mkdir -p /lib/rc/init.d
-	fi
-fi
 rc-update -u || error_handler
 
 #default net to null
@@ -107,26 +97,26 @@ echo modules=\"\!wireless\" >> /etc/conf.d/net
 echo config_wlan0=\"null\" >> /etc/conf.d/net
 echo config_eth0=\"null\" >> /etc/conf.d/net
 
-# Fixes functions.sh location since baselayout-2
+# Fixes functions.sh location since baselayout-2, probably not needed in 2023?
 ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || error_handler
 
 # Fix the root login by emptying the root password. No ssh will be allowed until 'passwd root'
 sed -i -e 's/^root:\*:/root::/' /etc/shadow || error_handler
 
 # Set default java vm
-if eselect java-vm list | grep openjdk-8; then
+if eselect java-vm list | grep openjdk-17; then
+  eselect java-vm set system openjdk-17 || error_handler
+elif eselect java-vm list | grep openjdk-bin-17; then
+  eselect java-vm set system openjdk-bin-17 || error_handler
+elif eselect java-vm list | grep openjdk-8; then
   eselect java-vm set system openjdk-8 || error_handler
 fi
 
 #mark all news read
 eselect news read --quiet all || error_handler
-#eselect news purge || error_handler
 
 # Add pentoo repo but use only the version we are packaging in the iso
 # this avoids corrupting timestamps in /var/cache/edb/mtimedb
-#mkdir -p /var/db/repos/pentoo || error_handler
-#rsync -aEXu --delete /var/gentoo/repos/local/ /var/db/repos/pentoo/ || error_handler
-#rm -rf /var/gentoo/repos/local
 chown -R portage:portage /var/db/repos || error_handler
 mkdir -p /var/cache/distfiles || error_handler
 chown portage:portage /var/cache/distfiles || error_handler
@@ -192,18 +182,11 @@ cat <<-EOF >> /etc/portage/make.conf.new
 	#you can check available options with "emerge -vp xorg-drivers"
 EOF
 mv -f /etc/portage/make.conf.new /etc/portage/make.conf || error_handler
-if [ ! -f "/etc/portage/repos.conf/pentoo.conf" ]; then
-  #XXX for the incredibly tiny, make sure we have pentoo defined
-  #XXX remove this hack when we have a super tiny metapackage to handle such things, which needs to be soon
-  mkdir /etc/portage/repos.conf
-  cp /var/db/repos/pentoo/pentoo/pentoo-system/files/pentoo-r2.conf /etc/portage/repos.conf/pentoo.conf
-  #XXX the above is shit, make a tiny metapackage
+
+if [ -d /usr/local/portage ]; then
+  printf "why does /usr/local/portage exist?\n"
+  exit 1
 fi
-
-#deleting this earlier causes the above calls to portageq to break
-rm -rf /usr/local/portage || error_handler
-
-#foo=$(readlink /etc/portage/make.profile); foo="${PORTDIR}/profiles/${foo#*profiles/}; ln -snf "${foo}" /etc/portage/make.profile
 
 if gcc -v 2>&1 | grep -q Hardened
 then
@@ -212,12 +195,12 @@ else
   hardening=default
 fi
 
-eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH} || error_handler
+#eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH} || error_handler
 portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/bleeding_edge
 
 # Build the metadata cache
 rm -rf /var/cache/edb/dep || error_handler
-emerge --regen || error_handler
+emerge --regen --jobs=$(nproc) --quiet || error_handler
 
 #this file isn't created but eix needs it
 touch /var/cache/eix/portage.eix
@@ -242,13 +225,20 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
   #make clean doesn't remove this
   rm -f /tmp/kernel_maps/Module.symvers
 	cp -a /usr/src/linux/System.map /tmp/kernel_maps/
+  mkdir /tmp/kernel_generated
+  cp -aR /usr/src/linux/include/generated/* /tmp/kernel_generated/
+  mkdir /tmp/kernel_certs
+  cp -aR /usr/src/linux/certs/* /tmp/kernel_certs/
 	pushd /usr/src/linux
 	#mrproper wipes the random seed and means we cannot build modules, be careful here
 	make -j clean
 	#cp -a /var/tmp/pentoo.config /usr/src/linux/.config
 	cp -a /tmp/kernel_maps/* /usr/src/linux
-	make -j prepare
-	make -j modules_prepare
+  cp -aR /tmp/kernel_generated/* /usr/src/linux/include/generated/ 
+  cp -aR /tmp/kernel_certs/* /usr/src/linux/certs
+  # modules_prepare already runs prepare
+  #make -j $(nproc) -l $(nproc) prepare
+  #make -j $(nproc) -l $(nproc) modules_prepare
   popd
 done
 
@@ -256,17 +246,16 @@ emerge --deselect=y livecd-tools || error_handler
 emerge --deselect=y sys-fs/zfs || error_handler
 emerge --deselect=y sys-kernel/pentoo-sources || error_handler
 
-for i in /var/gentoo/repos/local /var/db/repos/local /var/db/repos/pentoo; do
-  [ -x ${i}/scripts/bug-461824.sh ] && ${i}/scripts/bug-461824.sh
-done
+"$(portageq get_repo_path / pentoo)/scripts/bug-461824.sh"
 
+emerge -qN -kb -D --with-bdeps=y @system -vt --backtrack=99 --update
+emerge -qN -kb -D --with-bdeps=y @profile -vt --backtrack=99 --update
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update
 if portageq has_version / pentoo/pentoo; then
   if ! emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update; then
     emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update || error_handler
   fi
 fi
-#layman -S
 emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update || error_handler
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || error_handler
@@ -286,15 +275,11 @@ if ! revdep-rebuild -i -- --usepkg=n --buildpkg=y; then
 fi
 
 
-if [ -x /usr/sbin/python-updater ]; then
-	python-updater -- --buildpkg=y || error_handler
-fi
 perl-cleaner --ph-clean --modules -- --usepkg=n --buildpkg=y || safe_exit
 #the above line should always be enough
 #perl-cleaner --all -- --usepkg=n --buildpkg=y || error_handler
 
-/var/db/repos/local/scripts/bug-461824.sh
-/var/db/repos/pentoo/scripts/bug-461824.sh
+"$(portageq get_repo_path / pentoo)/scripts/bug-461824.sh"
 
 if portageq has_version / pentoo/pentoo-desktop; then
   # This makes sure we have the latest and greatest genmenu!
@@ -310,13 +295,6 @@ if [ -f /etc/xdg/menus/gnome-applications.menu ]; then
 	cp -af /etc/xdg/menus/gnome-applications.menu /etc/xdg/menus/applications.menu || error_handler
 fi
 
-#if [ $(command -v paxctl-ng 2> /dev/null) ]; then
-#	# fixes pax for metasploit/java attacks/wpscan
-#	for i in $(ls /usr/bin/ruby2[1-9]); do
-#		paxctl-ng -m ${i} || error_handler
-#	done
-#fi
-
 # Setup fonts
 pushd /usr/share/fonts
 mkfontdir * || error_handler
@@ -329,11 +307,6 @@ if portageq has_version / media-libs/fontconfig; then
     eselect fontconfig enable 57-dejavu-serif.conf || error_handler
   fi
 fi
-
-# Setup kismet
-#if [ -e /etc/kismet.conf ]; then
-#  sed -i -e 's#.kismet#kismet#' /etc/kismet.conf
-#fi
 
 # Setup tor-privoxy
 if [ -d /etc/privoxy ]; then
@@ -366,7 +339,7 @@ if portageq has_version / postgres; then
   fi
 
   if portageq has_version / metasploit; then
-    emerge --config net-analyzer/metasploit || /bash/bash
+    emerge --config net-analyzer/metasploit || error_handler
 
     #metasploit first run to create db, etc, and speed up livecd first run
     if [ -x "/usr/bin/msfconsole" ]; then
@@ -384,16 +357,6 @@ if [ -f /etc/skel/Desktop/pentoo-installer.desktop ] && [ ! -f /home/pentoo/Desk
 	cp /etc/skel/Desktop/pentoo-installer.desktop /home/pentoo/Desktop/pentoo-installer.deskop
 	chown pentoo:users /home/pentoo/Desktop/pentoo-installer.deskop
 fi
-
-#basic xfce4 setup
-#mkdir -p /root/.config/xfce4/
-#cp -r /etc/xdg/xfce4/panel/ /root/.config/xfce4/ || error_handler
-#magic to autohide panel 2
-#magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /root/.config/xfce4/panel/default.xml)+1))
-#sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /root/.config/xfce4/panel/default.xml
-#easy way to adjust wallpaper per install
-#mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || error_handler
-#cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ || error_handler
 
 if portageq has_version / pentoo/pentoo-desktop; then
   su pentoo -c "mkdir -p /home/pentoo/.config/xfce4/" || error_handler
@@ -440,15 +403,17 @@ sed -i "/#/! s#localhost\(.*\)#localhost pentoo#" /etc/hosts || error_handler
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
 
-if portageq has_version / dev-lang/ruby; then
-  eselect ruby set ruby27 || error_handler
+if portageq has_version / dev-lang/ruby:3.0; then
+  eselect ruby set ruby30
+fi
+if portageq has_version / dev-lang/ruby:3.1; then
+  eselect ruby set ruby31
 fi
 
-find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
+find /var/db/pkg -name CFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
+find /var/db/pkg -name CFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
+find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CXXFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
 find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
-
-#short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
-#emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
 
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || error_handler
@@ -460,12 +425,14 @@ fi
 rc-update -u || error_handler
 
 #last let's make sure we have all the binpkgs we expect
-quickpkg --include-config=y $($(portageq get_repo_path / pentoo)/scripts/binpkgs-missing-rebuild)
+if [ -n "$($(portageq get_repo_path / pentoo)/scripts/binpkgs-missing-rebuild)" ]; then
+  quickpkg --include-config=y $($(portageq get_repo_path / pentoo)/scripts/binpkgs-missing-rebuild)
+fi
 
 update-ca-certificates
 
 #setup pinentry to a sane default
-eselect pinentry set pinentry-gtk-2 || eselect pinentry set pinentry-curses
+eselect pinentry set pinentry-gnome3 || eselect pinentry set pinentry-curses
 
 #cleanup temp stuff in /etc/portage from catalyst build
 rm -f /etc/portage/make.conf.old
@@ -474,14 +441,22 @@ rm -f /etc/portage/depcheck
 rm -rf /etc/portage/profile
 
 emerge -1kb portage || error_handler
-if [ "${clst_version_stamp/full}" = "${clst_version_stamp}" ] || [ "${clst_version_stamp/core}" = "${clst_version_stamp}" ]; then
-  #non-full iso means we expect things like builddeps sacrificed for size
-  emerge --depclean --with-bdeps=n sys-kernel/genkernel --exclude sys-kernel/pentoo-sources
-else
-  emerge --depclean --with-bdeps=y --exclude sys-kernel/pentoo-sources
-  #full expects most things present, but this shit is huge and bdep only
-  emerge --depclean --with-bdeps=n 'dev-go/*' dev-lang/go dev-lang/go-bootstrap dev-java/gradle-bin virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi sys-kernel/genkernel --exclude sys-kernel/pentoo-sources
-fi
+
+#shrink all the livecds, people use binpkgs
+emerge --depclean --with-bdeps=n --quiet || error_handler
+#this shit is huge and bdep only, make extra sure it's gone
+emerge --depclean --with-bdeps=n --quiet 'dev-go/*' dev-lang/go-bootstrap dev-java/gradle-bin virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi || error_handler
+#specifically removing <llvm-15 because it only breaks one package and it is likely not needed
+#specifically removing genkernel because it's huge and only needed on kernel updates
+#specifically removing dev-lang/go because it should be a bdep but it isn't always
+emerge --unmerge --with-bdeps=n --quiet sys-kernel/genkernel '<sys-devel/llvm-15' dev-lang/go || error_handler
+
+# Remove extra python if nothing needs it
+EXCLUDES=""
+for python_slot in $(emerge --info | grep -oE '^PYTHON_TARGETS=".*(python3_[0-9]+\s*)+"' | grep -oE 'python3_[0-9]+' | cut -d\" -f2 | sed -e 's#_#.#' -e 's#python##'); do
+  EXCLUDES="${EXCLUDES} --exclude python:${python_slot}"
+done
+emerge -c python --with-bdeps=n ${EXCLUDES}
 
 #cleanup binary drivers
 if portageq has_version / x11-drivers/nvidia-drivers; then
@@ -495,14 +470,13 @@ if portageq has_version / dev-lang/ruby; then
   pushd /root/gentoollist
   mkdir -p /var/log/portage/tool-list
   ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json || error_handler
+  #cat /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json
   sync
   popd
 fi
 rm -rf /root/gentoollist
 
 rm -rf /var/tmp/portage/*
-fixpackages
-eclean-pkg -t 3m
 
 #bug #477498
 ln -snf /proc/self/mounts /etc/mtab
@@ -522,7 +496,6 @@ for i in $(ls /var/cache); do
   rm -rf "/var/cache/${i}"
 done
 #once more, with feeling
-chown -R portage:portage /var/cache/distfiles || error_handler
 chown root:portage -R /var/cache/edb
 chown root:portage -R /var/cache/eix
 
@@ -533,7 +506,8 @@ if [ -r /etc/issue.pentoo.logo ]; then
 fi
 find /root -uid 1001 -exec chown -h root:root {} \;
 find /etc -uid 1001 -exec chown -h root:root {} \;
-
+#delete all the log files generated during build but not the directory structure
+find /var/log -type f -delete
 updatedb
 #equery check -o '*' || error_handler
 sync

@@ -29,25 +29,24 @@ catalyst_clean() {
       mkdir -p "/catalyst/release/Pentoo_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-2022.0"
-    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-2022.0/*
+    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-20*.*"
+    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-20??.?/*
   elif [ "${stage}" = "livecd-stage2-core" ]; then
     if [ "${1}" = "pre" ]; then
       rm -rf "/catalyst/release/Pentoo_Core_${arch}_hardened"
       mkdir -p "/catalyst/release/Pentoo_Core_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Core_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-2022.0"
-    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-core-2022.0/*
+    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-20*.*"
+    rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-core-20??.?/*
   elif [ "${stage}" = "livecd-stage2-full" ]; then
     if [ "${1}" = "pre" ]; then
       rm -rf "/catalyst/release/Pentoo_Full_${arch}_hardened"
       mkdir -p "/catalyst/release/Pentoo_Full_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Full_${arch}_hardened"
     fi
-    ls -alh /catalyst/builds/hardened/livecd-stage2-amd64-full-2022.0/image.squashfs
-    rm -rf /catalyst/tmp/hardened/livecd-stage2-${subarch}-full-2022.0
-    rm -rf /catalyst/builds/hardened/livecd-stage2-${subarch}-full-2022.0/*
+    rm -rf /catalyst/tmp/hardened/livecd-stage2-${subarch}-full-20*.*
+    rm -rf /catalyst/builds/hardened/livecd-stage2-${subarch}-full-20??.?/*
   else
     rm -rf /catalyst/tmp/hardened/"${stage}-${subarch}-"*
   fi
@@ -59,16 +58,16 @@ mirror_sync() {
     if [ "${stage}" != "${stage/livecd/}" ]; then
       if [ "${stage}" != "${stage/full/}" ]; then
         #full iso
-        mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_Full_${arch}_hardened/
         wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Full_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
+        mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_Full_${arch}_hardened/
       elif [ "${stage}" != "${stage/core/}" ]; then
         #core iso
-        mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_Core_${arch}_hardened/
         wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Core_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
+        mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_Core_${arch}_hardened/
       else
         #normal iso
-        mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_${arch}_hardened/
         wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
+        mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_${arch}_hardened/
       fi
     fi
     if [ "${stage}" != "${stage/livecd/}" ] || [ "${stage}" != "${stage/full/}" ]; then

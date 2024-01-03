@@ -79,9 +79,15 @@ esac
 case ${target} in
 	stage1)
     ## let's run in circles
-    echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
-    #migrate to new version stamp by using a static version stamp
-    #echo "source_subpath: ${profile}/stage4-${subarch}-2019.3.squashfs"
+    if [ -f "/catalyst/builds/${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs" ]; then
+      echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
+    elif [ -f "/catalyst/builds/${profile}/stage4-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs" ]; then
+      #migrate to new version stamp by using a old version stamp
+      echo "source_subpath: ${profile}/stage4-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs"
+    else
+      printf "Unable to find a source path\n"
+      exit 1
+    fi
 		;;
 	stage2)
 		echo "source_subpath: ${profile}/stage1-${subarch}-${VERSION_STAMP}.squashfs"
@@ -90,7 +96,14 @@ case ${target} in
 		echo "source_subpath: ${profile}/stage2-${subarch}-${VERSION_STAMP}.squashfs"
 		;;
 	stage4)
-		echo "source_subpath: ${profile}/stage3-${subarch}-${VERSION_STAMP}.squashfs"
+		if [ -f "/catalyst/builds/${profile}/stage3-${subarch}-${VERSION_STAMP}.squashfs" ]; then
+			echo "source_subpath: ${profile}/stage3-${subarch}-${VERSION_STAMP}.squashfs"
+		elif [ -f "/catalyst/builds/${profile}/stage3-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs" ]; then
+			echo "source_subpath: ${profile}/stage3-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs"
+		else
+			printf "Unable to find a source path\n"
+			exit 1
+		fi
 		;;
 	stage4-pentoo*)
 		echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
@@ -176,18 +189,18 @@ echo "subarch: ${subarch}"
 
 if [ ${label_arch} = amd64 ]
 then
-	echo "cflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
-	echo "cxxflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
-	echo "fflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
-	echo "fcflags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
-	echo "common_flags: -Os -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "cflags: -O3 -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "cxxflags: -O3 -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "fflags: -O3 -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "fcflags: -O3 -mtune=core2 -pipe -frecord-gcc-switches"
+	echo "common_flags: -O3 -mtune=core2 -pipe -frecord-gcc-switches"
 elif [ ${label_arch} = x86 ]
 then
-	echo "cflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
-	echo "cxxflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
-	echo "fflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
-	echo "fcflags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
-	echo "common_flags: -Os -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "cflags: -O3 -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "cxxflags: -O3 -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "fflags: -O3 -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "fcflags: -O3 -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
+	echo "common_flags: -O3 -mtune=pentium-m -pipe -fomit-frame-pointer -frecord-gcc-switches"
 fi
 
 if [ "${target}" = stage4-pentoo ] || [ "${target}" = "stage4-pentoo-core" ] || [ "${target}" = "stage4-pentoo-full" ] || [ "${target}" = "stage4-pentoo-full" ] || [ "${target}" = "stage4-docker" ]
@@ -215,7 +228,7 @@ case ${target} in
 		echo "profile: --force pentoo:pentoo/${profile}/linux/${profile_arch}"
 		;;
 	livecd-stage2-core|livecd-stage2|livecd-stage2-full)
-		echo "profile: --force pentoo:pentoo/${profile}/linux/${profile_arch}/binary"
+		echo "profile: --force pentoo:pentoo/${profile}/linux/${profile_arch}"
 		;;
 esac
 

@@ -14,6 +14,8 @@ done
 pushd /var/db/repos/pentoo
 git pull
 popd
+chown -R portage:portage "$(portageq get_repo_path / gentoo)"
+chown -R portage:portage "$(portageq get_repo_path / pentoo)"
 emerge --sync || emerge --sync || exit 1
 if [ $(($(date +%s) - $(stat -c %Y '/usr/portage/metadata/timestamp'))) -gt 259200 ]; then
   printf "More than 72 hours out of date, snap is failing!\n"
@@ -22,3 +24,5 @@ fi
 catalyst -s latest -C options=keepwork compression_mode=pixz
 xzcat /catalyst/snapshots/gentoo-latest.tar.xz | tar2sqfs /catalyst/snapshots/gentoo-latest.squashfs -j $(nproc) -f --compressor zstd -X level=19 -s
 /usr/src/pentoo/pentoo-livecd/livecd/specs/make_modules.sh
+chown -R portage:portage "$(portageq get_repo_path / gentoo)"
+chown -R portage:portage "$(portageq get_repo_path / pentoo)"

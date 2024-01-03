@@ -1,16 +1,20 @@
-#!/bin/sh -x
+#!/bin/sh
+set -x
 source /tmp/envscript
+
+EC() { echo -e '\e[1;33m'code $?'\e[m\n'; }
+trap EC ERR
 
 fix_locale() {
   for i in /etc/locale.nopurge /etc/locale.gen; do
-  	echo C.UTF-8 UTF-8 > "${i}"
-  	echo en_US ISO-8859-1 >> "${i}"
-  	echo en_US.UTF-8 UTF-8 >> "${i}"
+    echo C.UTF-8 UTF-8 > "${i}"
+    echo en_US ISO-8859-1 >> "${i}"
+    echo en_US.UTF-8 UTF-8 >> "${i}"
   done
-	eselect locale set C.utf8 || error_handler
+  eselect locale set C.utf8 || error_handler
   env-update
   . /etc/profile
-	locale-gen || error_handler
+  locale-gen || error_handler
 }
 
 error_handler() {
@@ -37,13 +41,12 @@ USE=-lz4 emerge -1 -kb app-arch/libarchive || error_handler
 emerge -1 -kb app-arch/lz4 || error_handler
 #ease transition to the new use flags
 USE="-qt5" emerge -1 -kb cmake || error_handler
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
-        emerge --buildpkg=y @preserved-rebuild -q || error_handler
+if portageq list_preserved_libs /; then
+  #we do this twice for a reason, let this one fail sometimes
+  emerge --buildpkg=y @preserved-rebuild -q || true
 fi
 
 emerge --newuse -1kb --rebuild-if-new-rev sys-libs/glibc
-USE="openmp" emerge --newuse --oneshot --buildpkg=y --usepkg=n --rebuild-if-new-rev sys-devel/gcc
 emerge -1kb --newuse --update --changed-deps --onlydeps --onlydeps-with-rdeps media-gfx/graphite2
 emerge -1kb --newuse --update --changed-deps media-gfx/graphite2
 #perl update sucks
@@ -55,26 +58,38 @@ USE="-icu" emerge -1kb --newuse --update --changed-deps dev-db/sqlite
 USE="-tk" emerge -1kb --newuse --update --changed-deps dev-lang/python
 USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps media-libs/libva
 USE="-cups -lm-sensors -bluetooth -vaapi" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
+USE="-cups" emerge -1kb --newuse --update --changed-deps net-fs/samba
 emerge -1kb --newuse --update --changed-deps net-print/cups
+USE="minimal" emerge -1kb --newuse --update --changed-deps media-libs/libsndfile
 USE="-verify-sig" emerge -1kb --newuse --update --changed-deps dev-libs/libsodium
-#help udev update
-emerge -1kb --newuse --update --changed-deps sys-fs/udev
-#merge in the profile set since we have no @system set, but ignore failures because @world might catch it
+emerge -1kb --newuse --update --changed-deps @system || true
 emerge -1kb --newuse --update --changed-deps @profile || true
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb --changed-deps @world || error_handler
+old_gcc="$(portageq match / '<sys-devel/gcc-12.3')"
+if [ -n "${old_gcc}" ]; then
+  emerge -C "<sys-devel/gcc-12.3"
+fi
+gcc-config latest
+. /etc/profile
+#this has to be done early or x86 fails on the stage1 update seed
+if [ "${clst_subarch}" = "pentium-m" ]; then
+	emerge --update --oneshot -kb dev-lang/rust-bin || error_handler
+fi
+
 #do what stage1 update seed is going to do
 emerge --verbose --update --newuse --changed-deps --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 sys-devel/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || error_handler
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
-        emerge --buildpkg=y @preserved-rebuild -q || error_handler
+if portageq list_preserved_libs /; then
+  if ! emerge --buildpkg=y @preserved-rebuild -q ; then
+    emerge -C @preserved-rebuild || error handler
+    emerge --deep --update --newuse -kb --changed-deps @world || error_handler
+  fi
 fi
 
 #fix interpreted stuff
 perl-cleaner --all -- --buildpkg=y || error_handler
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
-        emerge --buildpkg=y @preserved-rebuild -q || error_handler
+if portageq list_preserved_libs /; then
+  emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
@@ -87,9 +102,8 @@ if [ -x /usr/sbin/python-updater ];then
 	python-updater -- --buildpkg=y || error_handler
 fi
 
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
-        emerge --buildpkg=y @preserved-rebuild -q || error_handler
+if portageq list_preserved_libs /; then
+  emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
 emerge -1 -kb app-portage/gentoolkit || error_handler
@@ -99,9 +113,8 @@ if [ -n "${broken_packages}" ]; then
   emerge -1 --buildpkg=y --usepkg=n ${broken_packages} || error_handler
 fi
 
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
-        emerge --buildpkg=y @preserved-rebuild -q || error_handler
+if portageq list_preserved_libs /; then
+  emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
 revdep-rebuild -i -- --usepkg=n --buildpkg=y || error_handler
@@ -129,11 +142,10 @@ USE="-pulseaudio" emerge -1kb dev-qt/qtmultimedia
 #fix cups/avahi circular deps in next stage
 USE=-zeroconf emerge --update --oneshot -kb net-print/cups || error_handler
 
-if [ "${clst_subarch}" = "pentium-m" ]; then
-	emerge --update --oneshot -kb dev-lang/rust-bin || error_handler
-fi
-portageq list_preserved_libs /
-if [ $? = 0 ]; then
+#needed by pkg_pretend for chromium in the next stage https://bugs.gentoo.org/902489
+emerge --update --oneshot -kb sys-devel/clang sys-devel/llvm
+
+if portageq list_preserved_libs /; then
   emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
@@ -143,12 +155,24 @@ fi
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
 #[ "${clst_subarch}" = "pentium-m" ] && crossdev -s1 -t x86_64
 
-fixpackages
-eclean-pkg -t 3m
-emerge --depclean --exclude dev-java/openjdk  --exclude sys-kernel/pentoo-sources \
-	--exclude dev-lang/rust-bin --exclude app-portage/gentoolkit --exclude net-print/cups \
-  --exclude dev-qt/qtmultimedia --exclude media-libs/harfbuzz --exclude media-libs/freetype \
-  --exclude dev-libs/libsodium || error_handler
+emerge --depclean \
+  --exclude app-portage/gentoolkit \
+  --exclude dev-db/sqlite \
+  --exclude dev-java/openjdk \
+	--exclude dev-lang/rust-bin \
+  --exclude dev-libs/libsodium \
+  --exclude dev-qt/qtmultimedia \
+  --exclude media-libs/freetype \
+  --exclude media-libs/harfbuzz \
+  --exclude media-libs/libsndfile \
+  --exclude media-libs/libva \
+  --exclude net-fs/samba \
+  --exclude net-print/cups \
+  --exclude sys-devel/clang \
+  --exclude sys-devel/llvm \
+  --exclude sys-kernel/pentoo-sources \
+  --exclude x11-libs/gtk+ \
+  || error_handler
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler

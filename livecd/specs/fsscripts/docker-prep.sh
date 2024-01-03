@@ -5,7 +5,7 @@ HOME=/tmp
 env-update
 . /tmp/envscript
 echo 'VIDEO_CARDS=""' >> /etc/portage/make.conf
-emerge --deep --update --newuse @world
+emerge --deep --update --newuse --changed-deps @world
 emerge --depclean --with-bdeps=n
 emerge --buildpkg=y --usepkg=n @preserved-rebuild
 

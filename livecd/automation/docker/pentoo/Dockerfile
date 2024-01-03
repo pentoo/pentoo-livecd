@@ -15,7 +15,7 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
 
 ADD portage_and_overlay.tar.xz /
 # --security=insecure is only needed for go
-RUN --security=insecure sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full -drivers#' /etc/portage/make.conf && \
+RUN sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full -drivers#' /etc/portage/make.conf && \
   #disable minimal
   sed -i 's# pentoo-minimal##' /etc/portage/make.conf && \
   #install libsndfile minimal to break circular deps

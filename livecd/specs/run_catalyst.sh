@@ -147,11 +147,11 @@ do
       printf "FUCK: we failed on /tmp/${arch}-${PROFILE}-${stage}.spec\n"
       exit 1
     fi
-    if [ -f "/catalyst/log/tool-list/tools_list_${arch}-${PROFILE}.json" ]; then
-      mv "/catalyst/log/tool-list/tools_list_${arch}-${PROFILE}.json" /catalyst/release/Pentoo_${arch}_${PROFILE}/
-    elif [ -f "/catalyst/log/tool-list/tools_list_full_${arch}-${PROFILE}.json" ]; then
-      mv "/catalyst/log/tool-list/tools_list_full_${arch}-${PROFILE}.json" /catalyst/release/Pentoo_Full_${arch}_${PROFILE}/
-    fi
+    #if [ -f "/catalyst/log/tool-list/tools_list_${arch}-${PROFILE}.json" ]; then
+    #  mv "/catalyst/log/tool-list/tools_list_${arch}-${PROFILE}.json" /catalyst/release/Pentoo_${arch}_${PROFILE}/
+    #elif [ -f "/catalyst/log/tool-list/tools_list_full_${arch}-${PROFILE}.json" ]; then
+    #  mv "/catalyst/log/tool-list/tools_list_full_${arch}-${PROFILE}.json" /catalyst/release/Pentoo_Full_${arch}_${PROFILE}/
+    #fi
 
 	done
 done

@@ -32,7 +32,7 @@ livecd/modblacklist: arusb_lnx rt2870sta rt3070sta prism54 r8187 pcspkr ieee1394
 # We do not use this on the official media, as catalyst sets up the runlevels
 # correctly for us.  Since we do not use this, it is left blank below.
 # This option will automatically create missing runlevels
-livecd/rcadd: udev|sysinit udev-mount|sysinit autoconfig|default acpid|default binary-driver-handler|default dbus|default gpm|default net.lo|default pwgen|default pentoo-zram|default pentoo-linux-symlinks|default thermald|default
+livecd/rcadd: udev|sysinit udev-mount|sysinit elogind|boot autoconfig|default acpid|default binary-driver-handler|default dbus|default gpm|default net.lo|default pwgen|default pentoo-zram|default pentoo-linux-symlinks|default thermald|default
 
 # This overlay is dropped onto the CD filesystem and is outside any loop which
 # has been configured.  This is typically used for adding the documentation,
@@ -74,7 +74,7 @@ boot/kernel/pentoo/use: livecd
 # This option is used to empty the directories listed.  It is useful for getting
 # rid of files that don't belong to a particular package, or removing files from
 # a package that you wish to keep, but won't need the full functionality.
-livecd/empty: /var/empty /var/log /var/tmp /tmp /usr/portage /etc/portage/patches
+livecd/empty: /var/empty /var/tmp /tmp /usr/portage /etc/portage/patches
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
