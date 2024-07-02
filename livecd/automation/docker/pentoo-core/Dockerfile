@@ -27,7 +27,7 @@ RUN mkdir -p /etc/portage/profile/package.use && \
   rc-update del udev && \
   rc-update del udev-trigger && \
   rc-update del kmod-static-nodes && \
-  printf '[ -f "/run/openrc/softlevel" ] && openrc sysinit > /dev/null 2>&1\n' >> /root/.bashrc && \
+  printf '[ -f "/run/openrc/softlevel" ] || openrc sysinit > /dev/null 2>&1\n' >> /root/.bashrc && \
   # basic gentoo nicety
   cat /tmp/fix_make_conf >> /root/.bashrc && \
   rm /tmp/fix_make_conf

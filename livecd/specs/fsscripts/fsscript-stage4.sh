@@ -59,7 +59,9 @@ USE="-tk" emerge -1kb --newuse --update --changed-deps dev-lang/python
 USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps media-libs/libva
 USE="-cups -lm-sensors -bluetooth -vaapi" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
 USE="-cups" emerge -1kb --newuse --update --changed-deps net-fs/samba
+USE="-zeroconf" emerge -1kb --update --changed-deps net-print/cups || error_handler
 emerge -1kb --newuse --update --changed-deps net-print/cups
+emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
 USE="minimal" emerge -1kb --newuse --update --changed-deps media-libs/libsndfile
 USE="-verify-sig" emerge -1kb --newuse --update --changed-deps dev-libs/libsodium
 emerge -1kb --newuse --update --changed-deps @system || true
@@ -78,7 +80,7 @@ if [ "${clst_subarch}" = "pentium-m" ]; then
 fi
 
 #do what stage1 update seed is going to do
-emerge --verbose --update --newuse --changed-deps --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 sys-devel/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || error_handler
+emerge --verbose --update --newuse --changed-deps --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 dev-build/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || error_handler
 if portageq list_preserved_libs /; then
   if ! emerge --buildpkg=y @preserved-rebuild -q ; then
     emerge -C @preserved-rebuild || error handler
@@ -138,9 +140,6 @@ fi
 
 #fix PyQt5->qtmultimedia->pulseaudio->PyQt5 circular deps in the next stage
 USE="-pulseaudio" emerge -1kb dev-qt/qtmultimedia
-
-#fix cups/avahi circular deps in next stage
-USE=-zeroconf emerge --update --oneshot -kb net-print/cups || error_handler
 
 #needed by pkg_pretend for chromium in the next stage https://bugs.gentoo.org/902489
 emerge --update --oneshot -kb sys-devel/clang sys-devel/llvm

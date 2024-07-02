@@ -444,8 +444,11 @@ emerge -1kb portage || error_handler
 
 #shrink all the livecds, people use binpkgs
 emerge --depclean --with-bdeps=n --quiet || error_handler
+
 #this shit is huge and bdep only, make extra sure it's gone
-emerge --depclean --with-bdeps=n --quiet 'dev-go/*' dev-lang/go-bootstrap dev-java/gradle-bin virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi || error_handler
+#it's already not in core, so just let it fail if everything is missing anyway
+emerge --depclean --with-bdeps=n 'dev-go/*' dev-lang/go-bootstrap dev-java/gradle-bin virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi || true
+
 #specifically removing <llvm-15 because it only breaks one package and it is likely not needed
 #specifically removing genkernel because it's huge and only needed on kernel updates
 #specifically removing dev-lang/go because it should be a bdep but it isn't always
