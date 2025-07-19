@@ -54,22 +54,22 @@ root_keydev="/dev/disk/by-uuid/$(for uuid in $(grep 'linux\W/' -- "${1}" | head 
 if [ "${root_keydev}" = '/dev/disk/by-uuid/' ]; then
   root_keydev="$(for uuid in $(grep 'linux\W/' -- "${1}" | head -n1); do printf "%s" "${uuid}" | awk -F'=' '/root_keydev/ {print $2}'; done)"
 fi
-crypt_root="/dev/disk/by-uuid$(for uuid in $(grep 'linux\W/' -- "${1}" | head -n1); do printf "%s" "${uuid}" | awk -F'=' '/crypt_root/ {print $3}'; done)"
+crypt_root="/dev/disk/by-uuid$(for uuid in $(grep 'linux\W/' -- "${1}" | head -n1); do printf "%s" "${uuid}" | awk -F'=' '/root/ {print $3}'; done)"
 if [ "${crypt_root}" = '/dev/disk/by-uuid/' ]; then
-  crypt_root="$(for uuid in $(grep 'linux\W/' -- "${1}" | head -n1); do printf "%s" "${uuid}" | awk -F'=' '/crypt_root/ {print $2}'; done)"
+  crypt_root="$(for uuid in $(grep 'linux\W/' -- "${1}" | head -n1); do printf "%s" "${uuid}" | awk -F'=' '/root/ {print $2}'; done)"
 fi
 
 #mount the keydev temporarily
 mkdir -p /mnt/key
 mount "${root_keydev}" /mnt/key
 
-gpg --pinentry-mode=loopback --logger-file /dev/null --quiet --decrypt "/mnt/key${root_key}" | sudo cryptsetup -d - luksOpen "${crypt_root}" root
+gpg --pinentry-mode=loopback --logger-file /dev/null --quiet --decrypt "/mnt/key${root_key}" | sudo cryptsetup -d - luksOpen "${crypt_root}" root_rescue
 
 #unmount the key as we are done with it
 umount /mnt/key
 
 mkdir -p "${DESTDIR}"
-mount /dev/mapper/root "${DESTDIR}"
+mount /dev/mapper/root_rescue "${DESTDIR}"
 
 live_mount
 chroot "${DESTDIR}" /bin/bash || true

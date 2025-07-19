@@ -4,10 +4,10 @@ set -e
 
 DISTRO=pentoo
 CATALYST_PATH='/catalyst/builds/hardened'
-if [ -f "${CATALYST_PATH}/stage4-amd64-docker-$(date +%Y).0.tar.xz" ]; then
-  TARBALL="stage4-amd64-docker-$(date +%Y).0.tar.xz"
-elif [ -f "${CATALYST_PATH}/stage4-amd64-docker-$(( "$(date +%Y)" - 1 )).0.tar.xz" ]; then
-  TARBALL="stage4-amd64-docker-$(( "$(date +%Y)" - 1 )).0.tar.xz"
+if [ -f "${CATALYST_PATH}/stage4-amd64-docker-$(date +%Y).0.tar.zstd" ]; then
+  TARBALL="stage4-amd64-docker-$(date +%Y).0.tar.zstd"
+elif [ -f "${CATALYST_PATH}/stage4-amd64-docker-$(( "$(date +%Y)" - 1 )).0.tar.zstd" ]; then
+  TARBALL="stage4-amd64-docker-$(( "$(date +%Y)" - 1 )).0.tar.zstd"
 else
   printf "Unable to find a source path\n"
   exit 1

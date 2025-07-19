@@ -37,10 +37,16 @@ done
 
 rm -rf /usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/*
 
+#unfuck repos.conf
+#mkdir -p /dev/shm/portage/rootfs/etc/portage/repos.conf/
+#cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-core/files/[pg]entoo.conf /dev/shm/portage/rootfs/etc/portage/repos.conf/
 ##make the gentoo portage module
 rm -rf /dev/shm/portage/rootfs/var/db/repos/gentoo
 mkdir -p /dev/shm/portage/rootfs/var/db/repos/gentoo
+mkdir -p /catalyst/tmp/repos/gentoo
+mount /var/tmp/catalyst/snapshots/gentoo-latest.sqfs /catalyst/tmp/repos/gentoo
 rsync -aEXu --delete /catalyst/tmp/repos/gentoo/* /dev/shm/portage/rootfs/var/db/repos/gentoo
+umount /catalyst/tmp/repos/gentoo
 ##add the distfiles we want
 mkdir -p /dev/shm/distfiles/rootfs/var/cache/distfiles/
 #make sure it's all in the local store too
@@ -69,6 +75,9 @@ rsync -aEXu --progress --delete /dev/shm/distfiles/tmp/  /dev/shm/portage/rootfs
 DISTDIR=/dev/shm/portage/rootfs/var/cache/distfiles/ emerge -fO nvidia-drivers
 ## add the pentoo overlay
 mkdir -p /dev/shm/portage/rootfs/var/db/repos/pentoo/
+cd /var/db/repos/pentoo
+sudo -u portage git pull
+cd /tmp
 rsync -aEXu --progress --delete /var/db/repos/pentoo/ /dev/shm/portage/rootfs/var/db/repos/pentoo/
 chown root:root /dev/shm/portage/rootfs/var/db/repos
 chown root:root /dev/shm/portage/rootfs/var/db

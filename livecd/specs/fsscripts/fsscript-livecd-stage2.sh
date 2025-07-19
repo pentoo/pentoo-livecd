@@ -6,9 +6,9 @@ source /tmp/envscript
 
 fix_locale() {
   for i in /etc/locale.nopurge /etc/locale.gen; do
-  	echo C.UTF-8 UTF-8 > "${i}"
+  	echo C.utf8 UTF-8 > "${i}"
   	echo en_US ISO-8859-1 >> "${i}"
-  	echo en_US.UTF-8 UTF-8 >> "${i}"
+  	echo en_US.UTF8 UTF-8 >> "${i}"
   done
 	eselect locale set C.utf8 || error_handler
   env-update
@@ -39,7 +39,7 @@ else
 fi
 
 #just in case, this seems to keep getting messed up
-chown -R portage:portage "$(portageq get_repo_path / gentoo)"
+#chown -R portage:portage "$(portageq get_repo_path / gentoo)"
 chown -R portage:portage "$(portageq get_repo_path / pentoo)"
 
 emerge -1kb --newuse --update sys-apps/portage || error_handler
@@ -48,14 +48,15 @@ emerge -1kb --newuse --update sys-apps/portage || error_handler
 \cp -f /etc/skel/.bashrc /root/.bashrc || error_handler
 
 #user gets wierd groups, fix it for us
-#defaults users,wheel,audio,plugdev,games,cdrom,disk,floppy,usb
-gpasswd -d pentoo games || error_handler #remove from games group
+#defaults users,wheel,audio,plugdev,cdrom,disk,floppy,usb
+#why doesn't catalyst do this anymore?
+useradd -G users,wheel,audio,plugdev,cdrom,disk,floppy,usb pentoo
 if portageq has_version / pentoo/pentoo; then
   #default and full isos have these groups
-  usermod -a -G audio,cdrom,cdrw,kismet,pcscd,plugdev,portage,usb,users,uucp,video,wheel,pcap pentoo || error_handler
+  usermod -a -G audio,cdrom,cdrw,kismet,pcscd,plugdev,portage,usb,users,uucp,video,wheel,pcap,dialout pentoo || error_handler
 else
   #pentoo-core is missing kismet and pcap
-  usermod -a -G audio,cdrom,cdrw,pcscd,plugdev,portage,usb,users,uucp,video,wheel pentoo || error_handler
+  usermod -a -G audio,cdrom,cdrw,pcscd,plugdev,portage,usb,users,uucp,video,wheel,dialout pentoo || error_handler
 fi
 
 #things are a little wonky with the move from /etc/ to /etc/portage of some key files so let's fix things a bit
@@ -117,7 +118,7 @@ eselect news read --quiet all || error_handler
 
 # Add pentoo repo but use only the version we are packaging in the iso
 # this avoids corrupting timestamps in /var/cache/edb/mtimedb
-chown -R portage:portage /var/db/repos || error_handler
+chown -R portage:portage /var/db/repos/pentoo || error_handler
 mkdir -p /var/cache/distfiles || error_handler
 chown portage:portage /var/cache/distfiles || error_handler
 
@@ -195,9 +196,6 @@ else
   hardening=default
 fi
 
-#eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH} || error_handler
-portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/bleeding_edge
-
 # Build the metadata cache
 rm -rf /var/cache/edb/dep || error_handler
 emerge --regen --jobs=$(nproc) --quiet || error_handler
@@ -208,14 +206,38 @@ chown root:portage /var/cache/eix/portage.eix
 chmod 664 /var/cache/eix/portage.eix
 HOME=/tmp eix-update || error_handler
 
-portageq has_version / pentoo/tribe && echo 'ACCEPT_LICENSE="*"' >> /etc/portage/make.conf
-portageq has_version / pentoo/tribe && echo 'USE="${USE} -bluetooth -database -exploit -footprint -forensics -forging -fuzzers -mitm -mobile -proxies -qemu -radio -rce -scanner -voip -wireless -wireless-compat"' >> /etc/portage/make.conf
-
 if [ "$(equery --quiet list pentoo/pentoo-installer 2> /dev/null)" = "pentoo/pentoo-installer-99999999" ]; then
   emerge -1 pentoo-installer || error_handler
 fi
 
+emerge --deselect=y livecd-tools || error_handler
+#emerge --deselect=y sys-fs/zfs || error_handler
+emerge --deselect=y sys-kernel/pentoo-sources || error_handler
+
+"$(portageq get_repo_path / pentoo)/scripts/bug-461824.sh"
+
+emerge -qN -kb -D --changed-deps --with-bdeps=y @system -vt --backtrack=99 --update
+emerge -qN -kb -D --changed-deps --with-bdeps=y @profile -vt --backtrack=99 --update
+emerge -qN -kb -D --changed-deps --with-bdeps=y @world -vt --backtrack=99 --update
+if portageq has_version / pentoo/pentoo; then
+  if ! emerge -qN -kb -D --changed-deps --with-bdeps=y pentoo/pentoo -vt --update; then
+    emerge -qN -kb -D --changed-deps --with-bdeps=y pentoo/pentoo -vt --update || error_handler
+  fi
+fi
+emerge -qN -kb -D --changed-deps --with-bdeps=y @world -vt --backtrack=99 --update || error_handler
+if portageq list_preserved_libs /; then
+	emerge --buildpkg=y @preserved-rebuild -q || error_handler
+fi
+
+#dropping usepkg on x11-modules-rebuild, doesn't make sense to use
+emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || error_handler
+if portageq list_preserved_libs /; then
+        emerge --buildpkg=y @preserved-rebuild -q || echo "preserved-rebuild failed"
+fi
+
+## clean kernel here
 # Fix the kernel config
+### XXX this is broken, kernel modules can't build after this and that's bad
 for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
 	if [ -d /tmp/kernel_maps ] ; then
 		rm -rf /tmp/kernel_maps
@@ -241,31 +263,6 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
   #make -j $(nproc) -l $(nproc) modules_prepare
   popd
 done
-
-emerge --deselect=y livecd-tools || error_handler
-emerge --deselect=y sys-fs/zfs || error_handler
-emerge --deselect=y sys-kernel/pentoo-sources || error_handler
-
-"$(portageq get_repo_path / pentoo)/scripts/bug-461824.sh"
-
-emerge -qN -kb -D --with-bdeps=y @system -vt --backtrack=99 --update
-emerge -qN -kb -D --with-bdeps=y @profile -vt --backtrack=99 --update
-emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update
-if portageq has_version / pentoo/pentoo; then
-  if ! emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update; then
-    emerge -qN -kb -D --with-bdeps=y pentoo/pentoo -vt --update || error_handler
-  fi
-fi
-emerge -qN -kb -D --with-bdeps=y @world -vt --backtrack=99 --update || error_handler
-if portageq list_preserved_libs /; then
-	emerge --buildpkg=y @preserved-rebuild -q || error_handler
-fi
-
-#dropping usepkg on x11-modules-rebuild, doesn't make sense to use
-emerge -qN -D --usepkg=n --buildpkg=y @x11-module-rebuild || error_handler
-if portageq list_preserved_libs /; then
-        emerge --buildpkg=y @preserved-rebuild -q || echo "preserved-rebuild failed"
-fi
 
 #if ! revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y; then
 #	revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y || error_handler
@@ -322,7 +319,7 @@ fi
 #allow this to fail for right now so builds don't randomly stop and piss me off
 smart-live-rebuild -E --timeout=60 -- --buildpkg=y
 
-if portageq has_version / postgres; then
+if portageq has_version / postgresql; then
   #configure postgres
   echo y | emerge --config dev-db/postgresql || error_handler
   sleep 1m
@@ -363,16 +360,16 @@ if portageq has_version / pentoo/pentoo-desktop; then
   su pentoo -c "cp -r /etc/xdg/xfce4/panel/ /home/pentoo/.config/xfce4/" || error_handler
 
   #magic to autohide panel 2
-  magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.config/xfce4/panel/default.xml)+1))
-  sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
+  #magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /home/pentoo/.config/xfce4/panel/default.xml)+1))
+  #sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /home/pentoo/.config/xfce4/panel/default.xml
 
   #magic to enable gnome-keyring, this file gets pulled when xfce4 starts for the first time
-  head -n-1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml > /tmp/xfce4-session.xml
-  echo '  <property name="compat" type="empty">' >> /tmp/xfce4-session.xml
-  echo '    <property name="LaunchGNOME" type="bool" value="true"/>' >> /tmp/xfce4-session.xml
-  echo '  </property>' >> /tmp/xfce4-session.xml
-  tail -n1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml >> /tmp/xfce4-session.xml
-  mv -f /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
+  #head -n-1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml > /tmp/xfce4-session.xml
+  #echo '  <property name="compat" type="empty">' >> /tmp/xfce4-session.xml
+  #echo '    <property name="LaunchGNOME" type="bool" value="true"/>' >> /tmp/xfce4-session.xml
+  #echo '  </property>' >> /tmp/xfce4-session.xml
+  #tail -n1 /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml >> /tmp/xfce4-session.xml
+  #mv -f /tmp/xfce4-session.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
 
   #slim dm is much nicer than default xdm
   sed -i 's/"xdm"/"slim"/' /etc/conf.d/display-manager
@@ -403,11 +400,17 @@ sed -i "/#/! s#localhost\(.*\)#localhost pentoo#" /etc/hosts || error_handler
 #make nano pretty, turn on all syntax hilighting
 sed -i '/include/s/# //' /etc/nanorc
 
-if portageq has_version / dev-lang/ruby:3.0; then
-  eselect ruby set ruby30
-fi
 if portageq has_version / dev-lang/ruby:3.1; then
   eselect ruby set ruby31
+fi
+if portageq has_version / dev-lang/ruby:3.2; then
+  eselect ruby set ruby32
+fi
+if portageq has_version / dev-lang/ruby:3.3; then
+  eselect ruby set ruby33
+fi
+if portageq has_version / dev-lang/ruby:3.4; then
+  eselect ruby set ruby34
 fi
 
 find /var/db/pkg -name CFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
@@ -449,10 +452,9 @@ emerge --depclean --with-bdeps=n --quiet || error_handler
 #it's already not in core, so just let it fail if everything is missing anyway
 emerge --depclean --with-bdeps=n 'dev-go/*' dev-lang/go-bootstrap dev-java/gradle-bin virtual/rust virtual/cargo dev-lang/rust dev-lang/rust-bin sys-devel/gcc-arm-none-eabi || true
 
-#specifically removing <llvm-15 because it only breaks one package and it is likely not needed
 #specifically removing genkernel because it's huge and only needed on kernel updates
 #specifically removing dev-lang/go because it should be a bdep but it isn't always
-emerge --unmerge --with-bdeps=n --quiet sys-kernel/genkernel '<sys-devel/llvm-15' dev-lang/go || error_handler
+emerge --unmerge --with-bdeps=n --quiet sys-kernel/genkernel dev-lang/go || error_handler
 
 # Remove extra python if nothing needs it
 EXCLUDES=""
@@ -486,7 +488,6 @@ ln -snf /proc/self/mounts /etc/mtab
 
 #reset profile to binary profile so users get it as default
 eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/binary || error_handler
-portageq has_version / pentoo/tribe && eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/bleeding_edge
 
 sync
 sleep 20
@@ -501,6 +502,11 @@ done
 #once more, with feeling
 chown root:portage -R /var/cache/edb
 chown root:portage -R /var/cache/eix
+# Nu fsscripts # getcap /sbin/unix_chkpwd
+#/sbin/unix_chkpwd cap_dac_override=ep
+# This gets stripped somehow, not sure why, override for now
+getcap /sbin/unix_chkpwd
+chmod u+s /sbin/unix_chkpwd || error_handler
 
 #todo when we no longer need this stub for testing, replace with default
 if [ -r /etc/issue.pentoo.logo ]; then

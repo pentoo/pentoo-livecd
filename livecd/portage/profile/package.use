@@ -2,7 +2,6 @@ dev-libs/glib livecd
 x11-base/xorg-server -doc
 dev-libs/openssl -bindist
 net-misc/openssh -bindist
-sys-devel/llvm gold
 dev-libs/boost -mpi
 # Fails to build, not sure why
 <media-video/vlc-3.0.22 -vdpau

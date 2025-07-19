@@ -16,7 +16,10 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
 
 #here we pull in the rootfs from catalyst
 ADD $TARBALL /
-COPY files/fix_make_conf /tmp/fix_make_conf
+COPY files/fix_make_conf.sh /etc/profile.d/fix_make_conf.sh
+COPY files/openrc_sysinit.sh /etc/profile.d/openrc_sysinit.sh
+COPY files/gentoo.conf /etc/portage/repos.conf/
+COPY files/pentoo.conf /etc/portage/repos.conf/
 RUN mkdir -p /etc/portage/profile/package.use && \
   echo 'pentoo/pentoo-wireless -drivers' >> /etc/portage/profile/package.use/pentoo && \
   # mark news read
@@ -27,9 +30,6 @@ RUN mkdir -p /etc/portage/profile/package.use && \
   rc-update del udev && \
   rc-update del udev-trigger && \
   rc-update del kmod-static-nodes && \
-  printf '[ -f "/run/openrc/softlevel" ] || openrc sysinit > /dev/null 2>&1\n' >> /root/.bashrc && \
-  # basic gentoo nicety
-  cat /tmp/fix_make_conf >> /root/.bashrc && \
-  rm /tmp/fix_make_conf
+  rm -rf /run/* /tmp/*
 
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "-l"]

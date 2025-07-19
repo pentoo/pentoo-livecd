@@ -82,7 +82,7 @@ livecd/rm: /etc/resolv.conf /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc
 
 # This option is used to create non-root users on your CD.  It takes a space
 # separated list of user names.  These users will be added to the following
-# groups: users,wheel,audio,games,cdrom,usb
+# groups: users,wheel,audio,cdrom,usb
 # If this is specified in your spec file, then the first user is also the user
 # used to start X. Since this is not used on the release media, it is blank.
 # example:

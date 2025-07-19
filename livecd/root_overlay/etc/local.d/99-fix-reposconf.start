@@ -1,0 +1,20 @@
+#!/bin/sh
+if [ ! -d /etc/portage/repos.conf ]; then
+  if [ -f /etc/portage/repos.conf ]; then
+    rm -f /etc/portage/repos.conf
+  fi
+  mkdir -p /etc/portage/repos.conf
+fi
+# We got this far, the directory exits
+if [ -f /etc/portage/repos.conf/pentoo.conf ]; then
+  if grep -q sync-uri /etc/portage/repos.conf/pentoo.conf; then
+    exit 0
+  fi
+fi
+# We got this far, the target file is wrong or missing
+if [ ! -f /var/db/repos/pentoo/pentoo/pentoo-core/files/pentoo-r2.conf ]; then
+  printf "/etc/portage/repos.conf/pentoo.conf is broken or missing and cannot be automatically fixed.\n"
+  exit 1
+fi
+# We got this far, we have the source file, and the destination directory is prepped, fix it
+cp /var/db/repos/pentoo/pentoo/pentoo-core/files/pentoo-r2.conf /etc/portage/repos.conf/pentoo.conf

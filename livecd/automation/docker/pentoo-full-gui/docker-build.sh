@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 DISTRO=pentoo
 
@@ -16,9 +16,10 @@ docker build --pull -t "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" \
     --build-arg VERSION="${VERSION}" \
     .
 
-docker run -d --rm --name "${IMAGE}-ci" ${CI_REGISTRY_IMAGE}/${IMAGE}
+docker run -d --rm --name "${IMAGE}-ci" ${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}
 sleep 10
-docker cp "${IMAGE}-ci" gui-checker /root/
+docker cp gui-checker "${IMAGE}-ci":/root/
+sleep 30
 if docker exec "${IMAGE}-ci" /root/gui-checker excessive; then
   docker stop "${IMAGE}-ci"
   docker tag "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" "${CI_REGISTRY_IMAGE}/${IMAGE}:latest"

@@ -25,6 +25,6 @@ RUN sed -i 's#-pentoo-full ##' /etc/portage/make.conf && \
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
   #cleanup
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/*
+  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug
 
 CMD ["/bin/bash"]

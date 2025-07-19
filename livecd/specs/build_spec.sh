@@ -53,15 +53,20 @@ RC=p$(date "+%Y%m%d")
 
 
 echo "rel_type: ${profile}"
-echo "snapshot: latest.squashfs"
-echo "portage_overlay: /var/db/repos/pentoo"
+#echo "snapshot: latest.squashfs"
+echo "snapshot_treeish: latest"
+#echo "portage_overlay: /var/db/repos/pentoo"
+echo "repos: /var/db/repos/pentoo"
 echo "portage_confdir: /usr/src/pentoo/pentoo-livecd/livecd/portage"
-if [ "${target}" = "stage4-docker" ]; then
-  echo "compression_mode: pixz"
-else
-  echo "compression_mode: squashfs_zstd"
-fi
-echo "compressor_options: None"
+#if [ "${target}" = "stage4-docker" ]; then
+#  echo "compression_mode: pixz"
+#else
+#  echo "compression_mode: squashfs_zstd"
+#fi
+#echo "compressor_options: None"
+echo "compression_mode: zstd"
+compressed_extension="tar.zstd"
+echo "keep_repos: pentoo"
 
 #pkgcache_path
 case ${target} in
@@ -79,48 +84,48 @@ esac
 case ${target} in
 	stage1)
     ## let's run in circles
-    if [ -f "/catalyst/builds/${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs" ]; then
-      echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
-    elif [ -f "/catalyst/builds/${profile}/stage4-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs" ]; then
+    if [ -f "/catalyst/builds/${profile}/stage4-${subarch}-${VERSION_STAMP}.${compressed_extension}" ]; then
+      echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.${compressed_extension}"
+    elif [ -f "/catalyst/builds/${profile}/stage4-${subarch}-$(( "$(date +%Y)" - 1 )).0.${compressed_extension}" ]; then
       #migrate to new version stamp by using a old version stamp
-      echo "source_subpath: ${profile}/stage4-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs"
+      echo "source_subpath: ${profile}/stage4-${subarch}-$(( "$(date +%Y)" - 1 )).0.${compressed_extension}"
     else
       printf "Unable to find a source path\n"
       exit 1
     fi
 		;;
 	stage2)
-		echo "source_subpath: ${profile}/stage1-${subarch}-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage1-${subarch}-${VERSION_STAMP}.${compressed_extension}"
 		;;
 	stage3)
-		echo "source_subpath: ${profile}/stage2-${subarch}-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage2-${subarch}-${VERSION_STAMP}.${compressed_extension}"
 		;;
 	stage4)
-		if [ -f "/catalyst/builds/${profile}/stage3-${subarch}-${VERSION_STAMP}.squashfs" ]; then
-			echo "source_subpath: ${profile}/stage3-${subarch}-${VERSION_STAMP}.squashfs"
-		elif [ -f "/catalyst/builds/${profile}/stage3-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs" ]; then
-			echo "source_subpath: ${profile}/stage3-${subarch}-$(( "$(date +%Y)" - 1 )).0.squashfs"
+		if [ -f "/catalyst/builds/${profile}/stage3-${subarch}-${VERSION_STAMP}.${compressed_extension}" ]; then
+			echo "source_subpath: ${profile}/stage3-${subarch}-${VERSION_STAMP}.${compressed_extension}"
+		elif [ -f "/catalyst/builds/${profile}/stage3-${subarch}-$(( "$(date +%Y)" - 1 )).0.${compressed_extension}" ]; then
+			echo "source_subpath: ${profile}/stage3-${subarch}-$(( "$(date +%Y)" - 1 )).0.${compressed_extension}"
 		else
 			printf "Unable to find a source path\n"
 			exit 1
 		fi
 		;;
 	stage4-pentoo*)
-		echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-${VERSION_STAMP}.${compressed_extension}"
 		;;
 	stage4-docker)
-		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-core-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-core-${VERSION_STAMP}.${compressed_extension}"
 		;;
 	binpkg-update-seed)
-		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-full-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-full-${VERSION_STAMP}.${compressed_extension}"
 		;;
 	binpkg-update)
 		#this might be really dangerous but to avoid remaking the same fixes over and over
 		#I'm going to seed binpkg-update with binpkg-update :-)
-		echo "source_subpath: ${profile}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-binpkg-update-${VERSION_STAMP}.${compressed_extension}"
 		;;
 	livecd-stage2-core)
-		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-core-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-core-${VERSION_STAMP}.${compressed_extension}"
 		if [ -n "${RC}" ]; then
 			echo "livecd/iso: /catalyst/release/Pentoo_Core_${label_arch}_${profile}/pentoo-core-${label_arch}-${profile}-${VERSION_STAMP}_${RC}.iso"
 			echo "livecd/volid: Pentoo Linux Core ${arch} ${VERSION_STAMP} ${RC:0:5}"
@@ -131,7 +136,7 @@ case ${target} in
 		#echo "livecd/depclean: no"
 		;;
 	livecd-stage2)
-		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-${VERSION_STAMP}.${compressed_extension}"
 		if [ -n "${RC}" ]; then
       echo "livecd/iso: /catalyst/release/Pentoo_${label_arch}_${profile}/pentoo-${label_arch}-${profile}-${VERSION_STAMP}_${RC}.iso"
 			echo "livecd/volid: Pentoo Linux ${arch} ${VERSION_STAMP} ${RC:0:5}"
@@ -141,7 +146,7 @@ case ${target} in
 		fi
 		;;
 	livecd-stage2-full)
-		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-full-${VERSION_STAMP}.squashfs"
+		echo "source_subpath: ${profile}/stage4-${subarch}-pentoo-full-${VERSION_STAMP}.${compressed_extension}"
 		if [ -n "${RC}" ]; then
 			echo "livecd/iso: /catalyst/release/Pentoo_Full_${label_arch}_${profile}/pentoo-full-${label_arch}-${profile}-${VERSION_STAMP}_${RC}.iso"
 			echo "livecd/volid: Pentoo Linux Full ${arch} ${VERSION_STAMP} ${RC:0:5}"
@@ -166,7 +171,7 @@ then
   echo "kerncache_path: /catalyst/kerncache/${label_arch}-${profile}"
 
   #echo "livecd/fsops: -comp xz -Xbcj x86 -b 1048576 -no-recovery -noappend -Xdict-size 1048576"
-  echo "livecd/fsops: -comp zstd -Xcompression-level 22 -b 1048576 -no-recovery -noappend"
+  echo "livecd/fsops: --compressor zstd --comp-extra level=22 -b 1048576 -j 32 --force"
 
   echo -e "\n# This is a set of arguments that will be passed to genkernel for all kernels"
   echo "# defined in this target.  It is useful for passing arguments to genkernel that"
@@ -174,16 +179,16 @@ then
   echo "livecd/gk_mainargs: --compress-initramfs-type=zstd --no-dmraid --gpg --luks --lvm --mdadm --btrfs --e2fsprogs --no-module-rebuild --kernel-localversion=UNSET --no-microcode --no-microcode-initramfs --b2sum --no-zfs --save-config"
 fi
 
-if [ "${target}" = "livecd-stage2" ] || [ "${target}" = "livecd-stage2-full" ];
-then
-  echo "# This option is for merging kernel-dependent packages and external modules that"
-  echo "# are configured against this kernel label."
-  echo "boot/kernel/pentoo/packages: pentoo/pentoo"
-elif [ "${target}" = "livecd-stage2-core" ]; then
-  echo "# This option is for merging kernel-dependent packages and external modules that"
-  echo "# are configured against this kernel label."
-  echo "boot/kernel/pentoo/packages: pentoo/pentoo-core"
-fi
+#if [ "${target}" = "livecd-stage2" ] || [ "${target}" = "livecd-stage2-full" ];
+#then
+#  echo "# This option is for merging kernel-dependent packages and external modules that"
+#  echo "# are configured against this kernel label."
+#  echo "boot/kernel/pentoo/packages: pentoo/pentoo"
+#elif [ "${target}" = "livecd-stage2-core" ]; then
+#  echo "# This option is for merging kernel-dependent packages and external modules that"
+#  echo "# are configured against this kernel label."
+#  echo "boot/kernel/pentoo/packages: pentoo/pentoo-core"
+#fi
 
 echo "subarch: ${subarch}"
 
@@ -222,13 +227,13 @@ fi
 #fix profiles
 case ${target} in
 	stage1|stage2|stage3)
-		echo "profile: --force pentoo:pentoo/${profile}/linux/${profile_arch}/bootstrap"
+		echo "profile: pentoo:pentoo/${profile}/linux/${profile_arch}/bootstrap"
 		;;
 	stage4|stage4-pentoo|stage4-pentoo-full|stage4-pentoo-core|stage4-docker|binpkg-update-seed|binpkg-update)
-		echo "profile: --force pentoo:pentoo/${profile}/linux/${profile_arch}"
+		echo "profile: pentoo:pentoo/${profile}/linux/${profile_arch}"
 		;;
 	livecd-stage2-core|livecd-stage2|livecd-stage2-full)
-		echo "profile: --force pentoo:pentoo/${profile}/linux/${profile_arch}"
+		echo "profile: pentoo:pentoo/${profile}/linux/${profile_arch}"
 		;;
 esac
 
@@ -244,37 +249,42 @@ case ${target} in
 	stage4)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4.sh"
 		echo "stage4/packages: --update @system"
-    echo "stage4/rm: /usr/lib/debug /catalyst"
+    #echo "stage4/rm: /usr/lib/debug /catalyst"
+    echo "stage4/rm: /catalyst"
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -office -pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
-    echo "stage4/rm: /usr/lib/debug /catalyst"
+    #echo "stage4/rm: /usr/lib/debug /catalyst"
+    echo "stage4/rm: /catalyst"
 		;;
 	stage4-pentoo-full)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
-    echo "stage4/rm: /usr/lib/debug /catalyst"
+    #echo "stage4/rm: /usr/lib/debug /catalyst"
+    echo "stage4/rm: /catalyst"
 		;;
 	stage4-pentoo-core)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd pentoo-minimal livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo-core"
-    echo "stage4/rm: /usr/lib/debug /catalyst"
+    #echo "stage4/rm: /usr/lib/debug /catalyst"
+    echo "stage4/rm: /catalyst"
 		;;
 	stage4-docker)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/docker-prep.sh"
 		echo "stage4/use: -livecd pentoo-minimal pentoo-in-a-container"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo-core"
-    echo "stage4/unmerge: sys-devel/llvm sys-devel/llvm-common"
+    echo "stage4/unmerge: llvm-core/llvm"
     echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos/* /etc/portage/profile /usr/share/doc"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
-    echo "stage4/rm: /usr/lib/debug /catalyst"
+    #echo "stage4/rm: /usr/lib/debug /catalyst"
+    echo "stage4/rm: /catalyst"
 		;;
 esac

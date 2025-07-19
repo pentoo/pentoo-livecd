@@ -20,16 +20,16 @@ wait_for_it() {
 
 catalyst_clean() {
   if [ "${stage}" = "stage4-pentoo" ] || [ "${stage}" = "stage4-pentoo-full" ]; then
-    rm -rf /catalyst/tmp/hardened/stage4-"${subarch}"-pentoo-*
+    rm -rf /var/tmp/catalyst/tmp/hardened/stage4-"${subarch}"-pentoo-*
   elif [ "${stage}" = "binpkg-update-seed" ] || [ "${stage}" = "binpkg-update" ] ; then
-    rm -rf /catalyst/tmp/hardened/stage4-"${subarch}"-binpkg-update-*
+    rm -rf /var/tmp/catalyst/tmp/hardened/stage4-"${subarch}"-binpkg-update-*
   elif [ "${stage}" = "livecd-stage2" ]; then
     if [ "${1}" = "pre" ]; then
       rm -rf "/catalyst/release/Pentoo_${arch}_hardened"
       mkdir -p "/catalyst/release/Pentoo_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-20*.*"
+    rm -rf "/var/tmp/catalyst/tmp/hardened/livecd-stage2-${subarch}-20*.*"
     rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-20??.?/*
   elif [ "${stage}" = "livecd-stage2-core" ]; then
     if [ "${1}" = "pre" ]; then
@@ -37,7 +37,7 @@ catalyst_clean() {
       mkdir -p "/catalyst/release/Pentoo_Core_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Core_${arch}_hardened"
     fi
-    rm -rf "/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-20*.*"
+    rm -rf "/var/tmp/catalyst/tmp/hardened/livecd-stage2-${subarch}-core-20*.*"
     rm -rf /catalyst/builds/hardened/livecd-stage2-"${subarch}"-core-20??.?/*
   elif [ "${stage}" = "livecd-stage2-full" ]; then
     if [ "${1}" = "pre" ]; then
@@ -45,10 +45,10 @@ catalyst_clean() {
       mkdir -p "/catalyst/release/Pentoo_Full_${arch}_hardened"
       chmod 777 "/catalyst/release/Pentoo_Full_${arch}_hardened"
     fi
-    rm -rf /catalyst/tmp/hardened/livecd-stage2-${subarch}-full-20*.*
+    rm -rf /var/tmp/catalyst/tmp/hardened/livecd-stage2-${subarch}-full-20*.*
     rm -rf /catalyst/builds/hardened/livecd-stage2-${subarch}-full-20??.?/*
   else
-    rm -rf /catalyst/tmp/hardened/"${stage}-${subarch}-"*
+    rm -rf /var/tmp/catalyst/tmp/hardened/"${stage}-${subarch}-"*
   fi
 }
 

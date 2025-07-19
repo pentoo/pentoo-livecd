@@ -2,12 +2,16 @@
 #WARNING WARNING WARNING
 #this rc file is meant for use on Nu only, please modify to meet your needs
 
-export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=32 --load-average=32 --backtrack=99"
+#testing for Zac
+export portage_LIVE_REPO=https://github.com/zmedico/portage.git
+export portage_LIVE_BRANCH=bug_709746_PORTAGE_LOG_FILTER_FILE_CMD
+
+export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=16 --load-average=30 --backtrack=99 --verbose-conflicts --verbose --tree --implicit-system-deps n"
 #export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=1 --quiet --backtrack=99"
-export MAKEOPTS="-j8"
+export MAKEOPTS="-j32 -l32"
 #export MAKEOPTS="-j1"
-export clst_myfeatures="$(portageq envvar FEATURES) parallel-install ebuild-locks -preserve-libs -clean-logs -news cgroup binpkg-multi-instance"
-export FEATURES="$(portageq envvar FEATURES) parallel-install ebuild-locks -preserve-libs -clean-logs -news cgroup binpkg-multi-instance"
+export clst_myfeatures="$(portageq envvar FEATURES) buildpkg preserve-libs -clean-logs -news -getbinpkg compress-index -merge-sync -compress-build-logs"
+export FEATURES="$(portageq envvar FEATURES) buildpkg preserve-libs -clean-logs -news -getbinpkg compress-index -merge-sync -compress-build-logs"
 export ACCEPT_LICENSE="Intel-SDP NVIDIA-CUDA"
 export PORTAGE_NICENESS="15"
 #c 0-3 n 0-7 lower number is higher priority
@@ -18,8 +22,9 @@ export CONFIG_CHECK_FATAL=0
 export LANG="en_US.UTF-8"
 export TERM="linux"
 export INSTALL_MASK=""
-
-#export LC_ALL="C"
+export DONT_MOUNT_BOOT="true"
+export HOME=/root
+export SHELL=/bin/bash
 
 #export PORTAGE_BINHOST="http://192.168.1.251/pentoo/Packages/amd64-default/ http://192.168.1.251/pentoo/Packages/amd64-hardened/ http://192.168.1.251/pentoo/Packages/x86-default/ http://192.168.1.251/pentoo/Packages/x86-hardened/"
 
@@ -30,4 +35,3 @@ export DEPCHECK_BIN=/etc/portage/depcheck
 #this toggles on and off various debug shells to fix issues during catalyst builds
 #export debugshell=true
 #export reckless=true
-export SHELL=/bin/bash

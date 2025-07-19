@@ -47,11 +47,17 @@ if portageq list_preserved_libs /; then
 fi
 
 emerge --newuse -1kb --rebuild-if-new-rev sys-libs/glibc
-emerge -1kb --newuse --update --changed-deps --onlydeps --onlydeps-with-rdeps media-gfx/graphite2
-emerge -1kb --newuse --update --changed-deps media-gfx/graphite2
 #perl update sucks
 emerge --update -1kb perl --nodeps
+emerge -1 app-portage/gentoolkit
+emerge --update --changed-deps -1 $(equery d '<dev-lang/perl-5.40' | awk '/^\w/ {print "="$1}')
+removebigint=$(portage match / '<perl-core/Math-BigInt-2.3.2')
+if [ -n "${removebigint:-}" ]; then
+  emerge -C '<perl-core/Math-BigInt-2.3.2'
+fi
 perl-cleaner --modules -- --buildpkg=y
+emerge -1kb --newuse --update --changed-deps --onlydeps --onlydeps-with-rdeps media-gfx/graphite2
+emerge -1kb --newuse --update --changed-deps media-gfx/graphite2
 #bust some circular deps
 USE="-harfbuzz" emerge -1kb --newuse --update --changed-deps media-libs/freetype
 USE="-icu" emerge -1kb --newuse --update --changed-deps dev-db/sqlite
@@ -60,14 +66,18 @@ USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps media-libs/l
 USE="-cups -lm-sensors -bluetooth -vaapi" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
 USE="-cups" emerge -1kb --newuse --update --changed-deps net-fs/samba
 USE="-zeroconf" emerge -1kb --update --changed-deps net-print/cups || error_handler
+emerge -1kb --newuse --update --changed-deps sys-apps/util-linux
+emerge -1kb --newuse --update --changed-deps dev-libs/glib
 emerge -1kb --newuse --update --changed-deps net-print/cups
-emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
+emerge -1kb --newuse --update --changed-deps dev-lang/python
+#revdep-rebuild -i -- --usepkg=n --buildpkg=y || error_handler
+#emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
 USE="minimal" emerge -1kb --newuse --update --changed-deps media-libs/libsndfile
 USE="-verify-sig" emerge -1kb --newuse --update --changed-deps dev-libs/libsodium
-emerge -1kb --newuse --update --changed-deps @system || true
-emerge -1kb --newuse --update --changed-deps @profile || true
+emerge -1kb --newuse --update --with-bdeps=y --changed-deps @system || true
+emerge -1kb --newuse --update --with-bdeps=y --changed-deps @profile || true
 #finish transition to the new use flags
-emerge --deep --update --newuse -kb --changed-deps @world || error_handler
+emerge --deep --update --newuse -kb --with-bdeps=y --changed-deps @world || error_handler
 old_gcc="$(portageq match / '<sys-devel/gcc-12.3')"
 if [ -n "${old_gcc}" ]; then
   emerge -C "<sys-devel/gcc-12.3"
@@ -80,11 +90,11 @@ if [ "${clst_subarch}" = "pentium-m" ]; then
 fi
 
 #do what stage1 update seed is going to do
-emerge --verbose --update --newuse --changed-deps --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 dev-build/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || error_handler
+emerge --verbose --update --newuse --changed-deps --with-bdeps=y --oneshot --deep --changed-use --rebuild-if-new-rev sys-devel/gcc dev-libs/mpfr dev-libs/mpc dev-libs/gmp sys-libs/glibc app-arch/lbzip2 dev-build/libtool dev-lang/perl net-misc/openssh dev-libs/openssl sys-libs/readline sys-libs/ncurses || error_handler
 if portageq list_preserved_libs /; then
   if ! emerge --buildpkg=y @preserved-rebuild -q ; then
     emerge -C @preserved-rebuild || error handler
-    emerge --deep --update --newuse -kb --changed-deps @world || error_handler
+    emerge --deep --update --newuse -kb --changed-deps --with-bdeps=y @world || error_handler
   fi
 fi
 
@@ -141,15 +151,12 @@ fi
 #fix PyQt5->qtmultimedia->pulseaudio->PyQt5 circular deps in the next stage
 USE="-pulseaudio" emerge -1kb dev-qt/qtmultimedia
 
-#needed by pkg_pretend for chromium in the next stage https://bugs.gentoo.org/902489
-emerge --update --oneshot -kb sys-devel/clang sys-devel/llvm
-
 if portageq list_preserved_libs /; then
   emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
 #short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
-#emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
 
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
 #[ "${clst_subarch}" = "pentium-m" ] && crossdev -s1 -t x86_64
@@ -167,8 +174,8 @@ emerge --depclean \
   --exclude media-libs/libva \
   --exclude net-fs/samba \
   --exclude net-print/cups \
-  --exclude sys-devel/clang \
-  --exclude sys-devel/llvm \
+  --exclude llvm-core/clang \
+  --exclude llvm-core/llvm \
   --exclude sys-kernel/pentoo-sources \
   --exclude x11-libs/gtk+ \
   || error_handler
