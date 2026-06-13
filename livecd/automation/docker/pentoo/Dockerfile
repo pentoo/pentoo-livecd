@@ -15,7 +15,7 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
 
 ADD portage_and_overlay.tar.xz /
 # --security=insecure is only needed for go
-RUN sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full -drivers#' /etc/portage/make.conf && \
+RUN sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full#' /etc/portage/make.conf && \
   #disable minimal
   sed -i 's# pentoo-minimal##' /etc/portage/make.conf && \
   #install libsndfile minimal to break circular deps
@@ -25,13 +25,17 @@ RUN sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full -drivers#
   #deselect pentoo-core as pentoo/pentoo deps on it
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --deselect=y pentoo/pentoo-core && \
   #ensure we are up to date (should be a no-op)
-  FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse @world && \
+  #FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse @world && \
   #minimize things not needed to run
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --depclean --with-bdeps=n && \
   #double check nothing is broken
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
   #cleanup
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug
+  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug && \
+  DISTDIR="$(portageq envvar DISTDIR)" && \
+  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
+  PKGDIR="$(portageq envvar PKGDIR)" && \
+  if [ -d "${PKGDIR}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
 
 CMD ["/bin/bash"]

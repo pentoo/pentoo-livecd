@@ -18,13 +18,17 @@ RUN sed -i 's#-pentoo-full ##' /etc/portage/make.conf && \
   #update pentoo/pentoo with pentoo-full use flag
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse pentoo/pentoo && \
   #ensure we are up to date (should be a no-op)
-  FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse @world && \
+  #FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse @world && \
   #minimize things not needed to run
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --depclean --with-bdeps=n && \
   #double check nothing is broken
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
   #cleanup
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug
+  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug && \
+  DISTDIR="$(portageq envvar DISTDIR)" && \
+  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
+  PKGDIR="$(portageq envvar PKGDIR)" && \
+  if [ -d "${PKGDIR}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
 
 CMD ["/bin/bash"]

@@ -41,12 +41,14 @@ if [ -z ${1} ] || [ -z ${2} ] ; then
 fi
 
 if [ "${1}" = "x86" ]; then
-        subarch="pentium-m"
+  subarch="pentium-m"
+  profile_arch="x86_23.0s"
 elif [ "${1}" = "amd64" ]; then
-        subarch="${1}"
+  subarch="${1}"
+  profile_arch="amd64_23.0s"
 else
-	echo "Subarch must be x86 or amd64"
-	exit 1
+  echo "Subarch must be x86 or amd64"
+  exit 1
 fi
 
 if [ "$PROFILE" = "default" ] && [ "$ARCH" = "amd64" ]; then
@@ -161,7 +163,7 @@ done
 #if [ -n "${targets}" ]; then
   #sync packages
   check_io
-  rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${PROFILE} /mnt/mirror/local_mirror/Packages/
+  rsync -aEXuh --progress --delete --omit-dir-times /catalyst/packages/${ARCH}-${profile_arch} /mnt/mirror/local_mirror/Packages/
   check_io
   /mnt/mirror/mirror.sh
 #fi

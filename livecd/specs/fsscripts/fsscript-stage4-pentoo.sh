@@ -55,4 +55,5 @@ etc-update --automode -5 || error_handler
 #I guess this was removed from base-system?
 mkdir -p '/etc/modprobe.d'
 
+rm -rf /tmp/*
 true

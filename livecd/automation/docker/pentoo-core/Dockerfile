@@ -21,7 +21,6 @@ COPY files/openrc_sysinit.sh /etc/profile.d/openrc_sysinit.sh
 COPY files/gentoo.conf /etc/portage/repos.conf/
 COPY files/pentoo.conf /etc/portage/repos.conf/
 RUN mkdir -p /etc/portage/profile/package.use && \
-  echo 'pentoo/pentoo-wireless -drivers' >> /etc/portage/profile/package.use/pentoo && \
   # mark news read
   eselect news read && \
   # make openrc work
@@ -30,6 +29,10 @@ RUN mkdir -p /etc/portage/profile/package.use && \
   rc-update del udev && \
   rc-update del udev-trigger && \
   rc-update del kmod-static-nodes && \
-  rm -rf /run/* /tmp/*
+  rm -rf /run/* /tmp/* && \
+  DISTDIR="$(portageq envvar DISTDIR)" && \
+  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
+  PKGDIR="$(portageq envvar PKGDIR)" && \
+  if [ -d "${PKGDIR}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
 
 CMD ["/bin/bash", "-l"]

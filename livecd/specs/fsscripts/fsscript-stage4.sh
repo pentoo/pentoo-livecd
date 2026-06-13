@@ -51,7 +51,7 @@ emerge --newuse -1kb --rebuild-if-new-rev sys-libs/glibc
 emerge --update -1kb perl --nodeps
 emerge -1 app-portage/gentoolkit
 emerge --update --changed-deps -1 $(equery d '<dev-lang/perl-5.40' | awk '/^\w/ {print "="$1}')
-removebigint=$(portage match / '<perl-core/Math-BigInt-2.3.2')
+removebigint=$(portageq match / '<perl-core/Math-BigInt-2.3.2')
 if [ -n "${removebigint:-}" ]; then
   emerge -C '<perl-core/Math-BigInt-2.3.2'
 fi
@@ -156,30 +156,32 @@ if portageq list_preserved_libs /; then
 fi
 
 #short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
-emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+#emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
 
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
 #[ "${clst_subarch}" = "pentium-m" ] && crossdev -s1 -t x86_64
 
-emerge --depclean \
-  --exclude app-portage/gentoolkit \
-  --exclude dev-db/sqlite \
-  --exclude dev-java/openjdk \
-	--exclude dev-lang/rust-bin \
-  --exclude dev-libs/libsodium \
-  --exclude dev-qt/qtmultimedia \
-  --exclude media-libs/freetype \
-  --exclude media-libs/harfbuzz \
-  --exclude media-libs/libsndfile \
-  --exclude media-libs/libva \
-  --exclude net-fs/samba \
-  --exclude net-print/cups \
-  --exclude llvm-core/clang \
-  --exclude llvm-core/llvm \
-  --exclude sys-kernel/pentoo-sources \
-  --exclude x11-libs/gtk+ \
-  || error_handler
+#emerge --depclean \
+#  --exclude app-portage/gentoolkit \
+#  --exclude dev-db/sqlite \
+#  --exclude dev-java/openjdk \
+#	--exclude dev-lang/rust-bin \
+#  --exclude dev-libs/libsodium \
+#  --exclude dev-qt/qtmultimedia \
+#  --exclude media-libs/freetype \
+#  --exclude media-libs/harfbuzz \
+#  --exclude media-libs/libsndfile \
+#  --exclude media-libs/libva \
+#  --exclude media-video/ffmpeg \
+#  --exclude net-fs/samba \
+#  --exclude net-print/cups \
+#  --exclude llvm-core/clang \
+#  --exclude llvm-core/llvm \
+#  --exclude sys-kernel/pentoo-sources \
+#  --exclude x11-libs/gtk+ \
+#  || error_handler
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler
+rm -rf /tmp/*
 true

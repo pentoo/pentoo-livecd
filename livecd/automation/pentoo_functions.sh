@@ -1,9 +1,9 @@
 if [ "${arch}" = "amd64" ]; then
   subarch="amd64"
-  profile_arch="amd64_r1"
+  profile_arch="amd64_23.0s"
 elif [ "${arch}" = "x86" ]; then
   subarch="pentium-m"
-  profile_arch="x86"
+  profile_arch="x86_23.0s"
 else
   printf "Unknown arch\n"
   exit 1

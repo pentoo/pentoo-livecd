@@ -5,3 +5,5 @@ net-misc/openssh -bindist
 dev-libs/boost -mpi
 # Fails to build, not sure why
 <media-video/vlc-3.0.22 -vdpau
+# added to binary profile but we don't build in catalyst with that
+www-client/chromium ffmpeg-chromium

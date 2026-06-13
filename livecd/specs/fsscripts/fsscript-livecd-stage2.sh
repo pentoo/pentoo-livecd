@@ -6,9 +6,9 @@ source /tmp/envscript
 
 fix_locale() {
   for i in /etc/locale.nopurge /etc/locale.gen; do
-  	echo C.utf8 UTF-8 > "${i}"
-  	echo en_US ISO-8859-1 >> "${i}"
-  	echo en_US.UTF8 UTF-8 >> "${i}"
+    echo C.UTF-8 UTF-8 > "${i}"
+    echo en_US ISO-8859-1 >> "${i}"
+    echo en_US.UTF-8 UTF-8 >> "${i}"
   done
 	eselect locale set C.utf8 || error_handler
   env-update
@@ -32,7 +32,7 @@ if [ "${clst_subarch}" = "pentium-m" ]; then
   PROFILE_ARCH="x86"
 elif [ "${clst_subarch}" = "amd64" ]; then
 	ARCH="amd64"
-  PROFILE_ARCH="amd64_r1"
+  PROFILE_ARCH="amd64"
 else
 	echo "failed to handle arch"
 	/bin/bash
@@ -46,6 +46,17 @@ emerge -1kb --newuse --update sys-apps/portage || error_handler
 
 #somehow the default .bashrc runs X.... WTF????
 \cp -f /etc/skel/.bashrc /root/.bashrc || error_handler
+
+if [ -w '/tmp' ]; then
+  # Make sure our X11 stuff have the correct permissions
+  rm -rf /tmp/.ICE-unix /tmp/.X11-unix
+  mkdir -p /tmp/.ICE-unix /tmp/.X11-unix
+  chmod 1777 /tmp/.ICE-unix /tmp/.X11-unix
+  chown root:root -R /tmp/.ICE-unix /tmp/.X11-unix
+  if [ -x /sbin/restorecon ]; then
+    restorecon /tmp/.ICE-unix /tmp/.X11-unix
+  fi
+fi
 
 #user gets wierd groups, fix it for us
 #defaults users,wheel,audio,plugdev,cdrom,disk,floppy,usb
@@ -86,17 +97,19 @@ then
 fi
 
 # Fix provide rc-script annoyance
-pushd /etc/init.d/
+pushd /etc/init.d/ || exit 1
 ln -s net.lo net.wlan0
 ln -s net.lo net.eth0
 sed -e '/provide net/D' -i dhcpcd || error_handler
-popd
+popd || exit 1
 rc-update -u || error_handler
 
 #default net to null
-echo modules=\"\!wireless\" >> /etc/conf.d/net
-echo config_wlan0=\"null\" >> /etc/conf.d/net
-echo config_eth0=\"null\" >> /etc/conf.d/net
+cat << EOF >> /etc/conf.d/net
+modules="!wireless"
+config_wlan0="null"
+config_eth0="null"
+EOF
 
 # Fixes functions.sh location since baselayout-2, probably not needed in 2023?
 ln -s /lib/rc/sh/functions.sh /sbin/functions.sh || error_handler
@@ -198,7 +211,7 @@ fi
 
 # Build the metadata cache
 rm -rf /var/cache/edb/dep || error_handler
-emerge --regen --jobs=$(nproc) --quiet || error_handler
+emerge --regen --jobs="$(nproc)" --quiet || error_handler
 
 #this file isn't created but eix needs it
 touch /var/cache/eix/portage.eix
@@ -215,6 +228,13 @@ emerge --deselect=y livecd-tools || error_handler
 emerge --deselect=y sys-kernel/pentoo-sources || error_handler
 
 "$(portageq get_repo_path / pentoo)/scripts/bug-461824.sh"
+
+# Why do we have to bootstrap go here?  who knows, but @world update fails without it
+goornogo="$(portageq match / 'dev-lang/go')"
+if [ -z "${goornogo}" ]; then
+  emerge -1 -kb dev-lang/go-bootstrap
+  emerge -1 -kb dev-lang/go
+fi
 
 emerge -qN -kb -D --changed-deps --with-bdeps=y @system -vt --backtrack=99 --update
 emerge -qN -kb -D --changed-deps --with-bdeps=y @profile -vt --backtrack=99 --update
@@ -238,7 +258,7 @@ fi
 ## clean kernel here
 # Fix the kernel config
 ### XXX this is broken, kernel modules can't build after this and that's bad
-for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
+for krnl in $(ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'); do
 	if [ -d /tmp/kernel_maps ] ; then
 		rm -rf /tmp/kernel_maps
 	fi
@@ -251,7 +271,7 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
   cp -aR /usr/src/linux/include/generated/* /tmp/kernel_generated/
   mkdir /tmp/kernel_certs
   cp -aR /usr/src/linux/certs/* /tmp/kernel_certs/
-	pushd /usr/src/linux
+	pushd /usr/src/linux || exit 1
 	#mrproper wipes the random seed and means we cannot build modules, be careful here
 	make -j clean
 	#cp -a /var/tmp/pentoo.config /usr/src/linux/.config
@@ -261,7 +281,7 @@ for krnl in `ls /usr/src/ | grep -e "linux-" | sed -e 's/linux-//'`; do
   # modules_prepare already runs prepare
   #make -j $(nproc) -l $(nproc) prepare
   #make -j $(nproc) -l $(nproc) modules_prepare
-  popd
+  popd || exit 1
 done
 
 #if ! revdep-rebuild -i -- --rebuild-exclude dev-java/swt --exclude dev-java/swt --buildpkg=y; then
@@ -293,9 +313,9 @@ if [ -f /etc/xdg/menus/gnome-applications.menu ]; then
 fi
 
 # Setup fonts
-pushd /usr/share/fonts
+pushd /usr/share/fonts || exit 1
 mkfontdir * || error_handler
-popd
+popd || exit 1
 if portageq has_version / media-libs/fontconfig; then
   eselect fontconfig enable 10-sub-pixel-rgb.conf || error_handler
   if portageq has_version / media-fonts/dejavu; then
@@ -413,10 +433,12 @@ if portageq has_version / dev-lang/ruby:3.4; then
   eselect ruby set ruby34
 fi
 
-find /var/db/pkg -name CFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
-find /var/db/pkg -name CFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
-find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CXXFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
-find /var/db/pkg -name CXXFLAGS -exec grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
+printf "Rebuilding based on CFLAGS\n"
+find /var/db/pkg -name CFLAGS -exec sh -c grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
+find /var/db/pkg -name CFLAGS -exec sh -c grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
+printf "Rebuilding based on CXXFLAGS\n"
+find /var/db/pkg -name CXXFLAGS -exec sh -c grep -Hv -- "$(portageq envvar CXXFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}'
+find /var/db/pkg -name CXXFLAGS -exec sh -c grep -Hv -- "$(portageq envvar CFLAGS)" {} \; | awk -F/ '{print "="$5"/"$6}' | wc -l
 
 if portageq list_preserved_libs /; then
 	emerge --buildpkg=y @preserved-rebuild -q || error_handler
@@ -472,12 +494,12 @@ fi
 ## XXX: THIS IS A HORRIBLE IDEA!!!!
 # So it seems I have picked /var/log/portage to just randomly spew stuff into
 if portageq has_version / dev-lang/ruby; then
-  pushd /root/gentoollist
+  pushd /root/gentoollist || exit 1
   mkdir -p /var/log/portage/tool-list
-  ./gen_installedlist.rb > /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json || error_handler
+  ./gen_installedlist.rb > "/var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json" || error_handler
   #cat /var/log/portage/tool-list/tools_list_${ARCH}-${hardening}.json
   sync
-  popd
+  popd || exit 1
 fi
 rm -rf /root/gentoollist
 
@@ -487,7 +509,7 @@ rm -rf /var/tmp/portage/*
 ln -snf /proc/self/mounts /etc/mtab
 
 #reset profile to binary profile so users get it as default
-eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/binary || error_handler
+eselect profile set "pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/23.0/split-usr/binary" || error_handler
 
 sync
 sleep 20
@@ -517,8 +539,11 @@ find /root -uid 1001 -exec chown -h root:root {} \;
 find /etc -uid 1001 -exec chown -h root:root {} \;
 #delete all the log files generated during build but not the directory structure
 find /var/log -type f -delete
-updatedb
+if [ -x "$(command -v updatedb)" ]; then
+  updatedb
+fi
 #equery check -o '*' || error_handler
+rm -rf /tmp/*
 sync
 sleep 60
 rm -f /root/.bash_history

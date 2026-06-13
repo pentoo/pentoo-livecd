@@ -23,21 +23,14 @@ RUN FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y -
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
   #cleanup
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug
-RUN \
-  # configure the gui to be nicer
-  # magic to autohide panel 2
-  #magic_number=$(($(sed -n '/<value type="int" value="14"\/>/=' /etc/xdg/xfce4/panel/default.xml)+1)) && \
-  #sed -i "${magic_number} a\    <property name=\"autohide-behavior\" type=\"uint\" value=\"1\"/>" /etc/xdg/xfce4/panel/default.xml && \
-  # set wallpaper
-  #mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml/ && \
-  #cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/ && \
-  rm -rf /run/* /tmp/*
+  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug && \
+  DISTDIR="$(portageq envvar DISTDIR)" && \
+  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
+  PKGDIR="$(portageq envvar PKGDIR)" && \
+  if [ -d "${PKGDIR}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
 RUN \
   # make sure the menus exist
-  genmenu.py -x && \
-  rm -rf /run/* /tmp/*
-
+  genmenu.py -x
 
 EXPOSE 8080/tcp
 ENV DISPLAY=:0

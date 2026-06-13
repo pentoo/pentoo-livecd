@@ -25,6 +25,7 @@ docker build --no-cache -t "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" \
     --build-arg TARBALL=${TARBALL} \
     --build-arg BUILD_DATE=${BUILD_DATE} \
     --build-arg VERSION=${VERSION} \
+    --progress=plain \
     .
 
 docker tag "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" "${CI_REGISTRY_IMAGE}/${IMAGE}:latest"

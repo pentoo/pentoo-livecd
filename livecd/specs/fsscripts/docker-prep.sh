@@ -12,7 +12,7 @@ emerge --buildpkg=y --usepkg=n @preserved-rebuild
 if [ "${clst_subarch}" = "pentium-m" ]; then
   PROFILE_ARCH="x86"
 elif [ "${clst_subarch}" = "amd64" ]; then
-  PROFILE_ARCH="amd64_r1"
+  PROFILE_ARCH="amd64"
 else
 	echo "failed to handle arch"
   exit 1
@@ -23,6 +23,11 @@ then
 else
   hardening=default
 fi
-eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/binary
+eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/23.0/split-usr/binary
 eselect news read
+rm -rf /tmp/*
+DISTDIR="$(portageq envvar DISTDIR)"
+if [ -d "${DISTDIR:-}" ]; then rm -rf "${DISTDIR:?}"/* ; fi
+PKGDIR="$(portageq envvar PKGDIR)"
+if [ -d "${PKGDIR:-}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
 true

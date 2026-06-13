@@ -14,12 +14,13 @@ VERSION=${BUILD_VERSION}
 docker build --pull -t "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" \
     --build-arg BUILD_DATE="${BUILD_DATE}" \
     --build-arg VERSION="${VERSION}" \
+    --progress=plain \
     .
 
 docker run -d --rm --name "${IMAGE}-ci" ${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}
-sleep 10
+sleep 20
 docker cp gui-checker "${IMAGE}-ci":/root/
-sleep 30
+sleep 40
 if docker exec "${IMAGE}-ci" /root/gui-checker excessive; then
   docker stop "${IMAGE}-ci"
   docker tag "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" "${CI_REGISTRY_IMAGE}/${IMAGE}:latest"
@@ -28,4 +29,5 @@ if docker exec "${IMAGE}-ci" /root/gui-checker excessive; then
   docker push "${CI_REGISTRY_IMAGE}/${IMAGE}:latest"
 else
   docker stop "${IMAGE}-ci"
+  exit 1
 fi
