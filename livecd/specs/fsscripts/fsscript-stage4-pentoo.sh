@@ -12,7 +12,7 @@ error_handler() {
   fi
 }
 
-emerge -1kb --newuse --update sys-apps/portage || error_handler
+emerge -1kbq --newuse --update sys-apps/portage || error_handler
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler
@@ -31,7 +31,7 @@ if [ $? -ne 0 ]; then
 fi
 
 PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\=".*(python3_[0-9]+\s*)+"' | grep -oE 'python3_[0-9]+' | cut -d\" -f2 | sed 's#_#.#')
-${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
+${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1q --buildpkg=y python:${PYTHON3#python}
 
 portageq list_preserved_libs /
 if [ $? -ne 0 ]; then

@@ -31,51 +31,51 @@ fix_locale
 
 #revdep-rebuild --library 'libstdc++.so.6' -- --buildpkg=y --usepkg=n --exclude gcc
 
-emerge -1kb --newuse --update sys-apps/portage || error_handler
+emerge -1kbq --newuse --update sys-apps/portage || error_handler
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler
 
 # cmake dep loop unless lz4 exists first
-USE=-lz4 emerge -1 -kb app-arch/libarchive || error_handler
-emerge -1 -kb app-arch/lz4 || error_handler
+USE=-lz4 emerge -1kbq app-arch/libarchive || error_handler
+emerge -1kbq app-arch/lz4 || error_handler
 #ease transition to the new use flags
-USE="-qt5" emerge -1 -kb cmake || error_handler
+USE="-qt5" emerge -1kbq cmake || error_handler
 if portageq list_preserved_libs /; then
   #we do this twice for a reason, let this one fail sometimes
   emerge --buildpkg=y @preserved-rebuild -q || true
 fi
 
-emerge --newuse -1kb --rebuild-if-new-rev sys-libs/glibc
+emerge --newuse -1kbq --rebuild-if-new-rev sys-libs/glibc
 #perl update sucks
-emerge --update -1kb perl --nodeps
-emerge -1 app-portage/gentoolkit
-emerge --update --changed-deps -1 $(equery d '<dev-lang/perl-5.40' | awk '/^\w/ {print "="$1}')
+emerge --update -1kbq perl --nodeps
+emerge -1kbq app-portage/gentoolkit
+emerge --update --changed-deps -1kbq $(equery d '<dev-lang/perl-5.40' | awk '/^\w/ {print "="$1}')
 removebigint=$(portageq match / '<perl-core/Math-BigInt-2.3.2')
 if [ -n "${removebigint:-}" ]; then
   emerge -C '<perl-core/Math-BigInt-2.3.2'
 fi
 perl-cleaner --modules -- --buildpkg=y
-emerge -1kb --newuse --update --changed-deps --onlydeps --onlydeps-with-rdeps media-gfx/graphite2
-emerge -1kb --newuse --update --changed-deps media-gfx/graphite2
+emerge -1kbq --newuse --update --changed-deps --onlydeps --onlydeps-with-rdeps media-gfx/graphite2
+emerge -1kbq --newuse --update --changed-deps media-gfx/graphite2
 #bust some circular deps
-USE="-harfbuzz" emerge -1kb --newuse --update --changed-deps media-libs/freetype
-USE="-icu" emerge -1kb --newuse --update --changed-deps dev-db/sqlite
-USE="-tk" emerge -1kb --newuse --update --changed-deps dev-lang/python
-USE="-opengl -cups -X" emerge -1kb --newuse --update --changed-deps media-libs/libva
-USE="-cups -lm-sensors -bluetooth -vaapi" emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
-USE="-cups" emerge -1kb --newuse --update --changed-deps net-fs/samba
-USE="-zeroconf" emerge -1kb --update --changed-deps net-print/cups || error_handler
-emerge -1kb --newuse --update --changed-deps sys-apps/util-linux
-emerge -1kb --newuse --update --changed-deps dev-libs/glib
-emerge -1kb --newuse --update --changed-deps net-print/cups
-emerge -1kb --newuse --update --changed-deps dev-lang/python
+USE="-harfbuzz" emerge -1kbq --newuse --update --changed-deps media-libs/freetype
+USE="-icu" emerge -1kbq --newuse --update --changed-deps dev-db/sqlite
+USE="-tk" emerge -1kbq --newuse --update --changed-deps dev-lang/python
+USE="-opengl -cups -X" emerge -1kbq --newuse --update --changed-deps media-libs/libva
+USE="-cups -lm-sensors -bluetooth -vaapi" emerge -1kbq --newuse --update --changed-deps x11-libs/gtk+
+USE="-cups" emerge -1kbq --newuse --update --changed-deps net-fs/samba
+USE="-zeroconf" emerge -1kbq --update --changed-deps net-print/cups || error_handler
+emerge -1kbq --newuse --update --changed-deps sys-apps/util-linux
+emerge -1kbq --newuse --update --changed-deps dev-libs/glib
+emerge -1kbq --newuse --update --changed-deps net-print/cups
+emerge -1kbq --newuse --update --changed-deps dev-lang/python
 #revdep-rebuild -i -- --usepkg=n --buildpkg=y || error_handler
-#emerge -1kb --newuse --update --changed-deps x11-libs/gtk+
-USE="minimal" emerge -1kb --newuse --update --changed-deps media-libs/libsndfile
-USE="-verify-sig" emerge -1kb --newuse --update --changed-deps dev-libs/libsodium
-emerge -1kb --newuse --update --with-bdeps=y --changed-deps @system || true
-emerge -1kb --newuse --update --with-bdeps=y --changed-deps @profile || true
+#emerge -1kbq --newuse --update --changed-deps x11-libs/gtk+
+USE="minimal" emerge -1kbq --newuse --update --changed-deps media-libs/libsndfile
+USE="-verify-sig" emerge -1kbq --newuse --update --changed-deps dev-libs/libsodium
+emerge -1kbq --newuse --update --with-bdeps=y --changed-deps @system || true
+emerge -1kbq --newuse --update --with-bdeps=y --changed-deps @profile || true
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb --with-bdeps=y --changed-deps @world || error_handler
 old_gcc="$(portageq match / '<sys-devel/gcc-12.3')"
@@ -107,7 +107,7 @@ fi
 #first we set the python interpreters to match PYTHON_TARGETS
 PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\=".*(python3_[0-9]+\s*)+"' | grep -oE 'python3_[0-9]+' | cut -d\" -f2 | sed 's#_#.#')
 #eselect python set --python3 ${PYTHON3} || error_handler
-${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1 --buildpkg=y python:${PYTHON3#python}
+${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1q --buildpkg=y python:${PYTHON3#python}
 #python 3 by default now
 #eselect python set "${PYTHON3}"
 if [ -x /usr/sbin/python-updater ];then
@@ -118,11 +118,11 @@ if portageq list_preserved_libs /; then
   emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
-emerge -1 -kb app-portage/gentoolkit || error_handler
+emerge -1kbq app-portage/gentoolkit || error_handler
 #things are broken, I have no clue why or how, but this is the earliest point to fix it
 broken_packages=$(qfile -q $(equery -C -N check -o '*' 2>&1 | grep --color=never 'does not exist' | awk '{print $2}' | grep -Ev '\.cache') 2>&1 | grep -v 'qfile' | awk -F: '{print $1}' | sort -u | tr '\n' ' ')
 if [ -n "${broken_packages}" ]; then
-  emerge -1 --buildpkg=y --usepkg=n ${broken_packages} || error_handler
+  emerge -1q --buildpkg=y --usepkg=n ${broken_packages} || error_handler
 fi
 
 if portageq list_preserved_libs /; then
@@ -135,9 +135,14 @@ for i in /var/gentoo/repos/local /var/db/repos/local /var/db/repos/pentoo; do
   [ -x ${i}/scripts/bug-461824.sh ] && ${i}/scripts/bug-461824.sh
 done
 
+#remove all pentoo-sources then add just the newest
+kernelsources=$(portageq match / 'sys-kernel/pentoo-sources')
+if [ -n "${kernelsources:-}" ]; then
+  emerge -C 'sys-kernel/pentoo-sources'
+fi
 #some things fail in livecd-stage1 but work here, nfc why
-emerge -1 -kb sys-kernel/pentoo-sources || error_handler
-#emerge -1 -kb app-crypt/johntheripper || error_handler
+emerge -1kbq sys-kernel/pentoo-sources || error_handler
+#emerge -1kbq app-crypt/johntheripper || error_handler
 
 if [ "${clst_subarch}" != "pentium-m" ]; then
   #fix java circular deps in next stage
@@ -149,14 +154,14 @@ if [ "${clst_subarch}" != "pentium-m" ]; then
 fi
 
 #fix PyQt5->qtmultimedia->pulseaudio->PyQt5 circular deps in the next stage
-USE="-pulseaudio" emerge -1kb dev-qt/qtmultimedia
+USE="-pulseaudio" emerge -1kbq dev-qt/qtmultimedia
 
 if portageq list_preserved_libs /; then
   emerge --buildpkg=y @preserved-rebuild -q || error_handler
 fi
 
 #short term insanity, rebuild everything which was built with debug turned on to shrink file sizes
-#emerge --oneshot --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
+#emerge --oneshot -q --usepkg=n --buildpkg=y $(grep -ir ggdb /var/db/pkg/*/*/CFLAGS | sed -e 's#/var/db/pkg/#=#' -e 's#/CFLAGS.*##')
 
 #add 64 bit toolchain to 32 bit iso to build dual kernel iso someday
 #[ "${clst_subarch}" = "pentium-m" ] && crossdev -s1 -t x86_64

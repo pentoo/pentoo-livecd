@@ -74,6 +74,7 @@ dev-util/intel-ocl-sdk
 
 #force update
 <net-libs/libiio-0.26-r2
+<net-libs/libwebsockets-4.5.8-r1
 
 # llvm/clang
 <llvm-core/clang-18.1.8:18

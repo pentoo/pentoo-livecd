@@ -42,7 +42,7 @@ fi
 #chown -R portage:portage "$(portageq get_repo_path / gentoo)"
 chown -R portage:portage "$(portageq get_repo_path / pentoo)"
 
-emerge -1kb --newuse --update sys-apps/portage || error_handler
+emerge -1kbq --newuse --update sys-apps/portage || error_handler
 
 #somehow the default .bashrc runs X.... WTF????
 \cp -f /etc/skel/.bashrc /root/.bashrc || error_handler
@@ -220,7 +220,7 @@ chmod 664 /var/cache/eix/portage.eix
 HOME=/tmp eix-update || error_handler
 
 if [ "$(equery --quiet list pentoo/pentoo-installer 2> /dev/null)" = "pentoo/pentoo-installer-99999999" ]; then
-  emerge -1 pentoo-installer || error_handler
+  emerge -1q pentoo-installer || error_handler
 fi
 
 emerge --deselect=y livecd-tools || error_handler
@@ -232,8 +232,8 @@ emerge --deselect=y sys-kernel/pentoo-sources || error_handler
 # Why do we have to bootstrap go here?  who knows, but @world update fails without it
 goornogo="$(portageq match / 'dev-lang/go')"
 if [ -z "${goornogo}" ]; then
-  emerge -1 -kb dev-lang/go-bootstrap
-  emerge -1 -kb dev-lang/go
+  emerge -1kbq dev-lang/go-bootstrap
+  emerge -1kbq dev-lang/go
 fi
 
 emerge -qN -kb -D --changed-deps --with-bdeps=y @system -vt --backtrack=99 --update
@@ -300,7 +300,7 @@ perl-cleaner --ph-clean --modules -- --usepkg=n --buildpkg=y || safe_exit
 
 if portageq has_version / pentoo/pentoo-desktop; then
   # This makes sure we have the latest and greatest genmenu!
-  emerge -1 app-admin/genmenu || error_handler
+  emerge -1q app-admin/genmenu || error_handler
 
   # Runs the menu generator with a specific parameters for a WM
   su pentoo -c "genmenu.py -e" || error_handler
@@ -465,7 +465,7 @@ rm -f /etc/portage/make.conf.catalyst
 rm -f /etc/portage/depcheck
 rm -rf /etc/portage/profile
 
-emerge -1kb portage || error_handler
+emerge -1kbq portage || error_handler
 
 #shrink all the livecds, people use binpkgs
 emerge --depclean --with-bdeps=n --quiet || error_handler

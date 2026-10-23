@@ -92,6 +92,7 @@ chown portage:portage -R /dev/shm/portage/rootfs/var/db/repos/gentoo
 mksquashfs /dev/shm/portage/rootfs/ "/usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm" -comp zstd -Xcompression-level 22 -b 1048576 -no-recovery -noappend
 sqfs2tar "/usr/src/pentoo/pentoo-livecd/livecd/isoroot/modules/portage_and_overlay-$(date "+%Y%m%d").lzm" -c xz > /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-core/portage_and_overlay.tar.xz
+cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-core-ci/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-gui/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-full/portage_and_overlay.tar.xz
 cp /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo/portage_and_overlay.tar.xz /usr/src/pentoo/pentoo-livecd/livecd/automation/docker/pentoo-full-gui/portage_and_overlay.tar.xz
