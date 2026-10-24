@@ -55,5 +55,7 @@ etc-update --automode -5 || error_handler
 #I guess this was removed from base-system?
 mkdir -p '/etc/modprobe.d'
 
+# only python -O and -OO use these
+find /usr \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete || error_handler
 rm -rf /tmp/*
 true

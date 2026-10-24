@@ -1,3 +1,6 @@
+FROM scratch AS portage
+ADD portage_and_overlay.tar.xz /
+
 FROM pentoolinux/pentoo-core
 
 # Metadata params
@@ -13,15 +16,16 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.url='https://www.pentoo.org' \
       org.opencontainers.image.authors="Zero_Chaos"
 
-ADD portage_and_overlay.tar.xz /
 # --security=insecure is only needed for go
-RUN sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full#' /etc/portage/make.conf && \
+RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
+  touch /var/tmp/layer-start && \
+  sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full#' /etc/portage/make.conf && \
   #disable minimal
   sed -i 's# pentoo-minimal##' /etc/portage/make.conf && \
   #install libsndfile minimal to break circular deps
-  USE=minimal FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse media-libs/libsndfile && \
+  USE=minimal FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --rebuilt-binaries=n --jobs=$(nproc) --load-average=$(nproc) --deep --newuse media-libs/libsndfile && \
   #install pentoo/pentoo
-  FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse pentoo/pentoo && \
+  FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --rebuilt-binaries=n --jobs=$(nproc) --load-average=$(nproc) --deep --newuse pentoo/pentoo && \
   #deselect pentoo-core as pentoo/pentoo deps on it
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --deselect=y pentoo/pentoo-core && \
   #ensure we are up to date (should be a no-op)
@@ -29,10 +33,13 @@ RUN sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full#' /etc/po
   #minimize things not needed to run
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) --depclean --with-bdeps=n && \
   #double check nothing is broken
-  FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
+  FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --rebuilt-binaries=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
   #cleanup
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug && \
+  rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /run/* /tmp/* /usr/lib/debug && \
+  #only python -O and -OO use these; only this RUN's, deleting older ones can't shrink the image
+  find / -xdev -cnewer /var/tmp/layer-start \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete && \
+  rm /var/tmp/layer-start && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
   if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
   PKGDIR="$(portageq envvar PKGDIR)" && \

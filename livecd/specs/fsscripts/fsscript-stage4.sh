@@ -188,5 +188,7 @@ fi
 
 #merge all other desired changes into /etc
 etc-update --automode -5 || error_handler
+# only python -O and -OO use these
+find /usr \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete || error_handler
 rm -rf /tmp/*
 true

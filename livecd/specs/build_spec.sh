@@ -281,8 +281,7 @@ case ${target} in
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/docker-prep.sh"
 		echo "stage4/use: -livecd pentoo-minimal pentoo-in-a-container"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo-core"
-    echo "stage4/unmerge: llvm-core/llvm"
-    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos/* /etc/portage/profile /usr/share/doc /tmp/*"
+    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos/* /var/cache/edb/dep/* /var/log/emerge.log /var/log/emerge-fetch.log /etc/portage/profile /usr/share/doc /tmp/*"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"

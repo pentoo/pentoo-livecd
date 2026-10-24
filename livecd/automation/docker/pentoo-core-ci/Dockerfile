@@ -1,3 +1,6 @@
+FROM scratch AS portage
+ADD portage_and_overlay.tar.xz /
+
 FROM pentoolinux/pentoo-core
 
 # Metadata params
@@ -13,13 +16,14 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.url='https://www.pentoo.org' \
       org.opencontainers.image.authors="Zero_Chaos"
 
-ADD portage_and_overlay.tar.xz /
 # --security=insecure is only needed for go
 
 # disable minimal (pentoo-core is default minimal)
 #RUN sed -i 's# pentoo-minimal##' /etc/portage/make.conf
 
-RUN goornogo="$(portageq match / 'dev-lang/go')" && \
+RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
+  touch /var/tmp/layer-start && \
+  goornogo="$(portageq match / 'dev-lang/go')" && \
   if [ -z "${goornogo}" ]; then \
     FEATURES="-getbinpkg -ipc-sandbox -network-sandbox -pid-sandbox" emerge -1 --usepkg=y dev-lang/go-bootstrap --jobs="$(nproc)" --load-average="$(nproc)" --quiet; \
     FEATURES="-getbinpkg -ipc-sandbox -network-sandbox -pid-sandbox" emerge -1 --usepkg=y dev-lang/go --jobs="$(nproc)" --load-average="$(nproc)" --quiet; \
@@ -29,7 +33,10 @@ RUN goornogo="$(portageq match / 'dev-lang/go')" && \
   USE="-verify-sig" FEATURES="-getbinpkg -ipc-sandbox -network-sandbox -pid-sandbox" emerge -1 --usepkg=y --jobs="$(nproc)" --load-average="$(nproc)" --verbose --quiet dev-build/automake && \
   FEATURES="-getbinpkg -ipc-sandbox -network-sandbox -pid-sandbox" emerge --usepkg=y --with-bdeps=y --jobs="$(nproc)" --load-average="$(nproc)" --verbose --quiet @world && \
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles}/* /var/db/repos/* /run/* /tmp/* /usr/lib/debug && \
+  rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /run/* /tmp/* /usr/lib/debug && \
+  #only python -O and -OO use these; only this RUN's, deleting older ones can't shrink the image
+  find / -xdev -cnewer /var/tmp/layer-start \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete && \
+  rm /var/tmp/layer-start && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
   if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
   PKGDIR="$(portageq envvar PKGDIR)" && \
