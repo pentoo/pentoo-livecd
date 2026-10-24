@@ -33,3 +33,12 @@ mv /var/tmp/catalyst/snapshots/gentoo-*.sqfs /var/tmp/catalyst/snapshots/gentoo-
 /usr/src/pentoo/pentoo-livecd/livecd/specs/make_modules.sh
 chown -R portage:portage "$(portageq get_repo_path / gentoo)"
 chown -R portage:portage "$(portageq get_repo_path / pentoo)"
+#the trees the binpkgs are built from, read by rfctf-container's make_gentoo_cache.sh
+gentoo_commit="$(git -C /var/tmp/catalyst/repos/gentoo.git rev-parse stable)"
+gentoo_time="$(git -C /var/tmp/catalyst/repos/gentoo.git log -1 --format=%ct stable)"
+pentoo_commit="$(git -C /var/db/repos/pentoo rev-parse HEAD)"
+tree="$(mktemp)"
+printf 'PUBLISHED: %s\nGENTOO_MIRROR_COMMIT: %s\nGENTOO_MIRROR_COMMIT_TIME: %s\nPENTOO_COMMIT: %s\n' \
+  "$(date +%s)" "${gentoo_commit}" "${gentoo_time}" "${pentoo_commit}" > "${tree}"
+chmod 644 "${tree}"
+mv "${tree}" /catalyst/packages/local_mirror/TREE
