@@ -76,7 +76,7 @@ cat > "${work}/portage/make.conf" <<EOF
 ACCEPT_LICENSE="Intel-SDP NVIDIA-CUDA"
 FEATURES="-news -getbinpkg"
 PORTAGE_BINHOST=""
-PORTAGE_NICENESS=""
+PORTAGE_NICENESS="19"
 PKGDIR="${work}/pkgs"
 EOF
 
@@ -103,5 +103,5 @@ fi
 	ro_bind "${pkgdir:-${work}/pkgs}" "${work}/pkgs"
 	# unprivileged runs map only root, so portage cannot chown to its own user
 	PORTAGE_USERNAME=root PORTAGE_GRPNAME=root \
-		exec nice emerge --pretend --backtrack=99 --verbose-conflicts "$@"
+		exec emerge --pretend --backtrack=99 --verbose-conflicts "$@"
 ' bootstrap-resolve "${work}" "${vdb}" "${pkgdir}" "${args[@]}"
