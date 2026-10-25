@@ -10,3 +10,23 @@ Pentoo comes in many flavors and utilizes catalyst as a build tool. [Catalyst](h
 Want to learn more? [See the wiki.](https://wiki.gentoo.org/wiki/Catalyst)
 
 Discussion and support available on irc.freenode.net  **#pentoo**
+
+## Checking stage dependencies without building
+
+`livecd/tools/bootstrap-resolve.sh` pretend-runs the stage1 seed update or the
+stage3 `@system` emerge the way catalyst does, with the bootstrap profile and
+`livecd/portage`, so dependency problems in those stages show up before the
+nightly build. It needs no root: emerge runs in a private user and mount
+namespace, and the vdb and binpkgs it is given are mounted read-only.
+
+```
+# against a pentoo overlay checkout, no binpkgs, empty vdb
+livecd/tools/bootstrap-resolve.sh -o ~/pentoo-overlay stage3
+
+# on the build host, with the real pkgcache and the stage2 seed's vdb
+mkdir /tmp/stage2 && tar --zstd -xf /catalyst/builds/hardened/stage2-amd64-2026.0.tar.zstd -C /tmp/stage2 --wildcards '*var/db/pkg/*'
+livecd/tools/bootstrap-resolve.sh -p /catalyst/packages/amd64_23.0s-hardened-bootstrap -v /tmp/stage2/var/db/pkg stage3
+```
+
+With an empty vdb, stage3 ends in circular dependencies that the stage2 seed
+does not have; anything before the merge list is a real problem.
