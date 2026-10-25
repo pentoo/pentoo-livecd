@@ -122,7 +122,8 @@ fi
 
 emerge -1kbq app-portage/gentoolkit || error_handler
 #things are broken, I have no clue why or how, but this is the earliest point to fix it
-broken_packages=$(qfile -q $(equery -C -N check -o '*' 2>&1 | grep --color=never 'does not exist' | awk '{print $2}' | grep -Ev '\.cache') 2>&1 | grep -v 'qfile' | awk -F: '{print $1}' | sort -u | tr '\n' ' ')
+#missing .opt-*.pyc files only matter to python -O and -OO
+broken_packages=$(qfile -q $(equery -C -N check -o '*' 2>&1 | grep --color=never 'does not exist' | awk '{print $2}' | grep -Ev '\.cache|\.opt-[12]\.pyc$') 2>&1 | grep -v 'qfile' | awk -F: '{print $1}' | sort -u | tr '\n' ' ')
 if [ -n "${broken_packages}" ]; then
   emerge -1q --buildpkg=y --usepkg=n ${broken_packages} || error_handler
 fi
