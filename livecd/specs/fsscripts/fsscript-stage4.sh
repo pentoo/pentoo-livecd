@@ -105,7 +105,7 @@ if portageq list_preserved_libs /; then
 fi
 
 #first we set the python interpreters to match PYTHON_TARGETS
-PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\=".*(python3_[0-9]+\s*)+"' | grep -oE 'python3_[0-9]+' | cut -d\" -f2 | sed 's#_#.#')
+PYTHON3=$(portageq envvar PYTHON_SINGLE_TARGET | sed 's#_#.#')
 #eselect python set --python3 ${PYTHON3} || error_handler
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1q --buildpkg=y python:${PYTHON3#python}
 #python 3 by default now

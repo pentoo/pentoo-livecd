@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
         emerge @preserved-rebuild -q || error_handler
 fi
 
-PYTHON3=$(emerge --info | grep -oE '^PYTHON_SINGLE_TARGET\=".*(python3_[0-9]+\s*)+"' | grep -oE 'python3_[0-9]+' | cut -d\" -f2 | sed 's#_#.#')
+PYTHON3=$(portageq envvar PYTHON_SINGLE_TARGET | sed 's#_#.#')
 ${PYTHON3} -c "from _multiprocessing import SemLock" || emerge -1q --buildpkg=y python:${PYTHON3#python}
 
 portageq list_preserved_libs /
