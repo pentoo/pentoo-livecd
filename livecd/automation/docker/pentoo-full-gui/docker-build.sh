@@ -17,7 +17,10 @@ docker build --pull -t "${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}" \
     --progress=plain \
     .
 
-docker run -d --rm --name "${IMAGE}-ci" ${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}
+docker rm -f "${IMAGE}-ci" > /dev/null 2>&1 || true
+# no --rm: a container that dies early has to keep its state and logs for the else branch
+docker run -d --name "${IMAGE}-ci" ${CI_REGISTRY_IMAGE}/${IMAGE}:${VERSION}
+trap 'docker rm -f "${IMAGE}-ci" > /dev/null 2>&1 || true' EXIT
 sleep 20
 docker cp gui-checker "${IMAGE}-ci":/root/
 sleep 40
@@ -28,6 +31,7 @@ if docker exec "${IMAGE}-ci" /root/gui-checker excessive; then
   #this seems required to update the "latest" tag upstream
   docker push "${CI_REGISTRY_IMAGE}/${IMAGE}:latest"
 else
-  docker stop "${IMAGE}-ci"
+  docker inspect -f 'status {{.State.Status}}, exit code {{.State.ExitCode}}, OOM killed {{.State.OOMKilled}}, error "{{.State.Error}}"' "${IMAGE}-ci" || true
+  docker logs --tail 200 "${IMAGE}-ci" || true
   exit 1
 fi
