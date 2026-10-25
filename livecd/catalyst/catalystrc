@@ -23,7 +23,8 @@ export PORTAGE_COMPRESS=""
 export CONFIG_CHECK_FATAL=0
 export LANG="en_US.UTF-8"
 export TERM="linux"
-export INSTALL_MASK="$(portageq envvar INSTALL_MASK)"
+# only python -O and -OO use these
+export INSTALL_MASK="$(portageq envvar INSTALL_MASK) *.opt-1.pyc *.opt-2.pyc"
 export DONT_MOUNT_BOOT="true"
 export HOME=/root
 export SHELL=/bin/bash

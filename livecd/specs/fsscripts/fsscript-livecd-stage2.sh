@@ -504,8 +504,6 @@ fi
 rm -rf /root/gentoollist
 
 rm -rf /var/tmp/portage/*
-# only python -O and -OO use these
-find /usr \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete || error_handler
 
 #bug #477498
 ln -snf /proc/self/mounts /etc/mtab

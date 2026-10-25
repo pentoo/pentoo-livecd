@@ -18,7 +18,8 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
 
 # --security=insecure is only needed for go
 RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
-  touch /var/tmp/layer-start && \
+  #only python -O and -OO use these
+  export INSTALL_MASK="$(portageq envvar INSTALL_MASK) *.opt-1.pyc *.opt-2.pyc" && \
   sed -i 's#pentoo-in-a-container#pentoo-in-a-container -pentoo-full#' /etc/portage/make.conf && \
   #disable minimal
   sed -i 's# pentoo-minimal##' /etc/portage/make.conf && \
@@ -37,9 +38,6 @@ RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
   #cleanup
   eselect news read && \
   rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /run/* /tmp/* /usr/lib/debug && \
-  #only python -O and -OO use these; only this RUN's, deleting older ones can't shrink the image
-  find / -xdev -cnewer /var/tmp/layer-start \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete && \
-  rm /var/tmp/layer-start && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
   if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
   PKGDIR="$(portageq envvar PKGDIR)" && \

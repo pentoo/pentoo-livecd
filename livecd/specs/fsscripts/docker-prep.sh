@@ -25,8 +25,6 @@ else
 fi
 eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/23.0/split-usr/binary
 eselect news read
-# only python -O and -OO use these
-find /usr \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete
 rm -rf /tmp/*
 DISTDIR="$(portageq envvar DISTDIR)"
 if [ -d "${DISTDIR:-}" ]; then rm -rf "${DISTDIR:?}"/* ; fi

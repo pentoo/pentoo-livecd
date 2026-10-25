@@ -17,7 +17,8 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.authors="Zero_Chaos"
 
 RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
-  touch /var/tmp/layer-start && \
+  #only python -O and -OO use these
+  export INSTALL_MASK="$(portageq envvar INSTALL_MASK) *.opt-1.pyc *.opt-2.pyc" && \
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --rebuilt-binaries=n --jobs=$(nproc) www-apps/novnc x11-misc/x11vnc && \
   #ensure we are up to date (should be a no-op)
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --rebuilt-binaries=n --jobs=$(nproc) --load-average=$(nproc) --deep --update --newuse @world && \
@@ -28,9 +29,6 @@ RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
   #cleanup
   eselect news read && \
   rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /run/* /tmp/* /usr/lib/debug && \
-  #only python -O and -OO use these; only this RUN's, deleting older ones can't shrink the image
-  find / -xdev -cnewer /var/tmp/layer-start \( -name '*.opt-1.pyc' -o -name '*.opt-2.pyc' \) -delete && \
-  rm /var/tmp/layer-start && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
   if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
   PKGDIR="$(portageq envvar PKGDIR)" && \
