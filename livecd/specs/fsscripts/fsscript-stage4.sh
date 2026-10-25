@@ -59,7 +59,6 @@ perl-cleaner --modules -- --buildpkg=y
 emerge -1kbq --newuse --update --changed-deps --onlydeps --onlydeps-with-rdeps media-gfx/graphite2
 emerge -1kbq --newuse --update --changed-deps media-gfx/graphite2
 #bust some circular deps
-USE="-harfbuzz" emerge -1kbq --newuse --update --changed-deps media-libs/freetype
 USE="-icu" emerge -1kbq --newuse --update --changed-deps dev-db/sqlite
 USE="-tk" emerge -1kbq --newuse --update --changed-deps dev-lang/python
 USE="-opengl -cups -X" emerge -1kbq --newuse --update --changed-deps media-libs/libva
