@@ -3,17 +3,15 @@
 #this rc file is meant for use on Nu only, please modify to meet your needs
 
 #testing for Zac
-export portage_LIVE_REPO=https://github.com/zmedico/portage.git
-export portage_LIVE_BRANCH=bug_709746_PORTAGE_LOG_FILTER_FILE_CMD
+#export portage_LIVE_REPO=https://github.com/zmedico/portage.git
+#export portage_LIVE_BRANCH=bug_709746_PORTAGE_LOG_FILTER_FILE_CMD
 
 export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=16 --load-average=30 --backtrack=99 --verbose-conflicts --verbose --tree --implicit-system-deps n"
 #export EMERGE_DEFAULT_OPTS="$(portageq envvar EMERGE_DEFAULT_OPTS) --jobs=1 --quiet --backtrack=99"
-export MAKEOPTS="-j32 -l32"
-#export MAKEOPTS="-j1"
-export clst_myfeatures="$(portageq envvar FEATURES) buildpkg preserve-libs -clean-logs -news -getbinpkg compress-index -merge-sync -compress-build-logs gpg-keepalive"
-BINPKG_GPG_SIGNING_GPG_HOME="/root/.gnupg"
-BINPKG_GPG_SIGNING_KEY="0x537C5937C779CE2772F33029A5DD1427DD11F94A"
 export FEATURES="$(portageq envvar FEATURES) buildpkg preserve-libs -clean-logs -news -getbinpkg compress-index -merge-sync -compress-build-logs"
+export clst_myfeatures="$(portageq envvar FEATURES) buildpkg preserve-libs -clean-logs -news -getbinpkg compress-index -merge-sync -compress-build-logs"
+#BINPKG_GPG_SIGNING_GPG_HOME="/root/.gnupg"
+#BINPKG_GPG_SIGNING_KEY="0x537C5937C779CE2772F33029A5DD1427DD11F94A"
 export ACCEPT_LICENSE="Intel-SDP NVIDIA-CUDA"
 export PORTAGE_NICENESS="15"
 #c 0-3 n 0-7 lower number is higher priority
@@ -21,19 +19,20 @@ export PORTAGE_IO_NICENESS="ionice -c 3 -p \${PID}"
 export PORT_LOGDIR="/var/log/portage"
 export PORTAGE_COMPRESS=""
 export CONFIG_CHECK_FATAL=0
-export LANG="en_US.UTF-8"
+export LANG="en_US.utf8"
+export locale="C.utf8"
 export TERM="linux"
 # only python -O and -OO use these
 export INSTALL_MASK="$(portageq envvar INSTALL_MASK) *.opt-1.pyc *.opt-2.pyc"
-export DONT_MOUNT_BOOT="true"
+#export DONT_MOUNT_BOOT="true"
 export HOME=/root
 export SHELL=/bin/bash
 
 #export PORTAGE_BINHOST="http://192.168.1.251/pentoo/Packages/amd64-default/ http://192.168.1.251/pentoo/Packages/amd64-hardened/ http://192.168.1.251/pentoo/Packages/x86-default/ http://192.168.1.251/pentoo/Packages/x86-hardened/"
 
 #kensington's tinderbox script settings
-export TINDERBOX_DIR=/var/log/portage/tinderbox
-export DEPCHECK_BIN=/etc/portage/depcheck
+#export TINDERBOX_DIR=/var/log/portage/tinderbox
+#export DEPCHECK_BIN=/etc/portage/depcheck
 
 #this toggles on and off various debug shells to fix issues during catalyst builds
 #export debugshell=true
