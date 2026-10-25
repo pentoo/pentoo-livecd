@@ -80,8 +80,16 @@ PORTAGE_NICENESS=""
 PKGDIR="${work}/pkgs"
 EOF
 
+# a user namespace that maps only root would cost real root its access to
+# files owned by anyone else, such as repos owned by portage
+if [ "$(id -u)" -eq 0 ]; then
+	ns=(unshare --mount)
+else
+	ns=(unshare --map-root-user --mount)
+fi
+
 # shellcheck disable=SC2016
-unshare --map-root-user --mount bash -euc '
+"${ns[@]}" bash -euc '
 	work=$1 vdb=$2 pkgdir=$3
 	shift 3
 	ro_bind() {
@@ -93,7 +101,7 @@ unshare --map-root-user --mount bash -euc '
 	mount --bind "${work}/lib" /var/lib/portage
 	ro_bind "${vdb:-${work}/vdb}" /var/db/pkg
 	ro_bind "${pkgdir:-${work}/pkgs}" "${work}/pkgs"
-	# only root is mapped in the namespace, so portage cannot chown to its own user
+	# unprivileged runs map only root, so portage cannot chown to its own user
 	PORTAGE_USERNAME=root PORTAGE_GRPNAME=root \
 		exec nice emerge --pretend --backtrack=99 --verbose-conflicts "$@"
 ' bootstrap-resolve "${work}" "${vdb}" "${pkgdir}" "${args[@]}"

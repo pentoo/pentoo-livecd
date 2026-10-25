@@ -10,8 +10,16 @@ set -euo pipefail
 
 functions=$(cd "$(dirname "$0")/../automation" && pwd)/pentoo_functions.sh
 
+# a user namespace that maps only root would cost real root its access to
+# files owned by anyone else, such as a CI runner's checkout
+if [ "$(id -u)" -eq 0 ]; then
+	ns=(unshare --mount)
+else
+	ns=(unshare --map-root-user --mount)
+fi
+
 # shellcheck disable=SC2016
-exec unshare --map-root-user --mount bash -euc '
+exec "${ns[@]}" bash -euc '
 	functions=$1
 	mount -t tmpfs none /var/tmp
 	[ ! -d /catalyst ] || mount -t tmpfs none /catalyst
