@@ -30,3 +30,10 @@ livecd/tools/bootstrap-resolve.sh -p /catalyst/packages/amd64_23.0s-hardened-boo
 
 With an empty vdb, stage3 ends in circular dependencies that the stage2 seed
 does not have; anything before the merge list is a real problem.
+
+## Tests
+
+`livecd/tools/test-catalyst-clean.sh` checks that `catalyst_clean` in
+`livecd/automation/pentoo_functions.sh` removes only the tmp dir of the stage
+it runs for, since several stages can build at the same time. It needs no root
+and runs on tmpfs, so it is safe on the build host too.
