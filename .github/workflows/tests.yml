@@ -1,0 +1,16 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tools:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck
+        run: shellcheck livecd/tools/*.sh
+      # Ubuntu's AppArmor policy blocks mounts in unprivileged user namespaces
+      - name: catalyst_clean
+        run: sudo livecd/tools/test-catalyst-clean.sh
