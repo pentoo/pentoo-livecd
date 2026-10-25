@@ -14,3 +14,5 @@ jobs:
       # Ubuntu's AppArmor policy blocks mounts in unprivileged user namespaces
       - name: catalyst_clean
         run: sudo livecd/tools/test-catalyst-clean.sh
+      - name: mirror_sync and pentoo_binpkgs.sh
+        run: livecd/tools/test-mirror-sync.sh

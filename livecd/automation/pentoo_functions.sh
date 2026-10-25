@@ -58,18 +58,19 @@ mirror_sync() {
   if [ "${FAILED}" = "0" ]; then
     echo "hardened ${arch} build successful" 1>&2
     if [ "${stage}" != "${stage/livecd/}" ]; then
+      #the tools list has to be in the release dir before the rsync publishes it
       if [ "${stage}" != "${stage/full/}" ]; then
         #full iso
-        wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Full_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
         mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_Full_${arch}_hardened/
+        wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Full_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
       elif [ "${stage}" != "${stage/core/}" ]; then
         #core iso
-        wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Core_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
         mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_Core_${arch}_hardened/
+        wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_Core_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
       else
         #normal iso
-        wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
         mv "/catalyst/log/tool-list/tools_list_${arch}-hardened.json" /catalyst/release/Pentoo_${arch}_hardened/
+        wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/release/Pentoo_${arch}_hardened" /mnt/mirror/local_mirror/daily-autobuilds/
       fi
     fi
     if [ "${stage}" != "${stage/livecd/}" ] || [ "${stage}" != "${stage/full/}" ]; then
@@ -79,6 +80,8 @@ mirror_sync() {
     fi
   else
     echo "hardened ${arch} ${stage} build FAILED" 1>&2
+    #or the next livecd build to succeed would publish this list as its own
+    rm -f "/catalyst/log/tool-list/tools_list_${arch}-hardened.json"
     #exit 1
   fi
 }
