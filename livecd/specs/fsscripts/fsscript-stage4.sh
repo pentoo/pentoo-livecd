@@ -77,10 +77,13 @@ emerge -1kbq --newuse --update --with-bdeps=y --changed-deps @system || true
 emerge -1kbq --newuse --update --with-bdeps=y --changed-deps @profile || true
 #finish transition to the new use flags
 emerge --deep --update --newuse -kb --with-bdeps=y --changed-deps @world || error_handler
-old_gcc="$(portageq match / '<sys-devel/gcc-12.3')"
-if [ -n "${old_gcc}" ]; then
-  emerge -C "<sys-devel/gcc-12.3"
-fi
+#the stage1 update seed fails when --rebuild-if-new-rev picks a gcc slot the profile masks
+for installed_gcc in $(portageq match / sys-devel/gcc); do
+  gcc_slot="$(portageq metadata / installed "${installed_gcc}" SLOT)"
+  if [ -z "$(portageq best_visible / ebuild "sys-devel/gcc:${gcc_slot}")" ]; then
+    emerge -C "=${installed_gcc}" || error_handler
+  fi
+done
 gcc-config latest
 . /etc/profile
 #this has to be done early or x86 fails on the stage1 update seed
