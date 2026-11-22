@@ -104,3 +104,9 @@ mirror, and that synced binpkgs go through the signer before `mirror.sh` runs.
 A passphrase-protected software key in temp GnuPG homes stands in for the
 YubiKey. It runs unprivileged on a Gentoo host, or in a `gentoo/stage3`
 container as CI does (the command is in the script's header).
+
+`livecd/tools/test-sign-binpkgs-yubikey.sh SERIAL KEY.asc` is the same check
+against the real key on the YubiKey, so it needs the card and its user PIN.
+It uses temp GnuPG homes and reports the time per signature. With
+`--wrong-pin` it also checks that a wrong PIN file costs exactly one PIN try
+and that the next run refuses to use it. CI can't run it.
