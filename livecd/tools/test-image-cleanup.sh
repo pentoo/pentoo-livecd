@@ -4,7 +4,9 @@
 # each install, not shipped in a stage, an iso or a docker image.  Generates
 # the spec for every target with specs/build_spec.sh and checks that its
 # stage4/rm or livecd/rm list removes the keyring, and that every Dockerfile
-# that runs commands removes it too.  Needs no root.
+# that runs commands removes it too.  Those Dockerfiles must also empty every
+# binpkg location with eclean-pkg rather than rm, which would miss the
+# binrepos.conf locations.  Needs no root.
 #
 # usage: test-image-cleanup.sh
 
@@ -48,10 +50,20 @@ for target in stage4 stage4-pentoo stage4-pentoo-full stage4-pentoo-core stage4-
 	check "${target}: ${option} removes /etc/portage/gnupg" removes_keyring "${root}/${target}.spec" "${option}"
 done
 
+# shellcheck disable=SC1003,SC2016 # the Dockerfile line, verbatim
+eclean_line='mkdir -p "$(portageq pkgdir)" && ROOT=/var/empty eclean-pkg --deep && \'
+# $1 Dockerfile: no rm of PKGDIR or the binhost caches, in any form
+leaves_binpkgs_to_eclean() {
+	! grep -v '^[[:space:]]*#' "$1" | grep -qE 'rm -rf[^&]*(binpkgs|PKGDIR|/var/cache/binhost)'
+}
+
 for dockerfile in "${livecd}"/automation/docker/*/Dockerfile; do
 	image=${dockerfile%/Dockerfile}
 	grep -q '^RUN ' "${dockerfile}" || continue
 	check "docker ${image##*/}: removes /etc/portage/gnupg" grep -q 'rm -rf .*/etc/portage/gnupg' "${dockerfile}"
+	check "docker ${image##*/}: empties every binpkg location with eclean-pkg" \
+		grep -qxF "  ${eclean_line}" "${dockerfile}"
+	check "docker ${image##*/}: doesn't rm binpkg locations itself" leaves_binpkgs_to_eclean "${dockerfile}"
 done
 
 exit "${failed}"

@@ -37,10 +37,10 @@ RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --rebuilt-binaries=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
   #cleanup
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /var/cache/binhost /etc/portage/gnupg /run/* /tmp/* /usr/lib/debug && \
+  #nothing is installed in /var/empty, so with it as ROOT eclean-pkg --deep empties PKGDIR and every binrepos.conf location
+  mkdir -p "$(portageq pkgdir)" && ROOT=/var/empty eclean-pkg --deep && \
+  rm -rf /var/cache/{distfiles,edb/binhost,edb/dep}/* /etc/portage/gnupg /run/* /tmp/* /usr/lib/debug && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
-  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
-  PKGDIR="$(portageq envvar PKGDIR)" && \
-  if [ -d "${PKGDIR}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
+  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi
 
 CMD ["/bin/bash"]

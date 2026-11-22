@@ -29,10 +29,10 @@ RUN mkdir -p /etc/portage/profile/package.use && \
   rc-update del udev && \
   rc-update del udev-trigger && \
   rc-update del kmod-static-nodes && \
+  #nothing is installed in /var/empty, so with it as ROOT eclean-pkg --deep empties PKGDIR and every binrepos.conf location
+  mkdir -p "$(portageq pkgdir)" && ROOT=/var/empty eclean-pkg --deep && \
   rm -rf /run/* /tmp/* /etc/portage/gnupg && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
-  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
-  PKGDIR="$(portageq envvar PKGDIR)" && \
-  if [ -d "${PKGDIR}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
+  if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi
 
 CMD ["/bin/bash", "-l"]

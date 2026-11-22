@@ -134,7 +134,17 @@ no network.
 `livecd/tools/test-image-cleanup.sh` checks that every stage4, livecd and
 docker target removes `/etc/portage/gnupg`. getuto keeps a private local
 trust key and its passphrase there, so each install has to make its own
-rather than get one shipped in an image.
+rather than get one shipped in an image. It also checks that each
+Dockerfile empties the binpkg locations with `eclean-pkg` rather than `rm`.
+Binpkgs from the Pentoo binhosts are kept in the `binrepos.conf` locations
+under `/var/cache/binhost`, not in PKGDIR, and eclean-pkg finds them all.
+
+`livecd/tools/test-docker-eclean.sh` runs the Dockerfiles' `eclean-pkg`
+line in `pentoolinux/pentoo-core`. It checks that the line deletes every
+binpkg, both in PKGDIR and in a `binrepos.conf` location, and leaves the
+installed packages and `/var/empty` alone. Plain `eclean-pkg --deep` keeps
+binpkgs of installed packages, so the line points `ROOT` at `/var/empty`,
+where nothing is installed. It needs docker but no privileges.
 
 The iso keeps the repos, so a user can emerge on it without syncing first.
 `root_overlay/etc/local.d/50-pentoo-trust-helper.start` runs
