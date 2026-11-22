@@ -97,7 +97,8 @@ mirror serves the signed packages. Signing changes a gpkg's size and mtime, so
 `Packages.gz` with the local, already verified index and reports stale,
 missing and extra entries. It exits non-zero unless every mirror and dir
 matches. With no arguments it checks every dir under
-`/mnt/mirror/local_mirror/Packages` on the three public mirrors:
+`/mnt/mirror/local_mirror/Packages` on the three public mirrors and
+`www.pentoo.ch/isos`:
 
 ```
 livecd/tools/check-mirror-signed.sh

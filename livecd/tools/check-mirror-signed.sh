@@ -30,6 +30,7 @@ if [ "${#mirrors[@]}" -eq 0 ]; then
 		https://pentoo.glpgs.io/Packages/
 		https://ftp.acc.umu.se/mirror/pentoo.ch/Packages/
 		https://pentoo.osuosl.org/Packages/
+		https://www.pentoo.ch/isos/Packages/
 	)
 fi
 
