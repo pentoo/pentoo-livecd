@@ -52,6 +52,15 @@ done
 
 # shellcheck disable=SC1003,SC2016 # the Dockerfile line, verbatim
 eclean_line='mkdir -p "$(portageq pkgdir)" && ROOT=/var/empty eclean-pkg --deep && \'
+# shellcheck disable=SC1003,SC2016 # the Dockerfile line, verbatim
+trust_line='if [ -f "${helper}" ]; then bash "${helper}"; fi && \'
+# $1 Dockerfile: the trust helper runs before the first emerge
+trusts_before_emerge() {
+	local trust first_emerge
+	trust=$(grep -nxF "  ${trust_line}" "$1" | head -n 1 | cut -d: -f1)
+	first_emerge=$(grep -n 'emerge ' "$1" | grep -v ':[[:space:]]*#' | head -n 1 | cut -d: -f1)
+	[ -n "${trust}" ] && [ -n "${first_emerge}" ] && [ "${trust}" -lt "${first_emerge}" ]
+}
 # $1 Dockerfile: no rm of PKGDIR or the binhost caches, in any form
 leaves_binpkgs_to_eclean() {
 	! grep -v '^[[:space:]]*#' "$1" | grep -qE 'rm -rf[^&]*(binpkgs|PKGDIR|/var/cache/binhost)'
@@ -64,6 +73,9 @@ for dockerfile in "${livecd}"/automation/docker/*/Dockerfile; do
 	check "docker ${image##*/}: empties every binpkg location with eclean-pkg" \
 		grep -qxF "  ${eclean_line}" "${dockerfile}"
 	check "docker ${image##*/}: doesn't rm binpkg locations itself" leaves_binpkgs_to_eclean "${dockerfile}"
+	if grep -v '^[[:space:]]*#' "${dockerfile}" | grep -q 'emerge '; then
+		check "docker ${image##*/}: trusts the binhost keys before it emerges" trusts_before_emerge "${dockerfile}"
+	fi
 done
 
 exit "${failed}"

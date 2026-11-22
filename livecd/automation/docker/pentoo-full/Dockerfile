@@ -17,6 +17,9 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.authors="Zero_Chaos"
 
 RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
+  #the image has no /etc/portage/gnupg and builds don't sync, so trust the binhost keys before emerging
+  helper="$(portageq get_repo_path / pentoo)/pentoo/pentoo-core/files/pentoo-trust-helper" && \
+  if [ -f "${helper}" ]; then bash "${helper}"; fi && \
   #only python -O and -OO use these
   export INSTALL_MASK="$(portageq envvar INSTALL_MASK) *.opt-1.pyc *.opt-2.pyc" && \
   sed -i 's#-pentoo-full ##' /etc/portage/make.conf && \

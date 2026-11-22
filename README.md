@@ -146,6 +146,19 @@ installed packages and `/var/empty` alone. Plain `eclean-pkg --deep` keeps
 binpkgs of installed packages, so the line points `ROOT` at `/var/empty`,
 where nothing is installed. It needs docker but no privileges.
 
+The Dockerfiles that run emerge first run `pentoo-trust-helper` from the
+mounted pentoo repo, if it has it. The images ship without
+`/etc/portage/gnupg` and the builds don't sync, so nothing else makes the
+keyring and trusts the binhost keys. Signed binpkgs would then be rejected.
+`livecd/tools/test-docker-trust.sh OVERLAY` runs those lines in
+`pentoolinux/pentoo-core` with the portage tree and a pentoo-overlay checkout
+mounted at `/var/db/repos`, as the builds mount them. With an overlay that
+has the helper, the Pentoo binhost key has to end up fully trusted. Without
+it, the lines have to succeed and do nothing. It needs docker and the
+`portage` volume container from `gentoo/portage`, but no privileges.
+`test-image-cleanup.sh` checks that each of those Dockerfiles runs the
+helper before its first emerge.
+
 The iso keeps the repos, so a user can emerge on it without syncing first.
 `root_overlay/etc/local.d/50-pentoo-trust-helper.start` runs
 `pentoo-trust-helper` at boot to make the keyring and trust the Pentoo binhost

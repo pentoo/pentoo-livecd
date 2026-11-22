@@ -33,3 +33,9 @@ jobs:
           docker run --rm --volumes-from portage -v "$PWD":/src -w /src gentoo/stage3 livecd/tools/test-sign-binpkgs.sh
       - name: docker images empty every binpkg location
         run: livecd/tools/test-docker-eclean.sh
+      - uses: actions/checkout@v4
+        with:
+          repository: pentoo/pentoo-overlay
+          path: overlay
+      - name: docker images trust the binhost keys before they emerge
+        run: livecd/tools/test-docker-trust.sh overlay
