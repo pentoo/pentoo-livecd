@@ -78,7 +78,7 @@ livecd/empty: /var/empty /var/tmp /tmp /usr/portage /etc/portage/patches
 
 # This option tells catalyst to clean specific files from the filesystem and is
 # very usefu in cleaning up stray files in /etc left over after livecd/unmerge.
-livecd/rm: /etc/resolv.conf /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre* /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline* /catalyst /var/db/repos /usr/lib/debug
+livecd/rm: /etc/resolv.conf /usr/share/doc/lib* /usr/share/doc/g* /usr/share/doc/tiff* /usr/share/doc/twisted* /usr/share/doc/ruby* /usr/share/doc/paramiko* /usr/share/doc/perl* /usr/share/doc/pcre* /usr/share/doc/binutils* /usr/share/doc/ntp* /usr/share/doc/readline* /catalyst /var/db/repos /usr/lib/debug /etc/portage/gnupg
 
 # This option is used to create non-root users on your CD.  It takes a space
 # separated list of user names.  These users will be added to the following

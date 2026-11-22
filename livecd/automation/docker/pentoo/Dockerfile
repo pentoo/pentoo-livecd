@@ -37,7 +37,7 @@ RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
   FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --getbinpkg=y --buildpkg=n --rebuilt-binaries=n --jobs=$(nproc) --load-average=$(nproc) @preserved-rebuild && \
   #cleanup
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /run/* /tmp/* /usr/lib/debug && \
+  rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /var/cache/binhost /etc/portage/gnupg /run/* /tmp/* /usr/lib/debug && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
   if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
   PKGDIR="$(portageq envvar PKGDIR)" && \

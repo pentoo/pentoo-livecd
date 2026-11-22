@@ -254,40 +254,40 @@ case ${target} in
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4.sh"
 		echo "stage4/packages: --update --deep --newuse @world"
     #echo "stage4/rm: /usr/lib/debug /catalyst"
-    echo "stage4/rm: /catalyst /tmp/*"
+    echo "stage4/rm: /catalyst /tmp/* /etc/portage/gnupg"
 		;;
 	stage4-pentoo)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -office -pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo"
     #echo "stage4/rm: /usr/lib/debug /catalyst"
-    echo "stage4/rm: /catalyst /tmp/*"
+    echo "stage4/rm: /catalyst /tmp/* /etc/portage/gnupg"
 		;;
 	stage4-pentoo-full)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo"
     #echo "stage4/rm: /usr/lib/debug /catalyst"
-    echo "stage4/rm: /catalyst /tmp/*"
+    echo "stage4/rm: /catalyst /tmp/* /etc/portage/gnupg"
 		;;
 	stage4-pentoo-core)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/fsscript-stage4-pentoo.sh"
 		echo "stage4/use: livecd pentoo-minimal livecd-stage1 -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo-core"
     #echo "stage4/rm: /usr/lib/debug /catalyst"
-    echo "stage4/rm: /catalyst /tmp/*"
+    echo "stage4/rm: /catalyst /tmp/* /etc/portage/gnupg"
 		;;
 	stage4-docker)
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/docker-prep.sh"
 		echo "stage4/use: -livecd pentoo-minimal pentoo-in-a-container"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo-core"
-    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos/* /var/cache/edb/dep/* /var/log/emerge.log /var/log/emerge-fetch.log /etc/portage/profile /usr/share/doc /tmp/*"
+    echo "stage4/rm: /usr/lib/debug /catalyst /var/db/repos/* /var/cache/edb/dep/* /var/log/emerge.log /var/log/emerge-fetch.log /etc/portage/profile /usr/share/doc /tmp/* /etc/portage/gnupg"
 		;;
 	binpkg-update*)
 		echo "stage4/use: livecd livecd-stage1 pentoo-full -libzfs -video_cards_fglrx -video_cards_nvidia -video_cards_virtualbox"
 		echo "stage4/packages: --update --deep --newuse pentoo/pentoo"
 		echo "stage4/fsscript: /usr/src/pentoo/pentoo-livecd/livecd/specs/fsscripts/call-pentoo-updater.sh"
     #echo "stage4/rm: /usr/lib/debug /catalyst"
-    echo "stage4/rm: /catalyst /tmp/*"
+    echo "stage4/rm: /catalyst /tmp/* /etc/portage/gnupg"
 		;;
 esac

@@ -29,7 +29,7 @@ RUN mkdir -p /etc/portage/profile/package.use && \
   rc-update del udev && \
   rc-update del udev-trigger && \
   rc-update del kmod-static-nodes && \
-  rm -rf /run/* /tmp/* && \
+  rm -rf /run/* /tmp/* /etc/portage/gnupg && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
   if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
   PKGDIR="$(portageq envvar PKGDIR)" && \

@@ -34,7 +34,7 @@ RUN --mount=type=bind,from=portage,source=/var/db/repos,target=/var/db/repos \
   USE="-verify-sig" FEATURES="-getbinpkg -ipc-sandbox -network-sandbox -pid-sandbox" emerge -1 --usepkg=y --jobs="$(nproc)" --load-average="$(nproc)" --verbose --quiet dev-build/automake && \
   FEATURES="-getbinpkg -ipc-sandbox -network-sandbox -pid-sandbox" emerge --usepkg=y --with-bdeps=y --jobs="$(nproc)" --load-average="$(nproc)" --verbose --quiet @world && \
   eselect news read && \
-  rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /run/* /tmp/* /usr/lib/debug && \
+  rm -rf /var/cache/{binpkgs,distfiles,edb/binhost,edb/dep}/* /var/cache/binhost /etc/portage/gnupg /run/* /tmp/* /usr/lib/debug && \
   DISTDIR="$(portageq envvar DISTDIR)" && \
   if [ -d "${DISTDIR}" ]; then rm -rf "${DISTDIR:?}"/* ; fi && \
   PKGDIR="$(portageq envvar PKGDIR)" && \

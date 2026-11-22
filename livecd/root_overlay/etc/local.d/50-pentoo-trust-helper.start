@@ -1,0 +1,13 @@
+#!/bin/sh
+# The iso ships without /etc/portage/gnupg but with the repos, so make this
+# system's own keyring and trust the Pentoo binhost key before anything is
+# emerged.  Removes itself once that works; the installer's rsync of /etc
+# doesn't delete, so an install runs it once more on its first boot.
+command -v pentoo-trust-helper > /dev/null 2>&1 || exit 0
+if out=$(pentoo-trust-helper 2>&1); then
+	rm -f "$0"
+else
+	printf '%s\n' "${out}"
+	printf 'pentoo-trust-helper failed, binpkgs from the Pentoo binhost may be rejected\n'
+fi
+exit 0

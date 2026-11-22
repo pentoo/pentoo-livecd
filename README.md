@@ -130,3 +130,16 @@ against hand-written indexes served from `127.0.0.1`, with identical, stale,
 missing and extra entries, a stale `Packages.gz` and a dir missing on the
 mirror. It needs no root and
 no network.
+
+`livecd/tools/test-image-cleanup.sh` checks that every stage4, livecd and
+docker target removes `/etc/portage/gnupg`. getuto keeps a private local
+trust key and its passphrase there, so each install has to make its own
+rather than get one shipped in an image.
+
+The iso keeps the repos, so a user can emerge on it without syncing first.
+`root_overlay/etc/local.d/50-pentoo-trust-helper.start` runs
+`pentoo-trust-helper` at boot to make the keyring and trust the Pentoo binhost
+key, and removes itself once that works. The installer copies `/etc` without
+deleting, so an install runs it once more on its first boot.
+`livecd/tools/test-livecd-trust-hook.sh` checks it with a stub helper and
+needs no root.
