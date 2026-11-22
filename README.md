@@ -90,6 +90,20 @@ while the card shows fewer than 3 tries left, so a wrong file can't block
 the PIN. After fixing the file, `--test-pin` tries it once on purpose, which
 resets the counter when the PIN is right.
 
+Before clients start enforcing signatures (pentoo-updater writing
+`verify-signature = true` for the Pentoo binhosts), confirm that every public
+mirror serves the signed packages. Signing changes a gpkg's size and mtime, so
+`livecd/tools/check-mirror-signed.sh` compares each mirror's `Packages` and
+`Packages.gz` with the local, already verified index and reports stale,
+missing and extra entries. It exits non-zero unless every mirror and dir
+matches. With no arguments it checks every dir under
+`/mnt/mirror/local_mirror/Packages` on the three public mirrors:
+
+```
+livecd/tools/check-mirror-signed.sh
+livecd/tools/check-mirror-signed.sh -m https://pentoo.osuosl.org/Packages/ amd64_23.0s-hardened
+```
+
 ## Tests
 
 `livecd/tools/test-catalyst-clean.sh` checks that `catalyst_clean` in
@@ -110,3 +124,9 @@ against the real key on the YubiKey, so it needs the card and its user PIN.
 It uses temp GnuPG homes and reports the time per signature. With
 `--wrong-pin` it also checks that a wrong PIN file costs exactly one PIN try
 and that the next run refuses to use it. CI can't run it.
+
+`livecd/tools/test-check-mirror-signed.sh` runs `check-mirror-signed.sh`
+against hand-written indexes served from `127.0.0.1`, with identical, stale,
+missing and extra entries, a stale `Packages.gz` and a dir missing on the
+mirror. It needs no root and
+no network.
