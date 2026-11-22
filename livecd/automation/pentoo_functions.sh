@@ -54,6 +54,10 @@ catalyst_clean() {
   fi
 }
 
+sign_binpkgs() {
+  /usr/src/pentoo/pentoo-livecd/livecd/automation/pentoo_sign_binpkgs.sh "$1"
+}
+
 mirror_sync() {
   if [ "${FAILED}" = "0" ]; then
     echo "hardened ${arch} build successful" 1>&2
@@ -76,6 +80,10 @@ mirror_sync() {
     if [ "${stage}" != "${stage/livecd/}" ] || [ "${stage}" != "${stage/full/}" ]; then
       #sync packages for anything called livecd or full.  These are the stages which run eclean-pkg and fixpackages
       wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/packages/${profile_arch}-hardened" /mnt/mirror/local_mirror/Packages/
+      if ! sign_binpkgs "/mnt/mirror/local_mirror/Packages/${profile_arch}-hardened"; then
+        echo "hardened ${arch} binpkg signing FAILED" 1>&2
+        FAILED=1
+      fi
       #/mnt/mirror/mirror.sh &
     fi
   else

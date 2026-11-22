@@ -31,9 +31,76 @@ livecd/tools/bootstrap-resolve.sh -p /catalyst/packages/amd64_23.0s-hardened-boo
 With an empty vdb, stage3 ends in circular dependencies that the stage2 seed
 does not have; anything before the merge list is a real problem.
 
+## Signing binpkgs
+
+The pkgcache catalyst builds into stays unsigned, since the stages would
+reject signed packages from a key they don't trust. `mirror_sync` and
+`pentoo_binpkgs.sh` sign the copy they rsync to the mirror with
+`livecd/automation/pentoo_sign_binpkgs.sh`. It does three things:
+
+- signs every unsigned gpkg with `gpkg-sign`
+- refreshes `Packages`/`Packages.gz` with `emaint binhost --fix`
+- checks every package with `pentoo_verify_binpkgs.py`, the same way emerge
+  does with `FEATURES=binpkg-request-signature`, and checks that the index
+  matches the files
+
+If any step fails, the run fails and `pentoo_binpkgs.sh` doesn't run
+`mirror.sh`. The user PIN file `/root/.gnupg-binpkg-signing/pin` is the
+switch: signing is off until it exists, and removing it turns signing off
+again. Only create it once clients trust the key in `/etc/portage/gnupg`:
+emerge refuses signed binpkgs from an unknown key.
+
+The key is NIST P-384 (ECDSA), generated on a YubiKey, and expires in 900
+days, the GLEP 63 maximum. GLEP 63 itself only allows RSA or curve 25519 for
+Gentoo developer keys, but nothing in Portage enforces that, and P-384 is
+both stronger than either and much faster on the card. To generate it, plug in only that YubiKey and run:
+
+```
+livecd/tools/binpkg-key-yubikey.sh SERIAL ~/pentoo-binpkg-key
+```
+
+This wipes the card's OpenPGP keys. It works in a throwaway GnuPG home, so
+`~/.gnupg` is never touched. It writes the public key, the revocation
+certificate (keep it offline) and the fingerprint. Before the key expires,
+extend it with the card and its Admin PIN, and give clients the new expiry.
+
+On the build host, as root, with the YubiKey plugged in and pcscd running:
+
+```
+livecd/automation/pentoo_sign_binpkgs.sh --init FINGERPRINT.asc
+```
+
+To turn signing on, write the PIN file: run this, type the user PIN, press
+Enter, then Ctrl-D:
+
+```
+(umask 077; cat > /root/.gnupg-binpkg-signing/pin)
+```
+
+Then check it and sign the mirror once by hand. The first pass over a full
+binpkg dir can take an hour or more:
+
+```
+livecd/automation/pentoo_sign_binpkgs.sh --test-pin
+livecd/automation/pentoo_sign_binpkgs.sh /mnt/mirror/local_mirror/Packages/amd64_23.0s-hardened
+```
+
+A wrong PIN file costs one PIN try per run. The script won't use the file
+while the card shows fewer than 3 tries left, so a wrong file can't block
+the PIN. After fixing the file, `--test-pin` tries it once on purpose, which
+resets the counter when the PIN is right.
+
 ## Tests
 
 `livecd/tools/test-catalyst-clean.sh` checks that `catalyst_clean` in
 `livecd/automation/pentoo_functions.sh` removes only the tmp dir of the stage
 it runs for, since several stages can build at the same time. It needs no root
 and runs on tmpfs, so it is safe on the build host too.
+
+`livecd/tools/test-mirror-sync.sh` checks what the automation publishes to the
+mirror, and that synced binpkgs go through the signer before `mirror.sh` runs.
+
+`livecd/tools/test-sign-binpkgs.sh` signs and verifies real `quickpkg` gpkgs.
+A passphrase-protected software key in temp GnuPG homes stands in for the
+YubiKey. It runs unprivileged on a Gentoo host, or in a `gentoo/stage3`
+container as CI does (the command is in the script's header).

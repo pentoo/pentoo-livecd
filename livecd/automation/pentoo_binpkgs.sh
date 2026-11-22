@@ -5,6 +5,7 @@
 ARCH="x86 amd64"
 PROFILE="hardened"
 stage="binpkg-update"
+SIGN_FAILED=0
 
 for arch in ${ARCH}
 do
@@ -19,9 +20,18 @@ do
   if [ "${FAILED}" = "0" ]; then
     echo "${PROFILE} ${arch} build successful" 1>&2
     wait_for_it rsync -aEXuh --progress --delete --omit-dir-times "/catalyst/packages/${profile_arch}-${PROFILE}" /mnt/mirror/local_mirror/Packages/
+    if ! sign_binpkgs "/mnt/mirror/local_mirror/Packages/${profile_arch}-${PROFILE}"; then
+      echo "${PROFILE} ${arch} binpkg signing FAILED" 1>&2
+      SIGN_FAILED=1
+    fi
   elif [ "${FAILED}" = 1 ]; then
     echo "${PROFILE} ${arch} build FAILED" 1>&2
   fi
   echo "------------------------------------------------------------------" 1>&2
 done
-/mnt/mirror/mirror.sh && echo "mirror successful" 1>&2
+#a failed signing run can leave unsigned or stale-index packages in local_mirror
+if [ "${SIGN_FAILED}" = 0 ]; then
+  /mnt/mirror/mirror.sh && echo "mirror successful" 1>&2
+else
+  echo "not mirroring, binpkg signing failed" 1>&2
+fi
