@@ -139,6 +139,9 @@ rather than get one shipped in an image. It also checks that each
 Dockerfile empties the binpkg locations with `eclean-pkg` rather than `rm`.
 Binpkgs from the Pentoo binhosts are kept in the `binrepos.conf` locations
 under `/var/cache/binhost`, not in PKGDIR, and eclean-pkg finds them all.
+Finally, no fsscript may remove DISTDIR or PKGDIR. Catalyst bind-mounts the
+host's distfiles and package cache there, so removing them wipes the shared
+binhost cache, and every stage then rebuilds from source.
 
 `livecd/tools/test-docker-eclean.sh` runs the Dockerfiles' `eclean-pkg`
 line in `pentoolinux/pentoo-core`. It checks that the line deletes every

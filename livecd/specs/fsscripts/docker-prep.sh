@@ -26,8 +26,4 @@ fi
 eselect profile set pentoo:pentoo/${hardening}/linux/${PROFILE_ARCH}/23.0/split-usr/binary
 eselect news read
 rm -rf /tmp/*
-DISTDIR="$(portageq envvar DISTDIR)"
-if [ -d "${DISTDIR:-}" ]; then rm -rf "${DISTDIR:?}"/* ; fi
-PKGDIR="$(portageq envvar PKGDIR)"
-if [ -d "${PKGDIR:-}" ]; then rm -rf "${PKGDIR:?}"/* ; fi
 true

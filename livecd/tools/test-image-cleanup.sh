@@ -6,7 +6,9 @@
 # stage4/rm or livecd/rm list removes the keyring, and that every Dockerfile
 # that runs commands removes it too.  Those Dockerfiles must also empty every
 # binpkg location with eclean-pkg rather than rm, which would miss the
-# binrepos.conf locations.  Needs no root.
+# binrepos.conf locations.  No fsscript may remove DISTDIR or PKGDIR: catalyst
+# bind-mounts the host's distfiles and package cache there, so that wipes the
+# binhost's whole cache.  Needs no root.
 #
 # usage: test-image-cleanup.sh
 
@@ -76,6 +78,16 @@ for dockerfile in "${livecd}"/automation/docker/*/Dockerfile; do
 	if grep -v '^[[:space:]]*#' "${dockerfile}" | grep -q 'emerge '; then
 		check "docker ${image##*/}: trusts the binhost keys before it emerges" trusts_before_emerge "${dockerfile}"
 	fi
+done
+
+# $1 fsscript: no rm of DISTDIR, PKGDIR or their usual paths
+leaves_host_caches() {
+	! grep -v '^[[:space:]]*#' "$1" | grep -qE 'rm -[a-z]*[^&|;]*(DISTDIR|PKGDIR|/var/cache/(binpkgs|distfiles))'
+}
+
+for fsscript in "${livecd}"/specs/fsscripts/*.sh; do
+	check "fsscript ${fsscript##*/}: leaves the bind-mounted distfiles and package cache alone" \
+		leaves_host_caches "${fsscript}"
 done
 
 exit "${failed}"
