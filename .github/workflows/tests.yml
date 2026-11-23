@@ -33,6 +33,8 @@ jobs:
           docker run --rm --volumes-from portage -v "$PWD":/src -w /src gentoo/stage3 livecd/tools/test-sign-binpkgs.sh
       - name: docker images empty every binpkg location
         run: livecd/tools/test-docker-eclean.sh
+      - name: pentoo-core's rc-update lines work on current openrc
+        run: livecd/tools/test-docker-rc-update.sh
       - uses: actions/checkout@v4
         with:
           repository: pentoo/pentoo-overlay

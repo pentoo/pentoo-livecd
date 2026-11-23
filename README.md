@@ -150,6 +150,12 @@ installed packages and `/var/empty` alone. Plain `eclean-pkg --deep` keeps
 binpkgs of installed packages, so the line points `ROOT` at `/var/empty`,
 where nothing is installed. It needs docker but no privileges.
 
+`livecd/tools/test-docker-rc-update.sh` runs the pentoo-core Dockerfile's
+`rc-update` lines in `gentoo/stage3`. A docker build has no softlevel, and
+since openrc 0.64 `rc-update` then uses the default runlevel rather than
+sysinit, so every line has to name its runlevel. It needs docker but no
+privileges.
+
 The Dockerfiles that run emerge first run `pentoo-trust-helper` from the
 mounted pentoo repo, if it has it. The images ship without
 `/etc/portage/gnupg` and the builds don't sync, so nothing else makes the

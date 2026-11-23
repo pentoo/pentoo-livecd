@@ -26,9 +26,9 @@ RUN mkdir -p /etc/portage/profile/package.use && \
   # make openrc work
   if ! grep -- '-containers' /etc/init.d/udev; then echo 'rc_keyword="-containers"' >> /etc/conf.d/udev; fi && \
   # openrc sysinit
-  rc-update del udev && \
-  rc-update del udev-trigger && \
-  rc-update del kmod-static-nodes && \
+  rc-update del udev sysinit && \
+  rc-update del udev-trigger sysinit && \
+  rc-update del kmod-static-nodes sysinit && \
   #nothing is installed in /var/empty, so with it as ROOT eclean-pkg --deep empties PKGDIR and every binrepos.conf location
   mkdir -p "$(portageq pkgdir)" && ROOT=/var/empty eclean-pkg --deep && \
   rm -rf /run/* /tmp/* /etc/portage/gnupg && \
