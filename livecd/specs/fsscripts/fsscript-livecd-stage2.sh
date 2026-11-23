@@ -450,6 +450,8 @@ fi
 rc-update -u || error_handler
 
 #last let's make sure we have all the binpkgs we expect
+#depclean first, keeping build deps, so old slots nothing needs don't get quickpkg'd
+emerge --depclean --with-bdeps=y --quiet || error_handler
 if [ -n "$($(portageq get_repo_path / pentoo)/scripts/binpkgs-missing-rebuild)" ]; then
   quickpkg --include-config=y $($(portageq get_repo_path / pentoo)/scripts/binpkgs-missing-rebuild)
 fi
